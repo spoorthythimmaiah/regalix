@@ -1,0 +1,95 @@
+/* Rich text editor css overwrite */
+.content-slide-wrap{
+    font-size: 14px;
+    line-height: 22px;
+}
+.content-slide-wrap strong, .content-slide-wrap strong *{
+    font-weight: bold;
+}
+.content-slide-wrap em, .content-slide-wrap em *{
+    font-style: italic;
+}
+.content-slide-wrap u, .content-slide-wrap u *{
+    text-decoration: underline;
+}
+.content-slide-wrap s, .content-slide-wrap s *{
+    text-decoration: line-through;
+}
+.content-slide-wrap sup{
+    vertical-align: top;
+    top: 4px;
+    left: -2px;
+}
+.content-slide-wrap sub{
+    vertical-align: bottom;
+    bottom: 0px;
+}
+.content-slide-wrap ol{
+    list-style-type: decimal;
+}
+.content-slide-wrap ul{
+    list-style-type: disc;
+}
+.content-slide-wrap ol, .content-slide-wrap ul{
+    margin: 0 0 0 24px;
+    font-size: 15px;
+    line-height: 24px;
+}
+.content-slide-wrap ol li, .content-slide-wrap ul li{
+    text-align: left;
+}
+.content-slide-wrap blockquote{
+    padding-left: 10px !important;
+}
+.content-slide-wrap p{
+    font-size: 14px;
+    line-height: 24px;
+}
+.content-slide-wrap img {
+    max-width: 100%;
+    cursor: zoom-in;
+}
+.content-slide-wrap h1{
+    font-size: 30px;
+    line-height: 40px;
+    margin-bottom: 16px;
+}
+.content-slide-wrap h2{
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 8px;
+}
+.content-slide-wrap h3{
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 8px;
+}
+.content-slide-wrap h4{
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 8px;
+}
+.content-slide-wrap table td, .content-slide-wrap table th{
+    padding: 10px;
+    border: 1px solid #dddddd;
+}
+.content-slide-wrap p, .content-slide-wrap ul, .content-slide-wrap ol,
+.content-slide-wrap dl, .content-slide-wrap blockquote, .content-slide-wrap hr,
+.content-slide-wrap pre, .content-slide-wrap table, .content-slide-wrap figure,
+.content-slide-wrap address{
+    margin-bottom: 16px;
+}
+.content-slide-wrap table p, .content-slide-wrap table ul, .content-slide-wrap table ol,
+.content-slide-wrap table dl, .content-slide-wrap table blockquote, .content-slide-wrap table hr,
+.content-slide-wrap table pre, .content-slide-wrap table figure, .content-slide-wrap address{
+    margin-bottom: 0px;
+    line-height: normal;
+ }
+.content-slide-wrap ul ul, .content-slide-wrap ol ol,
+.content-slide-wrap ul ul ul, .content-slide-wrap ol ol ol{
+    margin-bottom: 0px;
+}
+.content-slide-wrap blockquote{
+	border-left: solid 2px #8d8d8d !important;
+	color: #8d8d8d !important;
+}

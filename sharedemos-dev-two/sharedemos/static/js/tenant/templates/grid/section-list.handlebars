@@ -1,0 +1,44 @@
+{{#each sections}}
+    {{# compare is_enabled '||' ../is_author }}
+        {{# compare is_visible '||' ../is_author }}
+            <div class="col-md-6 col-xs-12 pwt-wrap">
+                {{#unless ../is_author}}
+                    {{#if translations_available}}
+                    <div class="translation_available" data-toggle="tooltip" data-placement="left" title="{{i18n 'Translations Available'}}"></div>
+                    {{/if}}
+                {{/unless}}
+
+                <div class="pwt-box{{#unless is_enabled}} disabled{{/unless}} {{#if linked_asset }}asset-linked {{/if}}" slug='{{slug}}'>
+                    <div class="left">
+                        <div class="outer-circle">
+                            <div class="inner-circle">
+                                <div class="secondary-fill-color progress{{#if progress_class}} {{progress_class}}{{/if}}">
+                                    <div class="section-icon">
+                                        <img src="{{icon.url}}" alt="{{icon.name}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="title">
+                            {{name}}
+                            <!-- This span tag for locked content -->
+                            <!-- <span class="lock"></span> -->
+                        </div>
+                        <div class="pwt-description">{{description}}</div>
+                        {{#if tags}}
+                            <div class="labels-container">
+                            {{#each tags}}
+                                <span class="sd-label theme-bg-color tags-span">{{this}}</span>
+                            {{/each}}
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+
+            </div>
+        {{/compare}}
+    {{/compare}}
+{{/each}}
+

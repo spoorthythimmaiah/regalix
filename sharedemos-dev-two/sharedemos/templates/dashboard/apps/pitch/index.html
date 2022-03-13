@@ -1,0 +1,17 @@
+{% extends 'layouts/dashboard.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="//cloud.typography.com/7667932/7011412/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block dashboard_container %}
+    {% block dashboard_content_container %}
+        <div id="root"></div>
+    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build/apps/pitch/dashboard.js') }}"></script>
+{% endblock %}

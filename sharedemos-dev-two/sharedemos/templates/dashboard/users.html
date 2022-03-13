@@ -1,0 +1,241 @@
+{% extends 'layouts/dashboard.html' %}
+
+{% macro user_group(group_id) %}
+    {% if group_id == 1 %}
+        Admin
+    {% elif group_id == 2 %}
+        Author
+    {% elif group_id == 3 %}
+        Analyst
+    {% elif group_id == 4 %}
+        Viewer
+    {% endif %}
+{% endmacro %}
+
+
+{% macro paginate(current_page, max_page) -%}
+    {% if max_page > 1 %}
+    <div class="pagination-block">
+        <form class="demo_jumpto">
+            <label>
+                <span>Go to Page</span>
+                <input type="text" name="page" autocomplete="off" onkeypress='return keyTypeCheck(event)'>
+            </label>
+        </form>
+        <span class="pag-divider">|</span>
+        <ul>
+            {% set dots_before_added = False %}
+            {% set dots_after_added = False %}
+            {% for i in range(max_page) %}
+                {% if loop.index == 1 %}
+                <li>
+                    {% if role_id %}
+                    <a {% if current_page == 1 %}class="active" {% endif %}href="{% if current_page == 1 %}javascript:;{% else %}{{url_for('dashboard.users', role_id=role_id)}}?page=1{% endif %}">1</a>
+                    {% else %}
+                    <a {% if current_page == 1 %}class="active" {% endif %}href="{% if current_page == 1 %}javascript:;{% else %}{{url_for('dashboard.users')}}?page=1{% endif %}">1</a>
+                    {% endif %}
+                </li>
+                {% elif loop.last %}
+                <li class="ttl-page">
+                    {% if role_id %}
+                    <a {% if current_page == max_page %}class="active" {% endif %}href="{% if current_page == loop.index %}javascript:;{% else %}{{url_for('dashboard.users', role_id=role_id)}}?page={{max_page}}{% endif %}">{{max_page}}</a>
+                    {% else %}
+                    <a {% if current_page == max_page %}class="active" {% endif %}href="{% if current_page == loop.index %}javascript:;{% else %}{{url_for('dashboard.users')}}?page={{max_page}}{% endif %}">{{max_page}}</a>
+                    {% endif %}
+                </li>
+                {% elif current_page in [loop.index - 1, loop.index, loop.index + 1] %}
+                <li>
+                    {% if role_id %}
+                    <a {% if current_page == loop.index %}class="active" {% endif %}href="{% if current_page == loop.index %}javascript:;{% else %}{{url_for('dashboard.users', role_id=role_id)}}?page={{loop.index}}{% endif %}">{{loop.index}}</a>
+                    {% else %}
+                    <a {% if current_page == loop.index %}class="active" {% endif %}href="{% if current_page == loop.index %}javascript:;{% else %}{{url_for('dashboard.users')}}?page={{loop.index}}{% endif %}">{{loop.index}}</a>
+                    {% endif %}
+                </li>
+                {% elif loop.index < current_page and not dots_before_added %}
+                <div>...</div>
+                    {% set dots_before_added = True %}
+                {% elif loop.index > current_page and not dots_after_added %}
+                    <div>...</div>
+                    {% set dots_after_added = True %}
+                {% endif %}
+            {% endfor %}
+            {% if current_page < max_page %}
+                <li class="nxt-page">
+                {% if role_id %}
+                    <a href="{{url_for('dashboard.users', role_id=role_id)}}?page={{page_number+1}}">Next</a>
+                {% else %}
+                    <a href="{{url_for('dashboard.users')}}?page={{page_number+1}}">Next</a>
+                {% endif %}
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+{%- endmacro %}
+
+
+{% block dashboard_container %}
+    <ul class="nav nav-pills">
+        <li role="overview"><a href="javascript:void(0);" class="active" >User Permissions</a></li>
+    </ul>
+    <div class="dashboard-users dashboard-work-area library">
+        <div class="dashboard-users-header work-area shadow">
+            <div class="usertypes">
+                <a class="users-goback" href="/dashboard/library"><span></span>Back</a>
+                <div>
+                    <a class="user-tabs all-users{% if not role_id %} active{% endif %}" href="{{url_for('dashboard.users')}}">({{num_of_users}}) Users</a>
+                    <a class="user-tabs user-admins{% if role_id == 1 %} active{% endif %}" href="{{url_for('dashboard.users', role_id=1)}}">({{num_of_admins}}) Admins</a>
+                    <a class="user-tabs user-authors{% if role_id == 2 %} active{% endif %}" href="{{url_for('dashboard.users', role_id=2)}}">({{num_of_authors}}) Authors</a>
+                    <a class="user-tabs user-analysts{% if role_id == 3 %} active{% endif %}" href="{{url_for('dashboard.users', role_id=3)}}">({{num_of_analysts}}) Analysts</a>
+                    <a class="user-tabs user-viewers{% if role_id == 4 %} active{% endif %}" href="{{url_for('dashboard.users', role_id=4)}}">({{num_of_viewers}}) Viewers</a>
+                </div>
+            </div>
+            <div class="user-details-block" id="{{currentUserEmail}}">
+                {% if users %}
+                    {% for user in users %}
+                    <div class='user-details'>
+                        <div class='user-pic'>
+                            <img data-name="{{user.initials}}" picture-url='{{user.profile_picture_url or ""}}' >
+                        </div>
+                        <div class='user-activity'>
+                            <h3>{{user}}</h3>
+                            <p>
+                                <span>{{user_group(user.role_id)}}</span><br />
+                                {% if user.groups %}<span class="my-2">{{user.groups|join(", ")}}</span>{% endif %}
+                                {% if not user.password and not user.registration_status %}
+                                    <span class='request_status'> - Request Pending</span>
+                                {% endif %}
+                            </p>
+                            {% if g.user.email|lower != user.email|lower %}
+                            <div class='edit-remove' user-email='{{user.email}}'>
+                                <span class='user-edit {% if user.password or user.registration_status %}edit{% else %}resend-invite{% endif %}'>{% if user.password or user.registration_status %}edit{% else %}resend invite{% endif %}</span>
+                                <span class='user-remove'>remove</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                <div class="leads-pagination">
+                    {{paginate(page_number, total_pages)}}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="add-new-user ripple"></div>
+    </div>
+    <div class="user-popups">
+        <div class="user-popups-overlay">
+            <div class="user-remove-popup">
+                <div class="popup-title">DELETE USER</div>
+                <div class="popup-info">
+                    This user is part of your team.<br>
+                    Are you sure you want to delete this user?
+                </div>
+                <div class="popup-footer">
+                    <div class="del-cancel-footer">
+                        <div class="cancel">CANCEL</div>
+                        <div class="delete">DELETE</div>
+                    </div>
+                    <div class="delete-failed">
+                        OOPS! DELETE FAILED
+                    </div>
+                    <div class="delete-success">
+                        DELETED SUCCESSFULLY!
+                    </div>
+                    <div class="delete-progress">
+                        DELETING...
+                        <div class="cd-loading"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-add-popup">
+                <div class="popup-title">ADD USER</div>
+                <form method="post" enctype="multipart/form-data" name="user-data" id="addUserForm">
+                    {% set csrf_data = csrf_token() %}
+                    <input type="hidden" name="csrf_token" value="{{ csrf_data }}"/>
+                    <div class="new-user-block">
+                        <div class="block">
+                            <div class="title mandatory-field">USER NAME</div>
+                            <div class="sub-title">
+                                Add first and last name for this new user.
+                            </div>
+                            <input type="text" name="first_name" placeholder="First Name" class="user-first-name trim-input" autocomplete="off" />
+                            <input type="text" name="last_name" placeholder="Last Name" class="user-last-name trim-input" autocomplete="off" /></br>
+                            <i class='error-fields name'></i>
+                        </div>
+                        <input type="hidden" name="parent" value="">
+                        <div class="block">
+                            <div class="title mandatory-field">USER EMAIL</div>
+                            <div class="sub-title">
+                                An activation link will be sent to this email address.
+                            </div>
+                            <input type="text" name="email" placeholder="email@example.com" class="user-email trim-input" autocomplete="off" /></br>
+                            <i class='error-fields email'></i>
+                        </div>
+                        <div class="block">
+                            <div class="title">PERMISSION</div>
+                            <div class="sub-title">
+                                Choose a permission level for this user.
+                            </div>
+                            <div>
+                                <input type="radio" name="user-permission-type" id="Admins" user-group-id=1 class="permission-radio" checked>
+                                <label class="permission-type" for="Admins">Admin (Site and User Management, Authoring and Analytics Access)</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="user-permission-type" id="Authors" user-group-id=2 class="permission-radio" >
+                                <label class="permission-type" for="Authors">Author (Authoring and Analytics only) <span class="auth_cat_restriction">Select Categories</span></label>
+                            </div>
+                            <div>
+                                <input type="radio" name="user-permission-type" id="Analysts" user-group-id=3 class="permission-radio" >
+                                <label class="permission-type" for="Analysts">Analyst (Analytics only)</label>
+                            </div>
+                            {% if tenant.flags.is_private %}
+                            <div>
+                                <input type="radio" name="user-permission-type" id="Viewers" user-group-id=4 class="permission-radio" >
+                                <label class="permission-type" for="Viewers">Viewer</label>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="user-form-footer">
+                            <div class="cancel">CANCEL</div>
+                            <input type="submit" class="save" value="SAVE">
+                        </div>
+                        <div class="new-user-failed">
+                            OOPS! UNSUCCESSFULL
+                        </div>
+                        <div class="new-user-added new">
+                            ADDED SUCCESSFULLY!
+                        </div>
+                        <div class="new-user-added deleted">
+                            DELETED SUCCESSFULLY!
+                        </div>
+                        <div class="new-user-added edited">
+                            EDIT SUCCESSFULL!
+                        </div>
+                        <div class="user-adding">
+                            ADDING...
+                            <div class="cd-loading"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="select_auth_cat">
+                <div class="popup-title">SELECT CATEGORIES TO RESTRICT</div>
+                <div id="category_list"></div>
+                <div class="popup-footer">
+                    <div class="select_cat_footer">
+                        <div class="cancel">CANCEL</div>
+                        <div class="auth_select_done save">SELECT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sub_scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endblock sub_scripts %}

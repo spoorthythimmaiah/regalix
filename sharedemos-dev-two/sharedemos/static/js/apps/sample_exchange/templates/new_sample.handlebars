@@ -1,0 +1,58 @@
+<div class="container">
+	<div class="row">
+		<div class="new-sample col-lg-8">
+
+			<h1>{{ i18n 'add new sample'}}</h1>
+			<div class="title mandatory-field">{{ i18n 'sample title'}}</div>
+			<div class="sub-title">{{ i18n 'write a title for the suggestion'}}.</div>
+			<input name="title" type="text" maxlength="100" autocomplete="off" placeholder="Text">
+			<div class="title mandatory-field">{{ i18n 'sample description'}}</div>
+			<div class="sub-title">{{ i18n 'write a short description for this code sample'}}.</div>
+			<div class="description-wrap">
+				<div class="toolbar-wrap" style="margin-bottom: 16px;">
+					<div class="select-layout">
+						<div class="layout-selection">
+							<ul>
+								<li data-layout="1">
+									<img src="/static/images/author/layout1.png">
+								</li>
+								<li data-layout="2">
+									<img src="/static/images/author/layout2.png">
+								</li>
+								<li data-layout="3">
+									<img src="/static/images/author/layout3.png">
+								</li>
+								<li data-layout="4">
+									<img src="/static/images/author/layout4.png">
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div id="toolbar" style="margin-bottom: 16px;"></div>
+					<div class="content-done">{{i18n 'done'}}</div>
+					<div class="content-saving"></div>
+				</div>
+				<div class="sample-description"></div>
+			</div>
+			<div class="title mandatory-field">{{ i18n 'license'}}</div>
+			<div class="sub-title">{{ i18n 'choose a license for this code sample'}}.</div>
+			<select name="license">
+				<option value="MIT">MIT License</option>
+			</select>
+			<div class="title mandatory-field">{{ i18n 'tags'}}</div>
+			<div class="sub-title">{{ i18n 'add tags that best describe this code sample'}}.</div>
+			<div class="tag-holder"></div>
+			<input class="tag-input" name="tag" type="text" maxlength="100" autocomplete="off" placeholder="Text">
+			<div class="add-tag">{{ i18n 'add tag'}}</div>
+
+			<div class="title mandatory-field">{{ i18n 'upload zip file'}}</div>
+			<div class="sub-title">{{ i18n 'upload your code sample in a zip file'}}.</div>
+			<div class="zip-holder">
+				<img class="zip-image" src="/static/images/zipicon.png">
+				<label for="zip-upload" class="upload-zip">{{ i18n 'upload file'}}</label>
+				<input id="zip-upload" type="file">
+			</div>
+			<div class="submit-sample">{{ i18n 'submit sample'}}</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,52 @@
+{% extends 'tenants/seo/avaya/base.html' %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo/avaya/pitch.css') }}" />
+{% endblock %}
+
+
+{% block container %}
+<div class="container-block" id="main_container">
+    <div class="split-main-container">
+        {{ header() }}
+        <div class="right-side-panel">
+            <div id="pitch-temp-container" data-template="{{tenant.template}}">
+                <div class="pitch-heading">
+                    <h2 class="main-header">Pitch</h2>
+                    <h6 class="content-line">Content made and arranged just for you</h6>
+                </div> 
+                <div id="root"></div>
+            </div>
+        </div>
+        {{ footer() }}
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script src="{{ url_for('static', filename='libs/RecordRTC/RecordRTC.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/RecordRTC/EBML.js') }}"></script>
+    <script type="text/javascript">
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.logo = "/static/media/{{api['tenant']['logo']}}"
+        document.querySelector("link[rel*='shortcut']").href = "{{tenant.favicon}}"
+        {% if g.user.is_active() %}
+            document.isAuthor = "true";
+        {% endif %}
+        document.canEdit = "{{can_edit}}";
+        document.page = 'Pitch';
+    </script>
+    <script src="{{ url_for('static', filename='js/build/apps/pitch/main.js') }}"></script>
+    <script>
+        let pitchSection = $('.pitch-section');
+        if (pitchSection.length) {
+            hideBodyOverflow()
+        }
+        $('#root').on('click', '.tile.tile-container, .go-back, .finish-msg a.btn', () => hideBodyOverflow())
+        function hideBodyOverflow() {
+            $('body').addClass('custom-modal-open')
+        }
+    </script>
+{% endblock %}

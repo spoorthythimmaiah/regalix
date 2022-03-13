@@ -1,0 +1,18 @@
+<!-- slide Info -->
+<div class="slide_info">
+	<div class="info_arrow"></div>
+	{{#each activities}}
+		<div class="slide_info_details">
+			<div class="info_version">v{{version}}<span class="slide_info_separator">-</span></div>
+			<div class="slide_details">
+				{{#actions}}
+					<div class="slide_activity_detail">
+						<span class="slide_info_label">{{action}} on</span>
+						<span class="slide_activity_date">{{localTime activity_date}} </span>
+						by <span class="slide_activity_by">{{user_name}}.</span>
+					</div>
+				{{/actions}}
+			</div>
+		</div>
+	{{/each}}
+</div>

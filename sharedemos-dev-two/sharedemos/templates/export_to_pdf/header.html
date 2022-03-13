@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta
+        http-equiv="Content-type"
+        content="text/html; charset=utf-8" />
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        body {
+          margin: 0px !important;
+        }
+        #header {
+            color: #ffffff;
+            text-align: center;
+            font-size: {% if header_title | length > 60 %}28px{%else%}36px{%endif%};
+            height: 120px;
+            width: 100%;
+            display: table;
+            align-items: center;
+            text-align: -webkit-center;
+            font-family: 'Varela Round';
+            background-color: {{tenant_bg_color}};
+        }
+        p {
+          text-align: -webkit-center;
+          vertical-align: middle;
+          display: table-cell;
+        }
+    </style>
+    </head>
+    <body>
+        <div id="header">
+            <p>{{header_title | safe}}</p>
+        </div>
+    </body>
+    <script type="text/javascript"> 
+        // Method to skip PDF Header from First Page. 
+        (function() {
+            var pdfInfo = {};
+            var pdfPageInfo = document.location.search.substring(1).split('&');
+
+            for (var i in pdfPageInfo) {
+                var pageNo = pdfPageInfo[i].split('=',2);
+                pdfInfo[pageNo[0]] = unescape(pageNo[1]);
+            }
+            var page = pdfInfo.page || 1;
+            if(page == 1) document.getElementById('header').style.display = 'none';
+        }());
+    </script>
+</html>
+            

@@ -1,0 +1,12 @@
+<div class="page-prev" data-page="prev"><</div>
+<div class="pagination">
+    <ul>
+        {{#each notes}}
+            <li data-page="{{@key}}">
+                <span>{{@key}}</span>
+            </li>
+        {{/each}}
+        <li data-page="new"><span>+</span></li>
+    </ul>
+</div>
+<div class="page-next" data-page="next">></div>

@@ -1,0 +1,216 @@
+"""empty message
+
+Revision ID: 30e17500bac4
+Revises: 36e355a78e81
+Create Date: 2020-03-08 16:43:04.049203
+
+"""
+
+# revision identifiers, used by Alembic.
+revision = '30e17500bac4'
+down_revision = '36e355a78e81'
+branch_labels = None
+depends_on = None
+
+from alembic import op
+import sqlalchemy as sa
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.dialects import postgresql
+
+
+Session = sessionmaker()
+Base = declarative_base()
+bind = None
+session = None
+
+def upgrade(engine_name):
+    globals()["upgrade_%s" % engine_name]()
+
+
+def downgrade(engine_name):
+    globals()["downgrade_%s" % engine_name]()
+
+
+class Pitch(Base):
+
+    __tablename__ = "pitch"
+
+    id = sa.Column(sa.Integer, primary_key=True)
+
+
+class PitchSection(Base):
+
+    __tablename__ = "pitch_section"
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    pitch_id = sa.Column(sa.Integer, sa.ForeignKey("pitch.id"), nullable=False)
+    base_score = sa.Column(sa.Integer, nullable=False)
+
+
+class PitchSectionTranslations(Base):
+
+    __tablename__ = "pitch_section_translations"
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    section_id = sa.Column(sa.Integer, sa.ForeignKey("pitch_section.id"), nullable=False)
+
+
+class PitchSectionActivity(Base):
+
+    __tablename__ = "pitch_section_activity"
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    pitch_id = sa.Column(sa.Integer, sa.ForeignKey('pitch.id'))
+    section_id = sa.Column(sa.Integer, sa.ForeignKey('pitch_section.id'), nullable=False)
+
+
+class PitchRecording(Base):
+
+    __tablename__ = "pitch_recording"
+
+    id = sa.Column(sa.Integer, primary_key=True)
+
+    section_trans_id = sa.Column(
+        sa.Integer, sa.ForeignKey('pitch_section_translations.id'),
+        nullable=False
+    )
+
+
+class PitchRecordingActivity(Base):
+
+    __tablename__ = "pitch_recording_activity"
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    section_id = sa.Column(sa.Integer, sa.ForeignKey('pitch_section.id'), nullable=False)
+    recording_id = sa.Column(sa.Integer, sa.ForeignKey('pitch_recording.id'), nullable=False)
+
+
+class PitchResult(Base):
+
+    __tablename__ = "pitch_result"
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    base_score = sa.Column(sa.Integer, nullable=False)
+    recording_id = sa.Column(
+        sa.Integer, sa.ForeignKey('pitch_recording.id'), nullable=False
+    )
+
+
+def update_pitch_section_activity():
+    """Set pitch_id for section_activities."""
+    bind = op.get_bind()
+    session = Session(bind=bind)
+
+    section_activities = session.query(PitchSectionActivity).all()
+    section_ids = [s.section_id for s in section_activities]
+
+    if section_ids:
+
+        sections = session.query(PitchSection).join(
+            Pitch, Pitch.id == PitchSection.pitch_id
+        ).filter(
+            PitchSection.id.in_(section_ids)
+        ).with_entities(
+            PitchSection,
+            Pitch
+        ).all()
+
+        section_dict = {s.PitchSection.id: s.Pitch.id for s in sections}
+
+        for activity in section_activities:
+            activity.pitch_id = section_dict[activity.section_id]
+            session.add(activity)
+        session.commit()
+
+
+def update_pitch_recording_activity():
+    """Set section_id for recording_activities."""
+    bind = op.get_bind()
+    session = Session(bind=bind)
+
+    recording_activities = session.query(PitchRecordingActivity).all()
+    record_ids = [r.recording_id for r in recording_activities]
+
+    if record_ids:
+        recordings = session.query(PitchRecording).join(
+            PitchSectionTranslations, PitchSectionTranslations.id == PitchRecording.section_trans_id
+        ).join(
+            PitchSection, PitchSection.id == PitchSectionTranslations.section_id
+        ).filter(
+            PitchRecording.id.in_(record_ids)
+        ).with_entities(
+            PitchRecording,
+            PitchSection
+        ).all()
+
+        recording_dict = {r.PitchRecording.id: r.PitchSection.id for r in recordings}
+
+        for activity in recording_activities:
+            activity.section_id = recording_dict[activity.recording_id]
+            session.add(activity)
+        session.commit()
+
+
+def update_pitch_result():
+    """Set the base_score for all results."""
+    bind = op.get_bind()
+    session = Session(bind=bind)
+
+    results = session.query(
+        PitchResult
+    ).join(
+        PitchRecording, PitchResult.recording_id == PitchRecording.id
+    ).join(
+        PitchSectionTranslations, PitchRecording.section_trans_id == PitchSectionTranslations.id 
+    ).join(
+        PitchSection, PitchSectionTranslations.section_id == PitchSection.id
+    ).with_entities(
+        PitchResult,
+        PitchSection
+    ).all()
+
+    for res in results:
+        res.PitchResult.base_score = res.PitchSection.base_score
+        session.add(res.PitchResult)
+    session.commit()
+
+
+def upgrade_():
+    ### commands auto generated by Alembic - please adjust! ###
+    op.add_column('pitch_recording_activity', sa.Column('section_id', sa.Integer()))
+    op.create_foreign_key('pitch_recording_activity_pitch_section_fkey', 'pitch_recording_activity', 'pitch_section', ['section_id'], ['id'])
+
+    op.add_column('pitch_section_activity', sa.Column('pitch_id', sa.Integer()))
+    op.create_foreign_key('pitch_section_activity_pitch_fkey', 'pitch_section_activity', 'pitch', ['pitch_id'], ['id'])
+
+    op.drop_column('pitch_result', 'total_score')
+    op.add_column('pitch_result', sa.Column('base_score', sa.Integer()))
+
+    update_pitch_recording_activity()
+    update_pitch_section_activity()
+    update_pitch_result()
+
+    op.alter_column('pitch_result', 'base_score', nullable=False)
+    op.alter_column('pitch_recording_activity', 'section_id', nullable=False)
+    op.alter_column('pitch_section_activity', 'pitch_id', nullable=False)
+    ### end Alembic commands ###
+
+
+def downgrade_():
+    ### commands auto generated by Alembic - please adjust! ###
+    op.add_column('pitch_result', sa.Column('total_score', postgresql.DOUBLE_PRECISION(precision=53), autoincrement=False, nullable=True))
+    op.drop_column('pitch_result', 'base_score')
+    op.drop_constraint('pitch_section_activity_pitch_fkey', 'pitch_section_activity', type_='foreignkey')
+    op.drop_column('pitch_section_activity', 'pitch_id')
+    op.drop_constraint('pitch_recording_activity_pitch_section_fkey', 'pitch_recording_activity', type_='foreignkey')
+    op.drop_column('pitch_recording_activity', 'section_id')
+    ### end Alembic commands ###
+
+
+def upgrade_reports():
+    pass
+
+
+def downgrade_reports():
+    pass

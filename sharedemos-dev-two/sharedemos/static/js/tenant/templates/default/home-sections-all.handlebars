@@ -1,0 +1,29 @@
+<div class="row sortable">
+	{{#each sections }}
+		{{# compare is_enabled '||' ../is_author }}
+		{{# compare is_visible '||' ../is_author }}
+			<div class="col-md-6 col-sm-6 col-xs-12 pwt-wrap">
+				{{#unless ../is_author}}
+					{{#if translations_available}}
+						<div class="translation_available" data-toggle="tooltip" data-placement="left" title="{{i18n 'Translations Available'}}"></div>
+					{{/if}}
+				{{/unless}}
+
+				<div class="pwt-box {{#unless is_enabled}} disabled{{/unless}} {{#unless can_edit}}uneditable{{/unless}} {{#if linked_asset }}asset-linked {{/if}}" slug='{{slug}}'>
+					<div class="left icon">
+						<div class="outer-circle">
+							<div class="inner-circle progress">
+								<div class="section-icon"><img src="{{icon.url}}" alt="{{icon.name}}"/></div>
+							</div>
+						</div>
+					</div>
+					<div class="right">
+						<div class="title theme-title-color">{{name}}</div>
+						<div class="pwt-details theme-paragraph-color">{{description}}</div>
+					</div>
+				</div>
+			</div>
+		{{/compare}}
+		{{/compare}}
+	{{/each}}
+</div>

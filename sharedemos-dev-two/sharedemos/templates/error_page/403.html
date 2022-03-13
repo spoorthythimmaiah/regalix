@@ -1,0 +1,81 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+
+    {% if tenant['template'] == 'bmc' %}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bmc.css') }}" />
+    {% endif %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/error_page.css') }}" />
+{% endblock %}
+
+{% block container %}
+    <div class="container content-restricted">
+        {% if tenant and tenant['logo'] %}
+            <img src="{{ url_for('static', filename='media/' + tenant['logo']) }}">
+        {% else %}
+            <img src="{{ url_for('static', filename='images/ShareDemos-logo.png') }}">
+        {% endif %}
+        <h1>Sorry, you don’t have the proper credentials to view this content.</h1>
+        <p>If you feel like we’ve made a mistake please let us know. Thank you.</p>
+    </div>
+    <div class="grayout"></div>
+    {% if tenant and tenant.get('footer') and tenant['footer']['links'] or tenant['footer']['text']%}             
+        {% if tenant['template'] == 'bmc' %}
+        <footer class="bmc-footer">
+            <div class="container">
+                <div>
+                    <img src="{{ url_for('static', filename='images/bmc/bmc-footer.svg') }}">
+                </div>
+                <div class="page-footer">
+                {% if tenant['footer'].get('links') %}
+                    <ul class="links bmc">
+                        {% for link in tenant['footer']['links'] | sort(attribute='order') %}
+                        <li class="item bmc">
+                            <a class="title camel-case" target="_blank" href="{{link.url}}">{{link.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if tenant['footer']['text'] %}
+                    <div class="copyright">
+                        <div class="bmc-footer-text">
+                            {{tenant['footer']['text'] | safe}}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+        </footer>
+        {% else %}
+            <footer>
+                <div class="page-footer">
+                    {% if tenant['footer'].get('links') %}
+                        <ul class="links">
+                            {% for link in tenant['footer']['links'] | sort(attribute='order') %}
+                            <li class="item">
+                                <a class="title camel-case" target="_blank" href="{{ link.url }}">{{ link.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if tenant['footer']['text'] %}
+                        <div class="copyright">
+                            <div class="text">
+                                {{ tenant['footer']['text'] | safe}}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </footer>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ripple.js') }}"></script>
+{% endblock %}

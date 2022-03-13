@@ -1,0 +1,49 @@
+<link rel='stylesheet' type='text/css' href='/static/libs/froala/css/froala_style.css' />
+<style type='text/css'>
+    .outer-wrap{
+        position: relative;
+        margin: 30px;
+        display: inline-block;
+        height: 720px;
+        overflow: hidden;
+    }
+    .content-slide-wrap {
+        margin: 25px;
+        width: 1180px !important;
+        padding-bottom: 0px;
+        position: relative;
+        padding: 25px 25px;
+        min-height: 680px;
+    }
+    .layout{
+        min-height: 540px;
+    }
+    .content-footer{
+        position: relative;
+        bottom: 0;
+        text-align: center;
+        width: inherit;
+        font-size: 10px;
+        padding: 5px;
+        width: 100%;
+        display: inline-block;
+    }
+    .content-footer-image{
+        height: 36px;
+        display: block;
+        margin : 0px auto;
+    }
+</style>
+<div class='outer-wrap'>
+    <div class='content-slide-wrap'>
+        <div class='fr-view'>{{{html_content}}}</div>
+        <div class='content-footer'>
+            {{#if footer_image}}
+            <img class='content-footer-image' src='{{footer_image}}' />
+            {{/if}}
+            {{#if footer_text}}
+            <div class='content-footer-text'>{{footer_text}}</div>
+            {{/if}}
+        </div>
+    </div>
+</div>

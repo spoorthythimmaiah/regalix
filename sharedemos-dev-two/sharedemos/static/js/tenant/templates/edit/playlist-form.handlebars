@@ -1,0 +1,87 @@
+<form name='playlist-data' playlist_id="{{playlistId}}" >
+	<div class="popup-title camel-case">{{# if is_edit}}{{i18n 'edit'}}{{else}}{{i18n 'create'}}{{/if}} {{i18n 'playlist'}}</div>
+	<div class="content-block">
+		<div class="block">
+			<div class="title mandatory-field">{{i18n 'playlist title'}}</div>
+			<div class="sub-title">{{i18n 'choose a title for this playlist'}}.</div>
+			<div class="input_wrap">
+				<input type="text" maxlength="85" class="edit-playlist-title trim-input" name="name" autocomplete="off" placeholder="{{i18n 'Name'}}" {{#if name}}value="{{name}}"{{/if}}/>
+				<div class="counter">
+					<span data-counter>{{name_limit}}</span> <span> {{i18n 'characters left'}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="block">
+			<div class="title description">{{i18n 'playlist description'}}</div>
+			<div class="sub-title">{{i18n 'write a short description that best describes the content in this playlist'}}.</div>
+			<div class="input_wrap">
+				<textarea maxlength="250" class="edit-playlist-desc trim-input" name="description" autocomplete="off" placeholder="Description">{{description}}</textarea>
+				<div class="counter">
+					<span data-counter>{{description_limit}}</span><span> {{i18n 'characters left'}}</span>
+				</div>
+			</div>									
+		</div>
+		{{#if showRestrictionOption}}
+			<div class="block">
+				<div class="title capitalize-text {{#if restrictionsDisabled}} disabled {{/if}} hidden">{{i18n 'enable restrictions'}}</div>
+				{{#if restrictionsDisabled}}
+					<div class="sub-title disabled">
+						{{i18n 'restrictions already set in a parent content.'}}
+					</div>
+				{{/if}}
+				<input type="checkbox" name="playlist_enable_restrictions" id="playlist_enable_restrictions" class="css-checkbox hidden" data-toggle="collapse" data-target="#playlist-usr-grps-to-restrict" aria-expanded="false" aria-controls="playlist-usr-grps-to-restrict" {{#if isRestrictionEnabled}} checked {{/if}} {{#if restrictionsDisabled}} disabled {{/if}} />
+				<label for="playlist_enable_restrictions" class="css-label hidden"></label>
+
+				<div class="collapse {{#if isRestrictionEnabled}} in {{/if}}" id="playlist-usr-grps-to-restrict">
+					<div>
+					    <div class="user-groups">
+
+					        <div class="title capitalize-text">{{i18n 'allow access to' }}</div>
+					        <input type="text" placeholder="Select user groups" class="usr-grp-dropdown" id="playlist-usr-grp-dropdown" readonly="true" data-toggle="collapse" data-target="#playlist-usr-grps-list" aria-expanded="false" aria-controls="playlist-usr-grps-list" {{#if isRestrictionEnabled}} value="{{restrictedToGroups}}" data-selected-groups="{{restrictedToGroupIds}}" {{/if}} />
+
+					        <div id="playlist-usr-grps-list" class="collapse usr-grps-list">
+					            <ul>
+					            {{#each userGroupOptions}}
+					                <li {{#if selectedDisabled }} class="selected-disabled" {{/if}} >
+					                    <input type="checkbox" name="user-group" value="" id="playlist-usr-grp-{{_id}}" class="user-group-items" data-attr-id={{_id}} data-attr-name="{{name}}" {{#if isChecked }} checked {{/if}} {{#if selectedDisabled }} disabled {{/if}} />
+					                    <label for="playlist-usr-grp-{{_id}}"></label>
+					                    <span> {{name}} </span>
+					                </li>
+					            {{/each}}
+					            </ul>
+					        </div>
+					        <div>&nbsp;</div>
+
+					    </div>
+					</div>
+				</div>
+			</div>
+		{{/if}}
+
+		<div class="block">
+			<div class="title capitalize-text">{{i18n 'end of life'}}</div>
+			<div class="input_wrap">
+			    <input type="text" placeholder="Click to select date-time" class="datepicker-here" id="playlist_expire_at" readonly="true" data-position="top right" data-timepicker="true" {{#if eolExpireAt}}data-datetime={{eolExpireAt}}{{/if}} />
+			    <div>&nbsp;</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="popup-footer">
+		<div class="form-footer">
+			<div class="cancel rippleEffect" rel="popup-create-playlist">{{i18n 'cancel'}}</div>
+			<input type="submit" class="save rippleEffect capital-letter" value="{{i18n 'save'}}" />
+		</div>
+		<div class="form-failed">
+			{{i18n 'oops! saving failed'}}
+		</div>
+		<div class="form-sent">
+			{{i18n 'saved successfully!'}}
+		</div>
+		<div class="form-sending">
+			{{i18n 'saving'}}...
+			<div class="cd-loading"></div>
+		</div>
+	</div>
+</form>

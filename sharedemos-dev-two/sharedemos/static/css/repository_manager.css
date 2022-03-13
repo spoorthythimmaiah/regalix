@@ -1,0 +1,502 @@
+.full_popup_box::-webkit-scrollbar {
+    display: none;
+}
+.main-heading {
+    color: #1e1e1e;
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 243px;
+}
+
+.create-repository .full_popup_content h4{
+    margin-bottom: 20px;
+}
+.create-repository .details-tabs {
+    text-align: center;
+    margin-top: 20px;
+}
+.create-repository .details-tabs [data-tab]{
+    color: #cfcfcf;
+    text-transform: uppercase;
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 100;
+    font-size: 12px;
+}
+.create-repository .platform-data {
+    margin-top: 20px;
+    display: none;
+}
+
+.create-repository .basic-info {
+    margin-top: 20px;
+    display: none;
+}
+
+.create-repository .configure {
+    margin-top: 20px;
+    display: none;
+}
+
+.create-repository .details-tabs [data-tab].active {
+    border-bottom: 1px solid black;
+    font-weight: 500;
+    color: #41435c;
+}
+
+.platform-data.active,
+.basic-info.active,
+.configure.active {
+    display: block;
+    margin-top: 35px;
+    margin-left: 50px;
+}
+
+.label-heading {
+    color: #1e1e1e;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.repository-type {
+    margin-top: 20px;
+    margin-right: 17px;
+    width: 250px;
+    height: 120px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.repository-icon {
+    padding: 23px;
+    width: 115px;
+    height: 115px;
+    margin-left: 53px;
+}
+
+.platform-name {
+    margin-top: 20px;
+    color: #828b90;
+}
+
+.button-block {
+    text-align: center;
+}
+
+.repository-type-block {
+    margin-bottom: 30px;;
+}
+
+.button-block .previous-button{
+    content: '';
+    width: 35px;
+    height: 33px;
+    padding-top: 6px;
+    background-color: #e9e9e9;
+    border-radius: 50%;
+    display: none;
+}
+.previous-button .arrow-right {
+    border: solid #1e1e1e;
+    border-width: 0 1px 1px 0;
+    padding: 2px 7px 5px 0px;
+    height: 4px;
+    margin: 6px 3px 5px 14px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+#repositories .full_popup_content #submit-button {
+    display: inline-block;
+    border-radius: 23px;
+    background-color: #066afe;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: -3px;
+}
+
+#repositories .full_popup_content .text-left .repository-type.active {
+    border: 1px solid;
+    border-color: #066afe;
+}
+
+.text-left {
+    margin-left: 46px;
+}
+
+.sub-info {
+    margin-top: 9px;
+    color: #828b90;
+    font-size: 12px;
+}
+
+#repositories .toggle-block {
+    padding-right: 0;
+    display: block;
+    width: 100%;
+}
+
+#repositories input[type=checkbox]:checked + label.css-toggle-label{
+    background-position: 0 -50px;
+}
+
+#repositories input[type=checkbox].css-toggle + label.css-toggle-label:before{
+    position: inherit;
+    content: "OFF";
+    color: #5C5C5C;
+    font-size: 12px;
+    font-weight: 300;
+    vertical-align: bottom;
+}
+
+#repositories input[type=checkbox].css-toggle:checked + label.css-toggle-label:before{
+    position: inherit;
+    content: "ON";
+    color: #5C5C5C;
+    font-size: 12px;
+    font-weight: 300;
+    vertical-align: bottom;
+}
+
+.basic-info .email, .basic-info .password{
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 7px;
+}
+
+.basic-info .password-block {
+    margin-top: 19px;
+}
+
+.basic-info .root-folder {
+    margin-top: 22px;
+}
+
+.basic-info .form-feedback {
+    background: url(/static/images/repository_manager/validation.png) no-repeat;
+    position: absolute;
+    top: 25px;
+    right: 0;
+    z-index: 2;
+    display: none;
+    width: 22px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    background-size: 100%;
+    margin-right: -17px;
+}
+
+.basic-info .form-feedback.email-validation.active {
+    margin-top: 44px;
+    display: block;
+}
+
+.full_popup_box::-webkit-scrollbar {
+    display: none;
+}
+
+/* style for listing repositories  */
+
+#repositories-list {
+    display: block;
+}
+
+#repositories-list .repositories {
+    width: 490px;
+    height: 201px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin: 25px 10px 0px 10px;
+    display: inline-flex;
+}
+
+#repositories-list .repository-type-img {
+    width: 90px;
+    height: 91px;
+    margin: 42px 7px 60px 30px;
+}
+
+.repository-detail {
+    float: right;
+    margin: 42px 0px 0px 7px;
+    word-break: break-all;
+}
+
+.repository-detail h1 {
+    color: #1e1e1e;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.repository-detail .url {
+    color: #aeaeae;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+    padding-top: 13px;
+}
+
+.repository-detail .root-folder {
+    color: #aeaeae;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 21px;
+    padding: 5px 0px 21px 0px;
+}
+
+.repository-detail .edit-repository {
+    color: #3b99fc;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: inline;
+    cursor: pointer;
+}
+
+.repository-detail .delete {
+    color: #f43838;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: inline;
+    padding-left: 16px;
+    cursor: pointer;
+}
+
+.overlay{
+    position: fixed;
+    z-index: 12;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    background: rgba(0, 0, 0, .75);
+    -webkit-transition: all .5s ease-in-out .1s;
+    transition: all .5s ease-in-out .1s;
+    display: block;
+}
+
+.overlay.popup-active {
+    visibility: visible;
+    opacity: 1;
+    background: rgba(0, 0, 0, .75);
+    display: table;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: fixed;
+}
+
+.success-info, .error-info, .loading-exp {
+    height: 450px;
+    width: 500px;
+    background-color: white;
+    margin: 169px 0px 0px 450px;
+    border-radius: 15px;
+}
+
+.success-info h1, .error-info h1, .loading-exp h1 {
+    color: #000000;
+    font-size: 28px;
+    font-weight: 500;
+    padding: 60px 0px 0px;
+    text-align: center;
+}
+
+.success-img-block, .loading-img-block {
+    text-align: -webkit-center;
+}
+
+.success-img {
+    background: url(/static/images/repository_manager/check-success.jpg) no-repeat;
+    width: 130px;
+    height: 130px;
+    top: 25px;
+    background-size: 100%;
+    position: relative;
+}
+
+.loading-img {
+    background: url(/static/images/repository_manager/loading.gif) no-repeat;
+    width: 230px;
+    height: 230px;
+    top: 25px;
+    background-size: 100%;
+}
+
+
+@keyframes loading-animation {
+    0% { transform: translate(-50%,-50%) rotate(0deg); }
+    100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.loading-animation div {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border: 20px solid #73a90e;
+    border-top-color: transparent;
+    border-radius: 50%;
+}
+.loading-animation div {
+    animation: loading-animation 1s linear infinite;
+    top: 113px;
+    left: 239px;
+}
+.loadingio-spinner {
+    width: 100%;
+    height: 200px;
+    display: inline-block;
+    overflow: hidden;
+    background: #ffffff;
+}
+.loading-animation {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0; /* see note above */
+}
+.loading-animation div { box-sizing: content-box; }  
+
+.error-img {
+    background: url(/static/images/repository_manager/error.png) no-repeat;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    z-index: 2;  
+    background-size: 100%;
+    margin: 58px 0px 0px 60px;
+    display: inline;
+}
+
+.error-info .error-msg {
+    color: #f43838;
+    font-size: 16px;
+    font-weight: 400;
+    visibility: visible;
+    padding: 59px 0px 0px 100px;
+}
+
+.error-block {
+    padding-left: 12px;
+}
+
+.delete-repository-popup {
+    min-height: 100px;
+    width: 500px;
+    background-color: white;
+    margin: 180px 0px 0px 450px;
+    border-radius: 10px;
+}
+
+.overlay .popup-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    padding: 15px 0;
+    font-weight: 500;
+    color: #444444;
+    border-bottom: 1px solid #f4f4f4;
+    text-align: center;
+}
+
+.overlay .popup-info.text-center {
+    text-align: center;
+}
+
+.overlay .popup-info {
+    width: 100%;
+    overflow: auto;
+    max-height: 500px;
+    padding: 30px 50px;
+}
+.popup-footer {
+    width: 100%;
+    height: 49px;
+    border-top: 1px solid #dcdcdc;
+    font-size: 14px;
+    text-transform: uppercase;
+    clear: both;
+    position: relative;
+}
+
+.overlay .popup-footer .delete{
+    padding: 17px;
+    border-right: 1px solid #dcdcdc;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+    color: #444444;
+    background-color: transparent;
+    text-transform: uppercase;
+}
+
+.overlay .popup-footer .cancel {
+    padding: 17px;
+    border-right: 1px solid #dcdcdc;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+    color: #444444;
+    background-color: transparent;
+    text-transform: uppercase;
+}
+
+.dashboard-work-area {
+    padding: 27px 75px !important;
+}
+
+.credential-heading {
+    padding-left: 0px;
+}
+
+.popup-error-footer {
+    width: 500px;
+    height: 49px;
+    border-top: 1px solid #dcdcdc;
+    font-size: 14px;
+    text-transform: uppercase;
+    clear: both;
+    bottom: 79px;
+    position: absolute;
+    text-align: center;
+}
+
+.fix-error {
+    color: #878787;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: 16px;
+}
+
+.validation-error-message {
+    margin-top: 15px;
+    color: #FF0000;
+    display: none;
+}

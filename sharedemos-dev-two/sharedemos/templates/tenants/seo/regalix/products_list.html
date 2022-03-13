@@ -1,0 +1,53 @@
+{% extends 'tenants/seo/regalix/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+{% block sub_styles %}
+{% endblock %}
+{% block container %}
+    {{ search() }}
+    <div class="container-block" id="main_container" data-page-container="{{ view_type }}">
+        {{ translation_wrapper() }}
+        {{ header() }}
+        {% if enable_homepage_banner and banner_details %}
+            {{ homepage_banner (banner_details)}}
+        {% endif %}
+        <div id="journeys-container" class="container">
+            <h4 class="main-heading">Journeys</h4>
+            <div class="row journey-block">
+                <div class="items-block col-xs-12">
+                    <div class="row">
+                        {% for journey in api['all_journeys'] %}        
+                            <div class="col-xs-12 col-sm-6 col-md-3 item-block">
+                                <a href="{{journey.url}}">
+                                    {% set filename = 'media/'+ journey.icon_path if journey.icon_path else 'images/journey-default-icon.jpg' %}
+                                    <img data-src="{{ url_for('static', filename= filename)}}" class="lazy-load card-img-top img-responsive center-block" alt="{{journey.name}}" />
+                                    <h5 class="card-title">{{journey.name}}</h5>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.isUserAnonymous = true;
+        document.viewType = "{{view_type}}";
+        document.apps = JSON.parse('{{apps|tojson}}');
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.page = "Home";
+    </script>
+    <script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

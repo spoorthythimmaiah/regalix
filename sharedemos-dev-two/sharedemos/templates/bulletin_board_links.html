@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html' %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulletin_board.css') }}" />
+{% endblock %}
+{% block container %}
+<div id="main_container">
+    <div class="header">
+       <div class="main-headers">
+            <a href="/" class="hidden-xs hidden-sm">
+                <div class="logo">
+                {% if tenant.logo %}
+                   {% set tenant_logo = url_for('static', filename='media/' + tenant.logo) %}
+                   <img src="{{tenant_logo}}">
+                {% else %}
+                   <span>SHAREDEMOS</span>
+                {% endif %}
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="bb-links-banner container">
+    <div class="more-links-page-title">
+        Additional Links here
+        <p class="more-link-sub-title">Check out these links.We think you might find these helpful.</p>
+    </div>
+    <div class="overview-card more-link-page">
+        <ul>
+        {% for link in bulletin_board_details['link_details'] %}
+            <li class="link-holder">
+                <a href = '{{link.url}}' title='{{link.name}}' {% if link.link_type.lower() == 'external' %}target='_blank'{% endif %}>{{link.name|truncate(110)}}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

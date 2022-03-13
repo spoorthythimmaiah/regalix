@@ -1,0 +1,169 @@
+{% extends 'tenants/seo/avaya/base.html' %}
+
+{% block container %}
+    <div id="content-section" class="container-block feed">
+        <div class="split-main-container">
+            {{ header() }}
+            <div class="right-side-panel">
+                <div class="toggle-side-bar"></div>
+                <div class="row heading">
+                    <div class="col-sm-12">
+                        <h2>Library</h2>
+                        <h6>Find Everything you need and more</h6>
+                    </div>
+                    {{ search() }}
+                </div>
+                <div class="row stack-container">
+                    {% if recent_demos %}
+                        <div class="col-md-4">
+                            <h5>Latest Content Stack</h5>
+                            <div class="slide latest-content">
+                                <img class="img-stack lazy-load" data-src="{{ url_for('static', filename='images/avaya/news-stack.png') }}" alt="Card image">
+                                <p class="stack-desc">Self-Service is 'Golden' at Canon Finacial Services</p>
+                                <button class="btn-primary btn-blue">Fincncial Services</button>
+                            </div>
+                            <div class="stack-card1"></div>
+                            <div class="stack-card2"></div>
+                        </div>
+                    {% endif %}
+
+                    {% if featured_content %}
+                        <div class="col-md-4">
+                            <h5>Featured Content Stack</h5>
+                            <div class="slide featured-content">
+                                <img class="img-stack lazy-load" data-src="{{ url_for('static', filename='images/avaya/news-stack.png') }}" alt="Card image">
+                                <p class="stack-desc">Atento Raises the Stakes with AI, Sets the Bar for CRM Providers</p>
+                                <button class="btn-purple">Professional Services</button>
+                            </div>
+                            <div class="stack-card1"></div>
+                            <div class="stack-card2"></div>
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- stack content popup -->
+                <div class="overlay">
+                    <div class="latest content-stack">
+                        <div class="progress-slide">
+                            {% for content in recent_demos %}
+                                <div class="progress-tab">
+                                    <div class="progress-line" data-slide="{{ loop.index }}"></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="content-slider">
+                            {% for content in recent_demos %}
+                                <div class="content-item" data-slide="{{ loop.index }}">
+                                    <div class="content-text">
+                                        <div class="close-slide"></div>
+                                        <div class="content-description">
+                                            <div class="created-date">{{content.created_at.strftime('%B %d, %Y')}}</div>
+                                            <div class="content-title">{{ content.name }}</div>
+                                            <div class="content-tags">
+                                                {% for tag in content.tags %}
+                                                    <div class="content-tag">{{ tag }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            <a href="{{content.url}}" target="_blank">
+                                                <div class="content-tabs">
+                                                    <div class="launch-now">launch now</div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="content-display">
+                                        {% if content.image_src %}
+                                            <img src="{{content.image_src}}" alt="content_demo">
+                                        {% else %}
+                                            <img src="{{url_for('static', filename='images/avaya/category-bg.png')}}" alt="content_demo">
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <span class="previous-content"></span>
+                        <span class="next-content"></span>
+                    </div>
+                    <div class="featured content-stack">
+                        <div class="progress-slide">
+                            {% for content in featured_content %}
+                                <div class="progress-tab">
+                                    <div class="progress-line" data-slide="{{ loop.index }}"></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="content-slider">
+                            {% for content in featured_content %}
+                                <div class="content-item" data-slide="{{ loop.index }}">
+                                    <div class="content-text">
+                                        <div class="close-slide"></div>
+                                        <div class="content-description">
+                                            <div class="created-date"></div>
+                                            <div class="content-title">{{ content._name }}</div>
+                                            <div class="content-tags"></div>
+                                            <div class="content-tabs">
+                                                <a href="{{content._url}}" target="_blank">
+                                                    <div class="launch-now">launch now</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="content-display">
+                                        {% if content._image_src %}
+                                            <img src="{{content._image_src}}" alt="content_demo">
+                                        {% else %}
+                                            <img src="{{url_for('static', filename='images/avaya/category-bg.png')}}" alt="content_demo">
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <span class="previous-content"></span>
+                        <span class="next-content"></span>
+                    </div>
+                </div>
+                <!-- stack content popup -->
+                {% if api['all_products'] %}
+                <main class="library-container">
+                    <h2>{{_('Explore Categories')}}</h2>
+                    <section class="row categories-list">
+                        {% for product in api['all_products'] %}
+                        <div class="col-xs-6 col-md-4 col-lg-3 category-details">
+                            <div class="category-block">
+                                {% if product['translations_available'] %}
+                                    <div class="translation-icon" data-overlay="language-translations" data-language-options='{{product['locales_available']|tojson}}'></div>
+                                {% endif %}
+                                {% set href_url = url_for('apps.library', section=product['slug'])%}
+                                {% set class_name = 'category-link' %}
+                                {% if product['linked_asset'] %}
+                                    {% set href_url =  url_for('main.serve_section_assets', asset_name=product['linked_asset']['name']) %}
+                                    {% set class_name = 'asset-linked' %}
+                                {% endif %}
+                                {% set data_attr = 'data-product-id=' + product['slug'] + ' data-section-id=' + product['slug'] %}
+                                <a href="{{href_url}}" class="{{class_name}}"{% if product['linked_asset']%} {{data_attr}} target="_blank" {% endif %}>
+                                    <div class="category-icon">
+                                        {% if product['icon'] %}
+                                            <img data-src="{{ product['icon']['url'] }}" class="lazy-load" alt="{{ product['icon']['name'] }}">
+                                        {% elif product['linked_asset'] %}
+                                            <img data-src="{{ url_for('static', filename='images/section-default-link-icon.png') }}" class="lazy-load theme-bg-color" alt="library-app">
+                                        {% else %}
+                                            <div class="default-category-icon" alt="library-app"></div>
+                                        {% endif %}
+                                        <h5 class="category-name-aliginment">{{product['name']}}</h5>
+                                    </div>
+                                </a> 
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </section>
+                </main>
+                {% endif %}
+                {{ footer() }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block sub_scripts %}
+    <script type="text/javascript">
+        document.page = 'Library';
+    </script>
+{% endblock %}

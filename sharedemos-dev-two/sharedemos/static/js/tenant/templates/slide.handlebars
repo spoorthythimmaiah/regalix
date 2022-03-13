@@ -1,0 +1,186 @@
+<div class="slides-Container" slide-type="{{type}}" data-template="{{tenant_template}}">
+    {{#if is_image_with_audio}}
+           <audio>
+               <source src="{{sec_src }}">
+               Your browser does not support the audio element.
+           </audio>
+           <div class="image_with_audio">
+               <div class="v-audio">
+                   <div class="audio-backward"></div>
+                   <div class="audio-control play"></div>
+                   <div class="audio-farward"></div>
+                   <div class="audio-mute"></div>
+                   <div class="audio-currentTime">00:00</div>
+                   <div class="audio-timeline">
+                       <div class="audio-progress"></div>
+                   </div>
+                   <div class="audio-duration">00:00</div>
+               </div>
+           </div>
+    {{/if}}
+    <div class="slideArea width" id="slider{{ order }}" slide-type="{{type}}">
+        {{#if is_audio}}
+            <audio preload="metadata">
+                <source src="{{src}}">
+                Your browser does not support the audio element.
+            </audio>
+            <div class="slide_audio">
+                <div class="audio_banner">
+                    <img class='banner_image' src='/static/images/author/thumb-audio.png'>
+                </div>
+                <div class="v-audio">
+                    <div class="audio-backward"></div>
+                    <div class="audio-control play"></div>
+                    <div class="audio-farward"></div>
+                    <div class="audio-mute"></div>
+                    <div class="audio-currentTime">00:00</div>
+                    <div class="audio-timeline">
+                        <div class="audio-progress"></div>
+                    </div>
+                    <div class="audio-duration">00:00</div>
+                </div>
+            </div>
+        {{/if}}
+        {{#if is_video}}
+            <video width="100%" poster="" >
+                  <source src="{{src}}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {{/if}}
+        {{#if isPdf}}
+            <div class="pdf-launcher">
+                <div class="col-md-8">
+                    {{#if thumbnail_url}}
+                        <img src="{{thumbnail_url}}">
+                    {{ else }}
+                        <img src="/static/images/pdf-thumb.png">
+                    {{/if}}
+                </div>
+                <div class="col-md-4">view pdf</div>
+            </div>
+        {{/if}}
+        {{#if is_embed}}
+            <iframe allowFullScreen='allowFullScreen' embedType="{{embedType}}" resPath="{{resPath}}" src="{{src}}" width="100%" height="100%" frameborder="0"></iframe>
+        {{/if}}
+        {{#if is_wistia}}
+            <div class='wistia-player-block'>
+                <iframe src="{{src}}" resPath="{{resPath}}" title="{{title}}"
+                allowtransparency="true" frameborder="0" scrolling="no"
+                class="wistia_embed" name="wistia_embed"
+                allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen>
+                </iframe>
+            </div>
+        {{/if}}
+        {{#if is_link }}
+            <a class='slide_link' href="{{meta_data.url}}" target="_blank">
+                <div class="link_icon">
+                    <img src="{{icon}}" />
+                </div>
+                <div class='link_information'>
+                    <div class="glyphicon glyphicon-link" aria-hidden="true"></div>
+                    {{#if meta_data.site_name}}
+                        <div class="link_name">{{meta_data.site_name}}</div>
+                    {{/if}}
+                    {{#if meta_data.title}}
+                    <div class="link_title">{{meta_data.title}}</div>
+                    {{/if}}
+                    {{#if meta_data.description}}
+                        <div class="link_description">{{meta_data.description}}</div>
+                    {{/if}}
+                    <div class="link">{{meta_data.url}}</div>
+                </div>
+            </a>
+        {{/if}}
+        {{#if is_content}}
+            <!-- Text html content goes here -->
+            <div class="content-slide-wrap {{document_styles}}">
+                {{# compare tenant_template "==" 'bmc' }}
+                <div class="rte-branding">
+                    <img class ="rte-header" src="/static/images/bmc/rte_header_bmc.png">
+                </div>
+                {{/compare}}
+                {{# compare tenant_template "==" 'designeverest' }}
+                <div class="rte-branding">
+                    <img class ="rte-header" src="/static/images/designeverest/rte_header.png">
+                </div>
+                {{/compare}}
+                {{# compare tenant_template "==" 'vmware' }} 
+                <div class="rte-branding">
+                    <img class ="rte-header" alt="header-image" align="right" src="/static/images/vmware/rte_header_vmware.png">
+                </div>
+                {{/compare}}
+                <div class="fr-element fr-view content-slide">
+                    {{{content}}}
+                </div>
+                {{#compare tenant_template "==" 'vmware' }}
+                <div class="footer-bar"></div>
+                {{/compare}}
+                <div class="content-footer">
+                    {{#if footer_image}}
+                        <img class='content-footer-image' src="{{footer_image}}"></img>
+                    {{/if}}
+                    {{#if footer_text}}
+                        <div class='content-footer-text'>{{{footer_text}}}</div>
+                    {{/if}}
+                </div>
+            </div>
+        {{/if}}
+        {{#if is_iframe }}
+            <iframe width="100%" height="100%" src="{{src}}" resPath="{{resPath}}"></iframe>            
+        {{/if}}
+
+        {{#if is_360 }}
+            <div class="product-360-viewer">
+                <div class="product-viewer">
+                    {{#each frames}}
+                        <div class="product-frame {{#compare @index '==' 0}} active {{/compare}}" data-frame="{{math @index "+" 1}}">
+                            <img class="slide_image" src="{{framePath}}" alt="Product Preview">
+                        </div>
+                    {{/each}}
+                </div>
+                <!-- 360 product viewer controlls -->
+                <div class="product-viewer-controls">
+                    <div class="slider360"></div>
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if is_sandbox }}
+            <div class="sandbox-viewer">
+                <div class="sb-buffering-container">
+                    <div class="sb-buffering-block">
+                        <p>Loading demo...</p>
+                        <div class="sb-progress-bar">
+                            <div class="sb-loader"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sandbox-player" hotspot-status="show"></div>
+                <!-- sandbox product loading UI -->
+                <div class="loading-progress">
+                    <img src="/static/images/sandbox_loading_img.gif"/>
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if is_file }}
+            <div class="file_block">
+                <div class="file_icon">
+                    <img src="{{imageSrc}}">
+                </div>
+                <div class="file_information">
+                    <div class="file_title">{{ file_title }}</div>
+                    <div class="file_type">{{ file_type }} File</div>
+                    <div class="file_size">{{ file_size }} MB</div>
+                </div>
+                <div class="download_file">
+                    <a id="downloadFile" data-url="{{path_name}}"
+                        data-name="{{file_name}}" data-id={{resource_id}}>
+                        Download File
+                    </a>
+                </div>
+            </div>
+        {{/if}}
+
+    </div>
+</div>

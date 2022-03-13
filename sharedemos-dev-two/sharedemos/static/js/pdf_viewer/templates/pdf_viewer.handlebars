@@ -1,0 +1,32 @@
+<div class="pdf-viewer-container" id="pdf-viewer-container">
+    <div class="pdf-viewer-header">
+        <div class="close-pdf-viewer"></div>
+        <div class="tenant-details">
+            {{#if tenant.logo}}
+            <div class="tenant-logo">
+                <img src="{{tenant.logo}}">
+            </div>
+            {{/if}}
+            <div class="pdf-details">
+                <p class="pdf-title" title="{{pdf.title}}">{{pdf.title}}</p>
+                <p class="breadcrum" title="{{breadcrumb}}">{{breadcrumb}}</p>
+            </div>
+        </div>
+        <div class="controls">
+            <a id="download-pdf-link"
+                data-url="{{pdf.download_url}}" data-name="{{pdf.name}}"
+                data-id="{{pdf.resource_id}}">
+                <div class="download-button"></div>
+            </a>
+        </div>
+    </div>
+    <div class="pdf-container">
+        <div id="pdf-loading" class="hide">
+            <img src="/static/images/loading-icon.gif" />
+        </div>
+        <div id="error" class="hide">Loading Failed</div>
+        <div id="viewerContainer" class="container">
+            <div id="viewer" class="container pdfViewer"></div>
+        </div>
+    </div>
+</div>

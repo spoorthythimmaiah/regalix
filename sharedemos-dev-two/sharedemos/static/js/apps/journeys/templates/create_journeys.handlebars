@@ -1,0 +1,80 @@
+{{#if add_journey}}
+    <!-- New Journey Popup -->
+    <section class="full_popup_block">
+        <div class="full_popup_overlay"></div>
+        <div class="full_popup_box create_journeys">
+            <div class="close_full_popup" data-popup="create_journeys"></div>
+            <div class="full_popup_content">
+                <h4>{{#if isEdit}} Edit {{ else }} Add New {{/if}} Journey</h4>
+                <form class="text-left" data-journey-slug="{{slug}}" name="create-journeys-form" id="create-journeys-form" enctype="multipart/form-data">
+                    <input type="hidden" name="is_general" value="Yes">
+
+                    <div class="journey-tabs">
+                        <div class="journey-info active" data-tab="information">information</div>
+                        <div class="journey-tag" data-tab="tags">tagging</div>
+                    </div>
+
+                    <div class="journey-information active" data-tab="information">
+                        <div class="form-group col-xs-12">
+                            <label for="company" class="mandatory-field uppercase">journey name</label>
+                            <div class="sub-title">Provide a name for this journey.</div>
+                            <div class="input_wrap">
+                                <input type="text" placeholder="Name" name="name" class="section-name form-control" autocomplete="off" value="{{this.journeyName}}">
+                            </div>
+                        </div>
+                        {{#compare isPrivateTenant "&&" user_groups.length}}
+                        <div class="form-group col-xs-12">
+                            <label for="company" class="mandatory-field">Allow Access To</label>
+                            <div class="sub-title">Who do you want this journey to be visible for? Select all that apply.</div>
+                            <div class="input_wrap journeys-privacy-list">
+                                <div class="section-name form-control journeys-privacy-btn" data-default-text="Select Groups">Select Groups</div>
+                                <ul class="journeys-privacy-opt hide">
+                                    {{#each user_groups }}
+                                        {{#if this.is_author}}
+                                            <li data-group-id={{_id}} class="selected is-author">{{name}}</li>
+                                        {{else}}
+                                            <li data-group-id={{this._id}} {{#compare this.is_default "||" this.is_selected}}class="selected"{{/compare}}>{{this.name}}</li>
+                                        {{/if}}
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                        {{/compare}}
+                        <div class="form-group col-xs-12">
+                            <label for="message" class="uppercase">journey description</label>
+                            <div class="sub-title">Write a short description for this journey.</div>
+                            <div class="input_wrap">
+                                <textarea placeholder="Description" name="description" class="section-description form-control">{{description}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="eol" class="uppercase">end of life</label>
+                            <div class="input_wrap">
+                                <input type="text" name="eol" placeholder="Click to select date-time" class="datepicker-here form-control" id="journey_expire_at" readonly="true" data-position="top right" data-timepicker="true" {{#if expireAt}}data-datetime={{expireAt}}{{/if}} />
+                                <div>&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--journey tagging section-->
+                    <div class="journey-tagging" data-tab="tags">              
+                        <div class="form-group col-xs-12">
+                            <label for="company" class="mandatory-field">Add tags</label>
+                            <div class="sub-title">create tag to your journey to help organize and identify them.</div>
+                            <div class="journey-tag-groups-wrap">                               
+                                {{#each tags}}
+                                    {{> tags}} 
+                                {{/each}}               
+                                {{#unless tags}}
+                                    {{> tags}} 
+                                {{/unless}}                                                                  
+                            </div>                                        
+                            <button type="button" class="journey-create-tag-group btn">Add Tag Group</button>
+                        </div>
+                    </div>
+                    <!--end of journey tagging section-->
+                    <input type="submit" name="submit" value="{{#if isEdit}}SAVE{{else}}ADD{{/if}} JOURNEY" class="btn" name="create-journeys-form" data-popup="create_journeys" {{#unless isEdit}}disabled{{/unless}}>
+                </form>
+            </div>
+        </div>
+    </section>
+{{/if}}

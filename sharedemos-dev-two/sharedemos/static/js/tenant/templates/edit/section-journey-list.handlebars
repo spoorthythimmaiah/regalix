@@ -1,0 +1,9 @@
+{{#each journeyList}}
+	<li class="section-joureny-list">
+		<div class= "list-item" data-id="{{this.id}}">
+			<div class="name">{{this.name}}</div>
+			<div class="journey-link-remove">Remove</div>
+		</div>
+		<div class="journey-link-drag no-action ui-sortable-handle"></div>
+	</li>
+{{/each}}

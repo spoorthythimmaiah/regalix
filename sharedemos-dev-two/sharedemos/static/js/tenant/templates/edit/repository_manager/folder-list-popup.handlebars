@@ -1,0 +1,26 @@
+<div class="connector-folder-list-popup hidden">
+    <div class="popup-title camel-case">{{i18n 'Choose Folder to Link'}}</div>
+    <div class="popup-back-icon trigger-inplace-popup" data-hidePopup="connector-folder-list-popup" data-showPopup="repository-connector-list-popup"></div>
+    <div hidden class="content-block">
+        <div class="loading-icon-wrapper">
+            <img class="loading-icon" src="/static/images/loading_icon.gif" />
+        </div>
+    </div>
+    <div hidden class="content-block-list">
+    </div>
+    <div hidden class="popup-footer">
+        <div class="form-footer">
+            <div class="link-selected-repository-folder">{{i18n 'Link to this folder'}}</div>
+        </div>
+        <div class="form-failed">
+            {{i18n 'oops! something went wrong'}}
+        </div>
+        <div class="form-sent">
+            {{i18n 'Importing Content!'}}
+        </div>
+        <div class="form-sending">
+            {{i18n 'linking to Folder'}}...
+            <div class="cd-loading"></div>
+        </div>
+    </div>
+</div>

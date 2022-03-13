@@ -1,0 +1,40 @@
+<div class="search-result-wrapper">
+	<div class="search-container container">
+		<div class="col-md-2" id="search-app-list-block">
+			<button type="button" class="btn btn-default toggle-search-filter hidden-md hidden-lg" aria-label="Left Align">
+				<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+			</button>
+			<ul class="search-apps-list hidden-xs hidden-sm">
+				<li class="all{{#compare selectedApp '==' 'all'}} active {{/compare}}" data-app-id="all">All<span id="all" class="total-count"> 0</span></li>
+				{{#each apps}}
+					<li class="{{unique_id}}{{#compare unique_id "==" ../selectedApp}} active{{/compare}}" data-app-id="{{unique_id}}" ><span>{{name}}</span><span id="{{unique_id}}" class="result-count"> 0</span></li>
+				{{/each}}
+			</ul>
+		</div>
+		<div class="search-content-list col-md-8">
+			<div class="search-header">
+					<h5 id="result-from-app" class="searched-from-app"></h5>
+					<p class="search-result-count pull-right">Displaying <span id="display-count"> 	0</span><span id="display-result-title"> search result{{#compare results.length ">" 1}}s{{/compare}}</span>
+					</p>
+			</div>
+			<ul class="search-data">
+				{{#each results }}
+					<li id="{{ category }}" class="search-list library-app" >
+						<span class="col-xs-2 {{# if defaultIcon}} search app-icon {{/if}}">
+							<img src="{{imageUrl}}"></img>
+						</span>
+						<a class="search-chapter-detail col-xs-10" href="{{ link }}" target="_blank">
+							<div class="search-chapter-title">{{ title }}</div>
+							{{#if author_name}}
+								<p class="author">{{ i18n 'published by'}}:  {{ author_name }}</p>
+							{{/if}}
+							<div class="search-chapter-breadcrumb">{{ breadcrumb }}</div>
+						</a>
+					</li>
+				{{/each}}
+			</ul>
+			<div class="search-no-result"><span class='camel-case'>oops! no results found.</span><span class='camel-case'>please try a different search phrase.</span></div>
+		</div>
+		<div class="scroll-to-top"></div>
+	</div>
+</div>

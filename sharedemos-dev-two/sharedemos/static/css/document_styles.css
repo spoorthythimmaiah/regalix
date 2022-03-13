@@ -1,0 +1,278 @@
+/* global styles */
+.fr-table-wrapper {
+    width: 100%;
+    overflow-y: auto;
+    margin-bottom: 9px;
+}
+/* global styles ends here */
+
+/* aphukh theme styles */
+.aphukh-style {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 18px;
+    line-height: normal;
+    color: #80889b;
+}
+.aphukh-style a, .aphukh-style a:link{
+    text-decoration: underline;
+}
+.aphukh-style h1, .aphukh-style h2, .aphukh-style h3 {
+    font-size: 28px;
+    color: #0085C3;
+    line-height: normal;
+}
+.aphukh-style h3 {
+    font-size: 24px;
+}
+.aphukh-style h4 {
+    font-size: 18px;
+    color: #00447C;
+    line-height: normal;
+}
+.aphukh-style h5 {
+    font-weight: bold;
+}
+.aphukh-style p{
+    font-size: 18px !important;
+    font-weight: 400;
+    line-height: 32px !important;
+    margin-bottom: 25px !important;
+    color: #80889b;
+}
+.aphukh-style table > tbody > tr > td,
+.aphukh-style table > tbody > tr > td ol li,
+.aphukh-style table > tbody > tr > td ul li {
+    background: #EEEEEE;
+    color: #80889b;
+    font-size: 18px;
+    line-height: 32px;
+}
+.aphukh-style table .table_header td, 
+.aphukh-style table thead tr td,
+.aphukh-style table thead tr td a, 
+.aphukh-style table .table_header td p,
+.aphukh-style table .table_header td a, 
+.aphukh-style table thead tr td p {
+    background: #009BBB !important;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px !important;
+}
+.aphukh-style table td {
+    border: 1px solid #dddddd !important;
+}
+.aphukh-style code, .aphukh-style .code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    background: none;
+    word-break: break-all;
+}
+.aphukh-style p[style*='margin-bottom:0'] {
+    margin-bottom: 0px !important; 
+}
+.aphukh-style blockquote {
+    font-size: 18px;
+    color: #808080 !important;
+}
+.aphukh-style ol {
+    margin: 0 0 25px 0;
+    padding-left: 0pt;
+}
+.aphukh-style ol li,
+.aphukh-style ul li,
+.aphukh-style ul li p,
+.aphukh-style table p {
+    font-size: 18px !important;
+    line-height: 32px !important;
+    margin-bottom: 0 !important;
+    color: #80889b;
+}
+.aphukh-style ol li,
+.aphukh-style ul li,
+.aphukh-style ul li p,
+.aphukh-style table > tbody > tr > td ol li,
+.aphukh-style table > tbody > tr > td ul li {
+    line-height: 25px !important;
+}
+.aphukh-style .anchor_link, .aphukh-style .anchor_link:hover, 
+.aphukh-style .anchor_link:visited, .aphukh-style .anchor_link:focus, 
+.aphukh-style .anchor_link:active  {
+  text-decoration:none !important;
+  color: inherit;
+  outline: 0;
+  cursor: auto;
+}
+/* aphukh theme ends */
+
+
+/* jiubdc style starts here */
+.jiubdc-style {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: normal;
+    color: #000;
+}
+.jiubdc-style h1, .jiubdc-style h2, .jiubdc-style h3 {
+    font-size: 36px;
+    line-height: normal;
+}
+.jiubdc-style h3 {
+    color: #FE5000;
+}
+.jiubdc-style h4 {
+    font-size: 24px;
+    color: #00427e;
+    line-height: normal;
+}
+.jiubdc-style h5 {
+    font-size: 14px;
+    font-weight: bold;
+}
+.jiubdc-style p{
+    font-size: 14px !important;
+    font-weight: normal;
+    margin-bottom: 25px !important;
+    color: #000;
+}
+.jiubdc-style table > tbody > tr > td,
+.jiubdc-style table > tbody > tr > td ol li,
+.jiubdc-style table > tbody > tr > td ul li {
+    color: #000000;
+    font-size: 14px;
+    line-height: normal;
+    font-weight: normal;
+}
+.jiubdc-style table .table_header td, 
+.jiubdc-style table thead tr td {
+    background: #54ACD2;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px !important;
+}
+.jiubdc-style code, .aphukh-style .code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    background: none;
+    color: #000;
+    word-break: break-all;
+}
+.jiubdc-style blockquote {
+    font-size: 18px;
+    color: #000 !important;
+}
+.jiubdc-style ol {
+    margin: 0pt;
+    padding-left: 0pt;
+}
+.jiubdc-style ol li,
+.jiubdc-style ul li,
+.jiubdc-style ul li p,
+.jiubdc-style table p {
+    font-size: 14px !important;
+    margin-bottom: 0 !important;
+    color: #000;
+}
+.jiubdc-style .anchor_link, .jiubdc-style .anchor_link:hover, 
+.jiubdc-style .anchor_link:visited, .jiubdc-style .anchor_link:focus, 
+.jiubdc-style .anchor_link:active  {
+  text-decoration:none !important;
+  color: inherit;
+  outline: 0;
+  cursor: auto;
+}
+/* jiubdc style ends here */
+
+/* spenden style starts here  */
+.spenden-style {
+    font-family: "Open sans";
+    font-size: 14px;
+    color: #000;
+}
+
+.spenden-style h1 {
+    font-size: 24px;
+    color: #275B58;
+    line-height: 27px;
+    text-transform: capitalize;
+}
+
+.spenden-style h2{
+    font-size: 18px;
+    color: #408975;
+    line-height: 24px;
+    text-transform: capitalize;
+}
+
+.spenden-style h3 {
+    font-size: 14px;
+    color: #000000;
+    font-weight: 600;
+}
+
+.spenden-style p {
+    font-size: 14px;
+    color: #000;
+    text-align: justify;
+}
+
+.spenden-style table > tbody > tr > td,
+.spenden-style table > tbody > tr > td ol li,
+.spenden-style table > tbody > tr > td ul li {
+    color: #000000;
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #F4F4F4;
+}
+
+.spenden-style table .table_header th, 
+.spenden-style table thead tr th,
+.spenden-style table .table_header td, 
+.spenden-style table thead tr td {
+    background-color: #268974 !important;
+    color: white;
+}
+
+.spenden-style table .table_header th p, 
+.spenden-style table thead tr th p,
+.spenden-style table .table_header td p, 
+.spenden-style table thead tr td p{
+    color: white;
+}
+
+.spenden-style table p{
+    text-align: -webkit-match-parent;
+}
+
+.spenden-style ol li:first-letter,
+.spenden-style ul li:first-letter,
+.spenden-style ul li p:first-letter,
+.spenden-style p:first-letter {
+    text-transform: uppercase;
+}
+.spenden-style ul li {
+    font-size: 14px;
+}
+.spenden-style .fr-view span[style~="color:"] a {
+    color: #275B58;
+}
+
+.spenden-style h1 a {
+    font-size: 24px;
+}
+
+.spenden-style h2 a {
+    font-size: 18px;
+}
+
+.spenden-style h3 a {
+    font-size: 14px;
+}
+
+.spenden-style a, .spenden-style a:hover,
+.spenden-style a:visited, .spenden-style a:focus,
+.spenden-style a:active {
+    font-size: 14px;
+    cursor: auto;
+}
+
+/* spenden style ends here */

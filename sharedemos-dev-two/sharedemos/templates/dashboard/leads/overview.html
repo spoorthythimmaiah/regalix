@@ -1,0 +1,146 @@
+{% extends 'dashboard/dashboard_submenu/leads_menu.html' %}
+
+{% macro paginate(current_page, max_page) -%}
+    {% if max_page > 1 %}
+    <div class="pagination-block">
+        <form class="demo_jumpto">
+            <label>
+                <span>Go to Page</span>
+                <input type="text" name="page" autocomplete="off" onkeypress='return keyTypeCheck(event)'>
+            </label>
+        </form>
+        <span class="pag-divider">|</span>
+        <ul>
+            {% set dots_before_added = False %}
+            {% set dots_after_added = False %}
+            {% for i in range(max_page) %}
+                {% if loop.index == 1 %}
+                <li><a {% if current_page == 1 %}class="active" {% endif %}href="{% if current_page == 1 %}javascript:;{% else %}{{url_for('dashboard.leads', date_range=date_range, category_id=category['slug'], from_date=from_date, to_date=to_date)}}?page=1{% endif %}">1</a></li>
+                {% elif loop.last %}
+                <li class="ttl-page"><a {% if current_page == max_page %}class="active" {% endif %}href="{% if current_page == loop.index %}javascript:;{% else %}{{url_for('dashboard.leads', date_range=date_range, category_id=category['slug'], from_date=from_date, to_date=to_date)}}?page={{max_page}}{% endif %}">{{max_page}}</a></li>
+                {% elif current_page in [loop.index - 1, loop.index, loop.index + 1] %}
+                <li><a {% if current_page == loop.index %}class="active" {% endif %}href="{% if current_page == loop.index %}javascript:;{% else %}{{url_for('dashboard.leads', date_range=date_range, category_id=category['slug'], from_date=from_date, to_date=to_date)}}?page={{loop.index}}{% endif %}">{{loop.index}}</a></li>
+                {% elif loop.index < current_page and not dots_before_added %}
+                <div>...</div>
+                    {% set dots_before_added = True %}
+                {% elif loop.index > current_page and not dots_after_added %}
+                    <div>...</div>
+                    {% set dots_after_added = True %}
+                {% endif %}
+            {% endfor %}
+            {% if current_page < max_page %}
+            <li class="nxt-page"><a href="{{url_for('dashboard.leads', date_range=date_range, category_id=category['slug'], from_date=from_date, to_date=to_date)}}?page={{page_number+1}}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+    {% if max_page >= 1 %}
+    <a href="{{url_for('dashboard.leads', date_range=date_range, category_id=category.slug, from_date=from_date, to_date=to_date, download=true )}}" class="dwn-csv">Download CSV</a>
+    {% endif %}
+{%- endmacro %}
+
+
+{% block dashboard_content_container %}
+    <div class="dashboard-leads work-area shadow" id="dashboard_leads">
+        <div class="work-area">
+           <div class="report-filter row">
+                <div class="col-md-4 col-sm-12">
+                    <div class="dashboard-sub-title">
+                        Metrics for
+                    </div>
+                    <div class="time-interval-dd">
+                        <span class="interval">
+                           {% if date_range == 'today' %}
+                                today
+                            {% elif date_range == 'yesterday' %}
+                                yesterday
+                            {% elif date_range == 'week' %}
+                                last 7 days
+                            {% elif date_range == 'month' %}
+                                last 30 days
+                            {% elif date_range == 'quarter' %}
+                                last 3 months
+                            {% elif date_range == 'half-year' %}
+                                last 6 months
+                            {% elif date_range == 'year' %}
+                                last 12 months
+                            {% elif date_range == 'custom' %}
+                                custom days
+                            {% endif %}
+                        </span>
+                        <ul class="dd-menu">
+                            <li{% if date_range == 'today' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range='today', category_id=category.slug)}}">today</a></li>
+                            <li{% if date_range == 'yesterday' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range='yesterday', category_id=category.slug)}}">yesterday</a></li>
+                            <li{% if date_range == 'week' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range='week', category_id=category.slug)}}">1 week</a></li>
+                            <li{% if date_range == 'month' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range='month', category_id=category.slug)}}">30 days</a></li>
+                            <li{% if date_range == 'quarter' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range='quarter', category_id=category.slug)}}">3 months</a></li>
+                            <li{% if date_range == 'half-year' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range='half-year', category_id=category.slug)}}">6 months</a></li>
+                            <li{% if date_range == 'year' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range='year', category_id=category.slug)}}">12 months</a></li>
+                            <li{% if date_range == 'custom' %} class="active"{% endif %} id="cutsom">Custom</li>
+                        </ul>
+                   </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12 custome-date">
+                            <div class="dashboard-sub-title">
+                                From
+                            </div>
+                            <input id="from-date" type="text" name="from-date" class='datepicker-here' readonly="true">
+                        </div>
+                        <div class="col-sm-6 col-xs-12 custome-date">
+                            <div class="dashboard-sub-title">
+                                To
+                            </div>
+                            <input id="to-date" type="text" name="to-date" class='datepicker-here' readonly="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 pull-right">
+                    <div class="category-dd">
+                        <span class="category">{{category.name}}</span>
+                        <ul class="dd-menu">
+                            <li{% if category.slug == 'all' %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range=date_range, category_id='all', from_date=from_date, to_date=to_date, page=page_number)}}">All Categories</a></li>
+                            {% for cat in categories %}
+                            <li{% if cat.slug == category.slug %} class="active"{% endif %}><a href="{{url_for('dashboard.leads', date_range=date_range, category_id=cat.slug, from_date=from_date, to_date=to_date)}}">{{cat.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+           </div>
+
+           <!-- Leads report -->
+            <div class="report-area">
+                <div class="lead-report">
+                    <div class="lead-row header">
+                        <div class="date">date</div>
+                        <div class="name">name</div>
+                        <div class="email">email</div>
+                        <div class="company">company</div>
+                        <div class="desg">designation</div>
+                        <div class="category">category</div>
+                    </div>
+                    {% if leads %}
+                        {% for lead in leads %}
+                        <div class="lead-row">
+                            <div class="date">{{lead.created_at.strftime('%Y/%m/%d')}}</div>
+                            <div class="name">{{lead.user_name}}</div>
+                            <div class="email">{{lead.user_email}}</div>
+                            <div class="company">{{lead.user_company}}</div>
+                            <div class="desg">{{lead.user_designation}}</div>
+                            <div class="category">{{lead.product_name}}</div>
+                        </div>
+                        {% endfor %}
+                    <div class="leads-pagination">
+                        {{paginate(page_number, total_pages)}}
+                    </div>
+                    {% else %}
+                    <h4 style="text-align:center;padding: 20px;font-size: 16px;">No leads for selected date</h4>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

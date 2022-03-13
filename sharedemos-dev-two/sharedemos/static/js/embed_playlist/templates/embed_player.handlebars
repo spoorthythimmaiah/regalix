@@ -1,0 +1,140 @@
+<div id="player-container" class="page-container embed-player">
+    <div class="player_wrap"> 
+
+        <!--  fade overlay -->
+        <div class="overlay"></div>
+
+        <!-- prgress indicator -->
+        <div class="progress-line"><div></div></div>
+
+        <!-- Walkthrough Title -->
+
+        <div class="side-info-opener">
+            <span class="icon"><span></span></span><span type='demo-title'>{{walkthrough.name}}</span>
+        </div>
+
+        <!-- Toggle side menu block -->
+        <div class="side-info">
+            <div class="inner">
+                 <div class="sub-inner ">
+                    <div class="playlist-wrap jcf-scrollable ">
+                        <div class="playlist-block">
+                        {{#if currentPlaylist}}
+                            <div class="current_playlist">
+                                <div class="playlist-header">
+                                    <h3>current playlist:</h3>
+                                    <div class="playlist-title">
+                                       {{currentPlaylist.name}}
+                                    </div>
+                                    <div class="playlist-desc">
+                                       {{currentPlaylist.description}}
+                                    </div>
+                                </div>
+                                <div class="empty_space"></div>
+                                <div class="current-list-demos">
+                                    {{#each currentPlaylist.walkthroughs as |demo order| }}
+                                        <div class='cur_demos demo-links {{#compare demo.slug "==" ../currentDemo.slug}} active {{/compare}}' data-slug="{{demo.slug}}">
+                                            <div class="demo-thumb">
+                                                {{#if demo.first_slide_image}}
+                                                    <img src="{{demo.first_slide_image}}"/>
+                                                {{ else }}
+                                                    <div class="default_img" data-slide-type="{{demo.resource_type}}">
+                                                    </div>
+                                                {{/if}}
+                                            </div>
+                                            <div class="demo-title-slide">
+                                                <div>{{demo.name}}</div>
+                                                <div class="demo-total-slides">{{demo.total_slides}} slides</div>
+                                            </div>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        {{/if}}
+                        {{#if nextPlaylist.walkthroughs.length}}
+                            <div class="next_playlist">
+                                <div class="playlist-header">
+                                    <h3>Next playlist:</h3>
+                                    <div class="playlist-title">
+                                       {{nextPlaylist.name}}
+                                    </div>
+                                    <div class="playlist-desc">
+                                       {{nextPlaylist.description}}
+                                    </div>
+                                </div>
+                                <div class="empty_space"></div>
+                                <div class="next-list-demos">
+                                    {{#each nextPlaylist.walkthroughs as |nextPlaylistDemo order| }}
+                                        <div class="nxt_demos demo-links" data-slug="{{nextPlaylistDemo.slug}}">
+                                            <div class="demo-thumb">
+                                                {{#if nextPlaylistDemo.first_slide_image}}
+                                                    <img src="{{nextPlaylistDemo.first_slide_image}}"/>
+                                                {{ else }}
+                                                    <div class="default_img" data-slide-type="{{nextPlaylistDemo.resource_type}}"></div>
+                                                {{/if}}
+                                            </div>
+                                            <div class="demo-title-slide">
+                                                <div>{{nextPlaylistDemo.name}}</div>
+                                                <div class="demo-total-slides">{{nextPlaylistDemo.total_slides}} slide{{#compare nextPlaylistDemo.total_slides ">" 1}}s{{/compare}}</div>
+                                            </div>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        {{/if}}
+                        </div>
+                        <div class="expore_more">Explore More</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player block -->
+        <div id="player" class="player_wrapper"> 
+            <div style="position: relative">
+                <div class="player_slider source-area" id="slider">
+                    <ul id="sdemos-player-box"></ul>
+                </div>
+            </div>
+        </div>        
+          
+        <!-- desktop control buttons -->
+        <div class="dt-btn-prev customLink" target="prev"></div>
+        <div class="dt-btn-next customLink" target="next"></div>
+
+        <!-- Right side controll button block -->
+        <div class="side-panel">
+            <span class="notes_opener"></span>
+            <div class="fullscreen"></div>
+            <div class="btn-prev customLink" target="prev" ><i class="icon-left"></i></div>
+            <div class="btn-next customLink" target="next" ><i class="icon-right"></i></div>
+        </div>
+
+        <!-- Toggle Slides Notes -->
+        <div class="notes">
+            <div class="inner" >
+                <div class="sub-inner ">
+                    <div class="notes-wrap jcf-scrollable ">
+                        <div class="notes-wrap-outer">
+                            <div class="notes-wrap-inner">
+                                <h1 target="title"></h1>
+                                <div class="anim1">
+                                    <p target="body"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-title">
+                        <div class="notes-link"></div>
+                    </div>
+                </div>
+                <div class="pagination-wrap"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- End of player page wrap-->    
+</div>
+<div id='pdf-viewer-block' class='hide'></div>
+

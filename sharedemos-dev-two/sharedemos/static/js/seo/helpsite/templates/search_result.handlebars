@@ -1,0 +1,10 @@
+{{#each this}}
+    {{#each playlists}}
+        {{#each demos}}
+            <a href="/t/{{../../slug}}/{{this.slug}}" class="playerframe-link result"
+                        data-product-id="{{../../slug}}" data-section-id="{{../../slug}}"
+                           data-chapter-id="{{this.slug}}"
+                        >{{this.name}}</a>
+        {{/each}}
+    {{/each}}
+{{/each}}

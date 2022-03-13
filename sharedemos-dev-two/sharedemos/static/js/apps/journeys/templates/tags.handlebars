@@ -1,0 +1,17 @@
+<div class="journey-tag-group row">
+    <div class="col-xs-4">
+        <input type="text" placeholder="Key values" name="keyvalues" class="form-control
+        tags-autoComplete" autocomplete="off" value="{{name}}">
+    </div> 
+                                
+    <div class="col-xs-8">
+        <div class="tag-collections">
+        {{#each this.options}}
+            {{> tag_options}}        
+        {{/each}}
+        </div>
+        <input type="text" placeholder="Input" name="tag" class="form-control tag-input options-autoComplete" autocomplete="off">
+        <button type="button" class="journey-create-tag btn">add tag</button>
+        <button type="button" class="delete-tag-group btn">delete group</button>
+    </div>
+</div>

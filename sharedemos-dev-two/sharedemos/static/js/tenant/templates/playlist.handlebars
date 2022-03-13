@@ -1,0 +1,17 @@
+{{#each playlists}}
+  {{#if walkthroughs }}
+    <div class="playlist_name">{{name}}</div>
+    <ul class="pwt-list">
+        {{#each walkthroughs}}
+            <li slug='{{slug}}'>
+              <div class="read">
+                    <div class="circle">{{math @index "+" 1}}</div>
+              </div>
+              <div class="title">
+                    <div>{{name}}</div>
+              </div>
+            </li>
+        {{/each}}
+    </ul>
+  {{/if}}
+{{/each}}

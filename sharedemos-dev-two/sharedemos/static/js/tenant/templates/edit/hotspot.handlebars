@@ -1,0 +1,38 @@
+<div class="block">
+    <div class="title">{{i18n 'highlight color'}}</div>
+    <div class="sub-title">
+        {{i18n 'choose a highlight color for your hotspot'}}.
+    </div>
+    <div class="color-option">
+        <div class="custom-hotspot-color">
+            <div class="color-box"></div>
+        </div>
+    </div>
+</div>
+<div class="block">
+    <div class="title">{{i18n 'highlight link timer'}}</div>
+    <div class="sub-title">
+        {{i18n 'set a timer after which the hotspot is displayed'}}.
+    </div>
+    <div class="hotspot-timer">
+        <label><input type="text" id="hotspot-timer" name="hotspot-timer" placeholder="Ex: 10"> Seconds</label>
+    </div>
+</div>
+<div class="block">
+    <div class="title mandatory-field">{{i18n 'link'}}</div>
+    <div class="sub-title">
+        {{i18n 'link hotspot to another slide or external content'}}.
+    </div>
+    <div class="link-option">
+        <span class='camel-case'>{{i18n 'next'}}:</span> <input type="radio" id="next" name="goto" class="css-radio capital-letter" value="next" checked="checked"><label class="css-radio-label" for="next"></label><br/>
+        <span  class='camel-case'>{{i18n 'previous'}}:</span> <input type="radio" id="prev" name="goto" class="css-radio" value="prev"><label class="css-radio-label" for="prev"></label><br/>
+        <div>
+            <span class='camel-case'>{{i18n 'go to'}}:</span> <input type="radio" id="goto" name="goto" class="css-radio" value="goto"><label class="css-radio-label" for="goto"></label> 
+            <select id="goto-slide-no"></select>
+        </div>
+        <div>
+            <span  class='camel-case'>{{i18n 'external link'}}:</span> <input type="radio" id="elink" name="goto" class="css-radio" value="elink"><label class="css-radio-label" for="elink"></label><input class="url_input" type="text" name="elink" id="e-link" placeholder="http://" media-type="link"><div class="error-message"></div>
+        </div>
+        <span  class='camel-case'>{{i18n 'no action'}}:</span> <input type="radio" id="nolink" name="goto" class="css-radio" value="next"><label class="css-radio-label" for="nolink"></label><br/>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="launch-pad-player-wrapper active side-bar-open">
+    <div class="launch-pad-side-bar">
+        <a href="/">
+            <div class="exit-launch-pad-player"></div>
+        </a>
+        <div class="launch-pad-company-logo-holder">
+            {{#if tenantLogo }}
+                <img src="{{tenantLogo}}" alt="tenant-logo">
+            {{else}}
+                <div class="logo-text">SHAREDEMOS</div>
+            {{/if}}
+        </div>
+        <h1 class="launch-pad-title"></h1>
+        <div class="launch-pad-slide-controllers">
+            <div class="prev-launch-pad"></div>
+            <div class="next-launch-pad"></div>
+        </div>
+        <div class="inner">
+            <div class="journeys-holder">
+                {{#each this}}
+                    <div class="journey-content" data-journey-slug="{{this.slug}}"
+                         data-journey-name="{{this.name}}">
+                        {{#each assets}}
+                            <p data-chapter="{{this.slug}}">{{this.name}}</p>
+                        {{/each}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        {{#each this}}
+            {{#if cta_details.cta_button.cta_link}}
+                <a href="{{cta_details.cta_button.cta_link}}" target="_blank">
+                    <div class="side-bar-cta" data-journey-slug="{{slug}}">
+                        {{cta_details.cta_button.cta_text}}
+                    </div>
+                </a>
+            {{/if}}
+        {{/each}}
+    </div>
+    <div class="launch-pad-main-screen">
+        <div class="toggle-launch-pad-side-bar">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="launch-pad-main-container">
+            <div class="content">
+                {{#each this}}
+                    <div class="journey-pages" data-journey-slug="{{this.slug}}">
+                        {{#each assets}}
+                            <div class="launch-page" data-chapter="{{this.slug}}">
+                                <h1 class="content-title">{{this.name}}</h1>
+                                {{#compare this.type '==' 'chapter'}}                                    
+                                    <div class="chapter-launcher">
+                                        <img src="{{thumbnail}}">
+                                        <div
+                                       class="playerframe-link" data-product-id="{{this.product.slug}}"
+                                       data-section-id="{{this.section.slug}}" data-chapter-id="{{this.slug}}">
+                                        launch
+                                        </div>
+                                    </div>
+                                {{/compare}}
+                            </div>
+                        {{/each}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

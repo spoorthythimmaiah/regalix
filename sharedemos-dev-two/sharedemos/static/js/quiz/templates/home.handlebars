@@ -1,0 +1,36 @@
+<div class="fs-banner"> 
+	<div class="title1">
+		Quiz
+	</div>
+</div>
+<div class="quiz-list">
+	<ul class="sortable">
+		{{# each quizs}}
+			<li quiz-id={{slug}}>
+				<div class='quiz-list-wrap'>
+					<div class="banner">
+			            <img src="{{icon.url}}" alt="{{icon.name}}"/>
+						<label>{{name}}</label>
+						<div class="banner-overlay"></div>
+					</div>
+					<div class="info-block">
+						<div class="title">{{name}}</div>
+						<div class="description">{{description}}</div>
+						<div data-slug='{{slug}}' class="explore quiz">{{i18n 'take quiz'}}</div>
+					</div>
+					<div class="footer">
+						<div class="description">
+							{{description}}
+						</div>
+						<div class="time-limit">{{time_limit}}</div>
+						<div class="counts">{{questions_count}}
+							{{i18n 'question'}}{{#compare questions_count ">" "1"}}s
+							{{/compare}}
+							
+						</div>
+					</div>
+				</div>
+			</li>
+		{{/each}}
+	</ul>
+</div>

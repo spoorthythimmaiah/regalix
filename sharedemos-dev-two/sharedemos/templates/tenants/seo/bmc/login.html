@@ -1,0 +1,76 @@
+{% extends 'tenants/seo/bmc/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+
+{% block container %}
+    <div class="container-block login-page" id="main_container">
+        <div class="bmc-nav-outer">
+            <div class="black-overlay"></div>
+            <div class="bmc-nav-bar">
+                <div class="container">
+                    {% if api['tenant']['logo'] %}
+                        <a class="custom-bmc-logo" href="/">
+                            <img src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}" alt="logo">
+                        </a>
+                    {% else %}
+                        <a class="bmc-logo" href="/"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="container bmc-login-banner">
+            <img class="bmc-letters" src="{{ url_for('static', filename='images/bmc/letters.png') }}">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <h1>Everything you need to know about BMC Helix and More!</h1>
+                    <p>Sign in and unlock exclusive content for partners and employees. Explore walkthroughs, guides,
+                        whitepapers and much more.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="bmc-features-holder">
+                        <div class="bmc-feature">
+                            <img src="{{ url_for('static', filename='images/bmc/whatsnew.png') }}">
+                            <h4>what's new</h4>
+                        </div>
+                        <div class="bmc-feature">
+                            <img src="{{ url_for('static', filename='images/bmc/demo.png') }}">
+                            <h4>demos</h4>
+                        </div>
+                        <div class="bmc-feature">
+                            <img src="{{ url_for('static', filename='images/bmc/lab.png') }}">
+                            <h4>labs</h4>
+                        </div>
+                        <div class="bmc-feature">
+                            <img src="{{ url_for('static', filename='images/bmc/videos.png') }}">
+                            <h4>videos</h4>
+                        </div>
+                        <div class="bmc-feature">
+                            <img src="{{ url_for('static', filename='images/bmc/presendation.png') }}">
+                            <h4>presentations + more</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="content-login">
+                        <h2>Partners and Employees</h2>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-8">
+                                Sign in and explore content specifically tailored to you. <br/>Whether you are a partner or an employee, find everything you need all in one place!
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <a class="login-button" href="{{url_for('auth.saml_login', idp='default', RelayState=request.args.get('next', '/'))}}">sign in now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ footer() }}
+{% endblock %}

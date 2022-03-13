@@ -1,0 +1,310 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        @media only screen and (max-width: 800px) {
+            .metrics-title {
+                width: 350px !important;
+                padding-right: 15px;
+                word-break: break-word;
+            }           
+            .metrics-status {
+                width: 85px !important;
+            }
+            .metrics-number {
+                width: 200px !important;
+            }
+        }
+        
+    </style>
+</head>
+<body bgcolor="#ffffff">
+    <table class="wrapper" width="800" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f9f9f9">
+        <tbody>
+            <!-- Logo -->
+            <tr>
+                <td align="center" style="padding-top: 34px;">
+                    {% if tenant.logo %}
+                        {% set tenant_logo = url_for('static', filename='media/' + tenant.logo, _external=True) %}
+                        <img style="max-height: 40px; align:center" src="{{tenant_logo|replace('localhost', tenant.domain)}}">
+                    {% else %}
+                        <a target="_blank" href="{{sdemos_website_url}}" style="outline: none;display: block;font-size: 24px;font-weight: 700;line-height: 77px;color: #066afe;letter-spacing: 3px;text-decoration: none;">SHAREDEMOS</a>
+                    {% endif %}
+                </td>
+            </tr>       
+            <!-- Title -->
+            <tr align="center">
+                <td style="color: #7e8e9f; padding-top: 15px; font-size: 16px;">Metrics For <span style="font-weight: 600;">{{from_date.strftime('%B %d').decode('utf-8')}} - {{to_date.strftime('%B %d, %Y').decode('utf-8')}}</span></td>
+            </tr>
+            <!-- Description -->
+            <tr align="center">
+                {% if header_content['max_views'] > 0 %}
+                    <td width="100%"  align="center" style="color: #4f5f6f; font-size: 18px; padding-top: 70px; line-height: 24px;">Your best day was on <i style="font-weight: 600">{{header_content['max_views_date'].strftime('%A').decode('utf-8')}}, {{header_content['max_views_date'].strftime('%d %B').decode('utf-8')}}</i>  with <i style="font-weight: 600">{{'{:,}'.format(header_content['max_views'])}} </i> views. 
+                        {% if most_viewed_chapter %}
+                        Your best content was<br><i style="font-weight: 600">{{most_viewed_chapter.walkthrough}}</i> with <i style="font-weight: 600">{{'{:,}'.format(most_viewed_chapter.count)}}</i> views.</td>
+                        {% endif %}
+                        {% if most_viewed_guide %}
+                        Your best guide was<br><i style="font-weight: 600">{{most_viewed_guide.guide}}</i> with <i style="font-weight: 600">{{'{:,}'.format(most_viewed_guide.views)}}</i> views.</td>
+                        {% endif %}
+                {% endif %}
+            </tr>
+            <!-- Key Metrics -->
+            <tr>
+                <td width="680">
+                    <table cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr>
+                            <td colspan="3" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">KEY METRICS</td>
+                        </tr>
+                        <tr class="keymetrics-block" style="border: 1px solid #4f5f6f; margin-top: 20px; display: block; border-radius: 5px; padding: 20px 10px; ">
+                            <td colspan="1" width="290" style="font-size: 24px; color:#4f5f6f">
+                                Site Visitors
+                            </td>
+                            {% if visitors_progress > 0 %}
+	                            <td width="190" colspan="1" style="color:#7ed321 ;font-size:11px; vertical-align: middle;">
+	                                <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #7ed321;"></span>
+	                                <span>+{{'{:,}'.format(visitors_progress)}}%</span>
+	                            </td>
+                            {% else %}
+                            	<td width="190" colspan="1" style="color:#ff6161 ;font-size:11px; vertical-align: middle;">
+	                                <span style="display:inline-block; width: 0;height: 0;border-left: 8px solid transparent;border-right: 8px solid transparent;border-top: 8px solid #ff6161;"></span>
+	                                <span>{{'{:,}'.format(visitors_progress)}}%</span>
+	                            </td>
+                            {% endif %}
+                            <td colspan="1" width="200" align="right"  style="font-size: 38px; color:#4f5f6f">{{'{:,}'.format(new_visitors)}}</td>
+                        </tr>
+                        <tr class="keymetrics-block" style="border: 1px solid #4f5f6f; margin-top: 20px; display: block; border-radius: 5px; padding: 20px 10px;">
+                            <td colspan="1" width="290" style="font-size: 24px; color:#4f5f6f">
+                                Chapters Views
+                            </td>
+                        	{% if demo_views_progress > 0%}
+	                            <td width="100" colspan="1" style="color:#7ed321 ;font-size:11px; vertical-align: middle;">
+	                                <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #7ed321;"></span>
+	                                <span>+{{'{:,}'.format(demo_views_progress)}}%</span>
+	                            </td>
+                            {% else %}
+	                            <td width="100" colspan="1" style="color:#ff6161 ;font-size:11px; vertical-align: middle;">
+	                                <span style="display:inline-block; width: 0;height: 0;border-left: 8px solid transparent;border-right: 8px solid transparent;border-top: 8px solid #ff6161;"></span>
+	                                <span>{{'{:,}'.format(demo_views_progress)}}%</span>
+	                            </td>
+                            {% endif %}
+                            <td colspan="1" width="290" align="right" style="font-size: 38px; color:#4f5f6f">{{'{:,}'.format(demo_views)}}</td>
+                        </tr>
+                        <tr class="keymetrics-block" style="border: 1px solid #4f5f6f; margin-top: 20px; display: block; border-radius: 5px; padding: 20px 10px;">
+                            <td colspan="1" width="290" style="font-size: 24px; color:#4f5f6f">
+                                Completion Rate
+                            </td>
+                            {% if completion_rate_progress > 0%}
+                                <td width="100" colspan="1" style="color:#7ed321 ;font-size:11px; vertical-align: middle;">
+                                    <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #7ed321;"></span>
+                                    <span>+{{'{:,}'.format(completion_rate_progress)}}%</span>
+                                </td>
+                            {% else %}
+                                <td width="100" colspan="1" style="color:#ff6161 ;font-size:11px; vertical-align: middle;">
+                                    <span style="display:inline-block; width: 0;height: 0;border-left: 8px solid transparent;border-right: 8px solid transparent;border-top: 8px solid #ff6161;"></span>
+                                    <span>{{'{:,}'.format(completion_rate_progress)}}%</span>
+                                </td>
+                            {% endif %}
+                            <td colspan="1" width="290" align="right" style="font-size: 38px; color:#4f5f6f">{{'{:,}'.format(completion_rate|round|int)}}%</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Trending chapters -->
+            {% if trending_demos %}
+                <tr>
+                    <td>
+                        <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="4" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">TRENDING CHAPTERS</td>
+                            </tr>
+                            {% for demo in trending_demos %}
+                                <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                    <td colspan="1" width="30">
+                                       <div style="width:14px; height:14px;color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(loop.index)}}</div>
+                                    </td>
+                                    <td width="350" colspan="1" align="left" class="metrics-title" style="font-size: 16px; font-weight: 600; padding-left: 12px; color: #4f5f6f;">
+                                        {{demo.walkthrough}}
+                                    </td>
+                                    {% if demo.progress > 0 %}
+        	                            <td width="100" colspan="1" class="metrics-status" style="color:#7ed321 ;font-size:11px; vertical-align: middle;">
+        	                                <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #7ed321;"></span>
+        	                                <span>+{{'{:,}'.format(demo.progress)}}%</span>
+        	                            </td>
+                                    {% else %}
+        	                            <td width="100" colspan="1" class="metrics-status" style="color:#ff6161 ;font-size:11px; vertical-align: middle;">
+        	                                <span style="display:inline-block; width: 0;height: 0;border-left: 8px solid transparent;border-right: 8px solid transparent;border-top: 8px solid #ff6161;"></span>
+        	                                <span>{{'{:,}'.format(demo.progress)}}%</span>
+        	                            </td>
+                                    {% endif %}
+                                    <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                        <span style="font-weight: 600;">{{'{:,}'.format(demo.count)}}</span><span style="color: #7e8e9f;"> View{% if demo.count > 1 %}s{% endif %}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% endif %}
+            <!-- Trending categories -->
+            {% if trending_categories %}
+                <tr>
+                    <td>
+                        <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="4" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">TRENDING CATEGORIES</td>
+                            </tr>
+                            {% for category in trending_categories %}
+                                <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                    <td colspan="1" width="30">
+                                        <div style="width:14px; height:14px; color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(loop.index)}}</div>
+                                    </td>
+                                    <td width="350" colspan="1" align="left" class="metrics-title"style="font-size: 16px; padding-left: 12px; color: #4f5f6f; font-weight: 600; vertical-align: middle;">
+                                        {{category.section}}
+                                    </td>
+                                    {% if category.progress >0 %}
+        	                            <td width="100" colspan="1" class="metrics-status" style="color:#7ed321 ;font-size:11px; vertical-align: middle;">
+        	                                <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #7ed321;"></span>
+        	                                <span>+{{'{:,}'.format(category.progress)}}%</span>
+        	                            </td>
+    	                           {% else %}
+        	                        	<td width="100" colspan="1" class="metrics-status" style="color:#ff6161 ;font-size:11px; vertical-align: middle;">
+        	                                <span style="display:inline-block; width: 0;height: 0;border-left: 8px solid transparent;border-right: 8px solid transparent;border-top: 8px solid #ff6161;"></span>
+        	                                <span>{{'{:,}'.format(category.progress)}}%</span>
+        	                            </td>
+    	                           {% endif %}
+                                    <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                        <span style="font-weight: 600;">{{'{:,}'.format(category.views)}}</span><span style="color: #7e8e9f;"> View{% if category.views > 1 %}s{% endif %}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr> 
+            {% endif %}
+            <!-- Trending guides section only for storagehub.vmware.com -->
+            {% if trending_guides %}
+                <tr>
+                    <td>
+                        <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="4" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">GUIDES (High Traffic)</td>
+                            </tr>
+                            {% for guide in trending_guides %}
+                                <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                    <td colspan="1" width="30">
+                                        <div style="width:14px; height:14px; color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(loop.index)}}</div>
+                                    </td>
+                                    <td width="350" colspan="1" align="left" class="metrics-title"style="font-size: 16px; padding-left: 12px; color: #4f5f6f; font-weight: 600; vertical-align: middle;">
+                                        {{guide.section}}
+                                    </td>
+                                    {% if guide.progress >0 %}
+                                        <td width="100" colspan="1" class="metrics-status" style="color:#7ed321 ;font-size:11px; vertical-align: middle;">
+                                            <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #7ed321;"></span>
+                                            <span>+{{'{:,}'.format(guide.progress)}}%</span>
+                                        </td>
+                                   {% else %}
+                                        <td width="100" colspan="1" class="metrics-status" style="color:#ff6161 ;font-size:11px; vertical-align: middle;">
+                                            <span style="display:inline-block; width: 0;height: 0;border-left: 8px solid transparent;border-right: 8px solid transparent;border-top: 8px solid #ff6161;"></span>
+                                            <span>{{'{:,}'.format(guide.progress)}}%</span>
+                                        </td>
+                                   {% endif %}
+                                    <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                        <span style="font-weight: 600;">{{'{:,}'.format(guide.views)}}</span><span style="color: #7e8e9f;"> View{% if guide.views > 1 %}s{% endif %}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr> 
+            {% endif %}
+            {% if least_viewed_guides %}
+                <tr>
+                    <td>
+                        <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="4" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">GUIDES (Low Traffic)</td>
+                            </tr>
+                            {% for guide in least_viewed_guides %}
+                                <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                    <td colspan="1" width="30">
+                                        <div style="width:14px; height:14px; color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(loop.index)}}</div>
+                                    </td>
+                                    <td width="350" colspan="1" align="left" class="metrics-title"style="font-size: 16px; padding-left: 12px; color: #4f5f6f; font-weight: 600; vertical-align: middle;">
+                                        {{guide.section}}
+                                    </td>
+                                    {% if guide.progress >0 %}
+                                        <td width="100" colspan="1" class="metrics-status" style="color:#7ed321 ;font-size:11px; vertical-align: middle;">
+                                            <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #7ed321;"></span>
+                                            <span>+{{'{:,}'.format(guide.progress)}}%</span>
+                                        </td>
+                                   {% else %}
+                                        <td width="100" colspan="1" class="metrics-status" style="color:#ff6161 ;font-size:11px; vertical-align: middle;">
+                                            <span style="display:inline-block; width: 0;height: 0;border-left: 8px solid transparent;border-right: 8px solid transparent;border-top: 8px solid #ff6161;"></span>
+                                            <span>{{'{:,}'.format(guide.progress)}}%</span>
+                                        </td>
+                                   {% endif %}
+                                    <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                        <span style="font-weight: 600;">{{'{:,}'.format(guide.views)}}</span><span style="color: #7e8e9f;"> View{% if guide.views > 1 %}s{% endif %}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr> 
+            {% endif %}
+            <!-- Source of the traffic -->
+            {% if visitor_referals %}
+                <tr>
+                    <td>
+                        <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="3" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">SOURCE OF THE TRAFFIC</td>
+                            </tr>
+                            {% for visitors_referal in visitor_referals %}
+                                <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                    <td width="30" colspan="1">
+                                        <div style="width:14px; height:14px; color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(loop.index)}}
+                                        </div>
+                                    </td>
+                                    <td width="450" colspan="1" align="left" class="metrics-title"style="font-size: 16px; padding-left: 12px; color: #4f5f6f; font-weight: 600; vertical-align: middle;">
+                                        {{visitors_referal.name}}
+                                    </td>
+                                    <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                    <span style="font-weight: 600;">{{'{:,}'.format(visitors_referal.count)}}</span><span style="color: #7e8e9f;"> Click{% if visitors_referal.count > 1 %}s{% endif %}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% endif %}
+            <!-- Footer -->
+            <tr>
+                <td align="center" style="padding-top: 75px;">
+                    <a href="{{url_for('dashboard.category_reports', category_id=category, date_range='custom', from_date=from_date.strftime('%Y-%m-%d'), to_date=to_date.strftime('%Y-%m-%d'), _external=True)|replace('localhost', tenant.domain)}}" target="_blank" style="text-decoration: none; color: #ffffff; background: #066afe; padding: 25px 60px; border-radius: 47px; display: inline-block;">LAUNCH DASHBOARD</a>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="color: #7e8e9f; font-size: 18px; padding-top: 100px;">Powered By</td>
+            </tr>
+            <tr>
+                <td align="center" style="padding-top: 45px; padding-bottom: 40px;">
+                    <img src="{{ url_for('static',filename='images/login-logo.png',_external=True) }}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="color: #b8b8b8; font-size: 16px; padding-bottom: 20px;">
+                    &copy;2014 - {{now.year}} Regalix Inc. | All Rights Reserved.<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/" target="_blank">regalix.com</a> 2200 Geng Road., Palo Alto, CA, 94303<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/privacy-policy/" target="_blank">Privacy Policy</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

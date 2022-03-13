@@ -1,0 +1,105 @@
+<div class="popup-box popup-create-chapter">
+    <div class="popup-title"><span id="chapter-head">{{# if is_edit}}{{i18n 'edit'}}{{else}}{{i18n 'create'}}{{/if}} {{i18n 'chapter'}}</span></div>
+    <form name='walkthrough-data' playlist-id={{playlist_id}}{{#if chapter.slug}} walkthrough-id="{{chapter.slug}}"{{/if}}>
+        <div class="content-block">
+            <div class="block">
+                <div class="title mandatory-field">{{i18n 'chapter name'}}</div>
+                <div class="sub-title">
+                    {{i18n 'pick a name that your users will easily understand'}}.
+                </div>
+                <div class="input_wrap">
+                    <input type="text" name="name" class="edit-pwt-title trim-input" maxlength="85" autocomplete="off" placeholder="Name" {{#if chapter.name}}value="{{chapter.name}}"{{/if}}/>
+                    <div class="counter">
+                        <span data-counter>{{name_limit}}</span><span> {{i18n 'characters left'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="title">{{i18n 'tags'}}</div>
+                <div class="sub-title">{{i18n 'add tags that best describe this chapter'}}.</div>
+                <div class="add_tags">
+                    <input type="text" class="add_tag trim-input" placeholder="tag" autocomplete="off" />
+                    <div class="save_tag rippleEffect">{{i18n 'add tag'}}</div>
+                    <div class="suggestion_tags">
+                        <ul></ul>
+                    </div>
+                </div><br>
+                <div class="input_wrap">
+                    <div class="category_tags">
+                        <ul>
+                        {{#if chapter }}
+                        {{# each chapter.tags }}
+                            {{> tags}}
+                        {{/each}}
+                        {{/if}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {{#if showRestrictionOption}}
+                <div class='block'>
+                    <div class="title capitalize-text {{#if restrictionsDisabled}} disabled {{/if}} hidden">{{i18n 'enable restrictions'}}</div>
+                    {{#if restrictionsDisabled}}
+                        <div class="sub-title disabled">
+                            {{i18n 'restrictions already set in a parent content.'}}
+                        </div>
+                    {{/if}}
+
+                    <input type="checkbox" name="chapter_enable_restrictions" id="chapter_enable_restrictions" class="css-checkbox hidden" data-toggle="collapse" data-target="#chapter-usr-grps-to-restrict" aria-expanded="false" aria-controls="chapter-usr-grps-to-restrict" {{#if isRestrictionEnabled}} checked {{/if}} {{#if restrictionsDisabled}} disabled {{/if}}/>
+                    <label for="chapter_enable_restrictions" class="css-label hidden"></label>
+
+                    <div class="collapse {{#if isRestrictionEnabled}} in {{/if}}" id="chapter-usr-grps-to-restrict">
+                        <div>
+                            <div class="user-groups">
+
+                                <div class="title capitalize-text">{{i18n 'allow access to' }}</div>
+                                <input type="text" placeholder="Select user groups" class="usr-grp-dropdown" id="chapter-usr-grp-dropdown" readonly="true" data-toggle="collapse" data-target="#chapter-usr-grps-list" aria-expanded="false" aria-controls="chapter-usr-grps-list" {{#if isRestrictionEnabled}} value="{{restrictedToGroups}}" data-selected-groups="{{restrictedToGroupIds}}" {{/if}} />
+
+                                <div id="chapter-usr-grps-list" class="collapse usr-grps-list">
+                                    <ul>
+                                    {{#each userGroupOptions}}
+                                        <li {{#if selectedDisabled }} class="selected-disabled" {{/if}} >
+                                            <input type="checkbox" name="user-group" value="" id="chapter-usr-grp-{{_id}}" class="user-group-items" data-attr-id={{_id}} data-attr-name="{{name}}" {{#if isChecked }} checked {{/if}} {{#if selectedDisabled }} disabled {{/if}} />
+                                            <label for="chapter-usr-grp-{{_id}}"></label>
+                                            <span> {{name}} </span>
+                                        </li>
+                                    {{/each}}
+                                    </ul>
+                                </div>
+                                <div>&nbsp;</div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+
+            <div class="block">
+                <div class="title capitalize-text">{{i18n 'end of life'}}</div>
+                <div class="input_wrap">
+                    <input type="text" placeholder="Click to select date-time" class="datepicker-here" id="chapter_expire_at" readonly="true" data-position="top right" data-timepicker="true" {{#if eolExpireAt}}data-datetime={{eolExpireAt}}{{/if}} />
+                    <div>&nbsp;</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="popup-footer">
+            <div class="form-footer">
+                <div class="cancel rippleEffect" rel="popup-create-chapter">{{i18n 'cancel'}}</div>
+                <input type="submit" class="save rippleEffect capital-letter" value="{{i18n 'save'}}" />
+            </div>
+            <div class="form-failed">
+                {{i18n 'oops! saving failed'}}
+            </div>
+            <div class="form-sent">
+                {{i18n 'saved successfully!'}}
+            </div>
+            <div class="form-sending">
+                {{i18n 'saving'}}...
+                <div class="cd-loading"></div>
+            </div>
+        </div>
+    </form>
+</div>

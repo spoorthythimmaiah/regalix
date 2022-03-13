@@ -1,0 +1,167 @@
+.bb-links-banner {
+    margin-top: 88px;
+    margin-bottom: 80px;
+}
+.bb-links-banner li {
+    width: 50%;
+    padding: 0px 10px;
+    float: left;
+    margin-bottom: 12px;
+    min-height: 38px;
+}
+.bulletin-board-wrapper {
+    display: flex;
+}
+.multiple-bb, .single-bb, .more-link-page{
+    background-color: #efefef;
+    height: auto;
+    padding: 47px 48px 55px;
+    margin: 15px;
+    position: relative;
+}
+.overview-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+.overview-card p {
+    font-size: 14px;
+    line-height: 19.4px;
+    color: #4b4b4d;
+    margin-bottom: 21px;
+}
+.overview-card a {
+    cursor: pointer;
+    color: #3478f6;
+    font-size: 16px;
+    line-height: 19.4px;
+    margin-bottom: 16px;
+    display:inline;
+    clear: left;
+}
+.overview-card p{
+    font-size: 16px;
+    line-height: 19.4px;
+    margin-bottom: 0;
+}
+.overview-card ul{
+    margin-left: 15px;
+}
+.multiple-bb .overview-card .link-holder{
+    width: 100%;
+    margin-bottom: 12px;
+}
+.single-bb .overview-card .link-holder{
+    float: left;
+    width: 50%;
+    position: relative;
+    padding-left: 15px;
+    min-height: 35px;
+    margin-bottom: 8px;
+}
+.overview-card .link-holder a, .overview-card .link-holder p{
+    position: relative;
+}
+.overview-card .link-holder a:before, .overview-card .link-holder p:before{
+    content: '';
+    border-radius: 100%;
+    background: #3478f6;
+    height: 6px;
+    width: 6px;
+    display: inline-block;
+    margin-bottom: 3px;
+    margin-right: 15px;
+    position: absolute;
+    top: 9px;
+    left: -10px;
+}
+.overview-card .link-holder a{
+    margin-bottom: 0;
+}
+.overview-card .link-holder li{
+    margin-top: 0;
+}
+.more_bb_links{
+    display: block;
+    text-align: center;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+}
+.more_bb_links a {
+    color: #333;
+    background: #dfdfdf;
+    padding: 7px 15px;
+    display: inline-block;
+    margin-top: 5px;
+}
+.more-link-page {
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+}
+.more-links-page-title{
+    width: 100%;
+    font-size: 30px;
+    line-height: 1.5em;
+}
+.more-link-sub-title{
+    font-size:14px;
+}
+.header {
+    top: 0px;
+    position: relative;
+    height: 46px;
+    width: 100%;
+    background: #ffffff;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    -moz-box-shadow:0 0 5px rgba(0,0,0,0.3);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    z-index: 100;
+     -webkit-transition: all .5s linear 0s;
+    transition: all .5s linear 0s;
+    padding: 0 50px;
+}
+.header .logo {
+    position: relative;
+    height: 46px;
+    float: left;    
+    width: 200px;
+    z-index: 299;   
+}
+.header .logo span{
+   outline: none;
+   display: block;
+   float: left;
+   font-size: 24px;
+   font-family: 'Gotham Rounded A','Gotham Rounded B', sans-serif;
+   font-weight: 700;
+   line-height: 46PX;
+   color: #066afe ;
+   letter-spacing: 3px;
+   text-decoration: none;
+   text-transform: uppercase;
+}
+.header .logo img{
+    max-height: 100%;
+    max-width: 160px;
+    padding: 5px 0px 5px 0px;
+    float: left;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+}
+.container-block header {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+header .vmw-logo {
+    width: auto;
+    margin-bottom: 55px;
+    max-height: 35px;
+}

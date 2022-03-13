@@ -1,0 +1,80 @@
+{% extends 'tenants/seo/vmware/base.html' %}
+
+{% block seo %}
+    {{load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description'])}}
+{% endblock %}
+
+{% block container %}
+<div id="vmw-category" class="container-block">
+    {{ translation_wrapper() }}  
+    <div class="left-sidebar{%if is_announcement_widget_enabled %} widget_enabled{% endif %}">
+        {{ back_button(home=True) }}
+        {% if not api['tenant']['is_private'] %}
+        {{ social_share() }}
+        {% endif %}
+    </div>
+    {{ header() }}
+    {% if api['all_products'] %}
+    <main class="container">
+        <h2>{{_('categories')}}</h2>
+        <section class="row categories-list">
+            {% for product in api['all_products'] %}
+            <div class="col-xs-6 col-md-4 col-lg-3 category-details">
+                <div class="category-block">
+                    {% if product['translations_available'] %}
+                        <div class="translation-icon" data-overlay="language-translations" data-language-options='{{product['locales_available']|tojson}}'></div>
+                    {% endif %}
+                    {% set href_url = url_for('main.route_handler', section=product['slug'])%}
+                    {% set class_name = 'category-link' %}
+                    {% if product['linked_asset'] %}
+                        {% set href_url =  url_for('main.serve_section_assets', asset_name=product['linked_asset']['name']) %}
+                        {% set class_name = 'asset-linked' %}
+                    {% endif %}
+                    {% set data_attr = 'data-product-id=' + product['slug'] + ' data-section-id=' + product['slug'] %}
+                    <a href="{{href_url}}" class="{{class_name}}"{% if product['linked_asset']%} {{data_attr}} target="_blank" {% endif %}>
+                        <div class="category-icon">
+                            {% if product['icon'] %}
+                                <img data-src="{{ product['icon']['url'] }}" class="lazy-load" alt="{{ product['icon']['name'] }}">
+                            {% elif product['linked_asset'] %}
+                                <img data-src="{{ url_for('static', filename='images/section-default-link-icon.png') }}" class="lazy-load theme-bg-color" alt="library-app">
+                            {% else %}
+                                <img data-src="{{ url_for('static', filename='images/vmware/category-bg.png') }}" class="lazy-load" alt="library-app">
+                            {% endif %}
+                        </div>
+                        <h6>{{product['name']}}</h6>
+                    </a> 
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if 'sample_exchange' in api['tenant']['applications']|map(attribute='unique_id')|join(',') and sample_details%}
+                <a href="{{url_for('.sample_exchange')}}" class="sample-exchange-wrap col-xs-6 col-md-4 col-lg-3">
+                    <div class="samples-exchange-banner ">
+                        <div class="img-holder">
+                            <img src="{{ url_for('static', filename='images/vmware/vmwarecode.png') }}">
+                        </div>
+                        <h1>{{ sample_details['title']|safe }}</h1>
+                    </div>
+                    <h6>Sample Exchange</h6>
+                </a>
+            {% endif %}
+        </section>
+    </main>
+    {% endif %}
+</div>
+{{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+    document.isUserAnonymous = true;
+    document.apps = JSON.parse('{{apps|tojson}}');
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    document.page = 'Home';
+</script>
+<script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

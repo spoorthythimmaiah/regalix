@@ -1,0 +1,82 @@
+{% extends 'tenants/seo/designeverest/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+{% block sub_styles %}
+    {% if enable_homepage_banner %}
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/homepage_banner.css')}}">
+    {% endif %}
+{% endblock %}
+{% block container %}
+    {{ search() }}
+    <div class="container-block" id="main_container" data-page-container="{{ view_type }}">
+        {{ translation_wrapper() }}
+        {{ header() }}
+        <div class="welcome-video-holder">
+            <div class="hide-video-popup"></div>
+            <div class="section-video">
+            </div>
+        </div>
+        {% if enable_homepage_banner and banner_details %}
+            {{ homepage_banner (banner_details)}}
+        {% endif %}
+        <div class="products-page container {% if not enable_homepage_banner %}without-banner {% endif%}">
+            {% if api['bulletin_board_list'] %}
+                <h1>Featured Content</h1>
+                    {{ bulletin_boards() }}
+            {% endif %}
+            <h1></h1>
+            <div class="row categories">
+                {% for product in api['all_products'] %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 category">
+                        {% set href_url = url_for('main.route_handler', section=product['slug']) %}
+                        {% set class_name = 'category-link' %}
+                        {% if product['linked_asset'] %}
+                            {% set href_url =  url_for('main.serve_section_assets', asset_name=product['linked_asset']['name']) %}
+                            {% set class_name = 'asset-linked' %}
+                        {% endif %}
+                        {% set data_attr = 'data-product-id=' + product['slug'] + ' data-section-id=' + product['slug'] %}
+                        <div class="product-list-block">
+                            {% if product['translations_available'] %}
+                                <div class="translation-icon" data-overlay="language-translations"
+                                     data-language-options='{{ product['locales_available']|tojson }}'></div>
+                            {% endif %}
+                            <a href="{{ href_url }}" class="{{ class_name }}"{% if product['linked_asset'] %}
+                                {{ data_attr }} target="_blank" {% endif %}>
+                                <div class="category-icon">
+                                    {% if product['icon'] %}
+                                        <img class="lazy-load" data-src="{{ product['icon']['url'] }}" alt="{{product['icon']['name']}}">
+                                    {% else %}
+                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/default_chapter_icon.jpg') }}"
+                                             alt="logo">
+                                    {% endif %}
+                                </div>
+                                <h6 title="{{ product['name'] }}">{{ product['name'] }}</h6>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {{ footer() }}
+
+{% endblock %}
+<span>feupw8    d86qwfd86fwe    igucgw  79[fgwr8g9</span>
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.isUserAnonymous = true;
+        document.viewType = "{{view_type}}";
+        document.apps = JSON.parse('{{apps|tojson}}');
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.locales = JSON.parse('{{api["locales"]|tojson}}');
+        document.user_email = '{{ g.user.email}}';
+        document.page = 'Home';
+    </script>
+    <script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

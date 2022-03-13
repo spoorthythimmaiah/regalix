@@ -1,0 +1,444 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: normal;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body bgcolor="#ffffff">
+    <table class="wrapper" width="800" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f9f9f9">
+        <tbody>
+            <!-- Logo -->
+            <tr>
+                <td align="center" style="padding-top: 34px;">
+                {% set tenant_logo = url_for('static', filename='images/bmc/logo.png', _external=True) %}
+                {% if tenant.logo %}
+                    {% set tenant_logo = url_for('static', filename='media/' + tenant.logo, _external=True) %}
+                {% endif %}
+                <img style="max-height: 45px;" src="{{tenant_logo|replace('localhost', tenant.domain)}}">  
+                </td>
+            </tr>         
+            <!-- Title -->
+            <tr align="center">
+                <td style="color: #7e8e9f; padding-top: 50px; font-size: 16px; padding-bottom: 20px;">Metrics For <span style="font-weight: 600; color: #222222">{{from_date.strftime('%B %d').decode('utf-8')}} - {{to_date.strftime('%B %d, %Y').decode('utf-8')}}</span></td>
+            </tr>
+
+            <!-- Total visitors -->
+            {% set partner_customer_visits = site_visitors['total_visitors'] - (site_visitors['partner'] + site_visitors['customer'] + site_visitors['employee']) %}
+            {% set visit_max = site_visitors['maximum'] %}
+            {% if partner_customer_visits > site_visitors['maximum'] %}
+                {% set visit_max = partner_customer_visits %}
+            {% endif %}
+            {% set partner_customer_visit_width = ((partner_customer_visits /visit_max) * 100)| round %}
+            <tr>
+                <td>
+                    <table width="700" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr style="border: 1px solid #c5c6c7; margin-top: 20px; display: block; border-radius: 5px; padding: 10px 22px 22px;">
+                            <td>
+                                <table width="656" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td align="right">
+                                             <table width="225" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                                <tr>        
+                                                    <td style="font-size: 20px; font-weight: 900; color:#222222">Total Visitors</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 60px;">
+                                                        {{site_visitors['total_visitors']}}
+                                                    </td>
+                                                </tr>
+                                            </table>  
+                                        </td>  
+                                        <td width="428" align="right">
+                                            <table width="425" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                                {% if 'employee' in site_visitors %}
+                                                <tr height="30">
+                                                    {% set employee_width = ((site_visitors['employee'] / visit_max) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Employees
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #3478f7; border-radius: 5px; width: {{employee_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td width="40" align="right" style="font-weight: bold;">
+                                                        {{site_visitors['employee']}}
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'partner' in site_visitors %}
+                                                <tr height="30">
+                                                    {% set partner_width = ((site_visitors['partner'] /visit_max) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Partners
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #fe5000; border-radius: 5px; width: {{partner_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td width="40" align="right" style="font-weight: bold;">
+                                                        {{site_visitors['partner']}}
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'customer' in site_visitors %}
+                                                <tr height="30">
+                                                    {% set customer_width = ((site_visitors['customer'] /visit_max) * 100)| round%}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Customers
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #2acdfc; border-radius: 5px; width: {{customer_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td  width="40" align="right" style="font-weight: bold;">
+                                                        {{site_visitors['customer']}}
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                <tr height="30">
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Partners & Customers
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #c47245; border-radius: 5px; width: {{partner_customer_visit_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td width="40" align="right" style="font-weight: bold;">
+                                                        {{partner_customer_visits}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>                                    
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Total views -->
+            <tr>
+                <td>
+                    <table width="700" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr style="border: 1px solid #c5c6c7; margin-top: 20px; display: block; border-radius: 5px; padding: 10px 22px 22px;">
+                            <td>
+                                <table width="656" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td align="right">
+                                             <table width="225" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                                <tr>        
+                                                    <td style="font-size: 20px; font-weight: 900; color:#222222">Total Views</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 60px;">
+                                                        {{demo_views['total_views']}}
+                                                    </td>
+                                                </tr>
+                                            </table>  
+                                        </td>  
+                                        <td width="428" align="right">
+                                            <table width="425" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                                {% if 'employee' in demo_views %}
+                                                <tr height="30">
+                                                    {% set employee_width = ((demo_views['employee'] / demo_views['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Employees
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #3478f7; border-radius: 5px; width: {{employee_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td width="40" align="right" style="font-weight: bold;">
+                                                        {{demo_views['employee']}}
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'partner' in demo_views %}
+                                                <tr height="30">
+                                                    {% set partner_width = ((demo_views['partner'] / demo_views['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Partners
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #fe5000; border-radius: 5px; width: {{partner_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td width="40" align="right" style="font-weight: bold;">
+                                                        {{demo_views['partner']}}
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'customer' in demo_views %}
+                                                <tr height="30">
+                                                    {% set customer_width = ((demo_views['customer'] / demo_views['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Customers
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #2acdfc; border-radius: 5px; width: {{customer_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td  width="40" align="right" style="font-weight: bold;">
+                                                        {{demo_views['customer']}}
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'partner_customer' in demo_views %}
+                                                <tr height="30">
+                                                    {% set partner_customer_width = ((demo_views['partner_customer'] / demo_views['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Partners & Customers
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #c47245; border-radius: 5px; width: {{partner_customer_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td  width="40" align="right" style="font-weight: bold;">
+                                                        {{demo_views['partner_customer']}}
+                                                    </td>
+                                                {% endif %}
+                                                </tr>
+                                            </table>
+                                        </td>                                    
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Completion Rate -->
+            <tr>
+                <td>
+                    <table width="700" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr style="border: 1px solid #c5c6c7; margin-top: 20px; display: block; border-radius: 5px; padding: 10px 22px 22px;">
+                            <td>
+                                <table width="656" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td align="right">
+                                             <table width="225" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                                <tr>        
+                                                    <td style="font-size: 20px; font-weight: 900; color:#222222">Completion Rate</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 60px;">
+                                                        {{completion_rate['total_completion_rate']}}%
+                                                    </td>
+                                                </tr>
+                                            </table>  
+                                        </td>  
+                                        <td width="428" align="right">
+                                            <table width="425" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                                {% if 'employee' in completion_rate %}
+                                                <tr height="30">
+                                                    {% set employee_width = ((completion_rate['employee'] / completion_rate['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Employees
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #3478f7; border-radius: 5px; width: {{employee_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td width="40" align="right" style="font-weight: bold;">
+                                                        {{completion_rate['employee']}}%
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'partner' in completion_rate %}
+                                                <tr height="30">
+                                                    {% set partner_width = ((completion_rate['partner'] / completion_rate['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Partners
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #fe5000; border-radius: 5px; width: {{partner_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td width="40" align="right" style="font-weight: bold;">
+                                                        {{completion_rate['partner']}}%
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'customer' in completion_rate %}
+                                                <tr height="30">
+                                                    {% set customer_width = ((completion_rate['customer'] / completion_rate['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Customers
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #2acdfc; border-radius: 5px; width: {{customer_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td  width="40" align="right" style="font-weight: bold;">
+                                                        {{completion_rate['customer']}}%
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% if 'partner_customer' in         completion_rate %}
+                                                <tr height="30">
+                                                    {% set partner_customer_width = ((completion_rate['partner_customer'] / completion_rate['maximum']) * 100)| round %}
+                                                    <td width="200" align="left" style="color:#7e8e9f; font-size: 16px; font-weight: bold;">
+                                                        Partners & Customers
+                                                    </td>
+                                                    <td width="188" align="right">
+                                                        <hr style="background: #c47245; border-radius: 5px; width: {{partner_customer_width}}%; height: 3px; float:left; border: none;" >
+                                                    </td>
+                                                    <td  width="40" align="right" style="font-weight: bold;">
+                                                        {{completion_rate['partner_customer']}}%
+                                                    </td>
+                                                    {% endif %}
+                                                </tr>
+                                            </table>
+                                        </td>                                    
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Partners popular content -->
+            {% if popular_chapters %}
+                <!-- Employees popular content -->
+                {% if 'employee' in popular_chapters and popular_chapters['employee'] | length > 0 %}
+                    <tr>
+                        <td>
+                            <table width="700" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                <tr>
+                                    <td  colspan="4" style="font-size: 20px; color: #222222; padding-top: 60px; padding-bottom: 0px; font-weight: 900">Most Popular Journeys Among <span style="color: #3478f7;">Employees</span></td>
+                                </tr>
+                                {% for chapter in popular_chapters['employee'] %}
+                                    <tr style="display: block; border-radius: 5px; padding-top: 5px;">
+                                    <td colspan="1" width="30" style="vertical-align: top;">
+                                        <div style="width:14px; color: {{'#3478f7' if loop.first else '#7e8e9f'}}; padding: 0 8px 0 0; font-size: 28px;">{{"{:02}".format(loop.index)}}</div>
+                                    </td>
+                                        <td width="450" colspan="1" align="left" class="metrics-title" style="font-size: 16px; font-weight: bold; padding-left: 12px; color: #222222;">
+                                        {{chapter['walkthrough']}}<br/>
+                                    </td>
+                                    <td width="100" colspan="1" class="metrics-status" style="color:{{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}}; font-size:14px; vertical-align: middle;">
+                                        <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;
+                                            {{'border-bottom'  if chapter['progress'] > 0 else 'border-top'}}: 8px solid {{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}};"></span>
+                                            <span>{{'+' if chapter['progress'] > 0}}{{chapter['progress']}}%</span>
+                                    </td>
+                                    <td width="100" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                        <span style="font-weight: 600;">{{'{:,}'.format(chapter['views'])}}</span>
+                                        <span style="color: #7e8e9f; font-weight: bold;"> VIEW{%if chapter['views'] != 1 | int %}S{%endif%}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                {% endif %}
+
+                <!-- Partner's popular content -->
+                {% if 'partner' in popular_chapters and popular_chapters['partner'] | length > 0 %}
+                <tr>
+                    <td>
+                        <table class="partner" width="700" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="4" style="font-size: 20px; color: #222222; padding-top: 60px; padding-bottom: 10px; font-weight: 900">Most Popular Journeys Among <span style="color: #fe5000;">Partners</span></td>
+                            </tr>
+                            {% for chapter in popular_chapters['partner'] %}
+                            <tr style="display: block; border-radius: 5px; padding-top: 5px;">
+                                <td colspan="1" width="30" style="vertical-align: top;">
+                                    <div style="width:14px; color: {{'#fe5000' if loop.first else '#7e8e9f'}}; padding: 0 8px 0 0; font-size: 28px;">{{"{:02}".format(loop.index)}}</div>
+                                </td>
+                                <td width="450" colspan="1" align="left" class="metrics-title" style="font-size: 16px; font-weight: bold; padding-left: 12px; color: #222222;">
+                                        {{chapter['walkthrough']}}<br/>
+                                </td>
+                                <td width="100" colspan="1" class="metrics-status" style="color:{{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}} ;font-size:14px; vertical-align: middle;">
+                                    <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;{{'border-bottom'  if chapter['progress'] > 0 else 'border-top'}}: 8px solid {{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}};"></span>
+                                    <span>{{'+' if chapter['progress'] > 0}}{{chapter['progress']}}%</span>
+                                </td>
+                                <td width="100" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                    <span style="font-weight: 600;">{{'{:,}'.format(chapter['views'])}}</span>
+                                    <span style="color: #7e8e9f; font-weight: bold;"> VIEW{%if chapter['views'] != 1 | int %}S{%endif%}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+                {% endif %}
+
+                <!-- customer popular content -->
+                {% if 'customer' in popular_chapters and popular_chapters['customer'] | length > 0 %}
+                <tr>
+                    <td>
+                        <table class="partner" width="700" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="4" style="font-size: 20px; color: #222222; padding-top: 60px; padding-bottom: 10px; font-weight: 900">Most Popular Journeys Among <span style="color: #2acdfc;">Customers</span></td>
+                            </tr>
+                            {% for chapter in popular_chapters['customer'] %}
+                            <tr style="display: block; border-radius: 5px; padding-top: 5px;">
+                                <td colspan="1" width="30" style="vertical-align: top;">
+                                    <div style="width:14px; color: {{'#2acdfc' if loop.first else '#7e8e9f'}}; padding: 0 8px 0 0; font-size: 28px;">{{"{:02}".format(loop.index)}}</div>
+                                </td>
+                                <td width="450" colspan="1" align="left" class="metrics-title" style="font-size: 16px; font-weight: bold; padding-left: 12px; color: #222222;">
+                                        {{chapter['walkthrough']}}<br/>
+                                </td>
+                                <td width="100" colspan="1" class="metrics-status" style="color:{{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}} ;font-size:14px; vertical-align: middle;">
+                                    <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;{{'border-bottom'  if chapter['progress'] > 0 else 'border-top'}}: 8px solid {{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}};"></span>
+                                    <span>{{'+' if chapter['progress'] > 0}}{{chapter['progress']}}%</span>
+                                </td>
+                                <td width="100" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                    <span style="font-weight: 600;">{{'{:,}'.format(chapter['views'])}}</span>
+                                    <span style="color: #7e8e9f; font-weight: bold;"> VIEW{%if chapter['views'] != 1 | int %}S{%endif%}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+                {% endif %}
+
+                <!-- Partner and Customer popular content -->
+                {% if 'partner_customer' in popular_chapters and popular_chapters['partner_customer'] | length > 0 %}
+                <tr>
+                    <td>
+                        <table class="partner" width="700" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                            <tr>
+                                <td  colspan="4" style="font-size: 20px; color: #222222; padding-top: 60px; padding-bottom: 10px; font-weight: 900">Most Popular Journeys Among <span style="color: #c47245;">Partners and Customers</span></td>
+                            </tr>
+                            {% for chapter in popular_chapters['partner_customer'] %}
+                            <tr style="display: block; border-radius: 5px; padding-top: 5px;">
+                                <td colspan="1" width="30" style="vertical-align: top;">
+                                    <div style="width:14px; color: {{'#c47245' if loop.first else '#7e8e9f'}}; padding: 0 8px 0 0; font-size: 28px;">{{"{:02}".format(loop.index)}}</div>
+                                </td>
+                                <td width="450" colspan="1" align="left" class="metrics-title" style="font-size: 16px; font-weight: bold; padding-left: 12px; color: #222222;">
+                                        {{chapter['walkthrough']}}<br/>
+                                </td>
+                                <td width="100" colspan="1" class="metrics-status" style="color:{{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}} ;font-size:14px; vertical-align: middle;">
+                                    <span style="display:inline-block; width: 0;height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;{{'border-bottom'  if chapter['progress'] > 0 else 'border-top'}}: 8px solid {{'#1ed760' if chapter['progress'] > 0 else '#ff6161'}};"></span>
+                                    <span>{{'+' if chapter['progress'] > 0}}{{chapter['progress']}}%</span>
+                                </td>
+                                <td width="100" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                    <span style="font-weight: 600;">{{'{:,}'.format(chapter['views'])}}</span>
+                                    <span style="color: #7e8e9f; font-weight: bold;"> VIEW{%if chapter['views'] != 1 | int %}S{%endif%}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endif %}
+            <!-- Footer -->
+
+            <tr>
+                <td align="center" style="color: #7e8e9f; font-size: 12px; padding-top: 80px;">Powered By</td>
+            </tr>
+            <tr>
+                <td align="center" style="padding-top: 45px; padding-bottom: 40px;">
+                    <img src="{{ url_for('static',filename='images/login-logo.png',_external=True) }}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="color: #b8b8b8; font-size: 16px; padding-bottom: 20px;">
+                    &copy;2014 - {{now.year}} Regalix Inc. | All Rights Reserved.<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/" target="_blank">regalix.com</a> 2200 Geng Road., Palo Alto, CA, 94303<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/privacy-policy/" target="_blank">Privacy Policy</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

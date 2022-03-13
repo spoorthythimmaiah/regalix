@@ -1,0 +1,152 @@
+{{#if group}}
+<div class="popup-box" data-popup="group" {{#if is_edit}}data-slug={{slug}}{{/if}}>
+    <div class="popup-title">
+        {{#if is_edit}}{{i18n 'edit faq group'}}{{else}}{{i18n 'create new faq group'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'faq group name'}}</div>
+            <div class="sub-title">{{i18n 'provide a name for this faq group (i.e. "support faq")'}}</div>
+            <input name="name" type="text" maxlength="50" autocomplete="off" {{#if is_edit}}value="{{name}}"{{/if}} placeholder="Name" />
+            <div class="counter">50 {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'faq group description'}}</div>
+            <div class="sub-title">{{i18n 'write a description about this faq group'}}.</div>
+            <textarea name="description" maxlength="350" placeholder="Description">{{#if is_edit}}{{description}}{{/if}}</textarea>
+            <div class="counter">350 {{i18n 'characters left'}}</div>
+        </div>
+        <hr class="break"/>
+        <div class="advanced">{{i18n 'advanced'}}</div>
+        <div class="block advanced-block{{#if is_edit}}{{#if icon}} image-added{{/if}}{{/if}}">
+            <div class="title">{{i18n 'upload cover image'}}</div>
+            <div class="sub-title">{{i18n 'upload a cover image to go with this faq group'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*">
+            <img class="img-preview" {{#if is_edit}}{{#if icon}} data-icon-id='{{icon.id}}' src='{{icon.url}}'{{/if}}{{/if}}>
+            <div class="file-name">{{#if is_edit}}{{#if icon}}{{icon.name}}{{else}}File name{{/if}}{{/if}}</div>
+            <div class="remove-file">{{i18n 'remove'}}</div>
+            <label for="upload-file">{{i18n 'browse'}}</label>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" data-popup="group">{{i18n 'cancel'}}</div>
+            <div class="save">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if section}}
+<div class="popup-box" data-popup="section" {{#if is_edit}}data-id={{id}}{{/if}}>
+    <div class="popup-title">
+        {{#if is_edit}}{{i18n 'edit section'}}{{else}}{{i18n 'create section'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'section name'}}</div>
+            <div class="sub-title">{{i18n "choose a name for this section of your faq group (i.e. 'recommended')"}}.</div>
+            <input name="name" type="text" maxlength="50" autocomplete="off" {{#if is_edit}}value="{{name}}"{{/if}} placeholder="Name" />
+            <div class="counter">50 {{i18n 'characters left'}}</div>
+        </div>
+    </div>
+    <div class="footer ">
+        <div class="block">
+            <div class="cancel" data-popup="section">{{i18n 'cancel'}}</div>
+            <div class="save">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if qna}}
+    <div class="popup-box" data-popup="qna" {{#if is_edit}}data-id={{id}}{{/if}} data-section-id={{section_id}}>
+    <div class="popup-title">
+        {{#if is_edit}}{{i18n 'edit'}}{{else}}{{i18n 'create new'}}{{/if}} {{i18n 'Question and Answer'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'question'}}</div>
+            <div class="sub-title">{{i18n 'write a question to answer'}}</div>
+            <input name="question" type="text" maxlength="200" {{#if is_edit}}value="{{question}}"{{/if}} autocomplete="off" placeholder="Question" />
+            <div class="counter">200 {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block rte">
+            <div class="title mandatory-field">{{i18n 'answer'}}</div>
+            <div class="sub-title">{{i18n 'write and format the answer using text editor'}}.</div>
+            <div class="thumb-wrap">
+                {{#unless is_edit}}
+                    <img src='/static/images/author/RTE-thumb.png' />
+                {{/unless}}
+                <div id="preview" class="fr-view"></div>
+            </div>
+            <textarea name="answer" placeholder="Answer">{{#if is_edit}}{{answer}}{{/if}}</textarea> 
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" data-popup="qna">{{i18n 'cancel'}}</div>
+            <div class="save">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if confirm_delete}}
+<div class="popup-box confirm_delete">
+    <div class="popup-title delete-title">
+            delete {{entity_type}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                   {{i18n "you've made some cool stuff!"}}<br><br>
+                   {{i18n 'are you sure want to permanently delete this'}} {{entity_type}}?
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" rel="confirm_delete">cancel</div>
+                <div class="confirm-delete delete" data-type={{entity_type}} data-id={{entity_id}}>{{i18n 'delete'}}</div>
+            </div>
+            <div class="form-failed capital-letter">{{i18n 'oops! your work was not saved'}}.</div>
+            <div class="form-sent capital-letter">{{i18n 'success! your work has successfully been deleted.!'}}</div>
+            <div class="form-sending capital-letter">{{i18n 'deleting'}}...<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if publish_faq}}
+<div class="popup-box confirm_publish_faq">
+    <div class="popup-title capital-letter">
+            {{i18n 'publish changes'}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                    {{i18n 'are you sure you want to take your work live?'}}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" rel="confirm_publish_faq">{{i18n 'cancel'}}</div>
+                <div class="confirm-publish-faq publish">{{i18n 'publish'}}</div>
+            </div>
+            <div class="form-failed capital-letter">{{i18n 'oops! your work was not saved'}}.</div>
+            <div class="form-sent capital-letter">{{i18n 'success! your work has successfully been published.!'}}
+            </div>
+            <div class="form-sending">{{i18n 'publishing'}}...<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}

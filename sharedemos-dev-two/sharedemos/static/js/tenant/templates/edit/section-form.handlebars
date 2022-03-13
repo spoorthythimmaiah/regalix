@@ -1,0 +1,253 @@
+<div class="section-edit-block">
+    <div class="popup-title camel-case">
+        {{#if isEdit}}
+            {{i18n 'edit'}}
+        {{else}}
+            {{i18n 'create new'}}
+        {{/if}}
+        {{#if isAsset}}
+            {{i18n 'asset'}}
+        {{else}}
+            {{i18n 'category'}}
+        {{/if}}
+    </div>
+    <form enctype="multipart/form-data" name="{{#if isAsset}}asset{{else}}default{{/if}}-section-data">
+        <div class="content-block">
+            <div class="block">
+                <div class="title mandatory-field">
+                    {{#if isAsset}}
+                        {{i18n 'asset title'}}
+                    {{else}}
+                        {{i18n 'category title'}}
+                    {{/if}} 
+                </div>
+                <div class="sub-title">
+                    {{#if isAsset}}
+                        {{i18n 'choose a title for this asset'}}.
+                    {{else}}
+                        {{i18n 'choose a title for this category'}}.
+                    {{/if}}
+                </div>
+                <div class="input_wrap">
+                    <input type="text" name="name" class="section-name trim-input" maxlength="{{titleMaxLength}}" autocomplete="off" placeholder="Name" {{#if section.name}}value="{{section.name}}"{{/if}}/>
+                    <div class="counter"><span data-counter>{{section.name_limit}}</span> <span>{{i18n 'characters left'}}</span></div>
+                </div>            
+            </div>
+            <input type="hidden" name="parent" {{#if parent.slug}} value="{{parent.slug}}"{{/if}}/>
+            <div class="block">
+                <div class="title">
+                    {{#if isAsset}}
+                        {{i18n 'asset description'}}
+                    {{else}}
+                        {{i18n 'category description'}}
+                    {{/if}}
+                </div>
+                <div class="sub-title">
+                    {{#if isAsset}}
+                        {{i18n 'write a short description that best describes the content in this asset'}}.
+                    {{else}}
+                        {{i18n 'write a short description that best describes the content in this page'}}.
+                    {{/if}}
+                </div>
+                <div class="input_wrap">
+                    <textarea name="description" class="section-description trim-input" maxlength="{{descriptionMaxLength}}" placeholder="Description">{{section.description}}</textarea>
+                    <div class="counter"><span data-counter>{{section.description_limit}}</span> <span>{{i18n 'characters left'}}</span></div>
+                </div>
+            </div>
+            {{#if isAsset}}
+                <div class="block asset-link {{#if section.linked_asset}}asset-added{{/if}}">
+                    <div class="title mandatory-field">{{i18n 'upload asset file'}}</div>
+                    <div class="sub-title">{{i18n 'upload your asset file. your file will open on a separate tab.'}}</div>
+                    <input type="file" class="drag-file" id="upload-link-file" accept="application/pdf" name="file" resource-id={{section.linked_asset.id}} >
+                    <div class="file-name">
+                        {{#if section.linked_asset.meta_data.file_name}}
+                            {{section.linked_asset.meta_data.file_name}}
+                        {{else}}
+                            {{section.linked_asset.name}}
+                        {{/if}}
+                    </div>
+                    <label id="remove-asset">{{i18n 'remove'}}</label>
+                    <label for="upload-link-file" class="rippleEffect">
+                        <span class='upload-text'>{{i18n 'upload file'}}</span>
+                        <span class='progress-text hide'>{{i18n 'uploading . . .'}}</span>
+                        <span class='error-text hide'>{{i18n 'upload error'}}</span>
+                    </label>
+                </div>
+                <div class="block custom-url-block {{#unless section.linked_asset}}hide{{/unless}}">
+                    <div class="title"> {{i18n 'custom url name'}}</div>
+                    <div class="sub-title">{{i18n 'choose a custom url name for this asset.'}}</div>
+                    <div class="custom-url-preview">{{section.linked_asset.url}}</div>
+                    <div class="input_wrap">
+                        <input type="text" name="url" class="section-url trim-input" maxlength="{{urlMaxLength}}" autocomplete="off" placeholder="url" {{#if section.linked_asset.name}}value="{{section.linked_asset.name}}"{{/if}}/>
+                        <div class="counter"><span data-counter>{{section.linked_asset.name_limit}}</span> <span>{{i18n 'characters left'}}</span></div>
+                    </div>
+                </div>
+            {{/if}}
+            <div class="block row">
+                <div class="col-md-6">
+                    <div class="title">{{i18n 'hide/show'}}</div>
+                    <div class="sub-title">
+                        {{i18n 'toggle visibility for this category'}}. 
+                    </div>
+                    <input type="checkbox" id="show" name="show" class="css-checkbox" checked />
+                    <label for="show" class="css-label"></label>
+                </div>
+                {{#if showPrivateOption}}
+                    <div class="col-md-6">
+                        <div class="title">{{i18n 'public/private'}}</div>
+                        <div class="sub-title">
+                            {{i18n 'toggle privacy for this category'}}.
+                        </div>
+                        <input type="checkbox" name="private" id="private" class="css-checkbox" {{#if isPrivateTenant }} checked {{/if}}/>
+                        <label for="private" class="css-label"></label>
+                    </div>
+                {{/if}}
+            </div>
+            {{#unless isAsset}}
+                {{# if showExportOption}}
+                    <div class="block row">
+                        <div class="col-md-6">
+                            <div class="title">{{i18n 'export to pdf'}}</div>
+                            <div class="sub-title">
+                                {{i18n 'toggle pdf export for this category'}}. 
+                            </div>
+                            <input type="checkbox" id="export_to_pdf" name="export_to_pdf" class="css-checkbox" 
+                            {{# if section.can_download }} checked {{/if}}/>
+                            <label for="export_to_pdf" class="css-label"></label>
+                        </div>
+                    </div>
+                {{/if}}
+            {{/unless}}
+            <div class="block {{#if section.icon}}image-added{{/if}}">
+                <div class="title">{{i18n 'thumbnail cover'}}</div>
+                <div class="sub-title">{{i18n 'upload a thumbnail cover to illustrate this category'}}.</div>
+                <input type="file" class="drag-file" id="upload-file" accept="image/*" name="icon">
+                <img class="drag" id="upload-file-preview" {{#if section.icon}}src="{{section.icon.url}}"{{/if}}/>
+                <div class="file-name">{{#if section.icon}}{{section.icon.name}}{{/if}}</div>
+                <label id="remove-img">{{i18n 'remove'}}</label>
+                <label for="upload-file" class="rippleEffect">{{i18n 'browse'}}</label>
+            </div>
+            <hr>
+            <!-- cta button section -->
+            {{#unless isAsset}}
+                <div class="block create-cta-btn">
+                    <div class="title">{{i18n 'call to action button'}}</div>
+                    <div class="sub-title">{{i18n 'Create CTA button to share links or files with your visitors'}}.</div>
+                    {{#if showCreateCta}}
+                        <label for="create-cta" class="rippleEffect">{{i18n 'create cta'}}</label>
+                    {{/if}}
+                </div>
+                <div class="cta-list"></div>
+                <hr>
+            {{/unless}}
+            
+            {{#if isJourneyEnabled }}
+                <div class="block select-journey-btn">
+                    <div class="title">{{i18n 'Related Journeys'}}</div>
+                    <div class="sub-title">
+                        {{i18n 'Select the related Journeys to appear on Category page'}}.
+                    </div>
+                    <div class="rippleEffect browse-journey">{{i18n 'Choose Journeys'}}</div>
+                </div>
+                <div class="journey-list">
+                    <ol class="journey-link-list">
+                        {{> section-journey-list }}
+                    </ol>
+                </div>
+                <hr>
+            {{/if}}
+
+            <button class="show-advanced-options capital-letter" type="button" data-toggle="collapse" data-target="#advanced-cat-content">advanced</button>
+            <div id="advanced-cat-content" class="collapse">
+                {{#unless isAsset}}
+                    <div class="block">
+                        <div class="title">{{i18n 'upload video'}}</div>
+                        <div class="sub-title">{{i18n 'upload a video to this category by embedding the url'}}</div>
+                        <div class="video"></div>
+                        <div class="video-link">
+                            <input type="text" class="video-upload" placeholder="http://" autocomplete="off" />
+                            <div class="upload-section-video capital-letter rippleEffect">{{i18n 'upload'}}</div>
+                        </div>
+                    </div>
+                {{/unless}}
+                <div class="block">
+                    <div class="title">{{i18n 'tags'}}</div>
+                    <div class="sub-title">{{i18n 'add tags that best describe this category'}}.</div>
+                    <div class="add_tags">
+                        <input type="text" class="add_tag trim-input" placeholder="Tag" autocomplete="off" />
+                        <div class="save_tag rippleEffect capital-letter">{{i18n 'add tag'}}</div>
+                        <div class="suggestion_tags">
+                            <ul></ul>
+                        </div>
+                    </div><br>
+                    <div class="input_wrap">
+                        <div class="category_tags">
+                            <ul>
+                            {{# each section.tags}}
+                                {{> tags}}
+                            {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {{#if showRestrictionOption}}
+                    <div class="block">
+
+                        <div class="title capitalize-text {{#if restrictionsDisabled}} disabled {{/if}} hidden">{{i18n 'enable restrictions'}}</div>
+                        {{#if restrictionsDisabled}}
+                            <div class="sub-title disabled">
+                                {{i18n 'restrictions already set in a parent content.'}}
+                            </div>
+                        {{/if}}
+
+                        <input type="checkbox" name="section_enable_restrictions" id="section_enable_restrictions" class="css-checkbox hidden" data-toggle="collapse" data-target="#section-usr-grps-to-restrict" aria-expanded="false" aria-controls="section-usr-grps-to-restrict" {{#if isRestrictionEnabled}} checked {{/if}} {{#if restrictionsDisabled}} disabled {{/if}} />
+                        <label for="section_enable_restrictions" class="css-label hidden"></label>
+
+                        <div class="collapse {{#if isRestrictionEnabled}} in {{/if}}" id="section-usr-grps-to-restrict">
+                            <div>
+                                <div class="user-groups">
+
+                                    <div class="title capitalize-text">{{i18n 'allow access to' }}</div>
+                                    <input type="text" placeholder="Select user groups" class="usr-grp-dropdown" id="section-usr-grp-dropdown" readonly="true" data-toggle="collapse" data-target="#section-usr-grps-list" aria-expanded="false" aria-controls="section-usr-grps-list" {{#if isRestrictionEnabled}} value="{{restrictedToGroups}}" data-selected-groups="{{restrictedToGroupIds}}" {{/if}} />
+
+                                    <div id="section-usr-grps-list" class="collapse usr-grps-list">
+                                        <ul>
+                                        {{#each userGroupOptions}}
+                                            <li {{#if selectedDisabled }} class="selected-disabled" {{/if}}>
+                                                <input type="checkbox" name="user-group" value="" id="section-usr-grp-{{_id}}" class="user-group-items" data-attr-id={{_id}} data-attr-name="{{name}}" {{#if isChecked }} checked {{/if}}  {{#if selectedDisabled }} disabled {{/if}} />
+                                                <label for="section-usr-grp-{{_id}}"></label>
+                                                <span> {{name}} </span>
+                                            </li>
+                                        {{/each}}
+                                        </ul>
+                                    </div>
+                                    <div>&nbsp;</div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                {{/if}}
+                <div class="block">
+                    <div class="title capitalize-text">{{i18n 'end of life'}}</div>
+                    <div class="input_wrap">
+                        <input type="text" placeholder="Click to select date-time" class="datepicker-here" id="section_expire_at" readonly="true" data-position="top right" data-timepicker="true" {{#if eolExpireAt}}data-datetime={{eolExpireAt}}{{/if}} />
+                        <div>&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-footer">
+            <div class="form-footer">
+                <div class="cancel rippleEffect">{{i18n 'cancel'}}</div>
+                <input type="submit" class="save" value="{{i18n 'SAVE'}}" />
+            </div>
+            <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+            <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+            <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+        </div>
+    </form>
+</div>
+<div class="cta-form"></div>
+<div class="journey-form"></div>

@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pathfinder.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+{% endblock %}
+
+{% block container %}
+    <div id="main_container" data-pf-edit>
+        <div class="header">
+            <a href="{{url_for('dashboard.pathfinder')}}"><div class="cancel_pf_edit">{{_('cancel')}}</div></a>            
+            <label class="capital-letter">{{_('editing mode')}}</label>
+            <div class="tree-viewer">
+                <div class="tree-view-btn">Tree View</div>
+                {{ languagelist() }}
+                <div class="publish_pf disabled" data-popup="confirm_publish_pf">{{_('publish')}}</div>
+            </div>
+        </div>
+        <div class="path-finder-block">
+            <div class="send_pf_result">send me the list</div>
+            <div id="select-pf">
+                <div class="pf-available-options">  
+                    <div class="available_pathfinders"></div>
+                </div>
+            </div>
+            <div class="pf-nav-block row">
+                <div class="pf-nav">
+                    <div class="go-back-pf col-xs-6"><span></span></div>
+                    <div class="go-fwd-pf col-xs-6 disabled"><span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="tree-view-block"></div>
+        <div class="pathfinder_overlay">
+            <div class="popup-wrap"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+        {% else %}
+            document.favicon = ""
+        {% endif %}
+        {% if g.user.is_active() %}
+            document.isAuthor = "true";
+        {% endif %}
+        {% if slug %}
+            document.path_id = "{{slug}}";
+        {% endif %}
+        {% if can_publish %}
+            document.can_publish = "{{can_publish}}";
+        {% endif %}
+        document.requestParameters = function(){
+            return '?author=1'
+        };
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.defaultLocale = "{{tenant.default_locale.name}}";
+        document.viewType = "{{view_type}}";
+        document.locales = JSON.parse('{{all_languages|tojson}}');
+        {% if session['author']['locale'] %}
+            document.current_locale = "{{session['author']['locale']}}";
+        {% endif %}
+    </script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/apps/pathfinder.js') }}"></script>
+{% endblock %}

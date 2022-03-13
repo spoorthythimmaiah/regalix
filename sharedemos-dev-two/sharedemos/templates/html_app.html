@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{app.description or ''}}</title>
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+	{% if tenant and tenant.analytics %}
+        {{tenant.analytics|safe}}
+    {% endif %}
+    <style type="text/css">
+    	.evidon-banner {
+    		margin-left: 0 !important;
+    		width: 100% !important;
+    	}
+    </style>
+</head>
+<body style="margin: 0;padding: 0;overflow: hidden;" onresize="resizeWindow()">
+	<script type="text/javascript">
+		var w = window,
+	    d = document,
+	    e = d.documentElement,
+	    g = d.getElementsByTagName('body')[0],
+	    app_root = document.createElement('iframe');
+	    app_root.frameBorder = 0;
+	    app_root.id = 'html_app_viewport';
+	    // Append parent's referrer and request args to the child iframe 'src' attribute.
+	    // Changed from 'referrer' to 'referer' as the 'Ether' App uses the same convention. 
+	    var requestArgs = (window.location.search.length)?
+	    					(window.location.search + '&referer=' + document.referrer):
+	    					('?referer=' + document.referrer);
+	    app_root.src = '{{app_src}}' + requestArgs;
+		g.append(app_root);
+		resizeWindow()
+
+		function resizeWindow() {
+			var app_window = document.getElementById('html_app_viewport');
+			x = w.innerWidth || e.clientWidth || g.clientWidth;
+			y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+			app_window.width = x;
+			app_window.height = y;
+		}
+	</script>
+</body>
+</html>

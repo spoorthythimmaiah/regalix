@@ -1,0 +1,46 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<table border="0" cellpadding="0" cellspacing="0" width="800" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%; margin: 0px auto; background:#ffffff; color:#515151; font-family: Arial, Helvetica, sans-serif;border: 1px solid #818181;">
+			<tbody>
+				<tr>
+					<td>
+						<img src="{{url_for('static', filename='images/solid-fire-logo.png', _external=True)}}" align="left" style="display:block; margin: 45px;" width="95px;">
+					</td>
+				</tr>
+				<tr>
+					<td style="font-size:24px;text-align:center;padding: 0 45px 20px;;color: #1e1e1e">
+						{{user_first_name|title}}, you're almost there.
+					</td>
+				</tr>
+				<tr >
+					<td style="font-size:14px;line-height:25px;text-align:left;padding: 10px 45px;">
+						Hello {{user_first_name|title}},
+					</td>
+				</tr>
+				<tr >
+					<td style="font-size:14px;line-height:25px;text-align:left;padding: 10px 45px;">
+						Thank you for your registration. You are almost done with your account.
+					</td>
+				</tr>
+				<tr >
+					<td style="  font-size: 14px; line-height:25px; text-align: left;  padding: 10px 45px;">
+						To finish creating your account click the button below and create a password.<br />
+					</td>
+				</tr>
+				<tr>
+					<td style="padding:20px 45px">
+						<a href="{{url_for('auth.register_user', unique_user_id=unique_user_id, _external=True)}}" style="color:#ffffff;font-size:12px;padding:12px 30px;text-decoration:none;border-radius: 20px;background: #066afe;box-shadow: 0px 2px 3px 2px #ccc;">GET ACCESS</a>
+					</td>
+				</tr>
+				<tr >
+					<td style="font-size:14px;line-height:25px;text-align:left;padding: 20px 45px 50px;">
+						Sincerely,<br>
+						SolidFire Team
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

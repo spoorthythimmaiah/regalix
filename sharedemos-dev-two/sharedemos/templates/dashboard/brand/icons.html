@@ -1,0 +1,38 @@
+{% extends 'dashboard/dashboard_submenu/brand_submenu.html' %}
+
+{% block dashboard_content_container %}
+    {% if page_type == 'Create' %}
+        <div class="welcome_msg brand-wrap" >
+            <div class="welcome_txt">
+                <h1>No icons uploaded</h1>
+            </div>
+       </div>
+    {% else %}
+        <div class="view_options">
+            <span>View:</span>
+            <span class="glyphicon glyphicon-th-large active" id="lg_view"></span>
+            <span class="view_separator"></span>
+            <li class="glyphicon glyphicon-th-liststyle" id="li_view"></li>
+        </div>
+        <div class="work-area icons brand-background">
+            <div class="image_list current_view" id="th_lg_view">
+                <div class="item_details_header">
+                    <span class="item_name_header">Name</span>
+                    <span class="item_status">Status</span>
+                </div>
+                <div class="item_details">
+                    <div class="item_type"><img src="{{url_for('static', filename='images/bg1.jpg' )}}"></div>
+                    <p class="item_name" title="icons-with-longer-name-will-be-displayed-in-alt.jpg/png/jpeg">vmwarelogogray.png</p>
+                    <div class="item_options">
+                        <span class="img_date">06-26-2017</span>
+                        <span class="delete_item"></span>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    {% endif %}
+
+    <label for="brand_icons" class="create-new brand"></label>
+    <input type="file" id="brand_icons" class="hidden" accept="image/*" data-type="image">
+
+{% endblock %}

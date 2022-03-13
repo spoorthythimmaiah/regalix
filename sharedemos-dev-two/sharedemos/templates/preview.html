@@ -1,0 +1,134 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/jquery-qtip/jquery.qtip.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick-theme.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/document_styles.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pdf_viewer.css') }}"/>
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_editor.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/char_counter.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/code_view.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/colors.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/emoticons.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/file.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/fullscreen.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/help.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/image.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/image_manager.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/line_breaker.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/quick_insert.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/special_characters.min.css') }}" /> 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/table.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/video.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/third_party/embedly.min.css') }}" />
+
+    {% if tenant and tenant.theme %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='media/theme/' + tenant.theme.id|string + '.css') }}" />
+    {% endif %}
+{% endblock %}
+
+{% block container %}
+<div id="main_container">
+    <div class="header">
+        <a href="#!/" class="hidden-xs hidden-sm">
+            <div class="logo">
+                {% if tenant.logo %}
+                    {% set tenant_logo = url_for('static', filename='media/' + tenant.logo) %}
+                {% else %}
+                    {% set tenant_logo = url_for('static', filename='images/login-logo.png') %}
+                {% endif %}
+                <img src="{{tenant_logo}}">
+            </div>
+        </a>
+        <input type="text" name="search-terms" autocomplete="off" class= "search-terms" id="search-terms" placeholder="{{_('What are you looking for?')}}" autofocus>
+        <div class="sd-language">
+            <ul class="language-dd" id='user-language'>
+                {% for language in languages %}
+                <li lvalue='{{language.id}}' {% if language.selected %}class='active'{% endif %}>{{language.name}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="social-sharing">
+            <div class="twitter-share-button"></div>
+            <div class="linked-share-button"></div>
+        </div>
+        {% if session['user']['locale'] %}
+            <div id="search-bar" class="search-bar">
+                <div id="search">                
+                    <div class="search-overlay">
+                        <div class="search-overlay-header">                            
+                            <div class="close-search-overlay"></div>
+                        </div>
+                        <div id="input">                            
+                            <div id="search-result" class="search-result"></div>
+                            <div class="close-search-overlay visible-xs visible-sm">Close</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <a href="#!/" class="visible-xs visible-sm">
+            <div class="logo">
+                {% if tenant.logo %}
+                    {% set tenant_logo = url_for('static', filename='media/' + tenant.logo) %}
+                {% else %}
+                    {% set tenant_logo = url_for('static', filename='images/login-logo.png') %}
+                {% endif %}
+                <img src="{{tenant_logo}}">
+            </div>
+        </a>
+
+    </div>
+
+    <div id="block_container" class="block_container"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        document.projectEnv = '{{ project_env }}';
+        document.airbrake_api_key = '{{ airbrake_api_key }}';
+        document.airbrake_project_id = '{{ airbrake_project_id }}';
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+        {% else %}
+            document.favicon = ""
+        {% endif %}
+        document.privacy_link = "{{ tenant.privacy_link or '' }}";
+        document.requestParameters = function(){
+            return '?author=1'
+        };
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.defaultLocale = "{{tenant.default_locale.name}}";
+        document.viewType = "{{view_type}}";
+        document.tenantFooterImage = "{{tenant.logo or ''}}";
+        document.template_folder = "{{tenant.template or 'default'}}";
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+        document.documentStyles = "{{document_styles}}";
+        if(['box', 'grid', 'default'].indexOf(document.template_folder) == -1){
+            document.template_folder = 'box';
+        }
+        {% if session['author']['locale'] %}
+            document.current_locale = "{{session['author']['locale']}}";
+        {% endif %}
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script type="text/javascript" src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ripple.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/main.js') }}"></script>
+{% endblock %}

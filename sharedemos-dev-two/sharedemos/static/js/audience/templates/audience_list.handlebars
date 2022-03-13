@@ -1,0 +1,66 @@
+{{#if audiences.length}}
+    <div class="audience-wrap company">
+        <div class="company-manage">
+            <div class="row">
+                <div class="col-md-12">
+                    {{#each audiences}}
+                    <div class="company_profile" data-audience-id='{{company_id}}'>
+                        <div class="cp_delete"></div>
+                        <div class="company_details">
+                            <div class="logo">
+                                <img src="{{#if logo_url}}{{logo_url}}{{else}}/static/images/icon_overlay.png{{/if}}">
+                            </div>
+                            <div class="company_info">
+                                <div class="title">{{name}}<div class="company_edit"></div></div>
+                                <a class="link" href="{{website_url}}" target="_blank">{{website_url}}</a>
+                            </div>
+                        </div>
+                        <div class="share_content{{#if users.length}} active{{/if}}">
+                            SHARE CONTENT
+                            <div>Sharing content is only possible when employees from this company are added. Employees added will receive a private link to access your content.</div>
+                        </div>
+                        {{#if expire_at}}
+                        <br><div class="link_expiry">LINKS EXPIRE ON {{expire_at}}</div> 
+                        {{/if}}
+                        <div class="add_employee new">ADD NEW EMPLOYEE</div>
+                        {{#if users.length}}
+                        <div class="employee_details row">
+                            <div class="table_header">
+                                <div class="col-sm-3 name">NAME</div>
+                                <div class="col-sm-3 email">EMAIL</div>
+                                <div class="col-sm-3 link_status">LINK STATUS</div>
+                                <div class="col-sm-3"></div>
+                            </div>
+                            {{#each users}}
+                                {{#compare @index "<" '3'}}
+                                    <div class="table_row">
+                                        <div class="col-sm-3 name"><img class="profile-img" data-name="{{initials}}" picture-url="">{{first_name}}{{#if last_name}} {{last_name}}{{/if}}</div>
+                                        <div class="col-sm-3 email">{{email}}</div>
+                                        <div class="col-sm-3 link_status not_set">{{#if email_sent}}link sent{{else}}link not sent yet{{/if}}</div>
+                                        <div class="col-sm-3" data-employee-id="{{employee_id}}">
+                                            <div class="edit">EDIT</div>
+                                            <div class="delete">DELETE</div>
+                                        </div>
+                                    </div>
+                                {{/compare}}
+                            {{/each}}
+                            {{#compare users.length ">" '3'}}
+                            <div class="load_more">load more</div>
+                            {{/compare}}
+                        </div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <div class="audience-wrap welcome_msg">
+        <div class="audience-content welcome_txt">
+            <h1>Welcome to Audiences</h1>
+            <p class="message2">Create company profiles and share exclusive content with them.</p>
+        </div>
+    </div>
+{{/if}}
+<div class="add-new company"></div>   

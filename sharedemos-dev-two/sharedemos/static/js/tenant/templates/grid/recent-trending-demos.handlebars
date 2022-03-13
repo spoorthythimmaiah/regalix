@@ -1,0 +1,28 @@
+<div class="row ">
+	{{#each demos}}
+	<div class="recent" product='{{product_slug}}' section='{{section_slug}}' demo='{{slug}}'>
+		<div class="preview_wrap" style="background-image: url({{image_src}});" thumbnail_div='{{slug}}'>
+		</div>
+		<div class="information_wrap">
+			<div class="title">
+				{{name}}
+			</div>
+			<div class="links">
+				{{# compare product_name "==" section_name}}
+					{{product_name}} > {{name}}
+				{{/compare}}
+				{{# compare product_name "!=" section_name}}
+					{{product_name}} > {{section_name}} > {{name}}
+				{{/compare}}
+			</div>
+			{{#if tags}}
+			<div class="ratings pwt-tags">
+				{{#each tags}}
+				<span class="new sd-label theme-bg-color tags-span">{{this}}</span>
+				{{/each}}
+			</div>
+			{{/if}}
+		</div>
+	</div>
+	{{/each}}
+</div>

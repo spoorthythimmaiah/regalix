@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/audience_login.css') }}" />
+{% endblock %}
+{% block container %}
+<div class="outer_wrap">
+    <div class="main_wrap">
+        <div class="col-md-6 col-sm-12 col-xs-12 content-wrap left">
+            <div class="logo">
+                {% if employee.tenant.logo %}
+                <img src="{{ url_for('static', filename='media/' + employee.tenant.logo) }}">
+                {% else %}
+                <span>SHAREDEMOS</span>
+                {% endif %}
+            </div>
+            <div class="logo arrow">
+                <img src="{{ url_for('static', filename='images/bidirectional_arrow.png') }}">
+            </div>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='media/external_icons/' + employee.company.logo_url) if employee.company.logo_url else url_for('static', filename='images/icon_overlay.png') }}">
+            </div>
+            <h1>{{employee.first_name|title}}, {{employee.tenant.name or 'VMware Inc.'}} has some private content for you.</h1> 
+            <h2>{{employee.company.message}}</h2>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12 content-wrap right">
+            <div class="title1">Sign in to access Private Content</div>
+            <div class="title2">{{employee.email|lower}}</div>
+            <form method="POST" action="">
+                <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+                <div class="login-form-field ">
+                    <input type="password" placeholder="Password" name='password' autocomplete="off" required />
+                    {% for message in get_flashed_messages() %}
+                    <label class="field_status">{{message}}</label>
+                    {% endfor %}
+                </div>
+                <input type="submit" value="SIGN IN" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

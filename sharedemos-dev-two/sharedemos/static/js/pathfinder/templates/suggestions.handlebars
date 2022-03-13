@@ -1,0 +1,75 @@
+<ol class="pf-suggestion">
+	<div class="pf-suggestions-header">
+		<h2>{{message.title}}</h2>
+		<p>{{message.body}}</p>
+		{{#if message.icon_path }}
+		<div class="pf-icon-wrap">
+			<img class="pf-icon pf-suggestion-icon" src="/static/media/{{message.icon_path}}" />
+			<span class="img-magnifying"></span>
+		</div>
+		{{/if}}
+	</div>
+
+	{{#each suggestions}}
+		{{#compare type '==' 'group'}}
+			<li class="suggestion_group" group-id={{id}}>
+				<div class="pf-suggestions-group-header">
+					<h2>{{title}}</h2>
+					<p>{{description}}</p>
+					{{#if ../isEdit }}
+						<div class="pf_drag"></div>
+					{{/if}}
+				</div>
+				<ol class="suggestion_list">
+					{{#each suggestions_list}}
+						<li class="pf-suggestion-demo {{#unless chapter_slug}}external-suggestion{{/unless}}" chapter="{{chapter_slug}}" suggestion-id={{id}}>
+							<div>
+								{{#if ../../isEdit }}
+									<div class="pf_drag"></div>
+								{{/if}}
+								<div class="pf-suggestion-icon">
+									<img src="{{imageSrc}}"/>
+								</div>
+								<div class="pf-suggestion-info">
+									{{#if chapter_slug}}
+										<a product="{{product_slug}}" section="{{section_slug}}" chapter="{{chapter_slug}}" suggestion-type="demo">{{name}}</a>
+										<div class="count">{{totalSlides}}</div>
+									{{else}}
+										<a external_url="{{external_url.url}}" target="_blank" suggestion-type="external-link">{{#if external_url.title}}{{external_url.title}}{{/if}}
+										</a>
+										<div class="link">{{external_url.url}}</div>
+									{{/if}}
+								</div>
+							</div>
+						</li>
+					{{/each}}
+				</ol>
+			</li>
+		{{/compare}}
+
+		{{#compare type '==' 'discrete'}}
+			<li class="pf-suggestion-demo {{#unless chapter_slug}}external-suggestion{{/unless}}" chapter="{{chapter_slug}}" suggestion-id={{id}}>
+				<div>
+					{{#if ../isEdit }}
+						<div class="pf_drag"></div>
+					{{/if}}
+					<div class="pf-suggestion-icon">
+						<img src="{{imageSrc}}"/>
+					</div>
+					<div class="pf-suggestion-info">
+						{{#if chapter_slug}}
+							<a product="{{product_slug}}" section="{{section_slug}}" chapter="{{chapter_slug}}" suggestion-type="demo">{{name}}</a>
+							<div class="count">{{totalSlides}}</div>
+						{{else}}
+							<a external_url="{{external_url.url}}" target="_blank" suggestion-type="external-link">{{#if external_url.title}}{{external_url.title}}{{/if}}</a>
+							<div class="link">{{external_url.url}}</div>
+						{{/if}}
+					</div>
+				</div>
+			</li>
+		{{/compare}}
+
+	{{/each}}
+	 
+</ol>
+<div id="suggestion_popup"></div>

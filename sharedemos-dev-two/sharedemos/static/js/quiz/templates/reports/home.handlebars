@@ -1,0 +1,51 @@
+<div class="card-container">
+    <div class="card-block-container rounded-block">
+        <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-content="Total number of Quizzes present on End site">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </button>
+        <h6>Total Quizzes</h6>
+        <div class="count">{{list.length}}</div>
+    </div>
+    <div class="card-block-container rounded-block">
+        <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-content="Number of participants landing on Quiz Page">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </button>
+        <h6>Total Quiz Participants</h6>
+        <div class="count">{{users.started}}</div>
+    </div>
+    <div class="card-block-container rounded-block">
+        <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-content="Number of Participants completing and submitting the Quiz">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </button>
+        <h6>Completed Participants</h6>
+        <div class="count">{{users.submitted}}</div>
+    </div>
+</div>
+<div class="title-block">
+    <div class="title-header">Quizzes</div>
+    <div class="title-block-header">
+        <div>Title</div>
+        <div class="expires-on">Expires on</div>
+        <div>Average Passing</div>
+        <div>Questions</div>
+        <div>Quiz Takers</div>
+    </div>
+    {{#each list}}
+    <div class="title-row" data-quiz-id="{{id}}">
+        <div class="quiz-title">{{name}}</div>
+        <div class="expires-on">{{#if due_date}}{{localTime due_date '{"year": "numeric", "month": "numeric", "day": "numeric"}'}}{{else}}-{{/if}}</div>
+        <div>{{#if average_passing}}{{average_passing}}%{{else}}-{{/if}}</div>
+        <div>{{total_questions}}</div>
+        <div>{{users}}</div>
+    </div>
+    {{/each}}
+</div>

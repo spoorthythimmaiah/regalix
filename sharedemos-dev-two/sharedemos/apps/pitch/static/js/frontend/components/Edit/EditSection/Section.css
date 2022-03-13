@@ -1,0 +1,114 @@
+.sections-wrapper, .sections-wrapper .section {
+    position: relative;
+}
+
+.action {
+    position: absolute;
+    right: 20px;
+    top: -23px;
+    letter-spacing: 14px;
+}
+.action .dot {
+    height: 5px;
+    width: 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
+}
+.action:hover {
+    cursor: pointer;
+}
+.action:hover .dot {
+    background-color: #0568fa;
+}
+.action-list {
+    display: none;
+    letter-spacing: normal;
+    position: absolute;
+    right: 0;
+    background: #fff;
+    padding: 15px 15px 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 4px 0px #ccc;
+}
+.action:hover .action-list {
+    display: block;
+}
+.action-list li {
+    text-transform: capitalize;
+    padding-left: 30px;
+    position: relative;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+li.publish:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 14px;
+    background: url(/static/images/flyer.png) no-repeat;
+    left: 0;
+    background-size: 100%;
+    filter: invert(0.5);
+}
+li.delete:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 14px;
+    background: url(/static/images/icon-delete3.png) no-repeat;
+    left: 0;
+    background-size: 100%;
+    filter: invert(0.5);
+}
+li.edit:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 14px;
+    background: url(/static/images/writing.png) no-repeat;
+    left: 0;
+    background-size: 100%;
+    filter: invert(0.5);
+}
+.action-list li:hover, .action-list li:hover:before {
+    color: #0568fa;
+    filter: invert(0);
+}
+/* Section Navigation */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+}
+.navigation span {
+    background: #e9e9e9;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.navigation span.inactive {
+    opacity: 0.5;
+    cursor: default;
+}
+span.prev:after, span.next:after {
+    content: "";
+    position: absolute;
+    border: 2px solid #1e1e1e;
+    width: 8px;
+    height: 8px;
+    margin: 0 auto;
+    left: 0px;
+    right: 0;
+    border-top: none;
+    border-left: none;
+    transform: rotate(135deg);
+}
+span.next:after {
+    transform: rotate(-45deg);
+}

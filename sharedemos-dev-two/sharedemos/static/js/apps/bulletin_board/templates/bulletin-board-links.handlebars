@@ -1,0 +1,23 @@
+<li class="bulletin-link-data">
+    <div class="bulletin-link-details">
+        <div class="bulletin-link-title">{{this.name}}</div>
+        {{#compare this.link_type "==" 'external'}}
+            <a href="{{this.url}}" class="bulletin-link-url" data-type="{{this.link_type}}"
+            data-linkid="{{this.id}}" target="_blank">{{this.url}}</a>
+        {{/compare}}
+        {{#compare this.link_type "==" 'internal'}}
+            <a href="{{this.url}}" class="bulletin-link-url" data-type="{{this.link_type}}" 
+            data-product="{{this.product_id}}" data-section="{{this.section_id}}" 
+            data-chapter="{{this.chapter_id}}" target="_blank" data-groups="{{this.groups}}"
+            data-linkid="{{this.id}}">{{{this.breadcrumb}}}
+            </a>
+        {{/compare}}
+        <div class="bulletin-link-edit camel-case">
+            {{#compare this.link_type "==" 'external'}}
+                <span class="edit-bulletin-link" data-hidePopup="create-bulletin-popup" data-showPopup="create-bulletin-link-popup" data-type="{{this.link_type}}" >{{i18n 'edit'}}</span>
+            {{/compare}}
+            <span class="remove-bulletin-link">{{i18n 'remove'}}</span>
+        </div>
+    </div>
+    <div class="bulletin-board-link-drag no-action ui-sortable-handle"></div>
+</li>

@@ -1,0 +1,25 @@
+<h4>Geography</h4>
+<div id="geography">{{#unless geography.length}}<div class="no-report">{{ i18n 'No data available'}}</div>{{/unless}}</div>
+<div class="reports_data_list">
+    <div class='data_block'>
+        {{# if geography.length}}
+        <div class="reports_header col-xs-12">
+            <div class="col-xs-10"><span>country</span></div>
+            <div class="col-xs-2 text-right"><span>visits</span></div>
+        </div>
+        <div class="reports_list" id="referral_geography_reports">
+            {{# each geography}}
+                <div class="reports_data_row col-xs-12{{#unless ../load_more}}{{# compare @index ">" 4}} hidden {{/compare}}{{/unless}}">
+                  <div class="col-xs-10">{{math @index "+" 1}}. {{this.name}}</div>
+                  <div class="col-xs-2 text-right">{{formatNumber this.count}}</div>
+                </div>
+            {{/each}}
+            {{#unless load_more}}
+            {{# compare geography.length ">" 5}}
+                <div class="load_more_referrals load_more_reports text-center col-xs-12">load more</div>
+            {{/compare}}
+            {{/unless}}
+        </div>
+        {{/if}}
+    </div>
+</div>

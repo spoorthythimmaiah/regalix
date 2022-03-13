@@ -1,0 +1,141 @@
+{% extends 'tenants/seo/purestorage/base.html' %}
+
+{% block seo %}
+    {% set icon = api['icon']['url'] if api['icon'] else None %}
+    {% if not icon %}
+        {% set icon = api['parent']['icon']['url'] if api['parent'] and api['parent']['icon'] else None %}
+    {% endif %}
+    {% if not icon %}
+        {% set icon = api['product']['icon']['url'] if api['product'] and api['product']['icon'] else None %}
+    {% endif %}
+    {{ load_seo_meta(title=api['name'] + ' | ' + api['tenant']['name'], description=api['description'], image=icon) }}
+{% endblock %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo_player.css') }}" />
+{% endblock %}
+
+{% block container %}
+    {{ purestorage_search() }}
+    {% set link = url_for('main.home') %} 
+    {% if api['parent'] %}
+        {% set link = url_for('main.route_handler', section=api['parent']['slug']) %}
+    {% endif %}
+    <div class="container-block">
+        <header>
+            <div class="pure-nav-bar">
+                <div class="container">
+                    <img src="{{ url_for('static', filename='images/purestorage/logo.png') }}">
+                    <a href="{{ link }}"><img src="{{ url_for('static', filename='images/purestorage/backbutton.png') }}"></a>
+                    <!-- search -->
+                    <div class="ps-search-icon"></div>
+                    <div data-attr="cancel-search"></div>
+                </div>
+            </div>
+            <div id="pure-carousel" class="carousel slide" data-ride="carousel" >
+                <div class="item">
+                    <div class="carousel-banner-bg" style="background: url({{ url_for('static', filename='images/purestorage/categorybanner.jpg') }});background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                    <div class="carousel-caption container">
+                        <div class="col-xs-12 col-md-7">
+                            <h1 class="sub-title">{{ api['name'] }}</h1>
+                            <p>{{ api['description'] or '' }}</p>
+                            {% if api['tenant']['can_download'] and api['can_download'] and pl_with_chapter %}
+                                <a class="export-pdf" data-attr-section="{{ api['slug'] }}">{{ _('export to pdf') }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-12 col-md-5">
+                            {{ videos() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="pure-category">
+            {% for playlist in api['playlists'] %}
+                {% if playlist['walkthroughs'] %}
+                    <div class="playlist-block">
+                        <div class="container">
+                            <div class="playlist-header">
+                                <div>
+                                    <h4>{{ playlist['name'] }}</h4> 
+                                    <span class="playlist-demo-count">{{playlist['walkthroughs']|length}} Demo{% if playlist['walkthroughs']|length > 1 %}s{% endif %}</span>
+                                </div>
+                                <p>{{ playlist['description'] }}</p>
+                            </div>
+                            <div class="row">
+                                {% for demo in playlist['walkthroughs'] %}
+                                    <div class="col-xs-6 col-md-4 col-lg-4 demo-details">
+                                        <div class="demo-icon">
+                                            {% if api['product']['slug'] == api['slug'] %}
+                                                <a href="{{ url_for('main.route_handler', section=api['product']['slug'], chapter=demo['slug']) }}"
+                                                    class="playerframe-link" data-product-id="{{ api['product']['slug'] }}"
+                                                    data-section-id="{{ api['slug'] }}" data-chapter-id="{{ demo['slug'] }}">
+                                            {% else %}
+                                                <a href="{{ url_for('main.route_handler', section=api['slug'], chapter=demo['slug']) }}"
+                                                class="playerframe-link" data-product-id="{{ api['product']['slug'] }}"
+                                                data-section-id="{{ api['slug'] }}" data-chapter-id="{{ demo['slug'] }}">
+                                            {% endif %}
+                                            {% set img_url = url_for('static', filename='images/purestorage/category-bg.jpg') %}
+                                            {% if demo['image'] %}
+                                                {% if demo['image']['type'] == 'image' %}
+                                                    {% set img_url = url_for('static', filename='media/' + demo['image']['path']) %}
+                                                {% elif demo['image']['type'] == 'embed' and demo['image']['meta_data'] and demo['image']['meta_data']['thumbnail_url'] %}
+                                                    {% set img_url = demo['image']['meta_data']['thumbnail_url'] %}
+                                                {% elif demo['image']['type'] == 'sandbox' %}
+                                                    {% set img_url = demo['image']['path'] %}
+                                                {% elif demo['image']['type'] == '360' %}
+                                                    {% set img_url = url_for('static', filename='media/' + demo['image']['path'] + '/1.jpg') %}
+                                                {% elif demo['image']['type'] == 'link' and demo['image']['meta_data']['icon_name'] %}
+                                                    {% set img_url = url_for('static', filename='media/external_icons/' + demo['image']['meta_data']['icon_name']) %}
+                                                {% endif %}
+                                            {% endif %}
+                                            <img src="{{ img_url }}">
+                                            <div class="completed-overlay">
+                                                <p>completed</p>
+                                            </div>
+                                            <div class="demo-bottom-gradient"></div>
+                                            <h6 class="demo-name">{{ demo['name'] }}</h6>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% if api['cta_list'] %}
+        <div class="additional-resources">
+            <h4>check out these additional resources</h4>
+            <div class="pure-category-options">
+                {{ cta_list(api['cta_list']) }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="container">
+        {{ footer() }}
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="{{ url_for('static', filename='js/seo/purestorage/main.js') }}"></script>
+<script type="text/javascript">
+    document.isUserAnonymous = true;
+    document.apps = JSON.parse('{{apps|tojson}}');
+    document.app_name = "library";
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.viewType = "{{view_type}}";
+    document.product = "{{api['product']['slug']}}";
+    document.section = "{{api['slug']}}";
+    document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    document.page = 'Playlist';
+</script>
+<script src="{{ url_for('static', filename='js/build/templates/vmware/player.js') }}"></script>
+<script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

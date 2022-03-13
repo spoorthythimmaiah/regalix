@@ -1,0 +1,81 @@
+<form name='bulletin-board-data' class="create-bulletin-popup" id='{{bulletinBoard._id}}'>
+    <div class="popup-title camel-case">
+        {{#if isEdit}}
+            {{i18n 'edit'}}
+        {{else}}
+            {{i18n 'create new'}}
+        {{/if}}
+            {{i18n 'bulletin board'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'name'}}</div>
+            <div class="sub-title">{{i18n 'choose a title for this bulletin board'}}.</div>
+            <div class="input_wrap">
+                <input type="text" class="bulletin-board-title trim-input" name="name" autocomplete="off" placeholder="{{i18n 'Name'}}" value="{{bulletinBoard.name}}"/>
+            </div>
+        </div>
+        <div class="block">
+            <div class="title description">{{i18n 'description'}}</div>
+            <div class="sub-title">{{i18n 'write a short description that best describes the content in this bulletin board'}}.</div>
+            <div class="input_wrap">
+                <textarea class="bulletin-board-desc trim-input" name="description" autocomplete="off" placeholder="{{i18n 'description'}}">{{bulletinBoard.description}}</textarea>
+            </div>									
+        </div>
+        {{#if showRestrictionOption}}
+            <div class="block">
+                <div class="title capitalize-text">{{i18n 'allow access to' }}</div>
+                <input type="text" placeholder="Select user groups" class="usr-grp-dropdown" id="bboard-usr-grp-dropdown" readonly="true" data-toggle="collapse" data-target="#bboard-usr-grps-list" aria-expanded="false" aria-controls="bboard-usr-grps-list" value="{{restrictedToGroups}}" data-selected-groups="{{restrictedToGroupIds}}"/>
+                <div id="bboard-usr-grps-list" class="collapse usr-grps-list">
+                    <ul>
+                    {{#each userGroupOptions}}
+                        <li {{#if selectedDisabled }} class="selected-disabled" {{/if}}>
+                            <input type="checkbox" name="user-group" value="" id="bboard-usr-grp-{{_id}}" class="user-group-items" data-attr-id={{_id}} data-attr-name="{{name}}" {{#if isChecked }} checked {{/if}}  {{#if selectedDisabled }} disabled {{/if}} />
+                            <label for="bboard-usr-grp-{{_id}}"></label>
+                            <span> {{name}} </span>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+                <div>&nbsp;</div>
+            </div>
+        {{/if}}
+        <div class="block">
+            <div class="title">{{i18n 'link'}}</div>
+            <div class="sub-title">{{i18n 'choose link/s to display on bulletin board'}}.</div>
+            {{!-- Added links --}}
+            <ol class="bulletin-links-list" id="link-container">
+                {{#each bulletinBoard.links}}
+                    {{> bulletin-board-links}}
+                {{/each}}
+            </ol>
+            <div class="bulletin-link-wrap">
+                <div class="bulletin-external-link-btn capital-letter trigger-inplace-popup bulletin-btn {{#if isHidden}}hide-external{{/if}}"
+                data-hidePopup="create-bulletin-popup" data-showPopup="create-bulletin-link-popup">     {{i18n 'external link'}}
+                </div>
+                <div class="bulletin-browse-link-btn capital-letter trigger-inplace-popup  bulletin-btn" data-hidePopup="create-bulletin-popup" data-showPopup="bulletin-browse-link-popup">
+                    {{i18n 'browse link'}}
+                </div>
+            </div>                                  
+        </div>
+        </div>
+    </div>
+    <div class="popup-footer">
+        <div class="form-footer">
+            <div class="cancel rippleEffect" rel="create-bulletin-board">{{i18n 'cancel'}}</div>
+            <input type="submit" class="save rippleEffect capital-letter" value="{{i18n 'save'}}" />
+        </div>
+        <div class="form-failed">
+            {{i18n 'oops! saving failed'}}
+        </div>
+        <div class="form-sent">
+            {{i18n 'saved successfully!'}}
+        </div>
+        <div class="form-sending">
+            {{i18n 'saving'}}...
+            <div class="cd-loading"></div>
+        </div>
+    </div>
+</form>
+{{> bulletin-external-link}}
+{{> bulletin-browse-link}}

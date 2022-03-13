@@ -1,0 +1,121 @@
+{{#if add_quiz}}
+	<div class="add-block" data-popup="quiz">
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3 class='capital-letter'>add quiz</h3>
+	</div>
+{{/if}}
+
+{{#if add_question}}
+	<div class="add-block question" data-popup="question">
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>add question</h3>
+	</div>
+{{/if}}
+
+{{#if add_next_question}}
+	<div class="add-block new" data-popup="question">
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>new question</h3>
+	</div>
+{{/if}}
+
+{{#if choose_answer_option_type}}
+	<div class="add-block" data-popup="choose_answer_option_type">
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>answer type</h3>
+	</div>
+{{/if}}
+
+{{#if single_select}}
+	<div class="add-block" data-popup="select" data-type="single_select">
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>add single select answer</h3>
+	</div>
+{{/if}}
+
+{{#if pagination}}
+	{{#if first_question}}
+	    <div class = "pagination-head capital-letter">questions</div>
+	    <div class='pagination'>
+	        <span id="question_block_{{index}}" class='circle' question_id={{question_id}}>
+	            {{index}}
+	        </span>
+	    </div> 
+	{{else}}
+		<span id="question_block_{{index}}" class='circle' question_id={{question_id}}>
+	            {{index}}
+	    </span>
+	{{/if}}
+{{/if}}
+
+{{#if multi_select}}
+	<div class="add-block" data-popup="select" data-type="multi_select">
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>add multi select answer</h3>
+	</div>
+{{/if}}
+
+{{#if matching}}
+	<div class="add-block left" data-popup="item_style" data-type="matching_left" matching>
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>add item</h3>
+	</div>
+	<div class="add-block right disabled" data-popup="item_style" data-type="matching_right" matching>
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>item match</h3>
+	</div>
+{{/if}}
+
+{{#if sortable}}
+	<div class="add-block" data-popup="select" data-type="sortable">
+		<img src="/static/images/author/add_pathfinder.png" />
+		<h3 class='capital-letter'>add sortable answer</h3>
+	</div>
+{{/if}}
+
+{{#if edit_quiz}}
+	<div class="quiz-edit">
+		<div class="quiz-edit-wrap">
+			{{#if edit_question}}
+				<div class="quiz-edit-option camel-case edit" data-popup="question">
+					edit question
+				</div>
+				<div class=" camel-case quiz-edit-option delete" data-popup="confirm_delete" data-type="question">
+					delete question
+				</div>
+			{{/if}}
+
+			{{#if edit_answer}}
+				<div class="quiz-edit-option  camel-case edit" data-popup="{{popup}}" data-type="{{option_type}}">
+					edit answer
+				</div>
+				<div class="quiz-edit-option camel-case delete" data-popup="confirm_delete" data-type="answer">
+					delete answer
+				</div>
+			{{/if}}
+			{{#if quiz_edit}}
+		        <div class="quiz-edit-option camel-case edit" data-popup="quiz">
+		        	edit quiz
+		        </div>
+		        <div class="quiz-edit-option camel-case duplicate" data-popup="quiz">
+		        	duplicate quiz
+		        </div>
+		        <div class="quiz-edit-option camel-case delete " data-popup="confirm_delete" data-type="quiz">
+		        	delete quiz
+		        </div>
+		    {{/if}}
+		</div>
+	</div>
+{{/if}}
+{{#if quiz_sorting}}
+	<div class="quiz-reorder-icon no-action">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" 
+		viewBox="0 	0 100 125" enable-background="new 0 0 100 100" xml:space="preserve">\
+			<polygon fill-rule="evenodd" clip-rule="evenodd" points="95,50 83.75,38.75 83.75,44.375 55.625,44.375 55.625,16.25 61.25,16.25   50,5 38.75,16.25 44.375,16.25 44.375,44.375 16.25,44.375 16.25,38.75 5,50 16.25,61.25 16.25,55.625 44.375,55.625 44.375,83.75   38.75,83.75 50,95 61.25,83.75 55.625,83.75 55.625,55.625 83.75,55.625 83.75,61.25 "/>\
+		</svg>
+    </div>
+{{/if}}
+
+{{#if edit_sort_option}}
+    <div class="quiz-drag"></div>
+{{/if}}

@@ -1,0 +1,86 @@
+<div id="section-container" class="page-container theme-bg-color">
+	<div class="overlay">
+		<div class="sign-up-wrap"></div>
+	</div>
+	<div class="pwt-section">
+		<div class="">
+			<div class="row">
+				<div class="col-md-6 left-pane theme-bg-color">
+					<div class="section-pwt-list">
+						<div class="section-pwt-menu theme-title-color" slug='{{parent.slug}}'>
+							<span class="hidden-xs hidden-sm">{{i18n parent.name}}</span>
+						</div>
+						<div class="section-pwt-title theme-title-color">
+							{{ name }}
+						</div>
+						<div class="section-pwt-description theme-paragraph-color">{{description}}</div>
+							{{#each cta_list}}
+							<div class="sign-up hidden-sm hidden-xs">
+								{{#compare type "==" 'form'}}
+								<button class="sign-up-btn" data-cta-id="{{cta_id}}">{{text}}</button>
+							    {{/compare}}
+								{{#compare type "==" 'link'}}
+								<a class="cta-link" href="{{href}}" data-cta-id="{{cta_id}}" target="_blank">{{text}}</a>
+							    {{/compare}}
+							    {{#compare type "==" 'pdf'}}
+								<a class="cta-link" href="{{file_path}}" data-cta-id="{{cta_id}}" target="_blank">{{text}}</a>
+							    {{/compare}}
+							</div>
+							{{/each}}
+						<div class="section-vid-block visible-xs visible-sm">
+							{{#if videos}}
+								<div class="watch-videos" target="#video-slider-block">watch videos</div>
+							{{/if}}
+							{{#each cta_list}}
+							<div class="sign-up">
+								{{#compare type "==" 'form'}}
+								<button class="sign-up-btn" data-cta-id="{{cta_id}}">{{text}}</button>
+							    {{/compare}}
+								{{#compare type "==" 'link'}}
+								<a class="cta-link" href="{{href}}" data-cta-id="{{cta_id}}" target="_blank">{{text}}</a>
+							    {{/compare}}
+							</div>
+							{{/each}}
+						</div>
+						{{#if videos}}
+						<div class="section-video">
+							<div id="video-slider-block">
+								<div class="video-slider">
+									<ul>
+										{{#each videos}}
+										<li>
+											<div class="video-link" data-video-link="{{link}}">
+												<img src="{{poster_image}}" style="width:100%" >
+											</div>										
+											<iframe class="popup-video" width="480" height="270"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+										</li>
+										{{/each}}
+									</ul>
+								</div>	
+							</div>			
+	 					</div>
+						{{/if}}
+
+						{{#if related_products}}
+							<div class="related-products">
+								<div class='related-products-heading'>{{i18n 'Related Links'}}:</div>
+								{{#each related_products}}
+								<div class="related-products-list" product='{{product}}' section='{{section}}'>
+									{{name}}
+								</div>
+								{{/each}}
+							</div>
+						{{/if}}
+					</div>
+					{{#if tenant_privacy_link}} 
+						<a class="privacy theme-title-color" href="{{tenant_privacy_link}}" target="_blank">{{i18n 'privacy policy'}}</a>
+					{{/if}}	
+				</div>
+				<div class="col-md-6 right-pane">
+					<div class="section-pwt-list right_section">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

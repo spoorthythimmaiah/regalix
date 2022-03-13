@@ -1,0 +1,55 @@
+{{#if add_group}}
+	<div class="add-block" data-popup="group">
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3 class='capital-letter'>{{i18n 'add faq group'}}</h3>
+	</div>
+{{/if}}
+
+{{#if add_section}}
+	<div class="add-block" data-popup="section">
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3 class='capital-letter'>{{i18n 'add section'}}</h3>
+	</div>
+{{/if}}
+
+{{#if add_qna}}
+	<div class="add-block" data-popup="qna" data-type="question">
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3 class='capital-letter'>{{i18n 'add question and answer'}}</h3>
+	</div>
+{{/if}}
+
+{{#if edit_options}}
+	<div class="faq-edit">
+		<div class="faq-edit-wrap">
+
+			{{#if edit_group}}
+		        <div class="faq-edit-option edit" data-popup="group" data-type="group">
+		        	{{i18n 'edit group'}}
+		        </div>
+		        <div class="faq-edit-option delete" data-popup="confirm_delete" data-type="group">
+		        	{{i18n 'delete group'}}
+		        </div>
+		    {{/if}}
+		    
+		    {{#if edit_section}}
+		        <div class="faq-edit-option edit" data-popup="section" data-type="section">
+		        	{{i18n 'edit section'}}
+		        </div>
+		        <div class="faq-edit-option delete" data-popup="confirm_delete" data-type="section">
+		        	{{i18n 'delete section'}}
+		        </div>
+		    {{/if}}
+
+		    {{#if edit_qna}}
+		        <div class="faq-edit-option edit" data-popup="qna" data-type="question">
+		        	{{i18n 'edit q and a'}}
+		        </div>
+		        <div class="faq-edit-option delete" data-popup="confirm_delete" data-type="question">
+		        	{{i18n 'delete q and a'}}
+		        </div>
+		    {{/if}}
+
+		</div>
+	</div>
+{{/if}}

@@ -1,0 +1,27 @@
+<div class="search-result-wrapper">
+	<div class="container">
+		<div class="search-content-list row">
+			{{#compare query.length ">" 1}}
+				<div class="search-header">
+					<p class="search-result-count">{{results.length}} search result{{#compare results.length ">" 1}}s{{/compare}} for <b>{{query}}</b></p>
+				</div>
+			{{/compare}}
+			<div class="row searched-demos">
+				{{#each results }}
+					<div class="col-xs-6 col-md-4 col-lg-4 demo">
+						<div class="pure-thumbnail-cover">
+							<a href="{{ link }}" target= "_blank">
+								<img class="pure-thumbnail" src="{{imageUrl}}"></img>
+								<div class="pure-thumbnail-footer">
+									<p>walkthrough</p>
+									<h4>{{ title }}</h4>
+								</div>
+							</a>
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+		<div class="scroll-to-top"></div>
+	</div>
+</div>

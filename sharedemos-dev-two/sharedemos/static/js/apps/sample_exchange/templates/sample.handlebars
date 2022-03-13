@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="sample-breadcrumb">
+		<a href="/">Home</a> > <a href="/sample-exchange">{{{sample_page_title}}}</a> > {{ sample.name }}
+	</div>
+	<div class="sample-holder">
+		<div class="sample">
+			<div class="info">
+				<div class="sample-details">
+					<h1 class="title">{{ sample.name }}</h1>
+					<p class="author">{{ i18n 'published by'}}: {{ sample.author.fullName }}</p>
+					<div class="statistics">
+						<div class="downloads">
+							<img src="/static/images/vmware/downloads.png">
+							{{ i18n 'downloads'}} {{ sample.downloadCount }} 
+						</div>
+						<div class="updated">
+							<img src="/static/images/vmware/updated.png">
+							{{ i18n 'updated'}} {{ sample.lastUpdated }}
+						</div>
+					</div>
+					<div class="tag-holder"></div>
+				 </div>
+				<div class="actions">
+					<div data-id="{{ sample.id }}" data-name="{{ sample.name }}" data-url="{{ sample.downloadUrl }}" class="download">{{ i18n 'download'}}</div>
+				</div>
+			</div>
+			<div class="sample-content"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,20 @@
+<li class = "{{#if disabled }} disabled {{/if}}" data-item="section" 
+data-slug="{{this.slug}}" data-groups="{{this.groups}}" 
+data-id="{{this.id}}" data-name="{{this.name}}">
+    <div style="margin-left:10px" class="parentblock">
+        <span class="expandSection"></span>
+        <span class="siteMapTitle">{{name}}</span>
+        <input id="tree-{{slug}}" slug-id="{{slug}}" type="checkbox" class="css-checkbox">
+        <label for="tree-{{slug}}" class="css-label"></label>
+    </div>
+
+    <ul class="section" id="{{this.slug}}" style="display: none;">
+        {{#each children}}
+            {{> render-sections }}
+        {{else}}
+            {{#each playlists}}
+                {{> render-playlists }}
+            {{/each}}
+        {{/each}}
+    </ul>
+</li>

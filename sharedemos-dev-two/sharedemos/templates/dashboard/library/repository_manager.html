@@ -1,0 +1,14 @@
+{% extends 'dashboard/dashboard_submenu/library_menu.html' %}
+
+{% block sub_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/repository_manager.css') }}">
+{% endblock %}
+{% block dashboard_content_container %}
+    <div id="container" class="main-container"></div>
+    <div class="create-new repositories create-new-btn" data-form-name="create-repositories"></div>
+    <div id="repositories" class="create-repository-wrap"></div>
+    <div class="overlay"></div>
+{% endblock %}
+{% block sub_scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/build/services/repository/dashboard.js') }}"></script>
+{% endblock %}

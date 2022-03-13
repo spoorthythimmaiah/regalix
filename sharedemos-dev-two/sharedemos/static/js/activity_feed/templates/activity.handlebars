@@ -1,0 +1,78 @@
+<li class="edit-category">
+    <div class="activity-details">
+
+        {{#if activity.is_user_actions}}
+            <i class="user-action-icons fa {{#compare activity.action "==" 'granted'}}fa-unlock{{/compare}} {{#compare activity.action "==" 'denied'}}fa-lock{{/compare}} " aria-hidden="true"></i>
+        {{else}}
+            <span class="{{activity.action}}-{{activity.entity}}-icon"></span>
+        {{/if}}
+        <img class="author-icon" picture-url="{{activity.user_picture_url}}" data-name="{{activity.initials}}">
+        <div class="activity-type">
+            {{#if activity.is_product }}
+                {{#if activity.is_deleted }}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} {{activity.entity}} {{activity.attribute}}
+                    <span class="walk-title"> {{activity.section_name}} {{#if activity.language_id}} in {{activity.language_name}}{{/if}}</span>
+                {{else}}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} {{activity.entity}} {{activity.attribute}}
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}"> {{activity.product_name}} </a> {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{/if}}
+            {{/if}}
+
+            {{#if activity.is_section }}
+                {{#if activity.is_deleted }}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} {{activity.entity}} {{activity.attribute}}
+                    <span class="walk-title" >{{activity.section_name}}</span> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}} </a>
+                    {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{else}}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} {{activity.entity}} {{activity.attribute}}
+                    <a class="walk-title" target="_blank" href="/edit/{{activity.section_link}}">{{activity.section_name}}</a> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}}</a>  {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{/if}}
+            {{/if}}
+
+            {{#if activity.is_playlist }}
+                {{#if activity.is_deleted }}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} {{activity.entity}} {{activity.attribute}}
+                    <span class="walk-title" >{{activity.playlist_name}}</span> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}}</a>  {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{else}}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} {{activity.entity}} {{activity.attribute}}
+                    <a class="walk-title" target="_blank" href="/edit/{{activity.section_link}}">{{activity.playlist_name}}</a> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}}</a>  {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{/if}}
+            {{/if}}
+
+            {{#if activity.is_draft_walkthrough }}
+                {{#if activity.is_deleted }}
+                   <h3>{{activity.user_name}}</h3> {{activity.action}} chapter {{activity.attribute}}
+                    <span class="walk-title">{{activity.draft_walkthrough_name}}</span> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}}</a>  {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{else}}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} chapter {{activity.attribute}}
+                    <a class="walk-title" target="_blank" href="/edit/{{activity.draft_walkthrough_link}}">{{activity.draft_walkthrough_name}}</a> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}}</a>  {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{/if}}
+            {{/if}}
+
+            {{#if activity.is_walkthrough }}
+                {{#if activity.is_deleted }}
+                     <h3>{{activity.user_name}}</h3> {{activity.action}} chapter {{activity.attribute}}
+                    <span class="walk-title" >{{activity.walkthrough_name}}</span> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}}</a> {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{else}}
+                    <h3>{{activity.user_name}}</h3> {{activity.action}} chapter {{activity.attribute}}
+                    <a class="walk-title" target="_blank" href="/edit/{{activity.walkthrough_link}}">{{activity.walkthrough_name}}</a> under
+                    <a class="walk-category" target="_blank" href="/edit/{{activity.product_slug}}">{{activity.product_name}}</a>  {{#if activity.language_id}} in {{activity.language_name}} {{/if}}
+                {{/if}}
+            {{/if}}
+
+            {{#if activity.is_user_actions }}
+                <h3>{{activity.user_name}}</h3> {{activity.action}} access to <h3>{{activity.secondary_user_name}}</h3> for the product <a class="walk-title" target="_blank" href="/edit/{{activity.section_link}}">{{activity.restricted_product}}</a>
+            {{/if}}  
+        </div>
+    </div>
+    <div class="activity-date">
+        <span class="activity-list-date">{{activity.created}}</span>
+    </div>
+</li>

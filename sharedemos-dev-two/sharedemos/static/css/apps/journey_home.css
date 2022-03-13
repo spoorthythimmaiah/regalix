@@ -1,0 +1,124 @@
+#journeys-container {
+    margin-top: 140px;
+}
+#journeys-container h1 {
+    margin-bottom: 50px;
+    color: #222222;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: 1.8px;
+}
+.journey-block{
+    margin-top: 20px;
+    margin-bottom: 80px;
+    position: relative;
+    min-height: 50vh;
+}
+.journey-block:not(.content-loaded):after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background: url(/static/images/loading.gif) no-repeat;
+    display: block;
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.journey-filter-block{
+    box-shadow: 1px 1px 4px 4px #f5f1f1;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+.filter-heading-block{
+    border-bottom: 1.2px solid rgb(238, 233, 233);
+}
+h4.filter-heading{
+    margin-left: 23px;
+    padding: 28px 0;
+    color: #000000;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.checkbox label {
+    padding-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #1e1e1e;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 19px;
+    text-transform: capitalize;
+}
+.checkbox label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+input[type="checkbox"] + .checkbox-icon  {
+    position: relative;
+    display: inline-block;
+    background-color: #ccc;
+    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 18px;
+} 
+input[type="checkbox"]:checked + .checkbox-icon  {
+    background-color: rgb(4, 247, 4);
+} 
+.checkbox .checkbox-icon .cr-icon {
+    position: absolute;
+    font-size: 12px;
+    line-height: 0;
+    top: 50%;
+    left: 23%;
+}
+.checkbox label input[type="checkbox"] {
+    display: none;
+}
+  
+.checkbox label input[type="checkbox"]+.checkbox-icon>.cr-icon {
+    opacity: 0;
+}
+  
+.checkbox label input[type="checkbox"]:checked+.checkbox-icon>.cr-icon {
+    opacity: 1;
+    color: white;
+}
+.card-img-top{
+    height: 180px;
+    width: 100%;
+    object-fit: contain;
+}
+h5.card-title{
+    margin-left: 0px;
+    margin-top: 15px;
+    line-height: 20px;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 700;
+    max-height: 40px;
+    overflow: hidden;
+}
+.container-block h5 {
+    font-weight: bold;
+}
+.item-block{
+    margin-bottom: 20px;
+    height: 260px;
+}
+.journey-block.content-not-found:after{
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    background: none;
+    content:'content not found';
+    font-size: 24px;
+    text-transform: uppercase;
+}

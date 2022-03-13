@@ -1,0 +1,216 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-07-12 12:16+0530\n"
+"PO-Revision-Date: 2017-07-12 12:18+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.4.0\n"
+
+#: sharedemos/templates/error_page/404.html:13
+msgid "Oops! Something went wrong."
+msgstr "哎呀！出了些问题。"
+
+#:sharedemos/templates/edit.html:61
+msgid "editing mode"
+msgstr "editing mode"
+
+#: sharedemos/templates/error_page/404.html:13
+msgid "The page you are looking for couldn't be found."
+msgstr "找不到您正在寻找的页面。"
+
+#: sharedemos/templates/error_page/404.html:14
+msgid "It appears that the page you are looking for moved or no longer exists."
+msgstr "您正在寻找的页面似乎已移动或不再存在。"
+
+#: sharedemos/templates/error_page/404.html:16
+msgid "You can return home or stick around if you like 404 pages."
+msgstr "如果您喜欢404页面，您可以返回家中或粘贴。"
+
+#: sharedemos/templates/error_page/404.html:17
+#: sharedemos/templates/error_page/500.html:14
+msgid "TAKE ME BACK HOME"
+msgstr "让我回到家"
+
+#: sharedemos/templates/error_page/500.html:12
+msgid "It’s not you, it’s us."
+msgstr "不是你，就是我们。"
+
+#: sharedemos/templates/error_page/500.html:12
+msgid "Our site appears to be broken."
+msgstr "我们的网站似乎被打破了。"
+
+#: sharedemos/templates/error_page/500.html:13
+msgid ""
+"500 Error. The server encountered a problem and could not process your "
+"request. Let us show you your way back home."
+msgstr "500错误。服务器遇到问题，无法处理您的请求。让我们告诉你你回家的路。"
+
+#: sharedemos/templates/layouts/base.html:64
+msgid "What are you looking for?"
+msgstr "您要搜索什么？"
+
+#: sharedemos/templates/layouts/base.html:77
+msgid "available offline:"
+msgstr "离线可用："
+
+#: sharedemos/templates/layouts/base.html:92
+msgid "search"
+msgstr "搜索"
+
+#: sharedemos/templates/layouts/base.html:117
+msgid "Are you still there? Page reloading in"
+msgstr "你还在吗？页面重新加载"
+
+#: sharedemos/templates/layouts/base.html:117
+msgid "Reload Now"
+msgstr "重新载入"
+
+#: sharedemos/templates/layouts/base.html:121
+msgid "Your Browser is"
+msgstr "你的浏览器是"
+
+#: sharedemos/templates/layouts/base.html:121
+msgid "Out of Date"
+msgstr "过时了"
+
+#: sharedemos/templates/layouts/base.html:122
+msgid "ShareDemos uses technology that works best in other browsers."
+msgstr "ShareDemos使用最适合其他浏览器的技术。"
+
+#: sharedemos/templates/layouts/base.html:123
+msgid "For a full experience use one of the browsers below"
+msgstr "要获得完整体验，请使用以下浏览器之一"
+
+#: sharedemos/templates/layouts/base.html:129
+msgid "No thanks, I'll continue in this browser."
+msgstr "不，谢谢，我会继续在这个浏览器。"
+
+#: sharedemos/templates/edit.html:59
+msgid "EXIT"
+msgstr "直接"
+
+#: sharedemos/templates/edit.html:60
+msgid "PUBLISH"
+msgstr "PUBLISH"
+
+#: sharedemos/templates/edit.html:61
+msgid "PREVIEW"
+msgstr "PREVIEW"
+
+#: sharedemos/templates/edit.html:67
+msgid "CHOOSE A LAYOUT"
+msgstr "CHOOSE A LAYOUT"
+
+#: sharedemos/templates/edit.html:71
+msgid "CATEGORY"
+msgstr "类别"
+
+#: sharedemos/templates/edit.html:75
+msgid "PLAYLIST"
+msgstr "播放列表"
+
+#: sharedemos/templates/edit.html:79
+msgid "DEMO"
+msgstr "DEMO"
+
+#: sharedemos/templates/edit.html:83
+msgid "BOX IMPORT"
+msgstr "框导入"
+
+#: sharedemos/templates/edit.html:86
+msgid "cancel"
+msgstr "取消"
+
+msgid "Toggle privacy for this category."
+msgstr "切换此类别的隐私权设置。"
+
+#: sharedemos/templates/export_to_pdf.html:195
+msgid "Table of Contents"
+msgstr "目录"
+
+msgid "First Published On"
+msgstr "发布日期"
+
+msgid "Last Updated On"
+msgstr "更新日期"
+
+msgid "Translations Available"
+msgstr "可查看翻译版本"
+
+# New template translations
+#: sharedemos/templates/vmare/base.html
+msgid "Home"
+msgstr "家"
+
+#: sharedemos/templates/vmare/base.html
+msgid "Search Site"
+msgstr "搜索网站"
+
+#: sharedemos/templates/vmare/playlist.html
+msgid "Categories"
+msgstr "类别"
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "Playlists"
+msgstr "播放列表"
+
+#: sharedemos/templates/vmware/base.html
+msgid "Language select"
+msgstr "语言选择"
+
+#: sharedemos/templates/vmware/base.html
+msgid "current language"
+msgstr "当前语言"
+
+#: sharedemos/templates/vmware/base.html
+msgid "select language"
+msgstr "选择语言"
+
+#: sharedemos/templates/vmware/base.html
+msgid "This content is available in another language."
+msgstr "此内容已在另一语言中提供。"
+
+#: sharedemos/templates/vmware/base.html
+msgid "Select a language to translate."
+msgstr "选择要翻译的语言。"
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "export to pdf"
+msgstr "导出到 PDF"
+
+# New template footer link texts
+#: sharedemos/templates/vmware/base.html
+msgid "terms of use"
+msgstr "使用条款"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/legal.html"
+msgstr "http://www.vmware.com/cn/help/legal.html"
+
+#: sharedemos/templates/vmware/base.html
+msgid "privacy"
+msgstr "隐私"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/privacy.html"
+msgstr "http://www.vmware.com/cn/help/privacy.html"
+
+#: sharedemos/templates/vmware/base.html
+msgid "trademarks"
+msgstr "商标"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/trademarks.html"
+msgstr "http://www.vmware.com/cn/help/trademarks.html"

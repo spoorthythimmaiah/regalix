@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/error_page.css') }}" />
+{% endblock %}
+
+{% block container %}
+    <div class="error_fpage valign-center">
+        <div class="error_fpage_text">
+            <h1>{{ _('It’s not you, it’s us.')}}<br>{{ _('Our site appears to be broken.')}} </h1>
+            <p>{{ _('500 Error. The server encountered a problem and could not process your request. Let us show you your way back home.')}}</p>
+            <a href="{{ request.referrer or url_for('main.home') }}" class="return ripple">{{ _('TAKE ME BACK HOME')}}</a>
+        </div>
+        <div class="error_fpage_img"><img src="{{ url_for('static', filename='images/broken-img-1.png') }}"></div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ripple.js') }}"></script>
+{% endblock %}

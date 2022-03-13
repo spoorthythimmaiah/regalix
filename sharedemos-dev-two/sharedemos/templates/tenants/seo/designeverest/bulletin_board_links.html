@@ -1,0 +1,25 @@
+{% extends 'tenants/seo/designeverest/base.html' %}
+
+{% block container %}
+{{ search() }}
+{{ header() }}
+<div class="bb-links-banner container">
+	<div class="more-links-page-title">
+		Additional Links
+		<p class="more-link-sub-title">Check out these links.We think you might find these helpful.</p>
+	</div>
+	<div class="overview-card more-link-page">
+	    <ul>
+		{% for link in bulletin_board_details['link_details'] %}
+		        <li class="link-holder">
+		        	<a href = '{{link.url}}' title='{{link.name}}' {% if link.link_type.lower() == 'external' %}target='_blank'{% endif %}>{{link.name|truncate(110)}}</a>
+		        </li>
+		{% endfor %}
+	    </ul>
+	</div>
+</div>
+{{ footer() }}
+{% endblock %}
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+{% endblock %}

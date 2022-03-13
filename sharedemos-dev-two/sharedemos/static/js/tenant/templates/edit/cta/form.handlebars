@@ -1,0 +1,50 @@
+<form class="create-cta-block" name="create-cta">
+    <div class="popup-title capital-letter">
+        {{#if uniqueId}}
+            {{i18n 'edit'}}
+        {{else}}
+            {{i18n 'create'}}
+        {{/if}}
+        &nbsp{{i18n 'cta'}}
+    </div>
+    <div class="content-block">
+        <div class="block cta-link-block">
+            <input type="radio" id="cta_link" name="cta_type"  class="css-radio" checked="checked" cta-type="link">
+            <label class="css-radio-label" for="cta_link">{{i18n 'link'}}</label>
+            <br>
+            <div class="cta-block">
+                <div class="sub-title">{{i18n 'provide a URL to redirect your users to '}}</div>
+                <div class="input_wrap">
+                    <input type="text" name="link_title" class="cta_link" placeholder="button text" autocomplete="off" {{#compare type '==' 'link'}}value="{{text}}"{{/compare}} />
+                </div>
+                <div class="input_wrap">
+                    <input type="url" name="cta_link" class="cta_link" placeholder="http://" autocomplete="off" {{#compare type '==' 'link'}}value="{{href}}"{{/compare}} />
+                </div>
+            </div>
+        </div>
+        <div class="block cta-pdf-block disabled" >
+            <input type="radio" id="cta_pdf" name="cta_type" class="css-radio" cta-type="pdf" />
+            <label class="css-radio-label" for="cta_pdf">{{i18n 'pdf'}}</label>
+            <br>
+            <div class="cta-block">
+                <div class="sub-title">{{i18n 'upload a file to share with your visitors'}}</div>
+                <div class="input_wrap">
+                    <input type="text" name="pdf_title" class="cta_pdf" placeholder="{{i18n 'button text'}}"  autocomplete="off" {{#compare type '==' 'pdf'}}value="{{text}}"{{/compare}} / >
+                </div>
+                <input type="file" class="drag-file" id="upload-cta-file" accept="application/pdf" name="cta">
+                <div class="file-name">{{#if fileName}}{{fileName}}{{/if}}</div>
+                <label id="remove-file">{{i18n 'remove'}}</label>
+                <label for="upload-cta-file" class="rippleEffect">{{i18n 'upload file'}}</label>                
+            </div>
+        </div>
+    </div>
+    <div class="popup-footer">
+        <div class="form-footer">
+            <div class="cancel-cta rippleEffect" >{{i18n 'cancel'}}</div>
+            <div class="save-cta-btn rippleEffect" data-unique-id="{{uniqueId}}">{{i18n 'create'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</form>

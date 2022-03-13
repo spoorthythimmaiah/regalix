@@ -1,0 +1,207 @@
+# English (United States) translations for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-07-12 12:16+0530\n"
+"PO-Revision-Date: 2017-07-12 12:16+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.4.0\n"
+
+#: sharedemos/templates/error_page/404.html:13
+msgid "Oops! Something went wrong."
+msgstr "Oops! Something went wrong."
+
+#: sharedemos/templates/error_page/404.html:13
+msgid "The page you are looking for couldn't be found."
+msgstr "The page you are looking for couldn't be found."
+
+#: sharedemos/templates/error_page/404.html:14
+msgid "It appears that the page you are looking for moved or no longer exists."
+msgstr "It appears that the page you are looking for moved or no longer exists."
+
+#: sharedemos/templates/error_page/404.html:16
+msgid "You can return home or stick around if you like 404 pages."
+msgstr "You can return home or stick around if you like 404 pages."
+
+#: sharedemos/templates/error_page/404.html:17
+#: sharedemos/templates/error_page/500.html:14
+msgid "TAKE ME BACK HOME"
+msgstr "TAKE ME BACK HOME"
+
+#: sharedemos/templates/error_page/500.html:12
+msgid "It’s not you, it’s us."
+msgstr "It’s not you, it’s us."
+
+#: sharedemos/templates/error_page/500.html:12
+msgid "Our site appears to be broken."
+msgstr "Our site appears to be broken."
+
+#: sharedemos/templates/error_page/500.html:13
+msgid "500 Error. The server encountered a problem and could not process your request. Let us show you your way back home."
+msgstr "500 Error. The server encountered a problem and could not process your request. Let us show you your way back home."
+
+#: sharedemos/templates/layouts/base.html:64
+msgid "What are you looking for?"
+msgstr "What are you looking for?"
+
+#: sharedemos/templates/layouts/base.html:77
+msgid "available offline:"
+msgstr "available offline:"
+
+#: sharedemos/templates/layouts/base.html:92
+msgid "search"
+msgstr "search"
+
+#: sharedemos/templates/layouts/base.html:117
+msgid "Are you still there? Page reloading in"
+msgstr "Are you still there? Page reloading in"
+
+#: sharedemos/templates/layouts/base.html:117
+msgid "Reload Now"
+msgstr "Reload Now"
+
+#: sharedemos/templates/layouts/base.html:121
+msgid "Your Browser is"
+msgstr "Your Browser is"
+
+#: sharedemos/templates/layouts/base.html:121
+msgid "Out of Date"
+msgstr "Out of Date"
+
+#: sharedemos/templates/layouts/base.html:122
+msgid "ShareDemos uses technology that works best in other browsers."
+msgstr "ShareDemos uses technology that works best in other browsers."
+
+#: sharedemos/templates/layouts/base.html:123
+msgid "For a full experience use one of the browsers below"
+msgstr "For a full experience use one of the browsers below"
+
+#: sharedemos/templates/layouts/base.html:129
+msgid "No thanks, I'll continue in this browser."
+msgstr "No thanks, I'll continue in this browser."
+
+#: sharedemos/templates/edit.html:59
+msgid "EXIT"
+msgstr "EXIT"
+
+#: sharedemos/templates/edit.html:60
+msgid "publish"
+msgstr "publish"
+
+#: sharedemos/templates/edit.html:61
+msgid "preview"
+msgstr "preview"
+
+#: sharedemos/templates/edit.html:67
+msgid "CHOOSE A LAYOUT"
+msgstr "CHOOSE A LAYOUT"
+
+#: sharedemos/templates/edit.html:71
+msgid "CATEGORY"
+msgstr "CATEGORY"
+
+#: sharedemos/templates/edit.html:75
+msgid "PLAYLIST"
+msgstr "PLAYLIST"
+
+#: sharedemos/templates/edit.html:79
+msgid "DEMO"
+msgstr "DEMO"
+
+#: sharedemos/templates/edit.html:83
+msgid "BOX IMPORT"
+msgstr "BOX IMPORT"
+
+#: sharedemos/templates/edit.html:86
+msgid "cancel"
+msgstr "cancel"
+
+#sharedemos/templates/export_to_pdf.html:195
+msgid "table of contents"
+msgstr "table of contents"
+
+msgid "first published on"
+msgstr "first published on"
+
+msgid "last updated on"
+msgstr "last updated on"
+
+msgid "Translations Available"
+msgstr "Translations Available"
+
+# New template translations
+#: sharedemos/templates/vmare/base.html
+msgid "Home"
+msgstr "Home"
+
+#: sharedemos/templates/vmware/base.html
+msgid "Search Site"
+msgstr "Search Site"
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "categories"
+msgstr "Categories"
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "playlists"
+msgstr "Playlists"
+
+#: sharedemos/templates/vmware/base.html
+msgid "Language select"
+msgstr "Language select"
+
+#: sharedemos/templates/vmware/base.html
+msgid "current language"
+msgstr "current language"
+
+#: sharedemos/templates/vmware/base.html
+msgid "select language"
+msgstr "select language"
+
+#: sharedemos/templates/vmware/base.html
+msgid "This content is available in another language."
+msgstr "This content is available in another language."
+
+#: sharedemos/templates/vmware/base.html
+msgid "Select a language to translate."
+msgstr "Select a language to translate."
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "export to pdf"
+msgstr "export to pdf"
+
+# New template footer link texts
+#: sharedemos/templates/vmware/base.html
+msgid "terms of use"
+msgstr "terms of use"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/legal.html"
+msgstr "http://www.vmware.com/help/legal.html"
+
+#: sharedemos/templates/vmware/base.html
+msgid "privacy"
+msgstr "privacy"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/privacy.html"
+msgstr "http://www.vmware.com/help/privacy.html"
+
+#: sharedemos/templates/vmware/base.html
+msgid "trademarks"
+msgstr "trademarks"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/trademarks.html"
+msgstr "http://www.vmware.com/help/trademarks.html"

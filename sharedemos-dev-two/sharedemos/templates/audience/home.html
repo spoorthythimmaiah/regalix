@@ -1,0 +1,90 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/jquery-qtip/jquery.qtip.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick-theme.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+    {% if tenant and tenant.theme %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='media/theme/' + tenant.theme.id|string + '.css') }}" />
+    {% endif %}
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    {% if tenant and tenant.analytics %}
+        {{tenant.analytics|safe}}
+    {% endif %}
+{% endblock %}
+
+
+{% block container %}
+<div id="main_container">
+    <div class="header">
+        {{ main_header(['search', 'apps', 'social_share', 'offline']) }}
+    </div>
+    <div id="block_container" class="block_container"></div>
+    <div id='product_analytics'></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {% if g.user and g.user.is_active() %}
+    <script type="text/javascript">
+        document.user_name = "{{g.user}}";
+        document.email = "{{g.user.email}}";
+    </script>
+    {% endif %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/add-to-homescreen/addtohomescreen.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script type="text/javascript" src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ripple.js') }}"></script>
+    <script type="text/javascript">
+        document.ath = addToHomescreen({
+            message: 'Install this web app on your home screen: tap %icon and then <strong>Add to Home Screen</strong>.'
+        });
+        document.airbrake_project_id = '{{ airbrake_project_id }}';
+        document.airbrake_api_key = '{{ airbrake_api_key }}';
+        document.projectEnv = '{{ project_env }}';
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+        {% endif %}
+        {% if tenant.domain == "featurewalkthrough.vmware.com" %}
+            document.org_name = "VMware"
+        {% else %}
+            document.org_name = "{{tenant.name}}"
+        {% endif %}
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.defaultLocale = "{{tenant.default_locale.name}}";
+        document.privacy_link = "{{ tenant.privacy_link or '' }}";
+        document.viewType = "{{view_type}}";
+        document.tenantFooterImage = "{{tenant.logo or ''}}";
+        document.template_folder = "{{tenant.template or 'default'}}";
+        document.hash_url_path = window.location.pathname + window.location.hash;
+        document.isPrivateTenant = ("{{tenant.flags.is_private}}" == 'True');
+        document.isUserAnonymous = true;
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.company_id = '{{employee.company.unique_link_id}}';
+
+        {% if session['user']['locale'] %}
+            document.current_locale = "{{session['user']['locale']}}";
+        {% endif %}   
+
+        var requestParameters = function(){
+            return '?company={{employee.company.unique_link_id}}'
+        }; 
+
+    </script>
+    <script src="{{ url_for('static', filename='js/social_share.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/main.js') }}"></script>
+{% endblock %}

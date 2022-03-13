@@ -1,0 +1,83 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: normal;
+            font-size: 14px;
+        }        
+    </style>
+</head>
+<body bgcolor="#ffffff">
+    <table class="wrapper" width="800" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f9f9f9">
+        <tbody>
+            <!-- Logo -->
+            <tr>
+                <td align="center" style="padding-top: 34px;">
+                    {% set tenant_logo = url_for('static', filename='images/bmc/logo.png', _external=True) %}
+                    {% if tenant.logo %}
+                        {% set tenant_logo = url_for('static', filename='media/' + tenant.logo, _external=True) %}
+                    {% endif %}
+                    <img style="max-height: 45px;" src="{{tenant_logo|replace('localhost', tenant.domain)}}">
+                </td>
+            </tr>  
+            <tr align="center">
+                <td style="color: #8b8d90; padding-top: 50px; font-size: 16px; font-weight: bold;">Content Added For <span style="font-weight: 500; color: #616161;">{{from_date.strftime('%B %d').decode('utf-8')}} - {{to_date.strftime('%B %d, %Y').decode('utf-8')}}</span></td>
+            </tr>
+            <tr align="center">
+                <td style="color: #8b8d90;font-size: 16px; font-weight: bold; padding-bottom: 60px;">Total {{chapter_list|length}} Chapter{% if chapter_list|length > 1%}s{% endif %} added in last {{frequency}}</td>
+            </tr>       
+            <!-- Latest Content -->
+            <tr>
+                <td>
+                    <table cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse; width: 700px;">
+                        <tr>
+                            <td colspan="3" style="font-size: 20px; color: #4f5f6f; font-weight: 600">LATEST CONTENT ADDED</td>
+                        </tr>
+                        {% for chapter in chapter_list %}
+                        <tr style="border: 2px solid #eaeaea; margin-top: 20px; display: block; border-radius: 5px; padding: 25px;">
+                            <td colspan="1" width="240" style="font-size: 24px; color:#4f5f6f">
+                                {% set thumbnail = url_for('static', filename='images/default_chapter_icon.jpg', _external=True) %}
+                                {% if chapter.thumbnail %}
+                                    {% set thumbnail = chapter.thumbnail%}
+                                {% endif %}
+                                <img src="{{thumbnail|replace('localhost', tenant.domain)}}" style="height: 112px; width:200px" />
+                            </td>
+                            <td width="410" valign="top">
+                                <table style="line-height: 2.0">
+                                    <tr><td>
+                                        <a href="{{url_for('main.route_handler', product=chapter.product_slug,section=chapter.section_slug,chapter=chapter.slug, _external=True)|replace('localhost', tenant.domain)}}" target="_blank" style="font-size: 18px;font-weight: bold; text-decoration: none; color: #222">{{ chapter.name }}</a>
+                                    </td></tr>
+                                    <tr><td style="color: #787878; font-size: 12px;">Date Added: {{chapter.created_at.strftime(' %A,  %b %d, %Y').decode('utf-8')}}</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        {% endfor %}    
+                    </table>
+                </td>
+            </tr>            
+            <tr>
+                <td align="center" style="padding-top: 75px;">
+                    <a href="{{url_for('main.home', _external=True)|replace('localhost', tenant.domain)}}" target="_blank" style="height: 15px; width: 160px; background: #ff4500; text-decoration: none; color: #ffffff; padding: 25px 60px; display: inline-block; font-size: 16px; font-weight: bold;">SEE ALL</a>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="color: #7e8e9f; font-size: 18px; padding-top: 100px;">Powered By</td>
+            </tr>
+            <tr>
+                <td align="center" style="padding-top: 45px; padding-bottom: 40px;">
+                    <img src="{{ url_for('static',filename='images/login-logo.png',_external=True) }}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="color: #b8b8b8; font-size: 16px; padding-bottom: 20px;">
+                    &copy;2014 - {{now.year}} Regalix Inc. | All Rights Reserved.<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/" target="_blank">regalix.com</a> 2200 Geng Road., Palo Alto, CA, 94303<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/privacy-policy/" target="_blank">Privacy Policy</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

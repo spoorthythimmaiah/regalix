@@ -1,0 +1,447 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pdf_viewer.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick-theme.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vmw_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bmc.css') }}" />
+    {% if bulletin_board_app_enabled %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulletin_board.css') }}" />
+    {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
+    {% block sub_styles %}
+    {% endblock %}
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/moment-js/moment.min.js') }}"></script>
+    <script type="text/javascript">
+        if(window.location.hash && window.location.hash.includes('#!') && '{{request.blueprint}}' == 'main'){
+            var h_url = window.location.hash.split('#!')
+            if(h_url.length > 1 && h_url[1] != '/'){
+                window.location.replace(window.location.href.replace('#!', 't'));
+            }
+        }
+    </script>
+    {% if tenant and tenant.analytics %}
+        {{tenant.analytics|safe}}
+    {% endif %}
+{% endblock %}
+
+{% macro header() %}
+    <div class="bmc-nav-outer">
+        <div class="black-overlay"></div>
+        <div class="bmc-nav-bar">
+            <div class="container">
+
+                {% if api['parent'] %}
+                    {{ back_button(section=api['parent']['slug']) }}
+                {% elif api['product'] %}
+                    {{ back_button() }}
+                {% endif %}
+
+                {% if api['tenant']['logo'] %}
+                    <a class="custom-bmc-logo" href="/">
+                        <img src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}" alt="logo">
+                    </a>
+                {% else %}
+                    <a class="bmc-logo" href="/"></a>
+                {% endif %}
+                <div class="header-nav-right">
+                    {% if can_access_journey %}
+                        <a href="{{url_for('apps.journeys_home')}}" title="Journey" class="journey-toggle {% if api['view_type'] == 'journey' %}active{% endif %}"></a>
+                    {% endif %}
+                    <div class="bmc-search-icon"></div>
+                    <div data-attr="cancel-search"></div>
+                    {% if g.user.is_active() %}
+                    <div class="bmc-user-icon">
+                        <div class="bmc-log-out-menu">
+                            <div class="nav-menu loggedIn-user">{{g.user}}</div>
+
+                            {% for grp in g.user.groups %}
+                                {% if grp.slug == 'employee'%}
+                                    <a href="{{url_for('main.content_for_you')}}" class="nav-menu for-you-menu" >for you</a>
+                                {% endif %}
+                            {% endfor%}
+
+                            <div class="nav-menu welcome-video-opener">Welcome Video</div>
+                            <a href="mailto:bmc-support@regalix-inc.com" class="nav-menu email-support" target="_top">Contact Support</a>
+                            <a href="{{url_for('auth.logout', redirect_to='https://bmc.okta.com/login/signout')}}" class="nav-menu" id="logout" title="Logout">sign out</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro back_button(section=None, home=False) %}
+    {% set link = None %}
+    {% if home %}
+        {% set link = url_for('apps.home') %}
+    {% elif not section %}
+        {% set link = url_for('main.home') %}
+    {% else %}
+        {% set link = url_for('main.route_handler', section=section) %}
+    {% endif %}
+        <a href="{{link or 'javascript:;'}}" class="back-arrow"></a>
+{% endmacro %}
+{% macro breadcrumb(name, section_id=None, product=None) %}
+    <a href="{{url_for('main.home')}}">{{_('Home')}}</a>{% if product and product['slug'] != section_id %} > <a href="{{url_for('main.route_handler', section=product['slug'])}}">{{product['name']}}</a>{% endif %} > {{name}}
+{% endmacro %}
+{% macro translation_wrapper() %}
+    <div class="vmw custom-popup-wrapper"></div>
+{% endmacro %}
+{% macro social_share() %}
+    <div class="vmw-social-share" data-overlay="social-share"></div>
+{% endmacro %}
+{% macro search() %}
+    <div class="bmc-search-holder">
+        <div class="search-site-block container">
+            <div class="row">
+                <input class="search-site col-xs-12" name="search-site" type="text" placeholder="Search Demos">
+                <div class="clear-search"></div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+{% macro videos() %}
+    {% if api['videos'] %}
+        <div class="watch-videos center-pseudo" target="#video-slider-block">
+            <img src="{{api['videos'][0]['poster_image']}}" class="img-width" >
+        </div>
+    {% endif %}
+    {% if api['videos'] %}
+    <div class="section-video-popup">
+        <div class="hide-video-popup"></div>
+        <div class="section-video">
+            <div id="video-slider-block">
+                <div class="video-slider">
+                    <ul>
+                        {% for video in api['videos'] %}
+                        <li>
+                            <div class="video-link" data-video-link="{{video['link']}}">
+                                <img src="{{video['poster_image']}}" class="img-width" >
+                            </div> 
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>  
+            </div>          
+        </div>
+    </div>
+    {% endif %}
+{% endmacro %}
+{% macro bulletin_boards () %}
+    <div class="row">
+        <div class="bulletin-board-wrapper">
+            {% for bulletin_board in api['bulletin_board_list'] %}
+                <div class = {% if api['bulletin_board_list']|length == 1 %}"col-md-12 single-bb"
+                {% else %}"col-md-6 multiple-bb"{% endif%}>
+                    <div class="overview-card">
+                        <ul class="row">
+                        {% for link in bulletin_board['links'] %}
+                            <li class="link-holder">
+                                <a href = '{{link.url}}' title="{{link.name}}" 
+                                {%if link.link_type.lower() == 'external' %}target='_blank'{% endif %}>
+                                {{link['name']|truncate(110)}}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        {% if bulletin_board['has_more_links'] %}
+                        <div class="more_bb_links">
+                            <a href="{{ url_for('main.bulletin_board_links', id=bulletin_board._id)}}" target='_blank'>Learn More
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+<!-- section cta list -->
+{% macro cta_list(cta_list) %}
+    {% for cta in cta_list %}
+        {% if cta.type == 'link' %}
+            <a class="cta-btn" href="{{ cta.href }}" data-cta-id="{{ cta.cta_id }}"
+                target="_blank">{{ cta.text }}</a>
+        {% elif cta.type == 'pdf' %}
+            <a class="cta-btn cta-pdf-btn" data-url="{{ cta.file_path }}" data-name="{{ cta.name }}" data-cta-id="{{ cta.cta_id }}">{{ cta.text }}</a>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro homepage_banner(banner) %}
+    {% if banner._resource %}
+        {% set has_resource = True %}
+        {% set is_wistia = False %}
+        {% if banner._resource.resource_type == 'image' %}
+            {% set src = url_for('static', filename='media/' + banner._resource.path) %}
+        {% elif banner._resource.resource_type == 'wistia' %}
+           {% set is_wistia = True %}
+           {% set src = banner._resource.path %}
+        {% endif %}
+    {% endif %}
+    {% if banner._background_image%}
+        {% set bg_img_src = url_for('static', filename='media/' + banner._background_image.path) %}
+    {% endif %}
+    <div class="homepage-banner"
+         style="background: url({{bg_img_src}}) center center no-repeat, #000; background-size:cover">
+            <div class="container banner-container">
+                <div class="row banner-row">
+                    <div class="banner-icon {% if has_resource %}col-md-6{% else%} col-md-12{%endif%}">
+                        <h1>{{banner._title}}</h1>
+                        <p>{{banner._description}}</p>
+                        {% for cta in banner._cta_details %}
+                            <a class="cta-btn"
+                               href="{{cta._link}}"
+                               target="_blank"
+                               data-cta-id="{{cta._cta_id}}">{{cta._name}}
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {% if has_resource %}
+                        <div class="banner-resource col-md-6">
+                            <div
+                                class="preview-media
+                                {% if is_wistia%} wistia{% endif %}" data-icon="icon-magnify"
+                                target="#video-slider-block">
+                                {% if is_wistia %}
+                                    <div class='wistia-player-block'>
+                                        <iframe src="{{src}}"
+                                            allowtransparency="true" frameborder="0" scrolling="no"
+                                            class="wistia_embed" name="wistia_embed"
+                                            allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen>
+                                        </iframe>
+                                    </div> 
+                                {% else %}
+                                    <img src="{{src}}">
+                            {% endif %}
+                            </div>
+                            <div class="banner-media-popup">
+                                <div class="hide-media-popup"></div>
+                                <div class="banner-media">
+                                    <div id="slider-block">
+                                        <div class="slider">
+                                            <ul>
+                                                <li>
+                                                    <div class="image-link"
+                                                    data-img-link="{{src}}">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>    
+{% endmacro %}
+{% macro footer() -%}
+    <div class="grayout"></div>
+    {% if api and api.get('tenant') and api['tenant'].get('footer') and api['tenant']['footer']['links'] or api['tenant']['footer']['text']%}             
+        <footer class="bmc-footer">
+            <div class="container">
+                <div>
+                    <img src="{{ url_for('static', filename='images/bmc/bmc-footer.svg') }}">
+                </div>
+                <div class="page-footer">
+                {% if api['tenant']['footer'].get('links') %}
+                    <ul class="links bmc nav-footer-link-list">
+                        {% for link in api['tenant']['footer']['links'] | sort(attribute='order') %}
+                        <li class="item bmc">
+                            <a class="title camel-case" target="_blank" href="{{link.url}}">{{link.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if api['tenant']['footer']['text'] %}
+                    <div class="copyright">
+                        <div class="bmc-footer-text">
+                            {{api['tenant']['footer']['text'] | safe}}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+        </footer>
+    {% endif %}
+{%- endmacro %}
+
+{% macro load_seo_meta(title=None, description=None, image=None) -%}
+    <title>{{title or 'Product Walkthroughs'}}</title>
+    <meta name="description" content="{{description or ''}}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{title or ''}}" />
+    <meta property="og:description" content="{{description or ''}}" />
+    <meta property="og:url" content="{{request.url}}" />
+    <meta property="og:image" content="{{image or ''}}" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title or ''}}" />
+    <meta name="twitter:description" content="{{description or ''}}">
+    <meta name="twitter:url" content="{{request.url}}">
+    <meta name="twitter:image" content="{{image or ''}}">
+{%- endmacro %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+            $("link[rel*='shortcut']").attr("href", document.favicon);
+        {% endif %}
+
+        {% if session['user']['locale'] %}
+            document.current_locale = "{{session['user']['locale']}}";
+        {% endif %}
+
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.can_embed = "{{tenant.flags.can_embed}}";
+        document.isPrivate = "{{is_private}}" == 'True';
+        
+        // for algolia search content        
+        {% if algolia_api %}
+            document.algolia_tenant_index = '{{algolia_api.tenant_index}}';
+            document.algolia_app_id = '{{algolia_api.app_id}}';
+            document.algolia_search_key = '{{algolia_api.search_key}}';
+        {% endif %}
+
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+        document.isUserAnonymous = true;
+        document.documentStyles = "{{document_styles}}";
+
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+            {% if user_groups %}
+                // userGroupIds list.
+                document.userGroups = {{user_groups}};
+            {% endif %}
+        {% endif %}
+
+
+    </script>
+    <script type="text/html" id="social-share">
+        <div class="custom-popup" id="social-share-options">
+            <div class="close-custom-popup close-icon" data-close></div>
+            <h2>Share This Page</h2>
+            <p class="popup-desc">Share this page on your feed.</p>
+            <ul>
+                <li class="twitter">
+                    <div class="social-icon" social-share="twitter">
+                        <span class="fa fa-twitter" aria-hidden="true"></span>
+                        <span class="title">Share with Twitter</span>
+                    </div>
+                </li>
+                <li class="linkedin">
+                    <div class="social-icon" social-share="linkedin">
+                        <span class="fa fa-linkedin-square" aria-hidden="true"></span>
+                        <span class="title">Share with Linkedin</span>
+                    </div>
+                </li>
+                <li class="facebook">
+                    <div class="social-icon" social-share="facebook">
+                        <span class="fa fa-facebook-square" aria-hidden="true"></span>
+                        <span class="title">Share with Facebook</span>
+                    </div>
+                </li>
+                <li class="reddit">
+                    <div class="social-icon" social-share="reddit">
+                        <span class="fa fa-reddit-square" aria-hidden="true"></span>
+                        <span class="title">Share with Reddit</span>
+                    </div>
+                </li>
+                <li class="copyurl">
+                    <div class="social-icon" social-share="copyurl">
+                        <span class="copy-url-icon"></span>
+                        <span class="title">Copy URL</span>
+                    </div>                       
+                </li>
+                <li class="copyembedurl hide">
+                    <div class="social-icon" social-share="copyembedurl">
+                        <span class="fa fa-code" aria-hidden="true"></span>
+                        <span class="title">Embed Player</span>
+                    </div> 
+                    <div class="embed-url-box">
+                        <div>Copy: <span>&#8984;</span> - C to copy</div>
+                        <div class="embedURL"></div>
+                        <div class="close-embed-url">CLOSE</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </script>
+    <script type="text/html" id="rating-popup">
+        <div class="custom-popup" id='rating-feedback'>
+            <div class="popup-title">
+                <div class="feedback-title">Give Us Some Feedback</div>
+                <div class="feedback-subtitle">
+                    <p>Your feedback will help us to improve this content.</p>
+                    <p> How can we make this experience better for you?</p>
+                </div>
+            </div>
+            <div class="popup-body">
+                <textarea class="feedback-text" maxlength="500" placeholder="Feedback" ></textarea>
+                <div class="counter">
+                    <span data-counter>500</span><span> characters left</span>
+                </div>
+                <div class="error-msg">Please provide some feedback</div>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel">CANCEL</div>
+                    <div class="submit">SUBMIT FEEDBACK</div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="language-translations">
+        <div class="custom-popup" id="translation-options">
+            <div class="close-custom-popup close-icon" data-close></div>
+            <h2>{{_('Language select')}}</h2>
+            <p class="popup-desc">{{_('This content is available in another language.')}}<br>{{_('Select a language to translate.')}}</p>
+            <div class="current-lang" data-current-language>
+                <p>{{_('current language')}}</p>
+                <ul>
+                    <li class="lang-box active"></li>
+                </ul>
+            </div>
+            <div class="select-lang">
+                <p>{{_('select language')}}</p>
+                <ul data-language-options>
+                    <!-- <li class="lang-box"></li> -->
+                </ul>
+            </div>
+        </div>
+    </script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script type="text/javascript" src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+    <script type="text/javascript" src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+    <script src="{{ url_for('static', filename='libs/jquery-nicescroll/jquery.nicescroll.min.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='libs/sudo-slider/jquery.sudoSlider.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/build/lazyload.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/helpers/cookies.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/social_share.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/seo/common/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/seo/bmc/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/templates/bmc/search.js') }}"></script>
+    <script type="text/javascript">_satellite.pageBottom();</script>
+    <script src="{{ url_for('static', filename='js/build/templates/vmware/player.js') }}"></script>
+    {% block sub_scripts %}{% endblock %}
+{% endblock %}

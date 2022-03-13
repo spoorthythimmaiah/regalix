@@ -1,0 +1,18 @@
+<div class="sitemap-popup {{displayClass}}" data-slug="{{slug}}" data-item="{{item}}">
+    <div class="sitemap-popup-overlay" id="sitemap-popup-overlay">
+        <div class="sitemap-popup-block popup-box">
+            <div class="popup-title">{{popupTitle}}</div>
+            <div class="popup-msg">{{popupMsg}}</div>
+            <div class="popup-footer">
+                <div class="cancel">{{ i18n 'cancel' }}</div>
+                <div class="content-action {{contentAction}}">{{contentAction}}</div>
+                <div class="action-success">{{contentAction}} {{i18n 'successfull!'}}</div>
+                <div class="action-failed">{{ i18n 'oops! failed' }}</div>
+                <div class="action-progress">
+                    {{i18n 'progress...'}}
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

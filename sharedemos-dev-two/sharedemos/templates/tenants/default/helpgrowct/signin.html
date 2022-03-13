@@ -1,0 +1,34 @@
+{% extends 'tenants/default/helpgrowct/base.html' %}
+	{% block container %}
+		<div class="right_block signin">
+			<div class="right_content">
+				<div class="create-account">
+					<h4>Welcome Back! Please Sign in.</h4>
+	                <div class="login-form-right">
+	                    {% for message in get_flashed_messages() %}
+			        <p class="error">{{message}}</p>
+			    {% endfor %}
+	                    <form id="signin-solidfire" name="signin-solidfire" autocomplete="off" method="post" action='{{url_for("social.complete", backend="email")}}' onsubmit="return signinAccountForm()">
+		                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+		                   	<div>
+		                        <label>
+		                        	<p class="title mandatory-field">EMAIL</p>
+		                        	<input type="text" name="email" id="fullemail" autocomplete="off">
+		                        </label>
+		                    </div>
+		                   	<div>
+		                        <label>
+		                        	<p class="title mandatory-field">PASSWORD</p>
+		                        	<input type="password" name="password" id="password" autocomplete="off">
+		                        </label>
+		                    </div>
+		                    <div>
+		                    	<input type="submit" id="register-btn" class="active" value="SIGN IN">
+		                    </div>
+	                    </form>
+	                </div>
+	            </div>
+			</div>
+		</div>
+	{% endblock %}
+	

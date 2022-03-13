@@ -1,0 +1,10 @@
+<div class='slides_wraper'>
+	<div class="slide-rearrange"></div>
+	<div class='slides_box mCustomScrollbar' data-mcs-axis="yx" data-mcs-setWidth="100%" data-mcs-theme="minimal">
+		<div class='slides_container'>
+			{{#each slides}}
+			<div class='slide' {{#if is_image}}style="background-image:url('{{src}}'); "{{/if}} order={{order}} slide-type="{{primary_resource.type}}"></div>
+			{{/each}}
+		</div>
+	</div>
+</div>

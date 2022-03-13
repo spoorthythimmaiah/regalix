@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8" />
+    <title>{{title | safe}}</title>
+    <style type="text/css">
+        html {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 20px;
+            font-style: regular;
+            font-variant: regular;
+            font-weight: 400;
+            color: #434343;
+            background: hsl(0, 0%, 100%);
+        }
+        body {
+            margin: 0px 120px !important;
+            max-width: 991px !important;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }    
+        /* Title Style */
+        .title-page{
+            page-break-after: always;
+            position: relative;
+            top: 8cm;
+        }
+        .section-title {
+            padding: 10px 0px;
+        }
+        .inline-tag {
+            display: inline-block;
+        }
+        .title-page .title-text{
+            position: relative;
+            font-size: 50px;
+            color: #2BA0CC;
+            padding-top:20px;
+        }
+        .title-page .date-div{
+            font-size: 15px;
+            text-transform: capitalize;
+        }
+        /* End of Title Style */
+
+        /* Table of Contents Style */
+        .table-of-contents, .walkthrough-title {
+            padding-top:20px;
+        }
+        .table-of-contents .heading{
+            text-align: center;
+            text-transform: capitalize;
+        }
+        .table-of-contents ol {
+            counter-reset: item;
+        }
+        .table-of-contents li {
+            display: block;
+            font-size: 20px;
+        }
+        .table-of-contents li:before {
+            content: counters(item, ".")".";
+            counter-increment: item;
+        }
+        .table-of-contents a{
+            text-decoration: none;
+            color: black;
+        }
+        /* End of Table of Contents Style */
+
+        /* Chapter Sheet Style */
+        .chapter-sheet .playlist-title{
+            font-size: 12px;
+            color: #1e1e1e;
+            position: relative;
+            text-align: left;
+            top: 6cm;
+            page-break-before: always;
+            page-break-after: always;
+        }
+        .chapter-sheet .playlist-title div{
+            transform: translate (50%,50%);
+            font-size: 40px;
+            color: #adadad;
+            font-weight: bold;
+        }
+        .chapter-sheet .playlist-title p,
+        .description {
+            font-size: 20px;
+            position: relative;
+            margin-top: 0.5cm;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .description {
+            padding-top:20px;
+        }
+
+        .chapter-sheet .walkthrough-title{
+            font-size: 25px;
+            padding-bottom: 10px;
+        }
+        .chapter-sheet .sdemos-slide-image{
+            width: 100%;
+        }
+        .chapter-sheet .bottom-text{
+            text-align: center;
+            padding-top: -10px;
+            margin-top: -5px;
+            text-transform: initial !important;
+        }
+        .chapter-sheet .slide-notes{
+            text-align: center;
+            font-size: 10px;
+            padding-bottom: 20px;
+        }
+        /* End of Chapter Sheet Style */
+
+        /* Froala Override */
+        .content-slide-wrap{
+            font-size: 12px;
+            color: #434343;
+            padding: inherit;
+            font-family: 'Verdana';
+            font-weight: normal;
+            border: 1px solid rgba(0, 0, 0, 0);
+        }
+        p[class*="custom-h"] {
+            display: block;
+            font-weight: bold;
+        }
+        p.custom-h1 {
+            font-size: 2em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        p.custom-h2 {
+            font-size: 1.5em;
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        p.custom-h3 {
+            font-size: 1.17em;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        p.custom-h4 {
+            font-size: 1em
+            margin-block-start: 1.33em;
+            margin-block-end: 1.33em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        p.custom-h5 {
+            font-size: 0.83em;
+            margin-block-start: 1.67em;
+            margin-block-end: 1.67em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        p.custom-h6 {
+            font-size: 0.67em;
+            margin-block-start: 2.33em;
+            margin-block-end: 2.33em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        .rte-content {
+            font-size: 20px;
+        }
+        .rte-content img.sdemos-slide-image {
+            display: inline-block;
+        }
+        .rte-content img {
+            max-width: 100% !important;
+        }
+        table{
+            border-collapse: collapse;
+            border: 0px !important;
+            page-break-after: always !important;
+        }
+        table td, table th {
+                border: 1px solid #dddddd;
+                padding: 10px;
+                padding-top: 20px;
+        }
+        table, tr, td, th, tbody, thead, tfoot {
+            page-break-inside: avoid !important;
+        }
+        /*Override style of <h> tag*/
+        /*h tags have been used to create PDF bookmarks Please Don't Remove.*/
+        h1.book-mark, h2.book-mark {
+            font-weight: bold;
+            display: inline;
+            font-size: 40px;
+        }
+        h2.book-mark {
+            font-size: 22px;
+            font-weight: normal;
+        }
+        /* End of Overrride */
+
+    </style>
+</head>
+<body>
+    <div class='title-page'>
+        <div class='title-text'>{{title| safe}}</div>
+        {% if not is_section %}
+            <div class="section-title">({{section_title | safe}})</div>
+        {% endif %}
+        <div class='date-div'>{{_('first published on')}}: {{published_date}}</div>
+        <div class='date-div'>{{_('last updated on')}}: {{modified_date}}</div>
+        {% if description %}
+        <div class='description'>{{description | safe}}</div>
+        {% endif %}
+    </div>
+
+    <div class='table-of-contents'>
+        <div class='heading'>{{_('table of contents')}}</div>
+        
+        <ol>
+            {% for playlist in playlists %}
+                {% if is_section %}
+                    <li>
+                        <a href='#{{playlist.name}}'>{{playlist.name | safe}}</a>
+                        <ol>
+                            {% for walkthrough in playlist.enabled_walkthroughs %}
+                                <li><a href='#{{walkthrough.slug}}'>{{walkthrough.title | safe}}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                {% else %}
+                    {% for walkthrough in playlist.enabled_walkthroughs %}
+                        <li><a href='#{{walkthrough.slug}}'>{{walkthrough.title | safe}}</a></li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </div>
+
+    {% for playlist in playlists %}
+        <div class='chapter-sheet'>
+            {% if is_section %}
+            <div class='playlist-title' id='{{playlist.name}}'>
+                {% set playlist_index = loop.index %}
+                <div>{{playlist_index}}. <h1 class="book-mark">{{playlist.name | safe}}</h1></div>
+                <p>{{playlist.description}}</p>
+            </div>
+            {% else %}
+            <!-- Need a empty div to skip the pdf page after table of content page. -->
+                <div class="playlist-title"></div>
+            {% endif %}
+            {% for walkthrough in playlist.enabled_walkthroughs %}
+                <div class='walkthrough-title' id='{{walkthrough.slug}}'>
+                    {% if is_section %}{{playlist_index}}.{% endif %} {{loop.index}} <h2 class="book-mark">{{walkthrough.title| safe}}</h2>
+                </div>
+
+                    {% for slide in walkthrough._slides %}
+                    {% set s_p_res = slide.primary_resource %}
+
+                    {% if s_p_res.resource_type == 'image' %}
+                        {% set image_src = url_for('static', filename='media/'+ s_p_res.path, _physical=True) %}
+                        <p><img class='sdemos-slide-image' src='{{image_src}}'></img>
+                            {% if slide.secondary_resource %}
+                                {% set sec_res_link = url_for('static', filename='media/' + slide.secondary_resource.path, _external=True) %}
+                                <a href='{{sec_res_link}}' class="inline-tag"><p class='bottom-text'> {{_('click to see the')}} {{slide.secondary_resource.resource_type}}</p></a>
+                            {% endif %}
+                        </p>
+
+                    {% elif s_p_res.resource_type == 'content' %}
+                    <div class="rte-content">
+                        {{s_p_res._text_editor_html|safe}}
+                    </div>
+
+                    {% elif s_p_res.resource_type == 'html5' %}
+                        <p><a href="{{url_for('static', filename='media/html5/' + s_p_res.tenant.unique_tenant_id + '/' + s_p_res.path + '/index.html', _external=True)}}" class="inline-tag">
+                            <img class='sdemos-slide-image' src="{{url_for('static', filename='images/author/thumb-iframe.jpg', _physical=True)}}"></img>
+                            <p class='bottom-text'>{{_('click to see the')}} {{s_p_res.resource_type}}</p>
+                        </a></p>
+
+                    {% elif s_p_res.resource_type in ['link', 'embed', 'iframe', 'wistia'] %}
+                        {% if s_p_res.resource_type == 'link' %}
+                            {% set link_text = 'content' %}
+                            {% set image_src = url_for("static", filename='images/author/thumb-link.jpg', _physical=True) %}
+                        {% elif s_p_res.resource_type == 'iframe' %}
+                            {% set link_text = 'HTML page' %}
+                            {% set image_src = url_for("static", filename='images/author/thumb-iframe.jpg', _physical=True) %}
+                        {% else %}
+                            {% set link_text = 'topic media' %}
+                            {% set image_src = url_for("static", filename='images/author/thumb-video.jpg', _physical=True) %}
+                        {% endif %}
+                        <p style="text-align: center !important;"><a href='{{s_p_res.path}}' class="inline-tag" ">
+                            <img class='sdemos-slide-image' src='{{image_src}}'></img>
+                            <p class='bottom-text'> {{_('click to see the')}} {{link_text}}</p>
+                        </a></p>
+
+                    {% elif s_p_res.resource_type not in ['content', 'html5'] %}
+                        {% if slide.secondary_resource %}
+                            {% set sec_src = url_for("static", filename='media/' + slide.secondary_resource.path, _physical=True) %}
+                        {% elif s_p_res.resource_type == 'video' %}
+                            {% set sec_src = url_for("static", filename='images/author/thumb-video.jpg', _physical=True) %}
+                        {% elif s_p_res.resource_type == 'audio' %}
+                            {% set sec_src = url_for("static", filename='images/author/thumb-audio.jpg', _physical=True) %}
+                        {% endif%}
+                        {% set resource_link = url_for('static', filename='media/' + s_p_res.path, _external=True) %}
+                        <p><a href='{{resource_link}}' class="inline-tag">
+                            <img class='sdemos-slide-image' src='{{sec_src}}'></img>
+                            <p class='bottom-text'> {{_('click to see the')}} {{s_p_res.resource_type}}</p>
+                        </a></p>
+                    {% endif %}
+
+                    {% if slide.has_notes %}
+                        {% for page_num in slide.notes|sort %}
+                            <p><i class='bottom-text'>{{slide.notes[page_num].get('title', '')|safe}}</i></p>
+                            <p class='bottom-text'>{{slide.notes[page_num].get('body', '')|safe}}</p>
+                            {% if slide.notes[page_num].get('link') %}
+                                {% set res_link = slide.notes[page_num]['link']['resource'] %}
+                                {% if slide.notes[page_num]['link']['type'] == 'INTERNAL' and slide.notes[page_num]['link']['resource'] %}
+                                    {% set res_link = url_for('static', filename='media/' + slide.notes[page_num]['link'].get('resource', ''), _external=True) %}
+                                {% endif %}
+                                <a href="{{res_link}}" class="inline-tag">{{slide.notes[page_num]['link'].get('title', '')}}</a>
+                            {% endif%}
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+  <script type="text/javascript" src="{{url_for('static', filename='libs/jquery/jquery-1.11.1.min.js', _physical=True)}}"></script>
+  <script type="text/javascript">
+        document.current_locale = "{{locale}}";
+        // h1-6 tags in RTE content will be replaced with pre tag inorder to ignore
+        // them while creating book marks.
+        $('.rte-content h1').replaceWith(function() {
+                return '<p class="custom-h1">' + $(this).text() + '</p>';
+        });
+        $('.rte-content h2').replaceWith(function() {
+                return '<p class="custom-h2">' + $(this).text() + '</p>';
+        });
+        $('.rte-content h3').replaceWith(function() {
+                return '<p class="custom-h3">' + $(this).text() + '</p>';
+        });
+        $('.rte-content h4').replaceWith(function() {
+                return '<p class="custom-h4">' + $(this).text() + '</p>';
+        });
+        $('.rte-content h5').replaceWith(function() {
+                return '<p class="custom-h5">' + $(this).text() + '</p>';
+        });
+        $('.rte-content h6').replaceWith(function() {
+                return '<p class="custom-h6">' + $(this).text() + '</p>';
+        });
+   </script>
+   <script src="{{url_for('static', filename='js/build/translations.js', _physical=True)}}"></script>
+</body>
+</html>

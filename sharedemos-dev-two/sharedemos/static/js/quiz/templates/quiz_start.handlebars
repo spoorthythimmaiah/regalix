@@ -1,0 +1,14 @@
+<div class="welcome-block">
+	{{#compare quiz.time_limit ">" 0}}
+		<div class="quiz-time-info">{{quiz.time_limit}}:00 minutes time limit</div>
+	{{/compare}}
+	<div class="quiz-title">{{quiz.name}}</div>
+	<div class="quiz-description">{{quiz.description}}</div>
+	<div class="quiz-instruction">answer all questions to receive quiz results.</div>
+	<div class="quiz-agreement">
+		<input type="checkbox">
+		<b>Honesty Agreement</b> - I affirm that I will act with honesty and integrity at all times during this quiz.
+	</div>
+	<br>
+	<div class="quiz-start capital-letter">begin quiz</div>
+</div>

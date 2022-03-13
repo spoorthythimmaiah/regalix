@@ -1,0 +1,29 @@
+<div class="container-title capital-letter">{{i18n 'categories'}}</div>
+<div class="row">
+	<div class="sortable">
+		{{#each sections }}
+			{{# compare is_enabled '||' ../is_author }}
+			{{# compare is_visible '||' ../is_author }}
+				<div class="pwt-wrap">
+					{{#unless ../is_author}}
+						{{#if translations_available}}
+							<div class="translation_available" data-toggle="tooltip" data-placement="left" title="Translations Available"></div>
+						{{/if}}
+					{{/unless}}
+					<div class="pwt-box ui-state-default {{#unless is_enabled}} disabled{{/unless}} {{#unless can_edit}}uneditable{{/unless}} {{#if linked_asset }}asset-linked {{/if}}" slug='{{slug}}'>
+						<div class="{{#if repository_details.is_linked}} repository-linked {{#compare repository_details.sync_status '!=' 'COMPLETED'}} sync-inprogress {{/compare}} {{/if}}" title="{{#compare repository_details.sync_status '==' 'IN_PROGRESS'}}Sync in progress{{/compare}}"></div>
+						<div class="left icon">
+							<div class="thumbnail_block"><img class="theme-bg-color" src="{{icon.url}}" alt="{{icon.name}}"/></div>
+							<div class="title">{{name}}</div>
+						</div>
+						<div class="right"></div>
+					</div>
+				</div>
+			{{/compare}}
+			{{/compare}}
+		{{/each}}
+	</div>
+	{{#if editView}}
+		<div class="create-new rippleEffect"><p><span>+</span></br>add category</p></div>
+	{{/if}}
+</div>

@@ -1,0 +1,123 @@
+<div class="popup-box homepage-banner">
+    <div class="popup-title">
+        {{# if is_edit }}
+            {{i18n 'edit'}}
+        {{else}}
+            {{i18n 'add'}}
+        {{/if}}
+        {{i18n 'homepage banner'}}
+    </div>
+    <form name="homepage-banner" class="homepage-banner"
+          enctype="multipart/form-data"
+          data-id="{{banner_id}}">
+        <div class="popup-info">
+            <div>
+                <label>
+                    <span>banner title</span>
+                    <input type="text" class="trim-input" name="banner-title"
+                           id="banner-text" placeholder="Name"
+                           {{#if title }} value="{{title}}" {{/if}}>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span>banner description</span>
+                    <textarea class="trim-input" name="banner-description" placeholder="Description">{{description}}</textarea>
+                </label>
+            </div>
+            <div class="media-container row">
+                <div class="block  col-xs-12 col-sm-6 col-md-6 banner-image {{#if imageAdded}}image-added{{/if}}">
+                    <div class="title banner">{{i18n 'upload a banner image'}}</div>
+                    <div class="sub-title banner-image-sub-title">{{i18n 'upload an image for the banner'}}.</div>
+                    <input type="file" class="drag-file" id="upload-banner-image" accept="image/*" name="background-image" >
+                    <img class="drag" id="banner-image-preview"
+                    src="{{background_image.path}}"
+                    alt="{{background_image.name}}" />
+                    <div class="file-name">
+                        {{#if imageAdded}}{{background_image.name}}{{/if}}
+                    </div>
+                    <label id="remove-img" {{#if background_image}}image-added{{/if}}>
+                       {{i18n 'remove'}}</label>
+                    <label for="upload-banner-image" class="rippleEffect">{{i18n 'browse'}}</label>
+                </div>
+
+                <div class="block col-xs-12 col-sm-6 col-md-6 banner-resource {{#if resource}}resource-added{{/if}}">
+                    <div class="title banner">{{i18n 'upload media'}}</div>
+                    <div class="sub-title">{{i18n 'upload an image/video to go with this banner'}}.</div>
+                    <input type="file" class="drag-file" id="upload-banner-resource" accept="image/*,video/*" name="banner-resource">
+                    {{#if resource}}
+                        {{#compare resource.type "==" "wistia"}}
+                            {{#if resource.meta_data.thumbnail_url}}
+                                <img class="drag" id="upload-resource-preview"
+                                     src="{{resource.meta_data.thumbnail_url}}"
+                                     alt="banner-resource">
+                            {{else}}
+                                <img class="drag" id="upload-resource-preview"
+                                     src="/static/images/author/img-icon.png"
+                                     alt="banner-resource">
+                            {{/if}}
+                        {{/compare}}
+                        {{#compare resource.type "==" "image"}}
+                            <img class="drag" id="upload-resource-preview"
+                                 src="/static/media/{{resource.path}}"
+                                 alt="banner-resource">
+                        {{/compare}}
+                    {{else}}
+                        <img class="drag" id="upload-resource-preview"
+                             src="/static/images/author/img-icon.png"
+                             alt="banner-resource">
+                    {{/if}}
+                    <div class="resource-name">
+                        {{#if resource}}{{resource.name}}{{/if}}
+                    </div>
+                    <label id="remove-resource" {{#if resource}}resource-added{{/if}} >{{i18n 'remove'}}
+                    </label>
+                    <label for="upload-banner-resource" class="rippleEffect">{{i18n 'browse'}}</label>
+                </div>
+            </div>
+
+            <div class="call-to-action">
+                <div class="title banner">{{i18n 'call to action'}}</div>
+                <div class="sub-title">{{i18n 'create a call to action to go with this banner'}}</div>
+            </div>
+            <div class="row cta-action">
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                    <label>
+                    <input type="url" class="trim-input"
+                           name="banner-cta-link" id="banner-cta-link"
+                           placeholder="https://">
+                    </label>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                    <label>
+                        <input type="text" class="trim-input"
+                               name="banner-cta-text" id="banner-cta-text" placeholder="BUTTON TEXT">
+                    </label>
+                </div>
+                <div class="col-xs-12 col-sm-1 col-md-1">
+                    <label>
+                        <span id="add-cta">add</span>
+                    </label>
+                </div>
+            </div>
+            <div class="cta-block" id="cta-container">
+                <ol class="cta-items">
+                    {{#each cta_details }}
+                        {{> cta}}
+                    {{/each}}
+                </ol>
+            </div>
+                
+        </div>
+        <div class="popup-footer">
+            <div class="form-footer">
+                <div class="cancel">cancel</div>
+                <input type="submit" class="save" value="save" name="homepage-banner" />
+            </div>
+            <div class="failed">oops! saving failed</div>
+            <div class="added">saved successfully!</div>
+            <div class="adding">saving...<div class="cd-loading"></div>
+            </div>
+        </div>
+    </form>
+</div>

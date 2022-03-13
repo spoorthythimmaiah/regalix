@@ -1,0 +1,61 @@
+<div class="notes-edit-block">
+    <div class="popup-title">
+        {{#if isEdit}}{{i18n 'edit'}}{{else}}{{i18n 'add'}}{{/if}} {{i18n 'notes'}}
+    </div>
+    <form enctype="multipart/form-data" name="slide-notes-data" form-type="{{#if isEdit }}edit{{else}}add{{/if}}">
+        <div class="content-block">
+            <div class="block">
+                <div class="title">{{i18n 'notes title'}}</div>
+                <div class="sub-title">{{i18n 'write a title for your notes'}}.</div>
+                <div class="input_wrap">
+                    <div class="notes-title" contenteditable="true"></div>
+                </div>            
+            </div>
+            <div class="block">
+                <div class="title">{{i18n 'notes body'}}</div>
+                <div class="sub-title">{{i18n 'write the body for your notes'}}.</div>
+                <div class="input_wrap">
+                    <div class="notes-body" contenteditable="true"></div>
+                </div>
+            </div>
+            <hr>
+            <button class="show-advanced-options capital-letter" type="button" data-toggle="collapse" data-target="#advanced-notes-content" aria-expanded="false" aria-controls="advanced-notes-content">advanced</button>
+            <div id="advanced-notes-content" class="collapse">
+                <div class="block">
+                    <div class="title mandatory-field">{{i18n 'button title'}}</div>
+                    <div class="sub-title">{{i18n 'add a display title for a button at the bottom of your notes'}}.</div>
+                    <div class="input_wrap">
+                        <input type="text" name="name" class="notes-link-title trim-input" maxlength="{{notesLinkTitleLimit}}" autocomplete="off" placeholder="Title" value=""/>
+                        <div class="counter">
+                            <span data-counter>25</span><span> {{i18n 'characters left'}}</span>
+                        </div>
+                        <label class="error-message sub-title notes-url-title"></label>
+                    </div>            
+                </div>
+
+                <div class="block upload-resource">
+                    <div class="title">{{i18n 'upload file'}}</div>
+                    <div class="sub-title">{{i18n 'upload an image or video to be displayed when the button is clicked'}}.</div>
+                    <input type="file" class="drag-file" id="upload-notes-link-file" accept=".webm, .mp4, .jpg, .jpeg, .png, .gif, .bmp|images/" name="icon">
+                    <img class="drag" id="upload-file-preview" />
+                    <div class="file-name"></div>
+                    <label id="remove-img">{{i18n 'remove'}}</label>
+                    <label for="upload-notes-link-file" class="rippleEffect">{{i18n 'upload media'}}</label>
+                    <label class="notes-link-url rippleEffect">{{i18n 'embed url'}}</label>
+                    <label class="error-message sub-title notes-url-resource clearfix"></label>
+                    <input type="text" class="notes-url-link url_input" placeholder="http://" autocomplete="off" media-type="embed" />
+                    <label class="error-message sub-title notes-url"></label>
+                </div>
+            </div>
+        </div>
+        <div class="popup-footer">
+            <div class="form-footer">
+                <div class="cancel rippleEffect" rel="create-edit-notes">{{i18n 'cancel'}}</div>
+                <input type="submit" class="save capital-letter" value="{{i18n 'save'}}" />
+            </div>
+            <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+            <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+            <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+        </div>
+    </form>
+</div>

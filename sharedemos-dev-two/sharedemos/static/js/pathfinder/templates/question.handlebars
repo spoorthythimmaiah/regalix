@@ -1,0 +1,35 @@
+<div class="question-and-options">
+	<div class="pf-header">
+		<h2>{{question.text}}</h2>
+		{{#if question.subtext}}
+		<p>{{question.subtext}}</p>
+		{{/if}}
+		{{#if question.icon }}
+		<div class="pf-icon-wrap">
+			<img class="pf-icon pf-question-icon" src="{{question.image_src}}" />
+			<span class="img-magnifying"></span>
+		</div>
+		{{/if}}
+	</div>
+	{{#if question.options.length}}
+	<ul data-answer="option">
+		{{# each question.options}}
+		<li option-id={{option_id}}{{#compare ../current_option_selected '==' option_id}} class='active'{{/compare}} {{#if icon}} image{{#if text}}_text{{/if}} {{else}}text{{/if}}>
+			{{#if icon}}
+			<div class="pf-icon-wrap">
+				<img class="pf-icon pf-options-icon" src="{{image_src}}" />
+				<span class="img-magnifying"></span>
+			</div>
+			{{/if}}
+			<div class="option_desc">{{text}}</div>
+		</li>
+		{{/each}}
+	</ul>
+	{{else if question.information}}
+	<ul data-answer="information">
+		<li option-cta option-id={{question.information.option_id}}>
+			<div class="pf-option-cta">{{question.information.text}}</div>
+		</li>
+	</ul>
+	{{/if}}
+</div>

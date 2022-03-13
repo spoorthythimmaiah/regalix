@@ -1,0 +1,15 @@
+{{#each this}}
+    <li class="journey-link-data">
+        <div class="journey-link-details">
+            <div class="journey-link-title">{{this.name}}</div>
+            {{#compare this.type "==" 'chapter'}}
+                <a href="{{this.link}}" class="journey-link-url" data-id="{{this.id}}" data-slug="{{this.slug}}" data-type="{{this.type}}" target="_blank">{{this.breadcrumb}}</a>
+            {{/compare}}
+            <div class="journey-link-edit camel-case">
+                <span class="remove-journey-link">{{i18n 'remove'}}</span>
+            </div>
+        </div>
+        <div class="journey-asset-drag no-action ui-sortable-handle"></div>
+    </li>
+{{/each}}
+

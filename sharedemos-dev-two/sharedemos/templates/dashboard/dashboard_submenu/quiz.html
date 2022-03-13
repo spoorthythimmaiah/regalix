@@ -1,0 +1,17 @@
+{% extends 'layouts/dashboard.html' %}
+
+{% block sub_styles %}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/air-datepicker/css/datepicker.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard_content.css') }}">
+{% endblock sub_styles %}
+
+{% block dashboard_container %}
+	<ul class="nav nav-pills">
+        <li role="overview"><a href="{{url_for('dashboard.quiz')}}" {% if sub_menu == 'overview' %} class="active" {% endif %}>overview</a></li>
+        <li role="reports"><a href="{{url_for('dashboard.quiz_reports')}}" {% if sub_menu == 'reports' %} class="active" {% endif %}>reports</a></li>
+	</ul>
+	<div class="dashboard-work-area">
+		{% block dashboard_content_container %}
+		{% endblock %}
+	</div>
+{% endblock %}

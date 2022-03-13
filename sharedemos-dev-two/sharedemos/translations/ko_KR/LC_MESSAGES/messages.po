@@ -1,0 +1,48 @@
+# Korean (South Korea) translations for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-09-07 05:13+0000\n"
+"PO-Revision-Date: 2019-01-09 10:06+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ko_KR\n"
+"Language-Team: ko_KR <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "export to pdf"
+msgstr "PDF로 익스포트"
+
+msgid "first published on"
+msgstr "최초 게시 날짜"
+
+msgid "last updated on"
+msgstr "최종 업데이트 날짜"
+
+#: sharedemos/templates/layouts/base.html:89
+#: sharedemos/templates/preview.html:51
+msgid "What are you looking for?"
+msgstr "무엇을 찾으시나요?"
+
+#sharedemos/templates/export_to_pdf.html
+msgid "click to see the"
+msgstr "클릭하여"
+
+#: sharedemos/templates/export_to_pdf.html:195
+msgid "table of contents"
+msgstr "목차"
+
+msgid "categories"
+msgstr "카테고리"
+
+msgid "playlists"
+msgstr "재생목록"

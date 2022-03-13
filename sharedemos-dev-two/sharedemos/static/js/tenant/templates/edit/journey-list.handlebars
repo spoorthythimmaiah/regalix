@@ -1,0 +1,23 @@
+<div class="journey-browse-popup">
+    <div class="popup-title camel-case">{{i18n 'select content'}}</div>
+    <div class="content-block">
+            <ul id="journey-sitemap" class="sitemap-tree">
+                {{#each journeys}}
+                    <li class="sitemap-item parentblock {{#if disabled }}disabled{{/if}}"
+                    data-groups="{{groups}}" data-id="{{id}}" data-name="{{name}}">
+                        <span class="siteMapTitle">{{name}}</span>     
+                        <input id="tree-{{slug}}" data-id="{{id}}" type="checkbox" class="css-checkbox">
+                        <label for="tree-{{slug}}" class="css-label"></label>
+                    </li>
+                {{/each}}
+            </ul>
+   </div>
+    <div class="popup-footer">
+        <div class="form-footer">
+            <div class="journey-back rippleEffect trigger-inplace-popup" data-hidePopup="journey-browse-popup" data-showPopup="section-edit-block">{{i18n 'back'}}</div>
+            <div class="save-selected-journeys" data-hidePopup="joureny-browse-popup"
+            data-showPopup="section-edit-block">{{i18n 'save'}}</div>
+        </div>
+        </div>
+    </div>
+</div>

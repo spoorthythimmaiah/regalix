@@ -1,0 +1,767 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+.hidden {
+  	display: none !important;
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	color:#ccc;
+}
+::-moz-placeholder { /* Firefox 19+ */
+	color:#ccc;
+}
+:-ms-input-placeholder { /* IE 10+ */
+	color:#ccc;
+}
+:-moz-placeholder { /* Firefox 18- */
+	color:#ccc;
+}
+#root {
+	margin-bottom: 100px;
+}
+.loading-data {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    text-align: center;
+    transform: translateY(-50%);
+    background: url(/static/images/loading_icon.gif) no-repeat;
+    background-size: 100%;
+    width: 30px;
+    margin: 0 auto;
+    height: 30px;
+}
+.fullWidth {
+  	width: 100%;
+}
+.go-back {
+	position: absolute;
+    left: 20px;
+    top: 30px;
+    z-index: 2;
+    background: #eee;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    display: flex;
+	justify-content: center;
+	cursor: pointer;
+}
+.go-back img{
+	width: 21px;
+    filter: invert(0.5);
+}
+.logo {
+	margin: 30px 0px;
+	z-index: 1;
+	position: relative;
+	text-align: center;
+}
+.logo img {
+  	height: 41px;
+}
+.pitchs-wrapper {
+    margin-top: 82px;
+}
+.pitchs-wrapper h1 {
+	display: block;
+	font-size: 36px;
+	font-weight: 700;
+    margin-bottom: 45px;
+}
+.all-pitch {
+	display: flex;
+	margin-top: 20px;
+	flex-wrap: wrap;
+}
+.count {
+	font-size: 16px;
+	font-weight: 600;
+	color: #003663;
+	line-height: 0;
+}
+.position-bar {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	justify-content: space-between;
+}
+.position-bar li {
+	border-bottom: 3px solid #ccc;
+	list-style: none;
+	width: 100px;
+	flex-grow: 1;
+	flex-basis: 0;
+	margin-right: 10px;
+}
+.position-bar .submitted-bar {
+  	border-bottom-color: #23CE00;
+}
+.position-bar .active-bar {
+    border-bottom-width: 5px;
+}
+.tile {
+    height: 212px;
+    box-shadow: 0 0 26px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    overflow: hidden;
+    display: flex;
+	padding: 23px 25px 42px 22px;
+	position: relative;
+}
+.tile-container .banner {
+    max-width: 216px;
+}
+.tile-container .banner img {
+	width: 216px;
+    height: 100%;
+    object-fit: contain;
+}
+.tile-container .tile-info {
+	margin-left: 26px;
+	position: relative;
+	width: 100%;
+}
+.section h3 {
+	font-size: 36px;
+	color: #003663;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+.edit .section h3 {
+	margin-top: 30px;
+}
+.section p {
+	font-size: 18px;
+	color: #828B90;
+	line-height: 24px;
+}
+.count-wrapper {
+	margin: 0 0 20px 0;
+}
+.input-sub-info {
+	text-align: right;
+	font-size: 12px;
+	color: #ccc;
+	margin-top: 5px;
+}
+.start-record, .details-wrapper {
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #F6F6FA;
+	border-radius: 4px;
+	padding: 0 20px;
+	margin-top: 40px;
+}
+.details-wrapper {
+  	border: solid 1px #066AFE;
+}
+.start-record .head-par h5 {
+	text-transform: capitalize;
+	font-size: 20px;
+	margin: 0;
+	color: #1E1E1E;
+	font-weight: 400;
+}
+.start-record .head-par p {
+	font-size: 12px;
+	margin: 5px 0 0 0;
+	text-transform: uppercase;
+	color: #A6A6A6;
+	font-weight: 600;
+}
+.start-record .start-record-btn, .recording-options .start-record-btn {
+	text-transform: capitalize;
+	background-color: #066AFE;
+	padding: 15px;
+	border-radius: 4px;
+	font-size: 14px;
+	cursor: pointer;
+	color: white;
+	display: flex;
+	align-items: center;
+}
+.recording-options .start-record-btn {
+	width: max-content;
+    margin: 25px auto;
+}
+.start-record .start-record-btn img {
+	width: 17px;
+	margin-right: 10px;
+}
+.time-wrapper {
+	font-size: 20px;
+	text-transform: capitalize;
+	color: #066AFE;
+}
+.recorded-time {
+	color: #B7B7B7;
+	margin-left: 10px;
+	padding-left: 10px;
+	border-left: 2px solid #B7B7B7;
+	line-height: 17px;
+	display: inline-block;
+}
+.stored-record {
+	max-height: 300px;
+	margin:  0 auto;
+}
+.video-wrapper {
+	position: relative;
+	background: #000;
+	margin-top: 15px;
+}
+.video-wrapper #btn-stop-recording {
+	display: none;
+    border-radius: 8px;
+    background-color: #ffffff;
+    position: absolute;
+    bottom: 10px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: max-content;
+    padding: 20px 33px;
+    color: #f43838;
+    font-size: 20px;
+    font-weight: 700;
+	letter-spacing: -0.45px;
+	cursor: pointer;
+	box-shadow: 0px 0px 2px 0px #333;
+}
+.video-wrapper:hover #btn-stop-recording {
+	display: block;
+}
+.recording-options {
+    position: relative;
+    height: 50vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+	background: #000;
+	margin-top: 15px;
+}
+.recording-options .description {
+    text-align: center;
+    color: #fff;
+}
+.close-recording-options {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 3px;
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+.close-recording-options img {
+	width: 10px;
+	filter: brightness(200%);
+}
+.recording-options ul {
+	display: flex;
+    align-content: center;
+	justify-content: center;
+}
+.recording-options li {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	margin: 15px;
+	cursor: pointer;
+}
+.recording-options li img,
+.recording-options li:hover.active img {
+	height: 20px;
+	filter: none;
+}
+.recording-options li.active,
+.recording-options li:hover.active  {
+	border: none;
+	background: #076bfe;
+}
+.recording-options li:hover {
+	background: #343434;
+}
+.restart-save {
+	position: absolute;
+	bottom: -22px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.restart, .save {
+	border-radius: 20px;
+	text-transform: uppercase;
+	color: #fff;
+	font-weight: 501;
+	font-size: 12px;
+	cursor: pointer;
+	padding: 5px 15px;
+}
+.count-down-timer {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background: rgba(95, 101, 105, 0.9);
+	padding: 10px 20px;
+	text-align: right;
+}
+.count-down-timer h6 {
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: -0.45px;
+}
+.count-down-timer p {
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: -0.6px;
+	margin-top: 5px;
+}
+.restart {
+	background-color: red;
+	margin-right: 20px;
+}
+.save {
+  	background-color: #23CE00;
+}
+.retake-pitch {
+	padding: 15px 15px 15px 35px;
+	color: #066AFE;
+	border-radius: 4px;
+	background-color: #D3E5FF;
+	cursor: pointer;
+	position: relative;
+	line-height: 16px;
+}
+.retake-pitch strong:before {
+	content: "";
+	position: absolute;
+	background: url(/static/images/pitch/retake.png);
+	width: 14px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	left: 15px;
+	filter: hue-rotate(235deg);
+}
+.submit-wrapper {
+	display: flex;
+	justify-content: flex-end;
+}
+.submit {
+	justify-content: flex-end;
+	margin-top: 100px;
+	padding: 15px 50px 15px 15px;
+	background-color: #23CE00;
+	border-radius: 4px;
+	color: white;
+	cursor: pointer;
+	position: relative;
+}
+.submit:after {
+	content: "";
+	position: absolute;
+	background: url(/static/images/arrow.png) no-repeat;
+	width: 23px;
+	height: 16px;
+	background-size: 100%;
+	right: 15px;
+	transform: rotate(180deg);
+}
+.submitting-wrapper h3 {
+	font-size: 22px;
+	color: #003663;
+	text-align: center;
+	font-weight: 600;
+	padding-top: 10%;
+}
+.spinner-wrapper {
+	position: relative;
+	margin-top: 30px;  
+}
+.progress {
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: 35px;
+	text-align: center;
+	font-size: 42px;
+	color: #17d3e6;
+}
+.finished-wrapper h2 {
+	text-transform: capitalize;
+	font-size: 26px;
+	color: #23CE00;
+}
+.finished-wrapper p {
+	font-size: 18px;
+	color: #828B90;
+	line-height: 24px;
+}
+.btn {
+	padding: 15px 30px;
+	text-transform: capitalize;
+	font-weight: bold;
+	background-color: #D3E5FF;
+	color: #066AFE;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	text-decoration: none;
+	margin-top: 40px;
+	display: block;
+	width: max-content;
+}
+.finish-msg {
+  	margin: 15px 25%;
+}
+.horse-icon {
+	width: 400px;
+  	float: right;
+}
+.finished-wrapper {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	max-width: 100%;
+	background: #fff;
+}
+.finished-wrapper .top-bg {
+	background: url(/static/images/pitch/transperant-top.png) no-repeat;
+	width: 100%;
+	height: 100px;
+	background-size: 100%;
+}
+.finished-wrapper .bottom-bg {
+	position: absolute;
+	bottom: 0;
+	background: url(/static/images/pitch/transperant-bottom.png) no-repeat;
+	width: 100%;
+	height: 100px;
+	background-size: 100%;
+}
+.pitch-nav .prev, .pitch-nav .next {
+    left: 10%;
+    position: fixed;
+    top: 50%;
+	transform: translateY(-50%);
+	background: #e9e9e9;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.pitch-nav .prev:after, .pitch-nav .next:after {
+	content: "";
+    position: absolute;
+    border: 2px solid #1e1e1e;
+    width: 8px;
+    height: 8px;
+    margin: 0 auto;
+    top: 14px;
+    left: 16px;
+    border-top: none;
+    border-left: none;
+    transform: rotate(135deg);
+}
+.pitch-nav .next {
+	left: auto;
+	right: 10%;
+}
+.pitch-nav .next:after {
+	transform: rotate(-45deg);
+	left: 0px;
+	right: 2px;
+}
+
+/* Pitch Info Page */
+.info-wrapper {
+	margin-top: 52px;
+}
+.info-logo img {
+	width: 100%;
+}
+.info-sections-list {
+	border: 2px solid #dfe4ea;
+	border-radius: 8px;
+	margin-top: 27px;
+	padding: 36px 31px;
+}
+.info-sections-list h4 {
+	color: #18214d;
+	font-size: 20px;
+	font-weight: 700;
+}
+.info-sections-list p {
+	margin-top: 19px;
+	margin-bottom: 35px; 
+}
+.info-sections-list ul li {
+	color: #18214d;
+	font-size: 16px;
+	font-weight: 700;
+	margin-top: 10px;
+	line-height: 18px;
+}
+.info-right .tags li {
+    background-color: #ee3465;
+    display: inline-block;
+    margin-right: 10px;
+    text-transform: capitalize;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 11px;
+    padding: 6px 5px;
+}
+.info-right h1 {
+	color: #18214d;
+	font-size: 36px;
+	font-weight: 700;
+	margin: 15px 0;
+}
+.info-right .description {
+	color: #3e4462;
+	font-size: 18px;
+	font-weight: 400;
+}
+.start-pitch-btn {
+	border-radius: 8px;
+    background-color: #345dee;
+    padding: 20px 18px;
+    display: flex;
+    float: right;
+	align-items: center;
+	margin-top: 50px;
+	cursor: pointer;
+}
+.start-pitch-btn span {
+	color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 27px;
+}
+.start-pitch-btn img {
+	width: 20px;
+    height: 13px;
+    transform: rotate(180deg);
+}
+
+/* Edit section page */
+.edit.sections-wrapper {
+	display: block;
+	margin: 0 25%;
+    padding: 20px 0;
+}
+.edit.sections-wrapper .count-wrapper {
+    margin: 20px 0;
+}
+/* section page */
+.sections-wrapper {
+	display: flex;
+}
+.sections-list-wrapper {
+	width: 320px;
+    margin-right: 100px;
+}
+.sections-list-container {
+	border-radius: 8px;
+	border: 2px solid #dfe4ea;
+	padding: 24px 28px;
+}
+.sections-list-container h4 {
+    color: #18214d;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 34px;
+}
+ul.sections-list li {
+    display: flex;
+    margin-top: 22px;
+	align-items: center;
+    color: #18214d;
+}
+ul.sections-list li span {
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 29px;
+    min-height: 29px;
+    background-color: #dfe4ea;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+ul.sections-list li.active span, ul.sections-list li:hover span {
+	border: 2px solid #57B323;
+	background-color: #fff;
+}
+ul.sections-list li.completed span {
+	background-color: #23ce00;
+	color: #fff;
+}
+ul.sections-list li h5 {
+	font-size: 14px;
+	font-weight: 700;
+	flex-grow: 1;
+	cursor: pointer;
+}
+.sections-right {
+	width: calc(100vw - 100px);
+    max-width: 748px;
+}
+
+/* Loader */
+.cssload-bell {
+	width: 125px;
+	height: 128px;
+	border-radius: 100%;
+	position: absolute;
+	left: calc(50% - 63px);
+}
+
+.cssload-circle {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+.cssload-circle .cssload-inner {
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	border: 6px solid rgba(23,209,230,0.7);
+	border-right: none;
+	border-top: none;
+	background-clip: padding;
+	box-shadow: inset 0px 0px 13px rgba(23,209,230,0.17);
+}
+
+.cssload-circle:nth-of-type(0) {
+	transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+}
+.cssload-circle:nth-of-type(0) .cssload-inner {
+	animation: cssload-spin 2.3s infinite linear;
+	-o-animation: cssload-spin 2.3s infinite linear;
+	-ms-animation: cssload-spin 2.3s infinite linear;
+	-webkit-animation: cssload-spin 2.3s infinite linear;
+	-moz-animation: cssload-spin 2.3s infinite linear;
+}
+
+.cssload-circle:nth-of-type(1) {
+	transform: rotate(70deg);
+	-o-transform: rotate(70deg);
+	-ms-transform: rotate(70deg);
+	-webkit-transform: rotate(70deg);
+	-moz-transform: rotate(70deg);
+}
+.cssload-circle:nth-of-type(1) .cssload-inner {
+	animation: cssload-spin 2.3s infinite linear;
+	-o-animation: cssload-spin 2.3s infinite linear;
+	-ms-animation: cssload-spin 2.3s infinite linear;
+	-webkit-animation: cssload-spin 2.3s infinite linear;
+	-moz-animation: cssload-spin 2.3s infinite linear;
+}
+
+.cssload-circle:nth-of-type(2) {
+	transform: rotate(140deg);
+	-o-transform: rotate(140deg);
+	-ms-transform: rotate(140deg);
+	-webkit-transform: rotate(140deg);
+	-moz-transform: rotate(140deg);
+}
+.cssload-circle:nth-of-type(2) .cssload-inner {
+	animation: cssload-spin 2.3s infinite linear;
+	-o-animation: cssload-spin 2.3s infinite linear;
+	-ms-animation: cssload-spin 2.3s infinite linear;
+	-webkit-animation: cssload-spin 2.3s infinite linear;
+	-moz-animation: cssload-spin 2.3s infinite linear;
+}
+
+.cssload-bell {
+	animation: cssload-spin 5.75s infinite linear;
+	-o-animation: cssload-spin 5.75s infinite linear;
+	-ms-animation: cssload-spin 5.75s infinite linear;
+	-webkit-animation: cssload-spin 5.75s infinite linear;
+	-moz-animation: cssload-spin 5.75s infinite linear;
+}
+
+
+
+@keyframes cssload-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@-o-keyframes cssload-spin {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(360deg);
+	}
+}
+
+@-ms-keyframes cssload-spin {
+	from {
+		-ms-transform: rotate(0deg);
+	}
+	to {
+		-ms-transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes cssload-spin {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@-moz-keyframes cssload-spin {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(360deg);
+	}
+}
+
+/* Loader ends here */
+
+@media (max-width: 767px) and (min-width: 320px) {
+	.pitch-container {
+		margin: 0 20px;
+		max-width: 100%;
+	}
+}

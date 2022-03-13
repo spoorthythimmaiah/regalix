@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Helpgrowct</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="">
+	<link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+	<link rel="stylesheet" type="text/css" href="//cloud.typography.com/7667932/7011412/css/fonts.css" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/hg-favicon.ico') }}">
+</head>
+<body>
+	<div id="helpgrowct_container">
+		<div class="left_block">
+			<div class="left_content">
+				<div class="helpgrowct_logo"></div>
+				<p>We are a benefit company empowering entrepreneurship, small business growth & career advancement in our great State of Connecticut.</p>
+			</div>
+		</div>
+		{% block container %}
+        {% endblock %}
+	</div>
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/site.js') }}"></script>
+</body>
+</html>

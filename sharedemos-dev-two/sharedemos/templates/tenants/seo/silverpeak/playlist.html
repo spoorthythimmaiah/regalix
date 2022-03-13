@@ -1,0 +1,150 @@
+{% extends 'tenants/seo/silverpeak/base.html' %}
+
+{% block seo %}
+    {% set icon = api['icon']['url'] if api['icon'] else None %}
+    {% if not icon %}
+        {% set icon = api['parent']['icon']['url'] if api['parent'] and api['parent']['icon'] else None %}
+    {% endif %}
+    {% if not icon %}
+        {% set icon = api['product']['icon']['url'] if api['product'] and api['product']['icon'] else None %}
+    {% endif %}
+    {{ load_seo_meta(title=api['name'] + ' | ' + api['tenant']['name'], description=api['description'], image=icon) }}
+{% endblock %}
+
+{% block container %}
+    <div id="playlist" class="container-block">
+        <div class="custom-popup-wrapper"></div>
+        <div class="split-playlist-container">
+            <div class="playlist-left-panel">
+                <a href="/">
+                    {% if api['tenant']['logo'] %}
+                        <img class="logo" src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}"
+                             alt="logo">
+                    {% else %}
+                        <img class="logo" src="{{ url_for('static', filename='images/silverpeak/logo.png') }}"
+                             alt="logo">
+                    {% endif %}
+                </a>
+                <h1 class="category-title">{{ api['name'] }}</h1>
+                <p>{{ api['description'] or '' }}</p>
+                <div class="category-video-holder">
+                    {{ videos() }}
+                </div>
+                <div class="cta-holder">
+                    {{ cta_list(api['cta_list']) }}
+                </div>
+                <div class="mini-mobile-share">
+                    {% if not api['tenant']['is_private'] %}
+                        {{ social_share() }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="playlist-right-panel">
+                <div class="fluid-container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10 search-bar-holder">
+                            <a href="/">
+                                {% if api['tenant']['logo'] %}
+                                    <img class="mobile-logo"
+                                         src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}"
+                                         alt="logo">
+                                {% else %}
+                                    <img class="mobile-logo"
+                                         src="{{ url_for('static', filename='images/silverpeak/logo.png') }}"
+                                         alt="logo">
+                                {% endif %}
+                            </a>
+                            {{ search() }}
+                        </div>
+                        <div class="col-md-2">
+                            {% if not api['tenant']['is_private'] %}
+                                {{ social_share() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% if pl_with_chapter %}
+                    <main class="fluid-container" id="main_container">
+                        <section class="row playlist-list" data-attr="thumbnail-view">
+                            {% for playlist in api['playlists'] %}
+                                {% if playlist['walkthroughs'] %}
+                                    <div class="col-xs-12 col-sm-6 col-md-4 playlist-block">
+                                        <div class="playlist-container">
+                                            {% if playlist['translations_available'] %}
+                                                <div class="translation-icon" data-overlay="language-translations"
+                                                     data-language-options='{{ playlist['locales_available']|tojson }}'></div>
+                                            {% endif %}
+                                            {% if can_download %}
+                                                <div
+                                                        class="pdf-icon-thumbnail-view export-pdf {% if playlist['translations_available'] %}with-trans-icon{% endif %}"
+                                                        data-section-slug="{{ api['slug'] }}"
+                                                        data-playlist-id="{{ playlist['playlist_id'] }}"
+                                                        title="Export To PDF">
+                                                    <img src="{{ url_for('static', filename='images/dell/download-icon.png') }}"/>
+                                                </div>
+                                            {% endif %}
+                                            <div class="playlist-header">
+                                                <h3>{{ playlist['name'] }}</h3>
+                                                <p class="chapter-desc"><span
+                                                        class="min-chapter-desc">{{ playlist['description'] or '' }}</span>
+                                                </p>
+                                            </div>
+                                            <ul class="chapters-list">
+                                                {% for demo in playlist['walkthroughs'] %}
+                                                    <li>
+                                                        <a href="{{ url_for('main.route_handler',
+                                                        section=api['slug'], chapter=demo['slug']) }}"
+                                                           data-product-id="{{ api['product']['slug'] }}"
+                                                           data-section-id="{{ api['slug'] }}"
+                                                           data-chapter-id="{{ demo['slug'] }}"
+                                                           class="playerframe-link">
+                                                            <div class="chapter-index-block">
+                                                                <div class="chapter-index">{{ loop.index }}</div>
+                                                            </div>
+                                                            <div class="chapter-title">{{ demo['name'] }}</div>
+                                                        </a>
+                                                        {% if demo['tags']|length > 0 %}
+                                                            <div class="tags-block">
+                                                                <ul class="playlist-tags">
+                                                                    {% for tag in demo['tags'] %}
+                                                                        <li>{{ tag }}</li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </section>
+                    </main>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.isUserAnonymous = true;
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.apps = JSON.parse('{{apps|tojson}}');
+        document.app_name = "library";
+        document.tenantFooterImage = "{{tenant.logo or ''}}";
+        document.viewType = "{{view_type}}";
+        document.product = "{{api['product']['slug']}}";
+        document.section = "{{api['slug']}}";
+        document.locales = JSON.parse('{{api["locales"]|tojson}}');
+        document.page = 'Playlist';
+    </script>
+    <script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

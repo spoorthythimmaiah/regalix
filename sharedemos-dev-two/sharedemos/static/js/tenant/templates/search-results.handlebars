@@ -1,0 +1,17 @@
+<div class="search-categories">
+    <div class="search-data">
+        <ul>
+            {{#each search_results_list}}
+                <li class="redirect-to" >
+                    <span class="walkthroughs-icon"></span>
+                    <a class="search-detail search-links walkthrough-entry" href="{{demo_url}}" {{#if is_asset}}target="_blank"{{/if}} >
+                        <div class="search-title search-detail">{{title}}</div>
+                        <div class="search-breadcrumb search-detail">{{breadcrumb}}</div>
+                    </a>
+                </li>
+            {{else}}
+                <li class="no-results sub-title">{{i18n "oops! no results found. please try a different search phrase."}}</li>
+            {{/each}}
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+		<style type="text/css">
+			body {
+				font-family: Helvetica, Arial, sans-serif;
+				font-weight: normal;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+	<body bgcolor="#f2f2f2" style="margin:0;padding:0">
+		<table border="0" cellpadding="0" cellspacing="0" width="800" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%; margin: 0px auto; color:#ffffff; font-family: Arial, Helvetica, sans-serif; background: #fff;">
+			<tbody>
+				<tr>
+					<td>{% if tenant.logo %}
+						<img src="{{url_for('static', filename='media/' + tenant.logo, _external=True)}}" align="left" style="display:block; margin: 45px;" width="175px;">
+						{% else %}
+						<img src="{{url_for('static', filename='images/sharedemos-email-logo.png', _external=True)}}" align="left" style="display:block; margin: 45px;" width="175px;">
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td style="font-size:26px;text-align:center;padding:20px 45px; color: #1e1e1e;"> 
+						{{audience_user.first_name|title}}, you&#39;ve got content waiting for you.
+					</td>
+				</tr>
+				<tr >
+					<td style="  font-size: 16px; line-height:25px; text-align: left;  padding: 20px 45px; color: #828b90;">
+						Hey {{audience_user.first_name|title}},<br>
+						{{tenant.name|title}} has just shared content with you and your company, {{audience_user.company.name|title}}. <br><br>
+						To access this content click the button below and then sign in using your company credentials.
+
+					</td>
+				</tr>
+				<tr>
+					<td style="padding:20px 45px">
+						<a href="{{url_for('audience.register', company_id=audience_user.company.unique_link_id, unique_user_id=audience_user.unique_user_id, _external=True)}}" style="color:#ffffff;font-size:13px;padding:10px 25px;text-decoration:none;border-radius: 3px; background: #4584f6;">SIGN IN</a>
+					</td>
+				</tr>
+				<tr >
+					<td style="font-size:16px;line-height:25px;text-align:left;padding: 20px 45px 50px; color: #828b90;">
+						Sincerely,<br>
+						{{g.user}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

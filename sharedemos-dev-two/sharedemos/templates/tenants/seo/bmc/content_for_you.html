@@ -1,0 +1,59 @@
+{% extends 'tenants/seo/bmc/base.html' %}
+
+{% block container %}
+{{ search() }}
+{{ header() }}
+<main class="for-you-block container">
+    <section class="row">
+        <!-- Recently Viewed block -->
+        <section class="col-xs-12 col-md-8">
+            <div class="list-container">
+                <div class="head-section">
+					<small class="text-uppercase"><b>History</b></small>
+                	<h2>Recently Viewed</h2>
+				</div>
+                <div id="recently-viewed-block">
+					<ul>
+						{% if recent_chapters %}
+							{% for chapter in recent_chapters %}
+								<li>
+									<div class="text-info">
+										<h3><a href="{{chapter.url}}" title="{{chapter.name}}">{{chapter.name}}</a></h3>
+										<p title="{{chapter.breadcrumb}}">{{chapter.breadcrumb}}</p>
+									</div>
+								</li>
+							{% endfor %}
+						{% else %}
+							<div class="pager text-muted"> No content </div>
+						{% endif %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- Recommended for You block -->
+        <section class="col-xs-12 col-md-4">
+            <div class="list-container">
+                <div class="head-section">
+					<small class="text-uppercase"><b>curated content</b></small>
+                	<h2>Recommended for You</h2>
+				</div>
+                <div id="recommendations-block"></div>
+            </div>
+        </section>
+    </section>
+</main>
+{{ footer() }}
+{% endblock %}
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.isUserAnonymous = true;
+        document.viewType = "{{view_type}}";
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.user_email = '{{ g.user.email}}';
+    </script>
+    <script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/services/recommendations.js') }}"></script>
+{% endblock %}

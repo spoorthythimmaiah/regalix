@@ -1,0 +1,42 @@
+<div class="container-title capital-letter">bulletin board</div>
+<div class="row">
+    <div class="bulletin-board-sortable">
+        {{#each bulletinBoardData}}
+            <div class="bulletin-board-block {{#unless is_enabled}}disabled{{/unless}}{{#unless ../can_edit}}uneditable{{/unless}}" id={{_id}}>
+                <div class="bulletin-board-item">
+                    <ul>
+                        {{#each links}}
+                            <li><a href="{{this.url}}" target='_blank'>{{this.name}}</a></li>
+                        {{/each}}
+                        {{#if has_more_links}}
+                            <div class="more_bb_links">
+                                <a href="/bulletin-board-links/{{_id}}" target='_blank'>Learn More</a>
+                            </div>
+                        {{/if}}
+                    </ul>
+                    <div class="right">
+                        <div class='right-wrapper'>
+                            <div class='edit-hamburger no-action'><span class='no-action'></span></div>
+                            <div class='bulletin-board-drag no-action '>
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" enable-background="new 0 0 100 100" xml:space="preserve">\
+                                    <polygon fill-rule="evenodd" clip-rule="evenodd" points="95,50 83.75,38.75 83.75,44.375 55.625,44.375 55.625,16.25 61.25,16.25   50,5 38.75,16.25 44.375,16.25 44.375,44.375 16.25,44.375 16.25,38.75 5,50 16.25,61.25 16.25,55.625 44.375,55.625 44.375,83.75   38.75,83.75 50,95 61.25,83.75 55.625,83.75 55.625,55.625 83.75,55.625 83.75,61.25 "/>\
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='edit'>
+                    <div class="hide-bulletinboard-options rippleEffect"></div>
+                    <div class='enable-bulletin-board no-action rippleEffect'></div>
+                    <div class='duplicate-bulletin-board no-action rippleEffect'></div>
+                    <div class='edit-bulletin-board no-action rippleEffect'></div>
+                    <div class='delete-bboard no-action rippleEffect'></div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    {{#if can_edit}}
+        <div class="create-new-bulletin rippleEffect"><p><span>+</span></br>add bulletin board</p></div>
+    {{/if}}
+
+</div>

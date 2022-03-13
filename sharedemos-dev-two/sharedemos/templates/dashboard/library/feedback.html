@@ -1,0 +1,70 @@
+{% extends 'dashboard/dashboard_submenu/library_menu.html' %}
+
+{% block dashboard_content_container %}
+    <div class="work-area library-background">
+        <div id="feedback_wrap"> 
+            <div class="feedback-filter row shadow">
+                <div>
+                    <div class="dashboard_sub_title">Metrics for:</div>
+                    <div class="time-interval-dd">
+                        <span class="interval" data-attr='week'>last 7 days</span>
+                        <ul class="dd-menu" id='metrics'>
+                            <li data-attr='today' data-title='today'>today</li>
+                            <li data-attr='yesterday' data-title='yesterday'>yesterday</li>
+                            <li data-attr='week' data-title='Last 7 Days' class="active">1 week</li>
+                            <li data-attr='month' data-title='Last 30 days'>30 days</li>
+                            <li data-attr='quarter' data-title='Last 3 months'>3 months</li>
+                            <li data-attr='half-year' data-title='Last 6 months'>6 months</li>
+                            <li data-attr='year' data-title='Last 12 months'>12 months</li>
+                            <li data-attr='custom' data-title='Custom Days'>Custom</li>
+                        </ul>
+                   </div>
+                </div>
+                <div class="custome-dropdown">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12 custome-date">
+                            <div class="dashboard-sub-title">
+                                From
+                            </div>
+                            <input id="from-date" type="text" name="from-date" class='datepicker-here' readonly="true">
+                        </div>
+                        <div class="col-sm-6 col-xs-12 custome-date">
+                            <div class="dashboard-sub-title">
+                                To
+                            </div>
+                            <input id="to-date" type="text" name="to-date" class='datepicker-here' readonly="true">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="category-dd">
+                        <span class="category">All Categories</span>
+                        <ul class="dd-menu" id="categories">
+                            <li data-attr="all" class="active">All Categories</li>
+                            {% for Category in categories %}
+                                <li product_id="{{Category.id}}">{{Category.name}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="feedback-cards-wrap row"></div>
+            <div class="feedback-search-wrap shadow row">
+                <div class="breadcrumb"></div>      
+                <div class="feedback-search-result-wrap"></div>
+                <div class="feedback-list-wrap"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+<script type="text/javascript">
+    document.requestParameters = function(){
+        return '?author=1'
+    };
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/lang/datepicker.en.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/build/feedback.js') }}"></script>
+{% endblock sub_scripts %}

@@ -1,0 +1,20 @@
+<div class="search-result header row">
+    <div class="category-title col-xs-7">Category name</div>
+    <div class="col-xs-1"></div>
+    <div class="ratings col-xs-2">ratings</div>
+    <div class="comments col-xs-2">comments</div>
+</div>
+{{#each categories }}
+    <div class="search-result records row" data-id="{{category_id}}">
+        <div class="category-title col-xs-7" load-ratings data-product-id="{{product_id}}" data-section-id="{{section_id}}">{{#if section_name}}{{section_name}}{{else}}{{product_name}}{{/if}}</div>
+        <div class="col-xs-1">
+	        {{#if is_deleted}}
+				<div class="cat-deleted-section-icon rating"></div>
+			{{ else unless is_enabled }}
+				<div class="cat-disabled-section-icon rating"></div>
+			{{/if}}
+		</div>
+        <div class="ratings col-xs-2">{{ratings}}</div>
+        <div class="comments col-xs-2">{{comments}}</div>
+    </div>
+{{/each}}

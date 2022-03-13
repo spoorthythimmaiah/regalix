@@ -1,0 +1,54 @@
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+    
+{% macro extra() %}
+    <input name="_continue_editing" type="submit" class="btn" value="{{ _gettext('Save and Continue') }}" />
+{% endmacro %}
+
+{% block head %}
+    {{ super() }}
+    {{ lib.form_css() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% macro render_form_buttons(cancel_url, extra=None) %}
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" class="btn btn-primary btn-large" value="{{ _gettext('Upload') }}" />
+        {% if cancel_url %}
+        <a href="{{ cancel_url }}" class="btn btn-large">{{ _gettext('Cancel') }}</a>
+        {% endif %}
+      </div>
+    </div>
+{% endmacro %}
+
+{% macro render_form(form, cancel_url, extra=None, form_opts=None) -%}
+    {% call form_tag() %}
+        {{ render_form_buttons(cancel_url, extra) }}
+    {% endcall %}
+{% endmacro %}
+
+
+{% block body %}
+    {% set csrf_data = csrf_token() %}
+      <ul class="nav nav-tabs">
+      <li>
+          <a href="{{ return_url }}">{{ _gettext('List') }}</a>
+      </li>
+      <li class="active">
+          <a href="javascript:void(0)">{{ _gettext('Create') }}</a>
+      </li>
+    </ul>
+
+  {% call lib.form_tag(form) %}
+
+      {{ lib.render_form_fields(form, form_opts=form_opts) }}
+      <br></br>
+      {{ render_form_buttons(return_url, extra()) }}
+  {% endcall %}
+{% endblock %}
+
+{% block tail %}
+    {{ super() }}
+    {{ lib.form_js() }}
+{% endblock %}

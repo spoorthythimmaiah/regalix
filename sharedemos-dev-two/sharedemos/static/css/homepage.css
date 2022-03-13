@@ -1,0 +1,383 @@
+body{
+	font-size: 20px;
+}
+.nav-top{
+	position: fixed;
+	top: 0px;
+	height: 56px;
+	padding: 40px 0px;
+	width: 100%;
+	display: inline-table;
+	color: #fff;
+	-webkit-backface-visibility: hidden;
+	z-index: 999;
+}
+.nav-top ul.nav-bar{
+	list-style-type: none;
+}
+.nav-top ul.nav-bar li{
+	float: right;
+	margin: 21px 21px;
+}
+.nav-top ul.nav-bar li a{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 17px;
+	color: #fff;
+	height: 25px;
+	font-weight: bold;
+	padding: 2px 0px;
+}
+.nav-top ul.nav-bar li .nav:hover, .nav-top ul.nav-bar li .nav.active{
+	border-bottom: 2px solid #fb565a;
+}
+
+.nav-top ul.nav-bar li a.login{
+	color: #54454a;
+	border-radius: 5px;
+	background-color:  #ffffff;
+	height: 25px;
+	padding: 5px 8px;
+}
+.site-wrapper {
+	display: table;
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	position: absolute;
+}	
+.site-wrapper #video-bg {
+	background-size: cover;
+	line-height: 0;
+	opacity: 0.7;
+}
+video.video-width {
+	width: 100% !important;
+}
+
+video.video-height {
+	height: 115% !important;
+}
+.vd_bg {
+position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.site-wrapper-inner {
+	display: table-cell;
+	vertical-align: middle;
+	position: relative;	
+	z-index: 99;
+	margin-top: 30%;
+}
+.site-wrapper-inner .cover-heading{
+	text-align: center;
+	font-size: 50px;
+	color: #ffffff;
+	text-shadow: 3px 3px 10px #000000;
+}
+.site-wrapper-inner .sd-price{
+	text-align: center;
+	font-size: 17px;
+	color: #ffffff;
+	margin: 20px 0px;
+	text-shadow: 3px 3px 10px #000000;
+}
+.site-wrapper-inner .lead{
+	text-align: center;
+}
+.site-wrapper-inner .lead .start-free{
+	background: #fb565a;
+	color: #ffffff;
+	font-size: 17px;
+}
+.site-wrapper-inner .lead .learn-more{
+	color: #ffffff;
+	font-size: 16px;
+	border: 2px solid #fff;
+	text-shadow: 3px 3px 10px #000000;
+}
+.site-wrapper-inner .lead .btn{
+	margin: 0px 10px;
+}
+
+.content-wrapper{
+	width: 100%;
+	position: absolute;
+	top: 100%;	
+}
+
+.content-wrapper .explore-wrapper{
+	padding-top: 140px;
+	position: relative;
+	width: 100%;
+	min-height: 1000px;
+	background: #34495e;
+}
+.content-wrapper .explore-wrapper .work-area, .content-wrapper .login-wrapper .work-area, .content-wrapper .price-wrapper .work-area{
+	position: relative;
+	margin : 0px auto;
+	width : 83.33333333%;
+	display: block;
+	text-align: center;
+	margin-bottom: 30px;
+}
+.content-wrapper .login-wrapper .work-area, .content-wrapper .price-wrapper .work-area{
+	width: 100%;
+}
+.content-wrapper .explore-wrapper .work-area .explore-heading{
+	position: relative;;
+	font-size: 50px;
+	color: #abbcc3;
+	font-weight: normal;
+	line-height: 45px;
+	text-align: left;
+}
+.content-wrapper .explore-wrapper .work-area .explore-heading2{
+	position: relative;;
+	font-size: 15px;
+	color: #abbcc3;
+	font-weight: normal;
+	line-height: 45px;
+	text-align: left;
+}
+
+.content-wrapper .explore-wrapper .work-area .company-list{
+	position: relative;;
+	width: 100%;
+	padding: 10px 0px 20px 0px;
+	display: table;
+}
+.content-wrapper .explore-wrapper .work-area .company-list:nth-child(2){
+	margin-top: 30px;
+}
+.content-wrapper .explore-wrapper .work-area .company-list .company{
+	position: relative;
+	width: 25%;
+	float: left;
+}
+.content-wrapper .explore-wrapper .work-area .company-list a{
+	cursor: pointer;;
+}
+.content-wrapper .explore-wrapper .work-area .company-list a:nth-child(2) .company{
+	margin: 0px 12.5%;
+}
+.content-wrapper .explore-wrapper .work-area .company-list .company img{
+	display: block;
+	width: 100%;
+}
+.content-wrapper .explore-wrapper .work-area .company-list .company .footer{
+	background: #fff url('/static/images/linkedIn.png') no-repeat;
+	background-position: right 10px center;
+	color: #9197a8;
+	display: block;
+	padding: 10px 10px 10px 20px;
+	line-height: 20px;
+	text-align: left;
+}
+.content-wrapper .explore-wrapper .work-area .company-list .company .footer .company-name{
+	font-size: 12px;
+	text-transform: uppercase;
+}
+.content-wrapper .explore-wrapper .work-area .company-list .company .footer .no-demos{
+	font-size: 10px;
+}
+.content-wrapper .login-wrapper{
+	position: relative;
+	width: 100%;
+	min-height: 1000px;
+	background: #7accc8;
+	display: table;
+}
+.content-wrapper .login-wrapper .container{
+	display: table-cell;
+	vertical-align: middle;
+}
+.content-wrapper .login-wrapper .work-area  .login-heading{
+	position: relative;;
+	text-align: center;;
+	color: #fff;
+	font-size: 50px;
+	text-decoration: none;
+}
+.content-wrapper .login-wrapper .work-area  .login-heading2, .content-wrapper .login-wrapper .work-area  a.forgot-password{
+	position: relative;;
+	text-align: center;
+	color: #fff;
+	font-size: 17px;	
+	margin: 20px 0px 15px;
+	line-height: 30px;
+}
+.content-wrapper .login-wrapper .work-area  .login-heading3{
+	position: relative;;
+	text-align: center;
+	color: #fff;
+	font-size: 14px;	
+	margin: 0px ;
+	line-height: 20px;
+	width: 40px;
+	margin: 0px auto;
+	background: #7accc8;
+	text-transform: uppercase;
+}
+.content-wrapper .login-wrapper .work-area .overstike{
+	width: 480px;
+	height: 0px;
+	border: 2px solid #fff;
+	margin : -10px auto 10px;
+}
+.content-wrapper .login-wrapper .work-area input[type='text'], .content-wrapper .login-wrapper .work-area input[type='password']{
+	padding: 20px;
+	margin: 10px auto;
+	border: none;
+	border-radius: 6px;
+	width: 480px;
+	font-size: 17px;
+	color: #979798;
+	text-align: left;
+	padding-left: 55px;
+}
+
+#password-text
+{
+	background: #ffffff url('/static/images/password-bg.png') no-repeat;
+	background-position:  20px center;
+
+}
+
+#login-text
+{
+	background: #ffffff url('/static/images/email-bg.png') no-repeat;
+	background-position:  20px center;
+}
+
+.content-wrapper .login-wrapper .work-area #signup{
+	padding: 20px;
+	margin: 10px auto;
+	border: none;
+	border-radius: 6px;
+	width: 480px;
+	font-size: 19px;
+	color: #ffffff;
+	text-align: center;
+	background: #65abd0;
+	font-size: 22px;
+}	
+.content-wrapper .login-wrapper .work-area #login-linkedin{
+	padding: 20px;
+	margin: 10px auto;
+	border: none;
+	border-radius: 6px;
+	width: 227px;
+	font-size: 19px;
+	color: #ffffff;
+	text-align: center;
+	background: #65abd0;
+	margin-right: 10px;
+}
+.content-wrapper .login-wrapper .work-area #login-twitter{
+	padding: 20px;
+	margin: 10px auto;
+	border: none;
+	border-radius: 6px;
+	width: 227px;
+	font-size: 19px;
+	color: #ffffff;
+	text-align: center;
+	background: #3162a2;
+	margin-left: 10px;
+}
+
+.content-wrapper .price-wrapper{
+	display: table;
+	position: relative;
+	width: 100%;
+	min-height: 1000px;
+	background: #3598db;
+}
+.content-wrapper .price-wrapper .container{
+	display: table-cell;
+	vertical-align: middle;
+}
+.content-wrapper .price-wrapper .work-area  .price-heading{
+	position: relative;;
+	text-align: center;;
+	color: #fff;
+	font-size: 50px;
+	text-decoration: none;
+}
+.content-wrapper .price-wrapper .work-area .price-heading2{
+	position: relative;;
+	text-align: center;
+	color: #fff;
+	font-size: 17px;	
+	margin: 20px 0px 15px;
+	line-height: 30px;
+}
+
+.content-wrapper .price-wrapper .work-area #price-btn{
+	padding: 20px;
+	margin: 10px auto;
+	border: none;
+	border-radius: 6px;
+	font-size: 19px;
+	color: #ffffff;
+	text-align: center;
+	background: #fb565a;
+}
+
+
+/* End of fixed header navigation */
+
+/* End of Landing Page CSS */
+
+/* media query */
+@media (max-width: 1300px) { 
+
+	.nav-top ul.nav-bar li {
+		margin: 15px;
+	}
+
+}
+
+@media (max-width: 1000px) { 
+
+	.nav-top {
+		padding: 20px 0px;
+	}
+	.nav-top ul.nav-bar li {
+		margin: 15px 10px;
+	}
+	.nav-top ul.nav-bar li a{
+		font-size: 15px;
+	}
+	.site-wrapper-inner .cover-heading, .content-wrapper .explore-wrapper .work-area .explore-heading, .content-wrapper .price-wrapper .work-area .price-heading, .content-wrapper .login-wrapper .work-area .login-heading{
+		font-size: 40px;
+	}
+	.content-wrapper .explore-wrapper .work-area .company-list .company .footer .company-name{
+		font-size: 11px;
+	}
+	.content-wrapper .price-wrapper .work-area #price-btn{
+		padding: 15px;
+	}
+	
+}
+
+@media (max-width: 750px) { 
+	.nav-top ul.nav-bar li {
+		margin: 15px 10px;
+	}
+	.nav-top ul.nav-bar li a{
+		font-size: 13px;
+	}
+	.site-wrapper-inner .cover-heading, .content-wrapper .explore-wrapper .work-area .explore-heading, .content-wrapper .price-wrapper .work-area .price-heading, .content-wrapper .login-wrapper .work-area .login-heading{
+		font-size: 35px;	
+	}
+	.content-wrapper .explore-wrapper .work-area .company-list .company .footer .company-name{
+		font-size: 10px;
+	}
+	
+}

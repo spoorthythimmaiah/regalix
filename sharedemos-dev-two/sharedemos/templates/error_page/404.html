@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/error_page.css') }}" />
+{% endblock %}
+
+{% block container %}
+    <div class="error_spage valign-center">
+        <div class="error_spage_img"><img src="{{url_for('static', filename='images/broken-img-2.png')}}"></div>
+        <div class="error_spage_text">
+            <h1>{{ _('Oops! Something went wrong.')}}<br>{{_("The page you are looking for couldn't be found.")}}</h1>
+            <p>{{ _('It appears that the page you are looking for moved or no longer exists.')}} 
+            <br/>
+            {{ _('You can return home or stick around if you like 404 pages.')}}</p>
+            <a href="{{ request.referrer or url_for('main.home') }}" class="return ripple">{{_('TAKE ME BACK HOME')}}</a>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ripple.js') }}"></script>
+{% endblock %}

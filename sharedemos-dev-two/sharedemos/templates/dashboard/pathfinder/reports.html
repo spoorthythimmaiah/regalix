@@ -1,0 +1,202 @@
+{% extends 'dashboard/dashboard_submenu/pathfinder_menu.html' %}
+
+{% block dashboard_content_container %}
+    <div class="dashboard-work-area">
+        <div class="pathfinder_filter row shadow">
+            <div class="pf-metrics-dd">
+                <div class="dashboard_sub_title">Metrics for:</div>
+                <div class="custom_dropdown">
+                    {% if date_range == 'today' %}
+                        {% set day_filter = 'today' %}
+                    {% elif date_range == 'yesterday' %}
+                        {% set day_filter = 'yesterday' %}
+                    {% elif date_range == 'week' %}
+                        {% set day_filter = 'Last 7 Days' %}
+                    {% elif date_range == 'month' %}
+                        {% set day_filter = 'Last 30 Days' %}
+                    {% elif date_range == 'quarter' %}
+                        {% set day_filter = 'Last 3 months' %}
+                    {% elif date_range == 'half-year' %}
+                        {% set day_filter = 'Last 6 months' %}
+                    {% elif date_range == 'year' %}
+                        {% set day_filter = 'Last 12 months' %}
+                    {% elif date_range == 'custom' %}
+                        {% set day_filter = 'Custom' %}
+                    {% endif %}
+
+                    <span class="interval date-range">{{day_filter}}</span>
+                    <ul class="dd-menu select-date">
+                        <li data-attr='today' data-title='today'{%if date_range == 'today'%} class="active"{%endif%}>today</li>
+                        <li data-attr='yesterday' data-title='yesterday'{%if date_range == 'yesterday'%} class="active"{%endif%}>yesterday</li>
+                        <li data-attr='week' data-title='Last 7 Days'{%if date_range == 'week'%} class="active"{%endif%}>1 week</li>
+                        <li data-attr='month' data-title='Last 30 days'{%if date_range == 'month'%} class="active"{%endif%}>30 days</li>
+                        <li data-attr='quarter' data-title='Last 3 months'{%if date_range == 'quarter'%} class="active"{%endif%}>3 months</li>
+                        <li data-attr='half-year' data-title='Last 6 months'{%if date_range == 'half-year'%} class="active"{%endif%}>6 months</li>
+                        <li data-attr='year' data-title='Last 12 months'{%if date_range == 'year'%} class="active"{%endif%}>12 months</li>
+                        <li data-attr='custom' data-title='Custom'{%if date_range == 'custom'%} class="active"{%endif%}>Custom</li>
+                    </ul>
+               </div>
+            </div>
+            <div class="custom-dropdown">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 custom-from-to-date">
+                        <div class="dashboard-sub-title">
+                            From
+                        </div>
+                        <input id="from-date" type="text" name="from-date" class='datepicker-here' readonly="true">
+                    </div>
+                    <div class="col-sm-6 col-xs-12 custom-from-to-date">
+                        <div class="dashboard-sub-title">
+                            To
+                        </div>
+                        <input id="to-date" type="text" name="to-date" class='datepicker-here' readonly="true">
+                    </div>
+                </div>
+            </div>
+            <div class="pf-paths-dd">
+                <div class="custom_dropdown paths_dd">
+                    <span class="interval">{{path or 'All Paths'}}</span>
+                    <ul class="dd-menu select-paths">
+                        <li {% if path_id == 'all' %}class="active"{% endif %} data-attr='all' data-id='all'>All Paths</li>
+                        {% for path in paths %}
+                        <li {% if path_id == path.slug %}class="active"{% endif %} data-attr='{{path.slug}}' data-id='{{path.id}}'>{{path}}</li>
+                        {% endfor %}
+                    </ul>
+               </div>
+            </div>
+        </div>
+        <div class="pathfinder_count_cards row">
+            <div class="paths_card paths_started shadow">
+                <div class="pf_cards_container">
+                    <h6>paths started</h6>
+                    <div class="count">{{starts}}</div>
+                    <div class="pf_cards_stats {% if starts_progress|int >= 0 %}up{% else %}dn{% endif %}">
+                    {% if starts_progress|int >= 0 %}
+                        <span class='up'></span>
+                    {% else %}
+                        <span class='dn'></span>
+                    {% endif %}{{starts_progress}}% from last period</div>
+                </div>
+            </div>
+            <div class="paths_card paths_completed shadow">
+                <div class="pf_cards_container">
+                    <h6>paths completed</h6>
+                    <div class="count">{{goals}}</div>
+                    <div class="pf_cards_stats {% if goals_progress|int >= 0 %}up{% else %}dn{% endif %}">
+                        {% if goals_progress|int >= 0 %}
+                            <span class='up'></span>
+                        {% else %}
+                            <span class='dn'></span>
+                        {% endif %}{{goals_progress}}% from last period</div>
+                </div>
+            </div>
+            <div class="paths_card completion_rate shadow">
+                <div class="pf_cards_container">
+                    <h6>completion rate</h6>
+                    <div class="count">{{completion_rate}}%</div>
+                    <div class="pf_cards_stats {% if completion_rate_progress|int >= 0 %}up{% else %}dn{% endif %}">
+                        {% if completion_rate_progress|int >= 0 %}
+                            <span class='up'></span>
+                        {% else %}
+                            <span class='dn'></span>
+                        {% endif %}{{completion_rate_progress}}% from last period</div>
+                </div>
+            </div>
+            <div class="paths_card results_suggested shadow">
+                <div class="pf_cards_container">
+                    <h6>results suggested</h6>
+                    <div class="count">{{results_suggested}}</div>
+                    <div class="pf_cards_stats {% if results_suggested_progress|int >= 0 %}up{% else %}dn{% endif %}">
+                        {% if results_suggested_progress|int >= 0 %}
+                            <span class='up'></span>
+                        {% else %}
+                            <span class='dn'></span>
+                        {% endif %}{{results_suggested_progress}}% from last period</div>
+                </div>
+            </div>
+        </div>
+        {% if popular_paths %}
+        <div class="most_popular_paths row shadow">
+            <h4>Most Popular Paths</h4>
+            <div>
+                <div class="popular_paths_header col-xs-12">
+                    <div class="paths_title paths_header col-xs-7"><span>name</span></div>
+                    <div class="paths_clicks paths_header col-xs-2 active text-center"><span class="sort">clicks</span></div>
+                    <div class="paths_comp_rate paths_header col-xs-3 text-center"><span class="sort">completion rate</span></div>
+                </div>
+                <div class="popular_paths_list">
+                    {% for path in popular_paths %}
+                    <div class="pplist_data col-xs-12">
+                        <div class="paths_title col-xs-7">{{path['name']}}</div>
+                        <div class="paths_clicks col-xs-2 text-center">{{path['clicks']}}</div>
+                        <div class="paths_comp_rate col-xs-3 text-center">{{path['completion_rate']}}%</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if most_traversed %}
+        <div class="most_traveled_lines row shadow">
+            <div class="traveled-line-header">
+                <h4>Most Traveled Lines</h4>
+                <ul class="inner-traveled-list">
+                </ul>
+            </div>
+            <div class="traveled_lines_list">
+                {% for path in most_traversed %}
+                <div class="traveled_lines_data">
+                    <div class="tl_summary">
+                        <h6>{{path['question']}}</h6>
+                        {% if path['options'] %}
+                            <h5>
+                                <div class="most-tl-answers" option-id="{{path['options'][0]['option_id']}}">
+                                    {% if path['options'][0]['icon'] %}
+                                        <img src="/static/media/{{path['options'][0]['icon']}}" alt="">
+                                        <br>
+                                    {% endif %}
+                                    {{path['options'][0]['name']}}</div>
+                            </h5>
+                            <div class="tl_no_clicks">
+                                {{path['options'][0]['clicks']}} clicks
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% if path['options']|length > 1 %}
+                    <div class="tl_desc">
+                        <div id="tl_details{{loop.index}}" class="collapse tl_desc_details">
+                            <h5>Other Answers:</h5>
+                            <br/>
+                            {% for opt in path['options'] %}
+                                {% if loop.index > 1 %}
+                                    <div class="most-tl-answers" option-id="{{opt['option_id']}}">
+                                        {% if opt['icon'] %}
+                                            <img src="/static/media/{{opt['icon']}}" alt="">
+                                        {% endif %}
+                                        {{opt['name']}} - {{opt['clicks']}} Clicks</div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button type="button" class="btn btn-block tl_details" data-toggle="collapse" data-target="#tl_details{{loop.index}}"></button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+{% endblock %}
+
+{% block sub_scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/lang/datepicker.en.js') }}"></script>
+<script type="text/javascript">
+    document.pathfinderReportsUrl = "{{url_for('dashboard.pathfinder_reports')}}";
+    document.date_range = "{{date_range}}";
+    document.from_date = "{{from_date}}";
+    document.to_date = "{{to_date}}";
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/dashboard/pathfinder.js') }}"></script>
+{% endblock sub_scripts %}

@@ -1,0 +1,40 @@
+<div class="rating-list-title">
+    Avg. Playlist Rating
+</div>
+<div class="content-ratings avg-rating" data-rating="{{avg_rating}}"><span>{{avg_rating}}</span></div>
+<div class="feedback-sorting-wrap row">
+	<div class="sort-by-ratings" data-sorting="rating" >rating</div>
+	<div class="sort-by-date" data-sorting="date" >date submitted</div>
+</div>
+<div class="feedbacks-list" product_id="{{product_details.product_id}}" section_id="{{section_details.section_id}}" chapter_id="{{chapter_details.chapter_id}}">
+	{{#each content_ratings}}
+	<div class="feedback-wrap">
+		<div class="feedback-content">
+			<div class="content-ratings" data-rating="{{ratings}}"></div>
+			<p class="comment">{{comments}}</p>
+			<div class="chapter-link" chapter_id={{chapter_id}} class="chapter-link">{{chapter_name}}
+			</div>
+			{{#if is_deleted}}
+				<span class="deleted-walkthrough-icon rating" title="Chapter Deleted"></span>
+			{{ else unless is_enabled }}
+				<span class="disabled-walkthrough-icon rating" title="Chapter Disabled"></span>
+			{{/if}}
+		</div>
+		<div class="feedback-date">{{localTime created_at '{"year": "numeric", "month": "short", "day": "numeric", "hour": "numeric", "minute": "numeric"}'}}</div>
+	</div>
+	{{/each}}
+</div>
+
+{{#if pagination.is_paginated }}
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item {{#if pagination.prevDisable}} disabled {{/if}}"  data-page="{{pagination.pagePrev}}" ><a class="page-link">Previous</a></li>
+    
+    {{#each pagination.pages}}
+    	<li class="page-item {{#if currentPage}} active {{/if}}"  data-page={{pageNo}}><a class="page-link">{{pageNo}}</a></li>    
+    {{/each}}
+
+    <li class="page-item {{#if pagination.nextDisable}} disabled {{/if}}"  data-page={{pagination.pageNext}}><a class="page-link">Next</a></li>
+  </ul>
+</nav>
+{{/if}}

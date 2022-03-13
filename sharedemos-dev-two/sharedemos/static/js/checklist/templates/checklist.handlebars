@@ -1,0 +1,46 @@
+<div class="checklist_main_wrap">
+	<div class="return-home">back</div>
+	{{# unless is_edit}}
+		<div class="checklist_steps_menu">
+			{{# each checklist.checklist_sections}}
+				<div class="steps" data-id="{{checklist_section_id}}">
+					<span>{{math @index "+" 1}}</span> 
+					<div class="steps-name">{{title}}</div>
+				</div>
+			{{/each}}
+		</div>
+	{{/unless}}
+	<div class="checklist_wrap">
+		<div class="checklist_header" data-id="{{checklist.slug}}" checklist-id = "{{checklist.checklist_id}}">
+			<div class="checklist_title">{{checklist.title}}</div>
+			<div class="checklist_description">
+				{{checklist.description}}
+			</div>	
+		</div>
+		<div class="checklist_step_wrap">
+		</div>			
+	</div>
+</div>
+{{# compare view_type "==" "main_checklist" }}
+	{{# unless is_edit }}
+		<div class="checklist_result_block">
+			<div class="results_close"></div>
+			<div class="checks_progress">{{ i18n 'progress'}}</div>
+			<div class="progress_count"><span class="total_checks_count">0</span><span class="noun_form">{{ i18n 'checks'}}</span> {{ i18n 'marked'}}</div>
+			<div class="result_title">0</div>
+			<span class="result_rate">{{ i18n 'completion rate'}}</span>
+            <h1 class="hidden overall_rate">{{ i18n 'overall completion'}}</h1>
+			<div class="progress_bar"><div class="progress_status"></div></div>
+            <span class="progress_percent"></span>
+			<div class="get_result" data-slug="{{checklist.slug}}">{{ i18n 'get results'}}</div>
+			<div class="start_over" data-slug="{{checklist.slug}}">{{ i18n 'start over'}}</div>
+			<div class="result_block"></div>
+            <div class="email-block">
+                <div class="title">{{ i18n 'download my results'}}</div>
+                <div class="sub_title">{{ i18n 'enter your email to download a pdf with the results.'}}</div>
+                <input id="user_email" name="email" class="email-input" placeholder="example@example.com" type="email">
+                <div class="export">{{ i18n 'export results'}}</div>
+            </div>
+		</div>
+	{{/unless}}
+{{/compare}}

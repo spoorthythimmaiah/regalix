@@ -1,0 +1,8 @@
+[paths]
+default = https://spoorthythimmaiah@bitbucket.org/spoorthythimmaiah/sharedemos-dev-two
+parent = https://spoorthythimmaiah@bitbucket.org/regalix/sharedemos-dev
+[ui]
+username = spoorthythimmaiah
+
+#[hooks]
+#precommit = flake8 sharedemos/ tests/ --ignore=E501,E402,F401,N805 && behave -f null tests/console

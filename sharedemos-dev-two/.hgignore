@@ -1,0 +1,37 @@
+syntax: glob
+
+*.pyc
+*.rej
+*.orig
+celerybeat-schedule
+*.kate-swp
+*.project
+*.pydevproject
+*.settings
+*.sass-cache
+.idea
+*.rdb
+*.DS_Store
+*~
+*.leo
+# ignore ninja project files
+*.nja
+*nbproject*
+*/.leo_shadow/*
+*egg-info*
+*.bak
+*.sublime-project
+*.sublime-workspace
+package-lock.json
+.venv
+.vagrant
+static/media*
+static/html_zip*
+static/export_files*
+node_modules*
+ENV*
+s2*
+# sharedemos/static/js/templates/*.js
+static/js/build
+*.log
+*.code-workspace

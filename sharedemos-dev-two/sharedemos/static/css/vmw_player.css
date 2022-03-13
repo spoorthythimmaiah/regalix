@@ -1,0 +1,45 @@
+/* vmware RTE header image style */
+[data-template='vmware'] .rte-branding {
+    display: flex;
+    justify-content: flex-end;
+}
+[data-template='vmware'] img.rte-header {
+    height: 100px;
+	width: auto;
+}
+[data-template='vmware'] .fr-element.fr-view {
+	margin-top: -25px;
+}
+[data-template='vmware'] .footer-bar {
+	height: 10px;
+	display: flex;
+	margin: 50px -50px 10px;
+	background: rgba(117,190,39,1);
+	background: -moz-linear-gradient(left, rgba(117,190,39,1) 0%, rgba(68,190,119,1) 19%, rgba(2,192,213,1) 34%, rgba(3,150,218,1) 49%, rgba(3,148,216,1) 50%, rgba(10,112,184,1) 65%, rgba(35,63,141,1) 79%, rgba(74,60,156,1) 100%);
+	background: -webkit-linear-gradient(left, rgba(117,190,39,1) 0%, rgba(68,190,119,1) 19%, rgba(2,192,213,1) 34%, rgba(3,150,218,1) 49%, rgba(3,148,216,1) 50%, rgba(10,112,184,1) 65%, rgba(35,63,141,1) 79%, rgba(74,60,156,1) 100%);
+	background: -o-linear-gradient(left, rgba(117,190,39,1) 0%, rgba(68,190,119,1) 19%, rgba(2,192,213,1) 34%, rgba(3,150,218,1) 49%, rgba(3,148,216,1) 50%, rgba(10,112,184,1) 65%, rgba(35,63,141,1) 79%, rgba(74,60,156,1) 100%);
+	background: -ms-linear-gradient(left, rgba(117,190,39,1) 0%, rgba(68,190,119,1) 19%, rgba(2,192,213,1) 34%, rgba(3,150,218,1) 49%, rgba(3,148,216,1) 50%, rgba(10,112,184,1) 65%, rgba(35,63,141,1) 79%, rgba(74,60,156,1) 100%);
+	background: linear-gradient(to right, rgba(117,190,39,1) 0%, rgba(68,190,119,1) 19%, rgba(2,192,213,1) 34%, rgba(3,150,218,1) 49%, rgba(3,148,216,1) 50%, rgba(10,112,184,1) 65%, rgba(35,63,141,1) 79%, rgba(74,60,156,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#75be27', endColorstr='#4a3c9c', GradientType=1 );
+}
+[data-template='vmware'] .content-footer .content-footer-image {
+	float: right;
+	max-width: 100px;
+}
+[data-template='vmware'] .content-footer-text {
+	float: right;
+    margin-right: 15px;
+    margin-top: 4px;
+}
+
+/* Embed player */
+.embed-player [data-template='vmware'] .footer-bar {
+    margin: 50px -30px 10px;
+}
+
+@media (max-width: 767px) {
+    [data-template='vmware'] img.rte-header {
+		height: 100px;
+		width: auto;
+	}
+}

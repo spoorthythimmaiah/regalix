@@ -1,0 +1,112 @@
+{% extends 'dashboard/dashboard_submenu/brand_submenu.html' %}
+
+{% block dashboard_content_container %}
+    {% if page_type == 'Create' %}
+        <div class="welcome_msg brand-wrap" >
+            <div class="welcome_txt">
+                <h1>No colors added yet.</h1>
+            </div>
+       </div>
+    {% else %}
+        <div class="view_options">
+            <span>View:</span>
+            <span class="glyphicon glyphicon-th-large active" id="lg_view"></span>
+            <span class="view_separator"></span>
+            <li class="glyphicon glyphicon-th-liststyle" id="li_view"></li>
+        </div>
+        <div class="work-area brand brand-background">
+            <div class="color_list current_view" id="th_lg_view">
+
+                <div class="item_details_header">
+                    <span class="item_name_header">Color Code</span>
+                    <span class="item_status">Status</span>
+                </div>
+                <div class="item_details">
+                    <div class="item_type" style="background-color: #ffe90a;"></div>
+                    <p class="item_name">#ffe90a</p>
+                    <div class="item_options">
+                        <span class="make_default default">DEFAULT</span>
+                        <span class="delete_item"></span>
+                    </div>
+                </div>
+                <div class="item_details">
+                    <div class="item_type" style="background-color: #066afe;"></div>
+                    <p class="item_name">#066afe</p>
+                    <div class="item_options">
+                        <span class="make_default default">DEFAULT</span>
+                        <span class="delete_item"></span>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    {% endif %}
+
+    <div class="create-new brand create_new_btn" data-form-name="create_brand_color"></div>
+
+    <section class="full_popup_block">
+        <div class="full_popup_overlay"></div>
+        <div class="full_popup_box create_brand_color">
+            <div class="close_full_popup" data-popup="create_brand_color"></div>
+            <div class="full_popup_content">
+                <h4>Add your company color.</h4>
+                <div class="site_preview">
+                    <p>PREVIEW</p>
+                    <div class="mock_site_wireframe">
+                        <div>
+                            <div class="mock_site_header">
+                                <img src="">
+                            </div>
+                            <div class="mock_site_body">
+                                <div class="mock_site_innerheader">
+                                    <div class="mock_site_title"></div>
+                                    <div class="mock_site_desc"></div>
+                                </div>
+                                <div class="mock_site_cat_list row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="cat_list_items_mock col-sm-12">
+                                            <div class="site_color"></div>
+                                            <div class="cat_item_text">
+                                                <div class="cat_item_title"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="cat_list_items_mock col-sm-12">
+                                            <div class="site_color"></div>
+                                            <div class="cat_item_text">
+                                                <div class="cat_item_title"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                                <div class="cat_item_desc"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form action="" class="text-left" name="create_brand_color_form" id="create_brand_color_form">
+                    <div class="form-group col-xs-12">
+                        <label class="mandatory-field">COMPANY COLOR</label>
+                        <div class="sub-title">Company colors will be used minimally through out your apps.</div>
+                        <div class="company_color_block">
+                            <div class="color color1" id="company_color" data-color="#eeeeee"></div>
+                            <p class="color_code">#eeeeee</p>
+                        </div>
+                    </div>
+                    <input type="submit" name="submit" value="ADD COLOR" class="btn" data-popup="create_brand_color" disabled>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

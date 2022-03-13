@@ -1,0 +1,142 @@
+{% extends 'tenants/common/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo_player.css') }}" />
+{% endblock %}
+
+{% block container %}
+    {{ translation_wrapper() }}
+    <div class="container-block" id="main_container">
+        <header class="fixed-header mob-nav-bar nav-transp-style">
+            <div class="fix_width">
+                <a class="logo" href="https://www.sharedemos.com/">SHAREDEMOS</a>
+                <a class="help-logo" href="/"> | help site </a>
+                <div class="menu-toolbar navbar navbar-inverse navbar-fixed-top">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="menu-item">
+                                <a href="https://www.regalix.com/sales-enablement/nytro-platform/" class="menu-dropdown" target="_blank"><span>More On US</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="help-hero">
+            <div class="help-banner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 ">
+                            <h1>Hello, How can we help you?</h1>
+                            <p>Find everything you are looking for and explore our Help Community</p>
+                            <div class="search-input-holder">
+                                <input class="search-input" name="search-site" type="text"
+                                       placeholder="Search topics...">
+                                <div class="search-results" id="search-Results"></div>
+                                <div class="clear-help-search"></div>
+                                <div class="most-popular">
+                                    <p>Most Popular:</p>
+                                    <div class="popular-chapter-holder">
+                                        <div class="popular-chapter">Categories</div>
+                                        <div class="popular-chapter">Playlist</div>
+                                        <div class="popular-chapter">Chapter</div>
+                                        <div class="popular-chapter">Privacy</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 ">
+                            <img class="hero-image"
+                                 src="{{ url_for('static', filename='images/helpsite/help_illustration.png') }}"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="quick-start-banner">
+                <div class="container">
+                    <h1>Choose your Journey</h1>
+                </div>
+                <div class="container">
+                    <div class="left-journey"></div>
+                    <div class="right-journey"></div>
+                    <div class="journeys-slider"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-xs-12 col-lg-12">
+                    {% if api['all_products'] %}
+                        <div class="category-header">
+                            <h1>General</h1>
+                            <ul class="category-nav">
+                                {% for product in api['all_products'] %}
+                                    {% if loop.index >= 1 %}
+                                        <li class="{% if loop.index == 1 %}active{% endif %}">{{ product['name'] }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="playlist-holder"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if api and api.get('tenant') and api['tenant'].get('footer') and api['tenant']['footer']['links'] or api['tenant']['footer']['text'] %}
+        <div class="footer-block">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-left col-md-4">
+                        <div class="footer_logo">SHAREDEMOS</div>
+                        {% if api['tenant']['footer']['text'] %}
+                            <p>{{ api['tenant']['footer']['text'] | safe }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="footer-right col-md-8">
+                        {% if api['tenant']['footer'].get('links') %}
+                            {% for link in api['tenant']['footer']['links'] | sort(attribute='order') %}
+                                <a target="_blank"
+                                   href="{{ link.url }}">{{ link.name }}</a>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+
+        document.isUserAnonymous = true;
+        document.apps = JSON.parse('{{apps|tojson}}');
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    </script>
+    <script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/templates/helpsite/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/templates/helpsite/search.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/slick/slick.js') }}"></script>
+{% endblock %}

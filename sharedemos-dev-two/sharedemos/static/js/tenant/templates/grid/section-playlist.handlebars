@@ -1,0 +1,119 @@
+<div id="section-playlist" class="page-container newtemp">
+	<div class="overlay">
+		<div class="sign-up-wrap"></div>
+	    <div class="offline-mode-block">
+	    	<div class="offline-mode"> 
+	    		<div class="title">{{i18n 'offline mode'}}</div>
+	    		<div class="offline-desc">
+		    		{{ i18n "you'll be able to view these demos without an internet connection"}}.
+		    		{{ i18n "do you wish to enable offline mode and download these playlists"}}?
+	    		</div>
+	    		<div class="footer">
+					<div class="offline-footer">
+		    			<div class="enable theme-bg-color">{{ i18n 'enable'}}</div>
+		    			<div class="cancel">{{i18n 'cancel'}}</div>
+		    		</div>	
+				</div>
+	    	</div>
+	    </div>
+	    <div class="disable-offline-block">
+	    	<div class="disable-offline-mode"> 
+	    		<div class="title">{{i18n 'disable offline mode'}}</div>
+	    		<div class="offline-desc">
+		    		{{i18n "disabling offline mode will remove all this content from offline visibility"}}.
+		    		<br>
+		    		{{i18n "are you sure you want to remove this content from offline mode"}}?</div>
+	    		<div class="footer">
+					<div class="offline-footer">
+						<div class="disable-offline">{{i18n 'disable'}}</div>
+		    			<div class="cancel disable-cancel">{{i18n 'cancel'}}</div>
+		    		</div>	
+				</div>
+	    	</div>
+	    </div>
+	</div>
+	<div class="pwt-section">
+		<div class="">
+			<div class="fs-banner theme-bg-color">
+				<div class="section-pwt-list col-sm-12">
+					<div class="col-sm-2">
+						<div class="section-pwt-menu" slug='{{parent.slug}}'>
+							<span class="hidden-xs hidden-sm"></span>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="section-pwt-title theme-title-color">
+							{{name}}
+						</div>
+						<div class="section-pwt-description theme-paragraph-color">{{description}}</div>
+							{{#each cta_list}}
+								<div class="sign-up">
+									{{#compare type "==" 'form'}}
+									<button class="sign-up-btn" data-cta-id="{{cta_id}}">{{text}}</button>
+								    {{/compare}}
+									{{#compare type "==" 'link'}}
+									<a class="cta-link" href="{{href}}" data-cta-id="{{cta_id}}" target="_blank">{{text}}</a>
+								    {{/compare}}
+								    {{#compare type "==" 'pdf'}}
+										<a class="cta-link" href="{{file_path}}" data-cta-id="{{cta_id}}" target="_blank">{{text}}</a>
+								    {{/compare}}
+								</div>
+							{{/each}}
+						{{#if can_download}}
+							<div class="pdf-export camel-case"><a class="export-to-pdf-link" id='export-to-pdf' href="{{export_pdf_link}}">{{i18n 'export to pdf'}}</a></div>
+						{{/if}}
+					</div>
+					<div class="col-sm-2 play-video-button">
+						{{#if videos}}
+							<div class="watch-videos capital-letter" target="#video-slider-block">{{i18n 'play video'}}</div>
+						{{/if}}
+					</div>
+					{{#if videos}}
+					<div class="section-video-popup">
+						<div class="hide-video-popup"></div>
+						<div class="section-video">
+							<div id="video-slider-block">
+								<div class="video-slider">
+									<ul>
+										{{#each videos}}
+										<li>
+											<div class="video-link" data-video-link="{{link}}">
+												<img src="{{poster_image}}" style="width:100%" >
+											</div>										
+											<iframe class="popup-video" width="480" height="270"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+										</li>
+										{{/each}}
+									</ul>
+								</div>	
+							</div>			
+	 					</div>
+	 				</div>
+					{{/if}}
+					{{#if related_products}}
+						<div class="related-products">
+							<div class='related-products-heading'>Related Links:</div>
+							{{#each related_products}}
+							<div class="related-products-list" product='{{product}}' section='{{section}}'>
+								{{name}}
+							</div>
+							{{/each}}
+						</div>
+					{{/if}}
+				</div>
+				{{#if tenant_privacy_link}} 
+					<a class="privacy camel-case" href="{{tenant_privacy_link}}" target="_blank">{{i18n 'privacy policy'}}</a>
+				{{/if}}
+			</div>
+			<div class="col-md-12 right-pane newtemp-bg-color grid-view">
+				{{#if content_exists}}
+				<ul class="playlist-view-opt">
+					<li id="playlist-row-view"></li>
+					<li id="playlist-thumbnail-view" class="active"></li>
+				</ul>
+				{{/if}}
+				<div class="playlist_counter"></div>
+				<div class="section-playlist-list right_section reorder-bounds demo-leng-toggle"></div>
+			</div>
+		</div>
+	</div>
+</div>

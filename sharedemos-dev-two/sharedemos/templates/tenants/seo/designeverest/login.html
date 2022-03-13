@@ -1,0 +1,77 @@
+{% extends 'tenants/seo/designeverest/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+
+{% block container %}
+    <div class="container-block login-page" id="main_container">
+        <div class="nav-outer">
+            <div class="black-overlay"></div>
+            <div class="nav-bar">
+                <div class="container">
+                    {% if api['tenant']['logo'] %}
+                        <a class="custom-logo" href="/">
+                            <img src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}" alt="logo">
+                        </a>
+                    {% else %}
+                        <a class="logo" href="{{ url_for('main.home') }}"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="container login-banner">
+            <img class="letters" src="{{ url_for('static', filename='images/designeverest/login-page-banner.png') }}">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <h1>Exclusive Content Tailored for You</h1>
+                    <p>Sign in and unlock exclusive content for partners and employees. Explore walkthroughs, guides, whitepapers and much more.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="features-holder">
+                        <div class="feature">
+                            <img src="{{ url_for('static', filename='images/designeverest/icon-walkthroughs.png') }}">
+                            <h4>walkthroughs</h4>
+                        </div>
+                        <div class="feature">
+                            <img src="{{ url_for('static', filename='images/designeverest/icon-whitepapers.png') }}">
+                            <h4>whitepapers</h4>
+                        </div>
+                        <div class="feature">
+                            <img src="{{ url_for('static', filename='images/designeverest/icon-datasheets.png') }}">
+                            <h4>data sheets</h4>
+                        </div>
+                        <div class="feature">
+                            <img src="{{ url_for('static', filename='images/designeverest/icon-playbooks.png') }}">
+                            <h4>playbooks</h4>
+                         </div>
+                        <div class="feature">
+                            <img src="{{ url_for('static', filename='images/designeverest/icon-guides.png') }}">
+                            <h4>guides</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="content-login">
+                        <h2>employee content</h2>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <p>
+                                    Sign in using email and unlock<br> exclusive employee content.
+                                </p>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <a class="login-button" href="{{url_for('auth.saml_login', usergroup='employee', idp='employee', RelayState=request.args.get('next', '/'))}}">employee sign in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ footer() }}
+{% endblock %}

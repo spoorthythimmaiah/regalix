@@ -1,0 +1,24 @@
+<div class="create-bulletin-link-popup hidden">
+    <div class="popup-title camel-case">{{i18n 'create link'}}</div>
+    <div class="popup-back-icon trigger-inplace-popup" data-hidePopup="create-bulletin-link-popup" data-showPopup="create-bulletin-popup"></div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'external link'}}</div>
+            <div class="sub-title">{{i18n 'link to external content'}}.</div>
+            <div class="input_wrap">
+            <div class='error-msg' id="link-title-validation"></div>
+                <input type="text" class="bulletin-external-link-title trim-input" autocomplete="off" placeholder="{{i18n 'Text to Display'}}"/>
+            </div>
+            <div class='error-msg' id="link-validation"></div>
+            <div class="bulletin-link-wrap">
+                <input type="url" class="bulletin-external-link-url trim-input" autocomplete="off" placeholder="http://"/>
+                <div class="add-external-link capital-letter bulletin-btn" data-showPopup="create-bulletin-popup" data-hidePopup="create-bulletin-link-popup">{{i18n 'add'}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-footer">
+        <div class="form-footer">
+            <div class="back rippleEffect trigger-inplace-popup" data-hidePopup="create-bulletin-link-popup" data-showPopup="create-bulletin-popup">{{i18n 'back'}}</div>
+        </div>
+    </div>
+</div>

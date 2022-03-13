@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="refresh" content="3600" />
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+        Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <!-- SEO meta tags -->
+        <meta name="description" content="">
+
+        <!-- Open graph meta tags -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="" />
+        <meta property="og:description" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="//cloud.typography.com/7667932/7011412/css/fonts.css" />
+        {% block styles %}
+        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    <body>
+        {% block container %}
+        {% endblock %}
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

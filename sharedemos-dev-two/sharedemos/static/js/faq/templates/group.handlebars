@@ -1,0 +1,35 @@
+<div class="faq-main-wrap">
+	<div class="return-home">BACK</div>
+	{{#if sections.length}}
+    <a class="export-pdf" href="{{#if editMode}}/edit{{/if}}/export-faq/{{slug}}">{{  i18n 'export faq' }}</a>
+	<div class="faq-steps-menu">
+		{{#each sections}}
+		<div class="steps">
+			<a href="#section-{{math @index "+" 1}}"><span>{{math @index "+" 1}}</span> <div class="steps-name">{{name}}</div></a>
+		</div>
+		{{/each}}
+	</div>
+	{{/if}}
+	<div class="faq-wrap">
+		<div class="faq-header">
+			<div class="faq-title">{{name}}</div>
+			<div class="faq-description">{{description}}</div>
+		</div>
+		<div class="faq-section-wrap">
+			{{#each sections }}
+			<div id="section-{{math @index "+" 1}}" class="faq-section"{{#if ../editMode}} data-id={{id}}{{/if}}>
+			    <div class="section-title"><span>{{math @index "+" 1}}</span>{{name}}</div>
+			    {{#each questions}}
+			    <div class="faq-item"{{#if ../../editMode}} data-id={{id}}{{/if}}>
+				    <div class="head">
+				        <div class="title">{{question}}</div>
+				        <div class="arrow"></div>
+				    </div>
+				    <div class="info-block fr-view">{{{answer}}}</div>
+				</div>
+				{{/each}}
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</div>

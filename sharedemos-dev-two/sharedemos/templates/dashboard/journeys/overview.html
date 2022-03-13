@@ -1,0 +1,28 @@
+{% extends 'dashboard/dashboard_submenu/journeys_menu.html' %}
+
+{% block dashboard_content_container %}
+
+    <!-- Journeys List -->
+    <div class="journeys-list-wrap"></div>
+    <div class="create-new journeys create_new_btn" data-form-name="create_journeys"></div>
+    <!-- New Journey Popup -->
+    <div class="create-journeys-wrap"></div>
+    <!-- chapters and cta popup -->
+    <div id="dashboard-popups"></div>
+{% endblock %}
+
+{% block sub_scripts %}
+<!-- Note: can i delete this section -->
+<script type="text/javascript">
+    document.userEmail = "{{g.user.email}}";
+    document.user_groups = JSON.parse('{{user_groups|tojson}}');
+    document.journey_count = "{{journey_count}}";
+    document.requestParameters = function(){
+        return '?author=1'
+    };
+    document.is_author = true;
+    var tenantUpdatedDatetime = "{{tenant.last_activity.updated_at.strftime('%m/%d/%Y')}}";
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/custom-sitemap/jquery-sortable-lists-custom.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/build/apps/journeys/main.js') }}"></script>
+{% endblock sub_scripts %}

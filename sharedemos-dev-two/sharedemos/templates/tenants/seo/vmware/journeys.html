@@ -1,0 +1,37 @@
+{% extends 'tenants/seo/'+api['tenant']['template']+'/base.html' %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/apps/journey_home.css') }}" />
+{% endblock %}
+
+{% block container %}
+<div class="container-block" id="main_container">
+        {{ header() }}
+        {{ search() }}
+        <div class="welcome-video-holder">
+            <div class="hide-video-popup"></div>
+            <div class="section-video">
+            </div>
+        </div>
+        <div id="journeys-container" class="container" data-template="{{tenant.template}}">
+            <h1 class="main-heading">Journeys Made Just for You</h1>
+
+            <div class="row journey-block">
+                <div class="filters-block col-xs-12 col-md-3"></div>
+                <div class="items-block col-xs-12 col-md-9"></div>
+            </div>
+        </div>
+    </div>
+    {{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.apps = JSON.parse('{{apps|tojson}}');
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build/apps/journeys/home.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,52 @@
+<div class="question-block">
+    <span class="pf-type">Question  : </span>
+    <span class="title" question-id={{next_question.id}}>{{next_question.text}}</span>
+    {{#if next_question.is_linked}}
+        <span class="glyphicon glyphicon-link"></span>
+    {{/if}}
+    <span class="view-block">VIEW</span>
+</div>
+
+<ul class="options-block">
+{{#each next_question.options}}
+    <li class="{{#if next_question}} closed {{else if suggestions}} closed {{else}} empty {{/if}}">
+        <div class="parentblock" option-id={{id}}>
+            <span class="folder-icon"></span>
+            <span class="pf-type">Option: </span>
+            <span class="title">{{text}}</span>
+        </div>
+        {{#if next_question}}
+            {{> render_tree}}
+        {{/if}}
+        {{#if suggestions}}
+            <ul class="options-block has_suggestions_block">
+                {{#each suggestions}}
+                    {{#compare this.type '==' 'group'}}
+                        <div class='group-suggestion'>
+                        <span>{{title}}</span>
+                        {{#each suggestions_list}}
+                            <li class="closed suggestions-block">
+                            {{#if this.url}}
+                                <a external_url="{{this.url}}" target="_blank" suggestion-type="external-link">{{#if this.title}}{{this.title}}{{else}}{{this.url}}{{/if}}</a>
+                            {{else if this.slug}}
+                                <a product="{{this.product_slug}}" section="{{this.section_slug}}" chapter="{{this.slug}}" suggestion-type="demo">{{this.title}}</a>
+                            {{/if}}
+                            </li>
+                        {{/each}}
+                        </div>
+                    {{/compare}}
+                    {{#compare this.type '==' 'discrete'}}
+                        <li class="closed suggestions-block">
+                            {{#if this.slug}}
+                                <a product="{{this.product_slug}}" section="{{this.section_slug}}" chapter="{{this.slug}}" suggestion-type="demo">{{this.title}}</a>
+                            {{else if this.url}}
+                                <a external_url="{{this.url}}" target="_blank" suggestion-type="external-link">{{#if this.title}}{{this.title}}{{else}}{{this.url}}{{/if}}</a>
+                            {{/if}}
+                        </li>
+                    {{/compare}}
+                {{/each}}
+            </ul>        
+        {{/if}}
+    </li>
+{{/each}}
+</ul>

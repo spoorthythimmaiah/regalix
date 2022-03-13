@@ -1,0 +1,16 @@
+<div class="checklist_item" data-id="{{checklist_item.checklist_item_id}}">
+	<div class="head">
+		<div class="check" data-id="{{checklist_item.checklist_item_id}}"></div>
+		<div class="title">{{checklist_item.title}}</div>
+		<div class="arrow"></div>
+	</div>
+	<div class="info_block" id="item_{{checklist_item.checklist_item_id}}">
+		<div class="text">
+			{{checklist_item.description}}
+		</div>
+		{{# if checklist_item.suggestions}}
+			<div class="suggestions_title">{{ i18n 'suggested content : '}}</div>
+			<div class="sortable-wrap ui-sortable"></div>
+		{{/if}}
+	</div>
+</div>

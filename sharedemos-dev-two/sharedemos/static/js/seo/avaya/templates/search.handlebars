@@ -1,0 +1,43 @@
+<div class="search-result-wrapper">
+    <div class="container">
+        <div class="row search-main-container">
+            <div class="col-lg-3">
+                <div class="side-content mt-3 search-filters media_type">
+                    <div class="down-arrow"></div>
+                    <h6>Asset Type</h6>
+                    {{#each mediaTypes as | count mediaType | }}
+                    <label class="label-text">
+                        <input type="checkbox" value="{{mediaType}}" data-filter="media_type"/> {{mediaType}}<span class="filter-count">{{count}}</span>
+                    </label>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="card-container">
+                    <label class="search-total-count">Displaying {{resultList.length}} results</label>
+                    <hr class="hr-line">
+                    <div>
+                        {{#each resultList}}
+                        <div class="search-result-item" data-media_type="{{media_type}}">
+                            <div class="search-icon-wrapper">
+                                <div class="search-item-icon">
+                                    <img src="{{imageUrl}}" />
+                                </div>
+                                {{#if typeLabel}}
+                                    <label class="{{typeLabel}}-label result-label">{{typeLabel}}</label>
+                                {{/if}}
+                                </div>
+                                <div class="result-item-container">
+                                    <a href="{{link}}" target="_blank" class="card-heading">{{title}}</a>
+                                    <p class="card-text">{{breadcrumb}}</p>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-to-top"></div>
+    </div>
+</div>

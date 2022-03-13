@@ -1,0 +1,165 @@
+{% extends 'tenants/seo/purestorage/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo_player.css') }}" />
+    {% if enable_homepage_banner %}
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/homepage_banner.css')}}">
+    {% endif %}
+{% endblock %}
+
+{% block container %}
+    <div id="thumbnail-source-img">
+        <img src="{{ url_for('static', filename='images/purestorage/categorybanner.jpg') }}" alt="library-app">
+    </div>
+    {{ purestorage_search() }}
+    <div id="pure-category" class="container-block">
+        {{ translation_wrapper() }}
+        <header>
+            <div class="pure-nav-bar">
+                <div class="container">
+                    <img src="{{ url_for('static', filename='images/purestorage/logo.png') }}">
+                    <!-- search -->
+                    <div class="ps-search-icon"></div>
+                    <div data-attr="cancel-search"></div>
+                </div>
+            </div>
+            {% if enable_homepage_banner %}
+                {{homepage_banner(banner_details)}}
+            {% endif %}
+            {% if is_partner %}
+            <div class="welcome-banner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p>Hi, Welcome! Explore scripted demos from the categories below.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </header>
+        <div class="container">
+            <div class="pure-demo-header">
+                <p><span>Trending</span></p>
+                <div class="tab-container">
+                    <div class="active" data-attr="trending">Trending</div>
+                    <div data-attr="latest">Latest</div>
+                </div>
+            </div>
+            <div id="latest" class="row hidden demos">
+                {% for demo in api['recent_demos'] %}
+                    <div class="col-xs-6 col-md-4 col-lg-4 demo">
+                        {% set data_attr = 'data-product-id=' + demo.product_slug + ' data-section-id=' + demo.section_slug + ' data-chapter-id=' + demo.slug + '' %}
+                        <div class="pure-thumbnail-cover">
+                            <a href="{{ url }}" class="playerframe-link" {{ data_attr }}>
+                                {% set img_url = url_for('static', filename='images/purestorage/category-bg.jpg') %}
+                                    {% if demo.image_src %}
+                                        {% set img_url = demo.image_src %}
+                                    {% endif %}
+                                <img class="pure-thumbnail lazy-load" data-src="{{ img_url }}">
+                                <div class="pure-thumbnail-footer">
+                                    <p>walkthrough</p>
+                                    <h4>{{ demo.name }}</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="trending" class="row  demos">
+                {% for demo in api['trending_demos'] %}
+                    <div class="col-xs-6 col-md-4 col-lg-4 demo">
+                        {% set data_attr = 'data-product-id=' + demo.product_slug + ' data-section-id=' + demo.section_slug + ' data-chapter-id=' + demo.slug + '' %}
+                        <div class="pure-thumbnail-cover">
+                            <a href="{{ url }}" class="playerframe-link" {{ data_attr }}>
+                                {% set img_url = url_for('static', filename='images/purestorage/category-bg.jpg') %}
+                                    {% if demo.image_src %}
+                                        {% set img_url = demo.image_src %}
+                                    {% endif %}
+                                <img class="pure-thumbnail lazy-load" data-src="{{ img_url }}" />
+                                <div class="pure-thumbnail-footer">
+                                    <p>walkthrough</p>
+                                    <h4>{{ demo.name }}</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="btn-anim btn-anim-orange load-more-demos">
+                <div class="btn-text">load more</div>
+            </div>
+            
+            <!-- categories list -->
+            <div class="categories-list">
+                <h2>{{_('categories')}}</h2>
+                <div class="row categories">
+                    {% for product in api['all_products'] %}
+                        <div class="col-xs-6 col-md-4 col-lg-4 category">
+                            {% set href_url = url_for('main.route_handler', section=product['slug'])%}
+                            {% set class_name = 'category-link'%}
+                            {% if product['linked_asset'] %}
+                                {% set href_url =  url_for('main.serve_section_assets', asset_name=product['linked_asset']['name']) %}
+                                {% set class_name = 'asset-linked' %}
+                            {% endif %}
+                            {% set data_attr = 'data-product-id=' + product['slug'] + ' data-section-id=' + product['slug'] %}
+                            <div class="product-list-block">
+                                {% if product['translations_available'] %}
+                                    <div class="translation-icon" data-overlay="language-translations" data-language-options='{{product['locales_available']|tojson}}'></div>
+                                {% endif %}
+                                <a href="{{href_url}}" class="{{class_name}}"{% if product['linked_asset']%} {{data_attr}} target="_blank" {% endif %}>
+                                    <div class="category-icon">
+                                        {% if product['icon'] %}
+                                            <img class="lazy-load" data-src="{{product['icon']['url'] }}" alt="{{ product['icon']['name'] }}">
+                                        {% else %}
+                                        <canvas data-title="{{product['name']}}" class="cateogry-thumbnail" width="360" height="244"></canvas>
+                                        <span class="thumbnail-title">{{product['name']}}</span>
+                                        {% endif %}
+                                    </div>
+                                    <h6 title="{{product['name']}}">{{product['name']}}</h6>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {%if 'is_nda_approved' in session and not session['is_nda_approved'] %}
+        <div class="ps-custom-popup-wrapper">
+            <!-- NDA popup for partners -->
+            <div class="custom-popup nda-block" id="nda">
+                <p class="popup-desc">The content on these pages is confidential, subject to your NDA with Pure Storage, and for use with Pure Storage customers and prospective Pure Storage customers only.</p>
+                <div class="btn-anim btn-anim-orange btn-white">
+                    <div class="btn-text nda-agreed">I AGREE</div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="container">
+        {{ footer() }}
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+    document.isUserAnonymous = true;
+    document.viewType = "{{view_type}}";
+    document.apps = JSON.parse('{{apps|tojson}}');
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    document.user_email = '{{ g.user.email}}';
+    document.page = 'Home';
+</script>
+<script src="{{ url_for('static', filename='js/seo/purestorage/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/build/templates/vmware/player.js') }}"></script>
+<script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

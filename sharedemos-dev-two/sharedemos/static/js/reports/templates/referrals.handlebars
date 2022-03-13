@@ -1,0 +1,34 @@
+<h4>Referrals</h4>
+<div class="referral_block">
+    {{#if total_referrals}}
+        <div class="total_referrals">{{total_referrals}}</div>
+    {{/if}}
+    <div id="referral">
+        {{#unless referrals.length}}
+            <div class="no-report">{{ i18n 'No data available'}}</div>
+        {{/unless}}
+    </div>
+</div>
+<div class="reports_data_list">
+    <div class='data_block'>
+        {{# if referrals.length}}
+        <div class="reports_header col-xs-12">
+            <div class="col-xs-10"><span>url name</span></div>
+            <div class="col-xs-2 text-right"><span>visits</span></div>
+        </div>
+        <div class="reports_list" id="referral_reports">
+            {{# each referrals}}
+                <div class="reports_data_row col-xs-12{{#unless ../load_more}}{{# compare @index ">" 4}} hidden {{/compare}}{{/unless}}">
+                  <div class="col-xs-10">{{math @index "+" 1}}. {{name}}</div>
+                  <div class="col-xs-2 text-right">{{formatNumber count}}</div>
+                </div>
+            {{/each}}
+            {{#unless load_more}}
+            {{# compare referrals.length ">" 5}}
+                <div class="load_more_referral_geo load_more_reports text-center col-xs-12">load more</div>
+            {{/compare}}
+            {{/unless}}
+        </div>
+        {{/if}}
+    </div>
+</div>

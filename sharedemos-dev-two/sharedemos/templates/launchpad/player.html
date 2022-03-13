@@ -1,0 +1,235 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pdf_viewer.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rte_styles.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/launchpad.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/document_styles.css') }}" />
+{% endblock %}
+
+{% block seo %}
+    <title>{{metadata.title}}</title>
+    <meta name="description" content="{{metadata.description}}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{metadata.title}}" />
+    <meta property="og:description" content="{{metadata.description}}" />
+    <meta property="og:url" content="{{request.url}}" />
+    <meta property="og:image" content="{{metadata.image}}" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{metadata.title}}" />
+    <meta name="twitter:description" content="{{metadata.description}}">
+    <meta name="twitter:url" content="{{request.url}}">
+    <meta name="twitter:image" content="{{metadata.image}}">
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    {% if tenant and tenant.analytics %}
+        {{tenant.analytics|safe}}
+    {% endif %}
+{% endblock %}
+
+{% block container %}
+<div id="launchpad_container"  class="launchpad_container">
+	<div class="launch-pad-player-wrapper side-bar-open">
+    	<section class="side-bar transition-500">
+            {% if view_type.lower() == 'journey' %}
+                {% if tenant.template.lower() in ['regalix','helpsite'] %}
+                    <a href="{{ url_for('main.home') }}">
+                {% else %}
+                    <a href="{{ url_for('apps.journeys_home') }}">
+                {% endif %}
+            {% else %}
+                {% if tenant.template.lower() == 'avaya' %}
+                <a href="{{url_for('apps.library', section=section.slug)}}">
+                {% else %}
+                <a href="{{ section.url }}">
+                {% endif %}
+            {% endif %}
+
+                <div class="exit-launch-pad {{ view_type }}"></div>
+            </a>
+            <a href="/" class="text-center">
+                {% if tenant.logo %}
+                    <img class="logo"  src="{{ tenant.logo }}">
+                {% else %}
+                    <img class="logo"  src="{{ url_for('static', filename='images/ShareDemos-logo.png') }}">
+                {% endif %}
+            </a>
+            <div class="playlist-title">
+            	 {{asset_container.name}}
+            </div>
+            <div class="playlist-description">
+            	 {{asset_container.description or ''}} 
+            </div>
+            <div class="playlist-nav-wrap">
+                <a {% if previous %} href="{{previous.url}}" {% endif %} class="prev {% if not previous %}disable{% endif %}"></a>
+                <a {% if next %} href="{{next.url}}" {% endif %} class="next {% if not next %}disable{% endif %}"></a>
+            </div>
+            <div class="playlist-wrap">
+                <div class="playlists">
+                    {% for _chapter in asset_container.chapters %}
+                        <a href="{{_chapter.url}}" {%if _chapter.slug == slug %} class="active" {% endif %}>{{_chapter.name}}</a>
+                    {% endfor %}
+                </div> 
+            </div>
+            {% if view_type.lower() == 'journey' and asset_container.cta %}
+                <div class="cta-holder {{tenant.template}}">
+                    <a class="cta-btn" href="{{asset_container.cta.href}}"
+                        data-cta-id="{{asset_container.cta.cta_id}}" target="_blank">{{asset_container.cta.name}}</a>
+                </div>
+            {% endif %}
+    	</section>
+    	<section class="content-display-wrap transition-500">
+                <div class="header">
+            		<div class="toggle-side-bar"></div>
+                    {% if view_type.lower() != "journey" and not product.is_private %}
+                        <div class="social-share social-sharing">
+                            <ul class="social-sharing">
+                                <li class="fa-linkedin linkedin-icon" social-share="linkedin"></li>
+                                <li class="fa-facebook facebook-icon" social-share="facebook"></li>
+                                <li class="fa-twitter twitter-icon" social-share="twitter"></li>
+                                <li class="email-icon mailto"></li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            <div class="chapter-info">
+                <h1 class="playlist-title">
+                    {{asset_container.name}}
+                </h1>
+                <h2 class="chapter-title">
+                    {{name}}
+                </h2>
+            </div>
+            {% if slides | length > 1 %}
+            <div class="content-nav prev disable transition-500"></div>
+            <div class="content-nav next transition-500"></div>
+            {% endif %}
+            <div class="slide-content transition-500">
+                <ul class="slide-wrapper">
+                {% for slide in slides %}
+                    <li class="slide {% if loop.index == 1 %} active {% endif %}"  data-slide-no="{{ loop.index }}" >
+                        {% if slide.type == "content"%}
+                            <div class="content-slide-wrap {{document_styles}}">
+                                {{slide.content|safe}}
+                            </div>
+                        {% elif slide.type == "pdf" %}
+                            <div class="pdf-holder">
+                                <div class="pdf-banner">
+                                    {% if slide.resource.thumbnail%}
+                                        <img src="{{slide.resource.thumbnail}}">
+                                    {% endif %}
+                                </div>
+                                <div class="launch-pdf"  data-url="{{slide.resource.path}}" data-title="{{slide.resource.name}}" data-file-name="{{slide.resource.file_name}}" data-tenant_logo="{{tenant.logo}}" data-id="{{slide.resource.resource_id}}" data-type="{{slide.resource.metadata.source_type}}" data-ppt-source="{{slide.resource.metadata.source_name}}"
+                                >view pdf</div>
+                            </div>
+                        {% elif slide.type == "html5" %}
+                            <div class="fullscreen"></div>
+                            <div class="iframe-wrap">
+                                <iframe src="{{slide.resource.path}}" allowfullscreen webkitallowfullscreen mozallowfullscreen ></iframe>
+                            </div>
+                        {% elif slide.type == "wistia" %}
+                            <div class="iframe-wrap">
+                                <iframe class="wistia_embed" name="wistia_embed" embedType="{{embedType}}" resPath="{{slide.resource.path}}" src="{{slide.resource.path}}" allowfullscreen webkitallowfullscreen mozallowfullscreen ></iframe>
+                            </div>
+                        {% elif slide.type == "embed" %}
+                            <div class="iframe-wrap">
+                                <iframe embedType="{{embedType}}" resPath="{{slide.resource.path}}" src="{{slide.resource.path}}" allowfullscreen webkitallowfullscreen mozallowfullscreen ></iframe>
+                            </div>
+                        {% elif slide.type == "iframe" %}
+                            <div class="fullscreen"></div>
+                            <div class="iframe-wrap">
+                                <iframe src="{{slide.resource.path}}" allowfullscreen webkitallowfullscreen mozallowfullscreen ></iframe>
+                            </div>
+                        {% elif slide.type == "link" %}
+                            <div class="link-holder">
+                                <a href="{{slide.resource.metadata.url}}" target="_blank">
+                                     <div class="icon">
+                                        {% if slide.resource.metadata.icon %}
+                                            <img src="{{slide.resource.metadata.icon}}">
+                                        {% else %}     
+                                            <img src="{{ url_for('static', filename='images/author/thumb-link.jpg') }}">
+                                        {% endif %}
+                                    </div>
+                                    <div class="information">
+                                        {% if slide.resource.metadata.site_name%}
+                                            <p class="name">{{slide.resource.metadata.site_name}}</p>
+                                        {% endif %}
+                                        {% if slide.resource.metadata.title %}
+                                            <p class="title">{{slide.resource.metadata.title}}</p>
+                                        {% endif %}
+                                        {% if slide.resource.metadata.description %}
+                                            <p class="description">{{slide.resource.metadata.description}}</p>
+                                        {% endif %}
+                                        <p class="link">{{slide.resource.metadata.url}}</p>
+                                    </div>
+                                </a>
+                            </div>
+                            {% elif slide.type == "file" %}
+                            <div class="file_block">
+                                <div class="file_icon">
+                                    <img src="{{ slide.resource.metadata.get('thumbnail_url') or url_for('static', filename='images/thumb-file.jpg') }}">
+                                </div>
+                                <div class="file_information">
+                                    <div class="file_title">{{ slide.resource.name }}</div>
+                                    <div class="file_type">{{ slide.resource.metadata.type.split('.')[1] }} File</div>
+                                    <div class="file_size">{{'%0.2f' % (slide.resource.metadata.size/1048576) | float}} MB</div>
+                                </div>
+                                <div class="download_file">
+                                    <a id="downloadFile" data-url="{{slide.resource.path}}"  data-name="{{slide.resource.name}}{{slide.resource.metadata.type}}" data-id="{{slide.resource.resource_id}}">Download File
+                                    </a>
+                                </div>
+                            </div>
+                        {% else %} 
+                            <div class="error-block">
+                                <p>Oops! content not supported</p>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor%}
+                </ul>
+            </div>
+            {% if next_chapter %}
+                <div class="next-chapter transition-500 active">
+                    <a href="{{next_chapter.url}}">
+                        <p class="next">next</p>
+                        <p class="title">{{next_chapter.name}}</p>
+                    </a>
+                </div>
+            {% endif %}
+    	</section>
+    </div>	
+    <div class="overlay"></div>
+</div>
+<div id='pdf-viewer-block'></div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const chapterTitle = $('.chapter-title').text().trim();
+        const mailTo = `mailto:?subject=${chapterTitle}&body=${window.location.href}`;
+        $('.mailto').append(`<a class='share-with-mail' href='${mailTo}'></a>`);
+    </script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script type="text/javascript" src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+    <script type="text/javascript" src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+    <script src="{{ url_for('static', filename='js/helpers/cookies.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/social_share.js') }}"></script>
+    <script type="text/javascript">
+        {% if tenant.favicon %}
+            $("link[rel*='shortcut']").attr("href", "{{tenant.favicon}}");
+        {% endif %}
+        document.viewType = "{{view_type}}";
+        document.product = JSON.parse('{{product|tojson}}');
+        document.section = JSON.parse('{{section|tojson}}');
+        document.chapter_slug = "{{slug}}";
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+        document.page = 'Launchpad';
+    </script>
+    <script src="{{ url_for('static', filename='js/build/launchpad.js') }}"></script>
+{% endblock %}

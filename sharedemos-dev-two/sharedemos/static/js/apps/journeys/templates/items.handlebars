@@ -1,0 +1,17 @@
+<!-- Journeys list -->
+<div class="row items-block-wrapper">
+    {{#each this}}        
+        <div class="col-xs-12 col-sm-6 col-md-4 item-block-wrapper">
+            <div class="item-block">
+                <a href="/j/{{slug}}">
+                    {{#if icon_path}}
+                        <img src="/static/media/{{icon_path}}" class="card-img-top" />
+                    {{ else }}
+                        <img src="/static/images/journey-default-icon.jpg" class="card-img-top img-responsive center-block" />
+                    {{/if}}
+                    <h5 class="card-title">{{name}}</h5>
+                </a>
+            </div>
+        </div>
+    {{/each}}
+</div>

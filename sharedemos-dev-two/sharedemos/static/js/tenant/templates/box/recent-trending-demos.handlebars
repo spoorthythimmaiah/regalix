@@ -1,0 +1,18 @@
+<div class="row ">
+	{{#compare demos.length "==" 0}}
+		<div class="recent-empty"><p>nothing yet here</p></div>
+		<div class="recent-empty"><p>nothing yet here</p></div>
+		<div class="recent-empty"><p>nothing yet here</p></div>
+	{{/compare}}
+	{{#each demos}}
+		<div class="recent" product='{{product_slug}}' section='{{section_slug}}' demo='{{slug}}'>
+			<div class="preview_wrap" style="background-image: url({{image_src}});" thumbnail_div='{{slug}}'>
+			</div>
+			<div class="information_wrap">
+				<div class="title">
+					{{name}}
+				</div>
+			</div>
+		</div>
+	{{/each}}
+</div>

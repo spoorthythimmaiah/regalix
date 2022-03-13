@@ -1,0 +1,108 @@
+# Japanese (Japan) translations for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-12-01 11:41+0530\n"
+"PO-Revision-Date: 2017-12-01 11:41+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja_JP\n"
+"Language-Team: ja_JP <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.0\n"
+
+
+#: sharedemos/templates/layouts/base.html:64
+msgid "What are you looking for?"
+msgstr "検索?"
+
+#:sharedemos/templates/edit.html:61
+msgid "editing mode"
+msgstr "編集モード"
+
+#:sharedemos/templates/edit.html:60
+msgid "cancel"
+msgstr "キャンセル"
+
+#: sharedemos/templates/export_to_pdf.html:195
+msgid "table of contents"
+msgstr "目次"
+
+msgid "first published on"
+msgstr "発行日"
+
+msgid "last updated on"
+msgstr "更新日"
+
+# New template translations
+#: sharedemos/templates/vmare/base.html
+msgid "Home"
+msgstr "ホーム"
+
+#: sharedemos/templates/vmare/base.html
+msgid "Search Site"
+msgstr "サイトの検索"
+
+#: sharedemos/templates/vmare/playlist.html
+msgid "Categories"
+msgstr "カテゴリ"
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "Playlists"
+msgstr "コンテンツ リスト"
+
+#: sharedemos/templates/vmware/base.html
+msgid "Language select"
+msgstr "言語の選択"
+
+#: sharedemos/templates/vmware/base.html
+msgid "current language"
+msgstr "現在の言語"
+
+#: sharedemos/templates/vmware/base.html
+msgid "select language"
+msgstr "言語を選択"
+
+#: sharedemos/templates/vmware/base.html
+msgid "This content is available in another language."
+msgstr "このコンテンツは他の言語でも表示できます。"
+
+#: sharedemos/templates/vmware/base.html
+msgid "Select a language to translate."
+msgstr "使用する言語を選択してください。"
+
+#: sharedemos/templates/vmware/playlist.html
+msgid "export to pdf"
+msgstr "PDF にエクスポート"
+
+# New template footer link texts
+#: sharedemos/templates/vmware/base.html
+msgid "terms of use"
+msgstr "利用条件"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/legal.html"
+msgstr "http://www.vmware.com/jp/help/legal.html"
+
+#: sharedemos/templates/vmware/base.html
+msgid "privacy"
+msgstr "プライバシー"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/privacy.html"
+msgstr "http://www.vmware.com/jp/help/privacy.html"
+
+#: sharedemos/templates/vmware/base.html
+msgid "trademarks"
+msgstr "商標"
+
+#: sharedemos/templates/vmware/base.html
+msgid "http://www.vmware.com/help/trademarks.html"
+msgstr "http://www.vmware.com/jp/help/trademarks.html"

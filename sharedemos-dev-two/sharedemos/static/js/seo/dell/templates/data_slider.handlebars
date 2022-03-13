@@ -1,0 +1,15 @@
+<div class="slider-nav"></div>
+<div class="slider-content">
+    {{#each chapters}}
+        <a href="{{this.url}}" target="_blank">
+            <div class="slider-item">
+                <div class="slider-icon">
+                    <img src="{{image_src}}" alt="{{name}}" />
+                </div>
+                <h4 title="{{name}}{{# if section_name}} - {{section_name}}{{/if}}">
+                    {{name}}{{# if section_name}} - {{section_name}}{{/if}}
+                </h4>
+            </div>
+        </a>
+    {{/each}}
+</div>

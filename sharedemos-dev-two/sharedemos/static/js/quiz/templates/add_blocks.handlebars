@@ -1,0 +1,157 @@
+{{# compare block_type "==" "single_select" }}
+    <div class="checklist-item option-item" option-id={{option_id}}>
+        <div class="check"></div>
+        <div class="title">{{text}}</div>
+        {{#if description}}
+                <div class="arrow"></div>
+        {{else if icon}}
+            <div class="arrow"></div>
+        {{/if}}
+        <div class="info-block">
+            {{#if description}}
+                <div class="description">{{description}}</div>
+            {{/if}}
+            {{# if icon}}
+                <img src="{{icon.url}}">
+            {{/if}}
+        </div>
+    </div>
+{{/compare}}
+
+{{# compare block_type "==" "multi_select" }}
+    <div class="checklist-item option-item" option-id={{option_id}}>
+        <div class="check"></div>
+        <div class="title">{{text}}</div>
+        {{#if description}}
+                <div class="arrow"></div>
+        {{else if icon}}
+            <div class="arrow"></div>
+        {{/if}}
+        <div class="info-block">
+            {{#if description}}
+                <div class="description">{{description}}</div>
+            {{/if}}
+            {{# if icon}}
+                <img src="{{icon.url}}">
+            {{/if}}
+        </div>
+    </div>
+{{/compare}}
+
+{{# compare block_type "==" "sortable" }}
+    <div class="order-block option-item" option-id={{option_id}}>
+        <div class="order-info">
+            <h2>{{text}}</h2>
+            {{# if icon}}
+                <img src="{{icon.url}}" >
+            {{/if}}
+        </div>
+    </div>
+{{/compare}}
+
+{{# compare block_type "==" "matching_left" }}
+    <div class="match-wrap left">
+        <div class="match-block option-item" {{#if item_left.image}} image{{#if item_left.text}}_text{{/if}} {{else}}text{{/if}}>
+            {{# if item_left.text}}
+                <p>{{item_left.text}}</p>
+            {{/if}}
+            {{# if item_left.image}}
+                <img src="{{item_left.image}}" >
+            {{/if}}
+        </div>
+    </div>
+    <div class="divider"></div>
+{{/compare}}
+
+{{# compare block_type "==" "matching_right" }}
+    <div class="match-wrap right">
+        <div class="match-block" {{#if item_right.image}} image{{#if item_right.text}}_text{{/if}} {{else}}text{{/if}}>
+            {{# if item_right.text}}
+                <p>{{item_right.text}}</p>
+            {{/if}}
+            {{# if item_right.image}}
+                <img src="{{item_right.image}}" >
+            {{/if}}
+        </div>
+    </div>
+{{/compare}}
+
+{{# compare block_type "==" "question" }}
+    <div class="question-wrap active" id="question_block_{{index}}" question-id="{{question_id}}" data-points="{{points}}">
+                <div class="question">
+                    
+                </div>
+                <div class="choose-answer capital-letter"></div>
+                <div class="options-wrap" data-option-type={{option_type}}>
+                    <div class="change-answer-type capital-letter">{{i18n 'change the answer type'}}
+                    </div>
+                </div>
+                <div class="navigation-wrap">
+                    <div class="quiz-nav prev"></div>
+                    <div class="quiz-nav next capital-letter">{{i18n 'next question'}}</div>
+                    <div class="quiz-nav skip active">{{i18n 'skip'}}</div>
+                </div>
+            </div>
+{{/compare}}
+{{#if update_question}}
+    <div class="title"><span>{{index}}.</span> {{title}}</div>
+    <div class="description">{{description}}</div>
+       {{#if resource}}
+            {{# compare resource.type "==" "image"}}
+                <img class= "question-icon" src="{{resource.url}}" alt="{{resource.name}}" media-type="image">
+            {{/compare}}
+            {{# compare resource.type "==" "video"}}
+               <video class= "question-icon" poster="{{resource.thumbnail}}" controls>
+                  <source src="{{resource.url}}" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+            {{/compare}}
+            {{# compare resource.type "==" "audio"}}
+                <div class = 'audio-icon' align="left"> <img  class= "question-icon" src = "{{resource.thumbnail}}" alt="{{resource.name}}"></div>
+               <audio >
+                  <source src="{{resource.url}}" type="audio/mpeg">
+                </audio>
+                <div class="v-audio">
+                <div class="audio-backward"></div>
+                <div class="audio-control play"></div>
+                <div class="audio-farward"></div>
+                <div class="audio-mute"></div>
+                <div class="audio-currentTime">00:00</div>
+                <div class="audio-timeline">
+                    <div class="audio-progress"></div>
+                </div>
+                <div class="audio-duration">00:00</div>
+                </div>
+            {{/compare}}
+    {{/if}} 
+{{/if}}
+
+{{# compare block_type "==" "previous_button" }}
+    <div class="navigation-wrap previous_button">
+        <div class="quiz-nav prev"></div>
+    </div>
+{{/compare}}
+
+{{# compare block_type "==" "quiz" }}
+    <li quiz-id={{quiz.slug}}>
+        <div class='quiz-list-wrap'>
+            <div class="banner">
+                <img src="{{quiz.icon.url}}" alt="{{quiz.icon.name}}"/>
+                <label>{{quiz.name}}</label>
+                <div class="banner-overlay"></div>
+            </div>
+            <div class="info-block">
+                <div class="title">{{quiz.name}}</div>
+                <div class="description">{{quiz.description}}</div>
+                <div data-slug='{{quiz.slug}}' class="explore quiz">{{i18n 'take quiz'}}</div>
+            </div>
+            <div class="footer">
+                <div class="description">
+                    {{quiz.description}}
+                </div>
+                <div class="time-limit">{{quiz.time_limit}}</div>
+                <div class="counts">{{quiz.questions_count}} Questions</div>
+            </div>
+        </div>
+    </li>
+{{/compare}}

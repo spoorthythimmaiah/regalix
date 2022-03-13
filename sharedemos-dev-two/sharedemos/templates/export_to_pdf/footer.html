@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta
+        http-equiv="Content-type"
+        content="text/html; charset=utf-8" />
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        body {
+            font-family: 'Varela Round', sans-serif;
+            margin: 120px !important;
+        }
+        img {
+            width: auto;
+            height: 30px;
+        }
+        p.footer-text {
+            font-size: 14px;
+            margin: 0px;
+            color: #929292;
+            padding: 10px 0px;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="footer-container">
+            {% if tenant_logo %}
+                <img src="{{tenant_logo}}" />
+            {% endif %}
+            {% if footer_text %}
+                <p class="footer-text">{{footer_text | safe}}</p>
+            {% endif %}
+        </div>
+    </body>
+</html>

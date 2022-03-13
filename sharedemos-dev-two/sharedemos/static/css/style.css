@@ -1,0 +1,320 @@
+/*
+ * Author Girikudlur
+ */
+
+/*Defaut CSS Reset*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    vertical-align: top;
+}
+
+* {
+    border: none
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+q:before, q:after {
+    content: '';
+}
+abbr, acronym {
+    border: 0;
+    font-variant: normal;
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #cccccc;
+    margin: 1em 0;
+    padding: 0;
+}
+a, a:link, a:active, a:visited {
+    text-decoration: none;
+}
+input, select {
+    vertical-align: middle;
+}
+/* to preserve line-height and selector appearance */
+sup {
+    vertical-align: text-top;
+}
+sub {
+    vertical-align: text-bottom;
+}
+input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+/*to enable resizing for IE*/
+input, textarea, select {
+    *font-size: 100%;
+}
+/*because legend doesn't inherit in IE */
+legend {
+    color: #000;
+}
+/* End Of Default CSS Reset */
+
+/*Common Class Declaration*/
+.clear {
+    clear: both;
+}
+
+.line-break {
+    line-height: 10px;
+}
+
+span.bold {
+    font-weight: bold;
+}
+
+.center {
+    margin: 0px auto;
+}
+
+.clear {
+    float: none;
+    clear: both;
+}
+.fl_l {
+    float: left;
+}
+.fl_r {
+    float: right;
+}
+.ta_l {
+    text-align: left;
+}
+.ta_r {
+    text-align: right;
+}
+.ta_j {
+    text-align: justify;
+}
+.no_td:hover {
+    text-decoration: none;
+}
+
+/* End of Defaut CSS Reset*/
+
+/*  fonts */
+
+
+.select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+*:focus {
+    outline: 0;
+}
+body{
+    font-family: 'Gotham A', 'Gotham B', 'Open Sans';
+    font-style: normal;
+}
+body > .container-block {
+    min-height: 100vh;
+}
+
+/* Ancient browser warning popup */
+#browser_warning_popup {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999;
+}
+#browser_warning_popup.show {
+    display: block;
+}
+.greyout_bg, .pf-gray-bg {
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.5;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+}
+.ancient_browser_warning {
+    z-index: 999;
+    position: absolute;
+    background-color: #fff;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    padding: 25px;
+    text-align: left;
+    border-radius: 10px;
+}
+.ancient_browser_warning h5 {
+    color: #000;
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+span.out-of-date {
+    color: #f50b0b;
+}
+.ancient_browser_warning p {
+    color: #6b6b6b;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: normal;
+}
+.popular_browser_icons {
+    margin: 20px 0;
+    text-align: center;
+}
+.popular_browser_icons #firefox_icon {
+    display: inline-block;
+    background: url("/static/images/firefox_icon.jpg") no-repeat;
+    width: 100px;
+    height: 100px;
+    background-position: center;
+    background-size: 65%;
+}
+.popular_browser_icons #safari_icon {
+    display: inline-block;
+    background: url("/static/images/safari_icon.jpg") no-repeat;
+    width: 100px;
+    height: 100px;
+    background-position: center;
+    margin: 0 30px;
+    background-size: 65%;
+}
+.popular_browser_icons #chrome_icon {
+    display: inline-block;
+    background: url("/static/images/chrome_icon.jpg") no-repeat;
+    width: 100px;
+    height: 100px;
+    background-position: center;
+    background-size: 65%;
+}
+.popular_browser_icons a {
+    box-shadow: 0 0 16px 0 rgba(168,175,186,0.3);
+    border-radius: 10px;
+}
+.popular_browser_icons a:hover {
+    border: 1px solid #4885ee;
+    box-shadow: 0px 0px 16px 3px #ccc;
+    box-shadow: 0 0 16px 0 rgba(168,175,186,0.3);
+}
+.ancient_browser_warning .nothanks_msg {
+    color: #444444;
+    font-weight: 500;
+    padding: 15px 0 5px;
+    border-top: 1px solid #ccc;
+    cursor: pointer;
+}
+.ancient_browser_warning .nothanks_msg:hover {
+    text-decoration: underline;
+}
+.sub-title::first-letter{
+    text-transform:capitalize !important;
+}
+pre.sub-title{
+    background: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    line-height: inherit;
+    display:inline-block;
+    margin-right: 5px;
+    overflow:visible;
+}
+    
+/* Refresh every hour */
+#reload-message {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 550px;
+    left: 0;
+    right: 0;
+    background-color: #eeee;
+    font-size: 12px;
+    padding: 13px 0;
+    margin-top: 1px;
+    color: #000000;
+    z-index: 9999;
+}
+#reload-message a {
+    color: #43b0f5;
+    border-bottom: 1px solid #d0ebfc;
+}
+
+/* Evidon banner style */
+#_evidon_banner{
+    width: 100%!important;
+    margin-left: 0!important;
+}
+
+/* spacing classes m-margin x-left,right y-top,bottom 2 - 5px */
+.my-2 {
+    margin: 5px 0px;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Animate player slide Hotspot */
+.delay-hotspot {
+    opacity: 0;
+}
+@keyframes animatehotspot {
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes animatehotspot {
+    to {
+        opacity: 1;
+    }
+}

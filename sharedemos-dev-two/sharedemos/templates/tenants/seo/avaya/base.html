@@ -1,0 +1,140 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pdf_viewer.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo/avaya/main.css') }}">
+    {% block sub_styles %}
+    {% endblock %}
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript">
+        if(window.location.hash && window.location.hash.includes('#!') && '{{request.blueprint}}' == 'main'){
+            var h_url = window.location.hash.split('#!')
+            if(h_url.length > 1 && h_url[1] != '/'){
+                window.location.replace(window.location.href.replace('#!', 't'));
+            }
+        }
+    </script>
+{% endblock %}
+{% macro translation_wrapper() %}
+    
+{% endmacro %}
+<!-- Macro for sidenav -->
+{% macro header() %}
+<div class="left-side-panel">
+    <div>
+        <a href="{{url_for('apps.feed')}}">
+            {% if tenant.logo %}
+                <img class="logo lazy-load" data-src="{{ url_for('static', filename='media/' + tenant.logo)}}" alt="logo">
+            {% else %}
+                <img class="logo lazy-load" data-src="{{ url_for('static', filename='images/avaya/logo.svg')}}" alt="logo"> 
+            {% endif %}
+        </a>
+    </div>
+    <div class="profile-container">
+        <div class="img-profile">
+            <img class="lazy-load" data-src="{{ url_for('static', filename='images/avaya/user.png') }}" alt="profile">
+        </div>
+        <div class="group">partner</div>     
+    </div>
+    <div class="sidenav">
+        <a href="{{url_for('apps.feed')}}" {% if api['view_type'] == "feed" %} class="nav-active" {% endif %}>Feed</a>
+        <a href="{{url_for('apps.library')}}" {% if view_type == "home" %} class="nav-active" {% endif %}>Library</a>
+        {% for app in api['tenant']['applications'] %}
+            {% if app.unique_id.lower() == 'journeys' %}
+                <a href="{{url_for('apps.journeys_home')}}" {% if api['view_type'] == "journey" %} class="nav-active" {% endif %}>{{app.name}}</a>
+            {% elif app.unique_id.lower() == 'pitch'%}
+                <a href="{{url_for('main.pitch')}}" {% if api['view_type'] == "pitch" %} class="nav-active" {% endif %}>{{app.name}}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div> 
+{% endmacro %}
+<!-- Macro sidenav ends -->
+
+<!-- search macro starts -->
+{% macro search() %}
+<div class="search-icon"></div>
+<div data-attr="cancel-search"></div>
+<div class="header-search-block container">
+    <input class="search-site col-xs-12 text-line" name="search-site" type="text" placeholder="Search">
+    <div class="clear-search"></div>
+</div>
+{% endmacro %}
+<!-- search macro ends -->
+
+{% macro social_share() %}
+    <div class="vmw-social-share" data-overlay="social-share"></div>
+{% endmacro %}
+
+{% macro cta_list(cta_list) %}
+    {% for cta in api['cta_list'] %}
+        {% if cta['type'] in ['link', 'pdf'] %}
+            {% set href = cta['href'] or cta['file_path'] %}
+                <a class="cta-btn" href="{{ href }}" data-cta-id="{{ cta['cta_id'] }}" target="_blank">{{ cta['text'] }}</a>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro videos() %}
+{% endmacro %}
+
+{% macro footer() -%}
+<div class="grayout"></div>
+{%- endmacro %}
+
+<!-- Load SEO MetaData Macro -->
+{% macro load_seo_meta(title=None, description=None, image=None) -%}
+    <title>{{title or 'Product Walkthroughs'}}</title>
+    <meta name="description" content="{{description or ''}}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{title or ''}}" />
+    <meta property="og:description" content="{{description or ''}}" />
+    <meta property="og:url" content="{{request.url}}" />
+    <meta property="og:image" content="{{image or ''}}" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title or ''}}" />
+    <meta name="twitter:description" content="{{description or ''}}">
+    <meta name="twitter:url" content="{{request.url}}">
+    <meta name="twitter:image" content="{{image or ''}}">
+{%- endmacro %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+            $("link[rel*='shortcut']").attr("href", document.favicon);
+        {% endif %}
+        {% if session['user']['locale'] %}
+            document.current_locale = "{{session['user']['locale']}}";
+        {% endif %}
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.isPrivate = "{{is_private}}" === 'True';
+        
+        // for algolia search content
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+
+        document.isUserAnonymous = true;
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+            {% if user_groups %}
+                document.userGroups = {{user_groups}};
+            {% endif %}
+        {% endif %}
+    </script>
+    <script src="{{ url_for('static', filename='js/build/lazyload.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build/templates/avaya/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build/templates/avaya/search.js') }}"></script>
+    {% block sub_scripts %}{% endblock %}
+{% endblock %}

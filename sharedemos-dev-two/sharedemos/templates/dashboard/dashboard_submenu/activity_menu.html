@@ -1,0 +1,52 @@
+{% extends 'layouts/dashboard.html' %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/air-datepicker/css/datepicker.min.css') }}">
+{% endblock sub_styles %}
+
+{% block dashboard_container %}
+	<ul class="nav nav-pills">
+		<li role="overview"><a href="{{url_for('dashboard.activity')}}" {% if sub_menu == 'overview' %} class="active" {% endif %}>OVERVIEW</a></li>
+	</ul>
+	<div class="dashboard-work-area activity">
+		{% block dashboard_content_container %}
+		{% endblock %}
+	</div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/lang/datepicker.en.js') }}"></script>
+    <script type="text/javascript">
+        var category = "{{category}}";
+        var author = "{{author}}";
+        document.entity = "{{entity}}"
+
+        if (document.entity){
+            document.data = {
+                'authors': [],
+                'categories': [],
+                'request_from': 'filter',
+                'searchText': null,
+                'page': 1
+            } 
+            if("{{from_date or ''}}" && "{{to_date or ''}}"){
+                document.data['fromDate'] = "{{from_date}}"
+                document.data['untillDate'] = "{{to_date}}"
+            }
+        }
+        if(category && document.entity == "product"){
+            document.data['categories'] = ["{{category.id}}"]
+            $("a.search-category[data-item='{{category.id}}']").addClass('selected');
+        }
+        if(category && document.entity == "section"){
+            document.data['searchText'] = "{{category}}"
+            $('#search-activity-post').val('{{category}}');
+        }
+        if(author){
+            document.data['authors'] = ["{{author.id}}"]
+            $("a.search-author[data-item='{{author.id}}']").addClass('selected');
+        }
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build/dashboard/activity_feed.js') }}"></script>
+{% endblock %}

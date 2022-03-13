@@ -1,0 +1,25 @@
+.add-section {
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    cursor: pointer;
+    height: 176px;
+    border: 1px dashed #d6d6d6;
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.add-section p {
+    color: #d6d6d6;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: center;
+}
+.add-section p span {
+    color: #d6d6d6;
+    margin: 0px;
+    display: inline-block;
+    font-size: 28px;
+}

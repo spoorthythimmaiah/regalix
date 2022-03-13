@@ -1,0 +1,16 @@
+<div class="suggested_content_wrap" {{# if is_edit}}data-id={{suggestion.suggestion_id}} data-type="{{suggestion.suggestion_type}}"{{/if}}>
+	<a class="suggested_content" href={{suggestion.link}} target="_blank" tabindex="-1">
+		<div class="suggested_content_icon">
+			<img class="icon" src="{{suggestion.thumbnail}}">
+		</div>
+		<div class="suggested_content_info">
+			<div class="desc">
+				{{suggestion.title}}
+			</div>
+			<div class="url">{{suggestion.link}}</div>
+		</div>
+		{{# unless is_edit}}
+			<div class="link"></div>
+		{{/unless}}
+	</a>
+</div>

@@ -1,0 +1,47 @@
+{% extends 'tenants/seo/avaya/base.html' %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo/avaya/journey.css') }}" />
+{% endblock %}
+
+
+{% block container %}
+<div class="container-block" id="main_container">
+    <div class="split-main-container">
+        {{ header() }}
+        <div class="right-side-panel">
+            {{ search() }}
+            <div id="journeys-container" data-template="{{tenant.template}}">
+                <div class="journey-heading">
+                    <h2 class="main-header">Journeys</h2>
+                    <h6 class="content-line">Content made and arranged just for you</h6>
+                    <h5 class="explore-journeys">explore journeys</h5>
+                </div> 
+                
+                <div class="journey-block">
+                    <div class="filters-wrapper col-xs-12 col-md-3">
+                        <div class="filter-header">filter journey</div>
+                        <div class="filters-block"></div>
+                        <button class="filter-close-button"></button>
+                    </div>
+                    
+                    <div class="items-block"></div>
+                    <div class="filter-button"></div>
+                </div>
+            </div>
+        </div>
+        {{ footer() }}
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.apps = JSON.parse('{{apps|tojson}}');
+        document.page = 'Journey';
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build/templates/avaya/journey.js') }}"></script>
+{% endblock %}

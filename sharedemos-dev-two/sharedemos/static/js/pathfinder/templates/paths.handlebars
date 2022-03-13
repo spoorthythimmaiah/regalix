@@ -1,0 +1,24 @@
+{{#if paths}}
+<h2 class="sub-title">{{i18n 'what are you looking for today?'}}</h2>
+<p class="sub-title">{{i18n 'select one of the available pathfinders to find a solution'}}.</p>
+<ul>
+    {{# each paths}}
+        <li data-path='{{slug}}'>
+        	<div class="pf-icon-wrap">
+            {{#if icon}} 
+                <img class="pf-icon" src="{{image_src}}" />
+                <span class="img-magnifying"></span>  
+            {{else}}
+            	<img class="pf-icon default" src="/static/images/default_path_icon.jpg"/>
+            {{/if}}
+        	</div>
+            <div class="pf_desc">
+               <h3>{{title}}</h3>
+               <p>{{description}}</p>
+            </div>
+        </li>
+    {{/each}}
+</ul>
+{{else}}
+<h2 class="no-pf-result sub-title">{{i18n 'no paths found at this time. try again later'}}</h2>
+{{/if}}

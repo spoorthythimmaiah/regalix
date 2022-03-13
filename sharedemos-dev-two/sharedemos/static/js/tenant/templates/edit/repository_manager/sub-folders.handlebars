@@ -1,0 +1,14 @@
+<li class="connector-folder" data-relative-folder-path="{{folder_level_path}}" data-id="{{id}}" data-root-folder="{{name}}">
+    <div style="margin-left:10px" class="sub-folder">
+        <span {{#if children}} class="expand-folder" {{else}} class="expand-folder expanded" {{/if}} ></span>
+        <span class="folder-title">{{name}}</span>
+        <input id="folder-{{id}}" data-id="{{id}}" type="checkbox" class="radio-btn">
+        <label for="folder-{{id}}" class="radio-label"></label>
+    </div>
+
+    <ul class="sub-folder-wrapper" id="{{id}}" {{#if children}} style="display: none;" {{/if}}>
+        {{#each children}}
+            {{> sub-folders }}
+        {{/each}}
+    </ul>
+</li>

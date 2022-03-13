@@ -1,0 +1,232 @@
+html, body{
+	padding: 0;
+	border: 0;
+	width: 100%;
+	height: 100%;	
+}
+body {
+	margin: 0 auto;
+	font-family: 'Gotham A', 'Gotham B'; 
+    font-style: normal;
+}
+
+#solidfire_container, #helpgrowct_container {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.left_block, .right_block {
+	display: table-cell;
+	width: 50%;
+	height: 50%;
+	vertical-align: middle;
+    text-align: center;
+}
+.left_block {
+ 	background: red; /* For browsers that do not support gradients */    
+    background: -webkit-linear-gradient(right bottom, #9d1619, #f38020); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right bottom, #9d1619, #f38020); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right bottom, #9d1619, #f38020); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(right bottom, #9d1619, #f38020); /* Standard syntax (must be last) */
+    color: #fff;
+}
+#solidfire_container .left_block {
+    background: #fff;
+}
+#solidfire_container .left_block p
+{
+    color: #a7241a;
+}
+#solidfire_container .right_block {
+    background: #e6e6e6; /* For browsers that do not support gradients */    
+    background: -webkit-linear-gradient(#fefefe, #e6e6e6); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient( #fefefe, #e6e6e6); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient( #fefefe, #e6e6e6); /* For Firefox 3.6 to 15 */
+    background: linear-gradient( #fefefe, #e6e6e6); /* Standard syntax (must be last) */
+    color: #fff;
+}
+.error {
+    color: red;
+}
+#helpgrowct_container .left_block {
+    background: red; /* For browsers that do not support gradients */    
+    background: -webkit-linear-gradient(right bottom, #1e2629, #454c50); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right bottom, #1e2629, #454c50); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right bottom, #1e2629, #454c50); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(right bottom, #1e2629, #454c50); /* Standard syntax (must be last) */
+    color: #fff;
+}
+.solidfire_logo {
+ 	background: url("/static/images/solid-fire-logo.png") no-repeat;
+    width: 190px;
+    height: 150px;
+    background-size: 100%;
+   	margin: 0 auto;
+}
+.helpgrowct_logo {
+    background: url("/static/images/helpgrowct-logo.png") no-repeat;
+    width: 237px;
+    height: 214px;
+    background-size: 100%;
+    margin: 0 auto;
+}
+.left_content h6 {
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 90px;
+}
+.left_content p {
+	font-size: 12px;
+	margin: 5% 15% 0;
+}
+#helpgrowct_container .left_content p {
+    margin: 5% 24% 0;
+}
+.right_content h4{
+	color: #1e1e1e;
+	font-size: 24px;
+	font-weight: normal;
+	margin-bottom: 80px;
+}
+.right_content .title{
+	color: #a2a2a2;
+	font-size: 10px;
+	font-weight: normal;
+	margin-bottom: 5px;
+}
+.mandatory-field:after {
+    content: '*';
+    color: #fb5758;
+    margin-left: 3px;
+    font-size: 16px;
+    line-height: 14px;
+}
+#register-solidfire div, #signin-solidfire div, #choosePassword-solidfire div, #reset-solidfire div {
+	max-width: 60%;
+	text-align: left;
+	margin: 0 auto 15px;
+
+}
+#register-solidfire div label, #signin-solidfire div label,#choosePassword-solidfire div label, #reset-solidfire div label {
+	width: 100%;
+	position: relative;
+}
+.right_content label span {
+	font-size: 14px;
+	font-weight: normal;
+	color: #afafaf;
+}
+#solidfire_container .error-msg, #solidfire_container .check-mail
+{
+    font-size: 18px;
+    color: #000;
+}
+.reset-pwd-link {
+    display: inline-block;
+    float: right;
+}
+.reset-pwd-link a {
+    color: #4584f6;
+    border-bottom: none;
+    margin: 0;
+    float: none;
+    font-size: 12px;
+}
+.reset-pwd-link h5 {
+    font-size: 12px;
+    font-weight: normal;
+    color: #1e1e1e;
+    margin: 50px 0px 0;
+}
+input[type='text'], input[type='password'], input[type='email'] {
+    position: relative;
+    width: 100%;
+    font-size: 14px;
+    color: #1e1e1e;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #c3c3c3;
+    padding-bottom: 5px;
+    margin: 0px auto;
+    font-weight: normal;
+    outline: none;
+}
+input[type='submit'] {
+    background: #afafaf;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 10px;
+    border-radius: 20px;
+    border: none;
+    margin-top: 50px;
+    outline: none;
+    min-width: 120px;
+}
+input[type='submit'].active {
+    background: #0088cb;
+    box-shadow: 0px 2px 5px 2px #ccc;
+}
+#helpgrowct_container input[type='submit'].active {
+    background: #fdb935;
+    color: #1f272a;
+}
+#register-solidfire  label input[type='text']#email,
+#register-solidfire  label input[type='text']#confirmEmail {
+	width: 50%;
+}
+.field_status.success {
+    background: url('/static/images/icon-correct.png') no-repeat center center;
+    background-size: 100%;
+    width: 18px !important;
+    height: 18px;
+    vertical-align: bottom;
+    position: absolute !important;
+    top: 15px;
+    right: -35px;
+}
+.field_status.error {
+    background: url('/static/images/icon-incorrect.png') no-repeat center center;
+    background-size: 100%;
+    width: 18px !Important;
+    height: 18px;
+    vertical-align: bottom;
+    position: absolute !important;
+    top: 15px;
+    right: -35px;
+}
+.registration-response {
+	color: #1e1e1e;
+	font-size: 12px; 
+}
+.registration-response .success-icon {
+    background: url('/static/images/upload_success.png') no-repeat center center;
+    background-size: 100%;
+    width: 56px;
+    height: 56px;
+    vertical-align: bottom;
+    text-align: center;
+    margin: 0 auto 25px;
+}
+.registration-response h5 {
+    font-size: 24px;
+    font-weight: 100;
+    margin-bottom: 20px;
+}
+.registration-response a{
+	color: #066afe;
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+	.left_block, .right_block {
+		display: block;
+		width: 100%;
+	}
+	.left_block .left_content {
+	    top: 50%;
+	    position: relative;
+	    transform: translateY(-50%);
+	}
+	.right_block .right_content {
+	    top: 15%;
+	    position: relative;
+	}
+}

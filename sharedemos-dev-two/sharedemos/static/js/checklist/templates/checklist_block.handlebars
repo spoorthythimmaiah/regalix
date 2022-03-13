@@ -1,0 +1,23 @@
+<li data-checklist-slug="{{checklist.slug}}" class="{{#if is_edit}}{{#unless checklist.is_enabled}} disabled{{/unless}}{{/if}}">
+	<div class='checklist_wrap'>
+		<div class="banner">		
+			<img src="{{checklist.icon.url}}"/>
+			<label>{{checklist.title}}</label>
+			<div class="banner_overlay"></div>
+		</div>
+		<div class="info_block">
+			<div class="title">{{checklist.title}}</div>
+			<div class="description">{{checklist.description}}</div>
+			<div data-slug='{{checklist.slug}}' class="explore">{{ i18n 'explore'}}</div>
+		</div>
+		<div class="footer">
+			<div class="description">
+				{{checklist.description}}
+			</div>
+			{{# unless is_edit}}
+				<div class="views">{{checklist.views_count}}</div>
+			{{/unless}}
+			<div class="counts">{{checklist.items_count}} {{ i18n 'checks'}}</div>
+		</div>
+	</div>
+</li>

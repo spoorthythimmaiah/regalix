@@ -1,0 +1,48 @@
+<div class="lib_cards shadow">
+    <div class="lib_cards_container" id="site_visitors">
+        <button data-trigger="hover"
+            data-toggle="popover"
+            data-placement="bottom"
+            data-content="Site Visitors is the number of users that visited your content.">
+            <span class="glyphicon glyphicon-question-sign"></span>
+        </button>
+        <h6>Site Visitors</h6>
+        <div class="count">{{formatNumber users.count}}</div>
+        <div class="lib_cards_stats {{#compare users.progress '<' 0}}dn{{/compare}}{{#compare users.progress '>=' 0}}up{{/compare}}">
+            <span class="{{#compare users.progress '<' 0}}dn{{/compare}}{{#compare users.progress '>=' 0}}up{{/compare}}"></span>
+            <span>{{formatNumber users.progress}}&#37 from last period</span>
+        </div>
+    </div>
+</div>
+<div class="lib_cards shadow" id="demo_views">
+    <div class="lib_cards_container">
+        <button data-trigger="hover"
+            data-toggle="popover"
+            data-placement="bottom"
+            data-content="Views is the number of users that viewed your chapters.">
+            <span class="glyphicon glyphicon-question-sign"></span>
+        </button>
+        <h6>Views</h6>
+        <div class="count">{{formatNumber views.count}}</div>
+        <div class="lib_cards_stats {{#compare views.progress '<' 0}}dn{{/compare}}{{#compare views.progress '>=' 0}}up{{/compare}}">
+            <span class="{{#compare views.progress '<' 0}}dn{{/compare}}{{#compare views.progress '>=' 0}}up{{/compare}}"></span>
+            <span>{{formatNumber views.progress}}&#37 from last period</span>
+        </div>
+    </div>
+</div>
+<div class="lib_cards shadow" id="completion_rate">
+    <div class="lib_cards_container">
+        <button data-trigger="hover"
+            data-toggle="popover"
+            data-placement="left"
+            data-content="Completion Rate is calculated by dividing the number of users that visited your chapters with the number of users that completed a chapter from start to finish.">
+            <span class="glyphicon glyphicon-question-sign"></span>
+        </button>
+        <h6>Completion Rate</h6>
+        <div class="count">{{completions.percentage}}&#37</div>
+        <div class="lib_cards_stats {{#compare completions.progress '<' 0}}dn{{/compare}}{{#compare completions.progress '>=' 0}}up{{/compare}}">
+            <span class="{{#compare completions.progress '<' 0}}dn{{/compare}}{{#compare completions.progress '>=' 0}}up{{/compare}}"></span>
+            <span>{{formatNumber completions.progress}}&#37 from last period</span>
+        </div>
+    </div>
+</div>

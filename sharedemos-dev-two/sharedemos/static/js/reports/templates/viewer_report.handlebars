@@ -1,0 +1,26 @@
+<div id="viewer-report">
+    <div class="card-block">
+        <div class="viewer-card">
+            <h6>Chapters Consumed</h6>
+            <div class="details-count">{{chapter_views.count}}</div>
+            <div class="cards_stats {{#compare chapter_views.progress '<' 0}}dn{{/compare}}{{#compare chapter_views.progress '>=' 0}}up{{/compare}}">
+                <span>{{formatNumber chapter_views.progress}}&#37 from last period</span>
+            </div>
+        </div>
+        <div class="viewer-card">
+            <h6>Completion Rate</h6>
+            <div class="details-count">{{completion_rate.percentage}}&#37</div>
+            <div class="cards_stats {{#compare completion_rate.progress '<' 0}}dn{{/compare}}{{#compare completion_rate.progress '>=' 0}}up{{/compare}}">
+                <span>{{formatNumber completion_rate.progress}}&#37 from last period</span>
+            </div>
+        </div>
+        <div class="viewer-card">
+            <h6>Most visited chapter</h6>
+            <div>{{most_visited_chapter}}</div>  
+        </div>
+    </div>
+    <div class="graph-align">
+        <h3>Views</h3>
+        <div id="graph-block"></div>
+    </div>
+</div>

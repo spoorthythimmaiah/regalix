@@ -1,0 +1,188 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        @media only screen and (max-width: 800px) {
+            .metrics-title {
+                width: 350px !important;
+                padding-right: 15px;
+                word-break: break-word;
+            }           
+            .metrics-status {
+                width: 85px !important;
+            }
+            .metrics-number {
+                width: 200px !important;
+            }
+        }
+        
+    </style>
+</head>
+<body bgcolor="#ffffff">
+    <table class="wrapper" width="800" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f9f9f9">
+        <tbody>
+            <!-- Logo -->
+            <tr>
+                <td align="center" style="padding-top: 34px;">
+                    {% if tenant.logo %}
+                        {% set tenant_logo = url_for('static', filename='media/' + tenant.logo, _external=True) %}
+                        <img style="max-height: 40px; align:center" src="{{tenant_logo|replace('localhost', tenant.domain)}}">
+                    {% else %}
+                        <a target="_blank" href="{{sdemos_website_url}}" style="outline: none;display: block;font-size: 24px;font-weight: 700;line-height: 77px;color: #066afe;letter-spacing: 3px;text-decoration: none;">SHAREDEMOS</a>
+                    {% endif %}
+                </td>
+            </tr>       
+            <!-- Title -->
+            <tr align="center">
+                <td style="color: #7e8e9f; padding-top: 15px; font-size: 16px;">Metrics For <span style="font-weight: 600;">{{from_date.strftime('%B %d').decode('utf-8')}} - {{to_date.strftime('%B %d, %Y').decode('utf-8')}}</span></td>
+            </tr>
+
+            <!-- Key Metrics -->
+            <tr>
+                <td width="680">
+                    <table cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr>
+                            <td colspan="3" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">KEY METRICS</td>
+                        </tr>
+                        <tr class="keymetrics-block" style="border: 1px solid #4f5f6f; margin-top: 20px; display: block; border-radius: 5px; padding: 20px 10px; ">
+                            <td colspan="2" width="360" style="font-size: 24px; color:#4f5f6f">
+                                Total Chapters Published till Date
+                            </td> 
+                            <td colspan="1" width="290" align="right"  style="font-size: 38px; color:#4f5f6f">{{'{:,}'.format(content_data.total_published_demos)}}</td>
+                        </tr>
+                        <tr class="keymetrics-block" style="border: 1px solid #4f5f6f; margin-top: 20px; display: block; border-radius: 5px; padding: 20px 10px; ">
+                            <td colspan="2" width="360" style="font-size: 24px; color:#4f5f6f">
+                                Total Chapters In-draft till Date
+                            </td> 
+                            <td colspan="1" width="290" align="right"  style="font-size: 38px; color:#4f5f6f">{{'{:,}'.format(content_data.total_draft_demos)}}</td>
+                        </tr>
+                        <tr class="keymetrics-block" style="border: 1px solid #4f5f6f; margin-top: 20px; display: block; border-radius: 5px; padding: 20px 10px; ">
+                            <td colspan="2" width="360" style="font-size: 24px; color:#4f5f6f">
+                                Chapters Published Last {{frequency|capitalize}}
+                            </td>
+                            <td colspan="1" width="290" align="right"  style="font-size: 38px; color:#4f5f6f">{{'{:,}'.format(content_data.published_demo_timerange)}}</td>
+                        </tr>
+                        <tr class="keymetrics-block" style="border: 1px solid #4f5f6f; margin-top: 20px; display: block; border-radius: 5px; padding: 20px 10px;">
+                            <td colspan="2" width="360" style="font-size: 24px; color:#4f5f6f">
+                                Chapters In-draft for Last {{frequency|capitalize}}
+                            </td>
+                            <td colspan="1" width="290" align="right" style="font-size: 38px; color:#4f5f6f">{{'{:,}'.format(content_data.draft_demos_timerange)}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Top Authors -->
+            {% if top_authors %}
+            <tr>
+                <td>
+                    <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr>
+                            <td  colspan="4" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">TOP AUTHORS</td>
+                        </tr>
+                            {% for author in top_authors %}
+                                <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                    <td colspan="1" width="30">
+                                       <div style="width:14px; height:14px;color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(loop.index)}}
+                                        </div>
+                                    </td>
+                                    <td width="350" colspan="1" align="left" class="metrics-title" style="font-size: 16px; font-weight: 600; padding-left: 12px; color: #4f5f6f;">
+                                        {{author.author_name}}
+                                    </td>
+                                    <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                        <span style="font-weight: 600;">{{author.chapter_count}}</span><span style="color: #7e8e9f;"> 
+                                            Chapter{% if author.chapter_count > 1 %}s{% endif %}
+                                        </span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                    </table>
+                </td>
+            </tr>
+            {% endif %}
+            <!-- New content categories -->
+            {% if content_data.category_list %}
+            <tr>
+                <td>
+                    <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr>
+                            <td  colspan="4" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">CATEGORIES WITH NEW CONTENT</td>
+                        </tr>
+                        {% for category in content_data.category_list %}
+                            {% set outer_loop = loop %}
+                                {% for section in category.values() %}
+                                    <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                        <td colspan="1" width="30">
+                                            <div style="width:14px; height:14px; color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(outer_loop.index)}}</div>
+                                        </td>
+                                        <td width="350" colspan="1" align="left" class="metrics-title"style="font-size: 16px; padding-left: 12px; color: #4f5f6f; font-weight: 600; vertical-align: middle;">
+                                            {{section.section_name}}
+                                        </td>
+                                        <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                            <span style="font-weight: 600;">{{section.chapter_count}}</span><span style="color: #7e8e9f;"> 
+                                                Chapter{% if section.chapter_count > 1 %}s{% endif %}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr> 
+            {% endif %}
+            <!-- Latest Content -->
+            {% if content_data.walkthrough_list %}
+            <tr>
+                <td>
+                    <table width="680" cellpadding="0" align="center" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr>
+                            <td  colspan="3" style="font-size: 20px; color: #4f5f6f; padding-top: 75px; font-weight: 600">LATEST CONTENT</td>
+                        </tr>
+                        {% for content in content_data.walkthrough_list %}
+                            <tr style="display: block; border-radius: 5px; padding-top: 28px;">
+                                <td colspan="1" width="30">
+                                    <div style="width:14px; height:14px; color: #0e6efe; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 50%;">{{"{:02}".format(loop.index)}}
+                                    </div>
+                                </td>
+                                <td width="450" colspan="1" align="left" class="metrics-title"style="font-size: 16px; padding-left: 12px; color: #4f5f6f; font-weight: 600; vertical-align: middle;">
+                                    {{content.walkthrough}}
+                                </td>
+                                <td width="200" colspan="1" align="right" class="metrics-number" style="color: #000000; vertical-align: middle;font-size: 16px;">
+                                    <span style="font-weight: 600;">{{content.created_at.strftime('%m/%d/%Y').decode('utf-8')}}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+            {% endif %}
+            <!-- Footer -->
+            <tr>
+                <td align="center" style="padding-top: 75px;">
+                    <a href="{{url_for('dashboard.activity', from_date=from_date.strftime('%Y-%m-%d'), to_date=to_date.strftime('%Y-%m-%d'), entity='date', _external=True)|replace('localhost', tenant.domain)}}" target="_blank" style="text-decoration: none; color: #ffffff; background: #066afe; padding: 25px 60px; border-radius: 47px; display: inline-block;">LAUNCH DASHBOARD</a>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="color: #7e8e9f; font-size: 18px; padding-top: 100px;">Powered By</td>
+            </tr>
+            <tr>
+                <td align="center" style="padding-top: 45px; padding-bottom: 40px;">
+                    <img src="{{ url_for('static',filename='images/login-logo.png',_external=True) }}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="color: #b8b8b8; font-size: 16px; padding-bottom: 20px;">
+                    &copy;2014 - {{now.year}} Regalix Inc. | All Rights Reserved.<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/" target="_blank">regalix.com</a> 2200 Geng Road., Palo Alto, CA, 94303<br>
+                    <a style="color: inherit; text-decoration: none;" href="https://www.regalix.com/privacy-policy/" target="_blank">Privacy Policy</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

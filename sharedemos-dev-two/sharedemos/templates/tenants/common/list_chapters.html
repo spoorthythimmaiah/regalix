@@ -1,0 +1,98 @@
+{% extends 'tenants/common/base.html' %}
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/document_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo_player.css') }}" />
+    {% if tenant.template.lower() == 'vmware' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/vmw_player.css') }}" />
+    {% endif %}
+{% endblock %}
+{% block container %}
+<div id="vmw-chapters" class="container-block">
+    {{ translation_wrapper() }}
+    <div class="left-sidebar">
+        {% set product_id = None %}
+        {% set parent_id = None %}
+        {{ back_button(product_id, parent_id) }}
+        {% if not api['tenant']['is_private'] %}
+        {{ social_share() }}
+        {% endif %}
+    </div>
+    <header class="container">
+        <div class="row">
+            <div class="col-sm-7 header-left-block">
+                {% set filename = 'media/' + api['tenant']['logo'] if api['tenant']['logo'] else 'images/vmware/logo.png' %}
+                    <img class="vmw-logo" src="{{ url_for('static', filename=filename) }}" alt="logo">
+                <div class="breadcrum">{{breadcrumb(widget_result_title)}}</div>
+            </div>
+            <div class="header-right-block col-sm-5">
+                <div class="row">
+                    <div class="search-site-block col-xs-12">
+                        {{ search() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="container sec-cat-details">
+         <div class="row">
+            <div class="col-md-12">
+                <h1>{{widget_result_title}}</h1>
+            </div>
+        </div>
+    </section>
+    <main class="container">
+        {% if api['chapters'] %}
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <p class="result-count text-right">Displaying {{api['chapters']|length}} result{% if api['chapters']|length > 1 %}s{% endif %}</p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="tagged-chapter-list">
+            {% for ch in api['chapters'] %}
+                {% if ch._product.slug == ch._section.slug %}
+                <a href="{{url_for('main.route_handler', section=ch._product.slug, chapter=ch.slug)}}" class="tagged-chapter playerframe-link" data-product-id="{{ch._product.slug}}" data-section-id="{{ch._section.slug}}" data-chapter-id="{{ch.slug}}">
+                    <div class="tagged-chapter-icon">
+                        <img src="{{ ch.thumbnail or url_for('static', filename='images/vmware/category-bg.png') }}" alt="chapter-icon">
+                    </div>
+                    <div class="tagged-chapter-details">
+                        <h5>{{ch.name}}</h5>
+                        <p>{{ch._product.name}} > {{ch.name}}</p>
+                    </div>
+                </a>
+                {% else %}
+                <a href="{{url_for('main.route_handler', section=ch._section.slug, chapter=ch.slug)}}" class="tagged-chapter playerframe-link" data-product-id="{{ch._product.slug}}" data-section-id="{{ch._section.slug}}" data-chapter-id="{{ch.slug}}">
+                    <div class="tagged-chapter-icon">
+                        <img src="{{ ch.thumbnail or url_for('static', filename='images/vmware/category-bg.png') }}" alt="chapter-icon">
+                    </div>
+                    <div class="tagged-chapter-details">
+                        <h5>{{ch.name}}</h5>
+                        <p>{{ch._product.name}} > {{ch._section.name}} > {{ch.name}}</p>
+                    </div>
+                </a>
+                {% endif %}
+            {% else %}
+            <div class="no-result">Oops!! No walkthroughs available.</div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+{{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+    document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+    document.algolia_app_id = '{{ algolia_api.app_id }}';
+    document.algolia_search_key = '{{ algolia_api.search_key }}';
+    document.apps = JSON.parse('{{apps|tojson}}');
+    document.app_name = 'announcement_widget';
+    document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+</script>
+{% if tenant.template.lower() == 'vmware' %}
+    <script src="{{ url_for('static', filename='js/build/templates/vmware/search.js') }}"></script>
+{% endif %}
+{% endblock %}

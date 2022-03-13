@@ -1,0 +1,51 @@
+{% extends 'layouts/embed_player_base.html' %}
+
+{% block styles %}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/document_styles.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_editor.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pdf_viewer.css') }}"/>
+    {% if tenant.template.lower() == 'vmware' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/vmw_player.css') }}" />
+    {% endif %}
+
+{% endblock %}
+
+{% block container %}
+<div id="main_container">
+    <div id="block_container" class="block_container"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script type="text/javascript" src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+    <script type="text/javascript" src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+    <script type="text/javascript">
+        document.demo = "{{demo}}";
+        document.section = '{{section}}';
+        document.product = '{{product}}';
+        document.viewType = '{{view_type}}';
+        document.template_folder = "{{tenant.template or 'default'}}";
+        document.tenantFooterImage = "{{tenant_footer_image or ''}}";
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+        document.documentStyles = "{{document_styles}}";
+        {% if session['user']['locale'] %}
+            document.current_locale = "{{session['user']['locale']}}";
+        {% endif %} 
+        $.ajaxSetup({
+        beforeSend: function(xhr, settings){
+            xhr.setRequestHeader('Cache-Control', 'no-cache');
+            xhr.setRequestHeader('Pragma', 'no-cache');
+            var csrftoken = $('meta[name=csrf-token]').attr('content');
+            xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/build/embed_playlist.js') }}"></script>
+{% endblock %}

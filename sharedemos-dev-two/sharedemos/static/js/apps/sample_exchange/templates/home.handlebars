@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="sample-breadcrumb">
+        <a href="/">Home</a> > {{{ title }}}
+    </div>
+    <div class="details">
+        <h1>{{ title }}</h1>
+        <p>{{{ description }}}<br>
+        </p>
+        <h2>{{ result_title }}</h2>
+    </div>
+    <div class='sample_count'>
+        <p>Displaying <span>0</span> results</p>
+    </div>
+    <div class="filtering-block">
+        {{#if platform.length }}
+            <label>Languages :</label>
+            <div class="samples-filter">
+                <span id="selected-filter">All Samples</span>
+                <span class="glyphicon glyphicon-play"></span>
+            </div>
+            <div class="filter-list">
+                <table class="filter-options">
+                    <tr>
+                        <td><input id="all" name="filter" class="options" value="" type="checkbox" checked></td>
+                        <td>All Samples</td>
+                    </tr>
+                    {{#each tags}}      
+                        <tr>
+                            <td><input name="filter" data-filter class="options tags" value="{{this}}" type="checkbox"
+                                    checked>
+                            </td>
+                            <td>{{this}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        {{/if}}
+    </div>
+    <div class="sorting-block">
+        <label>{{ i18n 'sort by' }}:</label>
+        <ul class="sorting-options">
+            <li class="active" data-item='lastUpdated'>{{ i18n 'recently updated' }}</li>
+            <li data-item='downloadCount'>{{ i18n 'downloads'}}</li>
+            <li data-item='name'>{{ i18n 'title' }}</li>
+            <li data-item='author-name'>{{ i18n 'author' }}</li>
+        </ul>
+    </div>
+    <div class="sample-holder">
+        {{ i18n 'loading samples...'}}
+    </div>
+</div>

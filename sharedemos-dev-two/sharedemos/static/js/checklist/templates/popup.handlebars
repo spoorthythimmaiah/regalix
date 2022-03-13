@@ -1,0 +1,384 @@
+{{#if alert}}
+<div class="popup-box" data-popup="alert">
+    <div class="popup-title">
+        warning
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="sub-title text-center">
+                {{alert_message}}
+            </div>
+        </div>      
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel {{alert_action}}" data-popup="alert">OK</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if checklist}}
+<div class="popup-box" data-popup="checklist">
+    <div class="popup-title">
+        {{#if is_edit}}{{ i18n 'edit checklist'}}{{else}}{{ i18n 'create new checklist'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{ i18n 'checklist title'}}</div>
+            <div class="sub-title">{{ i18n 'write a checklist title'}}</div>
+            <input name="title" type="text" maxlength="200" autocomplete="off" placeholder="{{ i18n 'checklist' }}" />
+            <div class="counter" id="checklist_title_counter">{{ i18n '200 characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{ i18n 'checklist description'}}</div>
+            <div class="sub-title">{{ i18n 'write a short description that best describes your checklist.'}}</div>
+            <textarea name="description" maxlength="500" placeholder="{{ i18n 'description' }}"></textarea>
+            <div class="counter" id="checklist_desc_counter">{{ i18n '500 characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{ i18n 'featured'}}</div>
+            <div class="sub-title">{{ i18n 'do you want your checklist featured?'}}</div>
+            <div id="featured">
+                <div class="option-check active">{{ i18n 'yes'}}</div>
+                <div class="option-check">{{ i18n 'no'}}</div>
+            </div>
+        </div>
+        <hr class="break"/>
+        <div class="advanced">{{ i18n 'advanced'}}</div>
+        <div class="block advanced-block">
+            <div class="title">{{ i18n 'upload image'}}</div>
+            <div class="sub-title">{{ i18n 'upload an image to go with your checklist'}}</div>
+            <input type="file" name="upload-file" class="upload-file" id="upload-file" accept="image/*">
+            <img class="img-preview">
+            <div class="file-name">{{ i18n 'file name'}}</div>
+            <div class="remove-file">{{ i18n 'remove'}}</div>
+            <label for="upload-file">{{ i18n 'browse'}}</label>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" data-popup="checklist">{{ i18n 'cancel'}}</div>
+            <div class="save" data-popup="checklist" data-id="{{checklist_slug}}">{{ i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{ i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{ i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{ i18n 'saving...'}}<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if checklist_section}}
+<div class="popup-box" data-popup="checklist_section">
+    <div class="popup-title">
+        {{#if is_edit}}{{ i18n 'edit step'}}{{else}}{{ i18n 'create step'}} {{index}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{ i18n 'step'}} {{index}} {{ i18n 'name'}}</div>
+            <div class="sub-title">{{ i18n 'choose the name for this step of your checklist experience ( i.e. "recommended").'}}</div>
+            <input name="name" type="text" maxlength="50" autocomplete="off" placeholder="{{ i18n 'name' }}" />
+            <div class="counter" id="checklist_section_title_counter">{{ i18n '50 Characters left'}}</div>
+        </div>
+    </div>
+    <div class="footer ">
+        <div class="block">
+            <div class="cancel" data-popup="checklist_section">{{ i18n 'cancel'}}</div>
+            <div class="save" {{#if section_id}}data-id="{{section_id}}"{{/if}}  >{{ i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{ i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{ i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{ i18n 'saving...'}}<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if checklist_item}}
+<div class="popup-box" data-popup="checklist_item">
+    <div class="popup-title">
+        {{#if is_edit}}{{ i18n 'edit checklist item'}}{{else}}{{ i18n 'create new checklist item'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{ i18n 'checklist item text'}}</div>
+            <div class="sub-title">{{ i18n 'write the main action text for this checklist item. (i.e. "install software")'}}</div>
+            <input name="title" type="text" maxlength="100" autocomplete="off" placeholder="{{ i18n 'Text'}}" />
+            <div class="counter" id="checklist_item_title_counter">{{ i18n '100 characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{ i18n 'checklist item description'}}</div>
+            <div class="sub-title">{{ i18n 'write a description about what this checklist item is for.'}}</div>
+            <textarea name="description" maxlength="350" placeholder="{{ i18n 'description'}}"></textarea>
+            <div class="counter" id="checklist_desc_counter">{{ i18n '350 characters left'}}</div>
+        </div>
+        <div class="block hide">
+            <div class="title">{{ i18n 'suggested content'}}</div>
+                <div class="sub-title">{{ i18n 'provide your user with internal or external content related to this checklist item.'}}</div>
+                <div class="suggetsion_type">
+                    <input type="radio" id="link_chapter" name="cta_type"  class="css-radio" checked="checked" value="cta-link">
+                    <label class="css-radio-label" for="link_chapter">{{ i18n 'chapters from your internal library'}}</label>
+                    <div class="content_suggestion">
+                        <div class="browse" data-popup="add_suggested_chapters" data-popup-from="add_suggestions" data-id="{{item_id}}">{{ i18n 'browse your library'}}</div>
+                        <div class="selected_chapters"></div>
+                    </div>
+                </div>
+                <div class="suggetsion_type">
+                    <input type="radio" id="link_external" name="cta_type"  class="css-radio" value="cta-link" >
+                    <label class="css-radio-label" for="link_external">{{ i18n 'link to external content'}}</label>
+                    <div class="content_suggestion disabled">
+                        <div class="external-links"></div>
+                        <input class="suggestion_link" placeholder="http://" type="url" disabled="true"/>
+                        <div class="add_suggestion_link">{{ i18n 'add'}}</div>
+                        <div class="loader"></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="footer ">
+        <div class="block">
+            <div class="cancel" data-popup="checklist_item">{{ i18n 'cancel'}}</div>
+            <div class="save" {{#if section_id}}section-id="{{section_id}}" {{/if}}
+            {{#if item_id}}data-id="{{item_id}}"{{/if}}>{{ i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{ i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{ i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{ i18n 'saving...'}}<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_suggestions}}
+<div class="popup-box" data-popup="checklist_suggestion">
+    <div class="popup-title suggestion-title">
+            {{ i18n 'add suggestion'}} {{entity_type}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="title mandatory-field">{{ i18n 'suggested content'}}</div>
+                <div class="sub-title">{{ i18n 'provide your user with internal or external content related to this checklist item.'}}</div>
+                <div class="suggetsion_type">
+                    <input type="radio" id="link_chapter" name="cta_type"  class="css-radio" checked="checked" value="cta-link">
+                    <label class="css-radio-label" for="link_chapter">{{ i18n 'chapters from your internal library'}}</label>
+                    <div class="content_suggestion">
+                        <div class="browse" data-popup="add_suggested_chapters" data-popup-from="add_suggestions" data-id="{{item_id}}">{{ i18n 'browse your library'}}</div>
+                        <div class="selected_chapters"></div>
+                    </div>
+                </div>
+                <div class="suggetsion_type">
+                    <input type="radio" id="link_external" name="cta_type"  class="css-radio" value="cta-link" >
+                    <label class="css-radio-label" for="link_external">{{ i18n 'link to external content'}}</label>
+                    <div class="content_suggestion disabled">
+                        <div class="external-links"></div>
+                        <input class="suggestion_link" placeholder="http://" type="url" disabled="true"/>
+                        <div class="add_suggestion_link">{{ i18n 'add'}}</div>
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" data-popup="checklist_suggestion">{{ i18n 'cancel'}}</div>
+                <div class="save" data-popup="checklist_suggestion" data-id="{{item_id}}">{{ i18n 'save'}}</div>
+            </div>
+            <div class="form-failed">{{ i18n 'oops!saving failed'}}</div>
+            <div class="form-sent">{{ i18n 'saved successfully!'}}</div>
+            <div class="form-sending">{{ i18n 'saving...'}}<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}} 
+
+{{#if edit_suggestion }}
+<div class="popup-box" data-popup="edit_suggestion">
+    <div class="popup-title">
+        {{ i18n 'edit suggestion text'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{ i18n 'title'}}</div>
+            <div class="sub-title">{{ i18n 'write a title for the suggestion.'}}</div>
+            <textarea name="title" class="" maxlength="200" placeholder="{{ i18n 'write something'}}">{{title}}</textarea>
+            <div class="counter" id="checklist_sugg_title_counter">{{title_limit}} {{ i18n 'characters left'}}</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="edit_suggestion">{{ i18n 'cancel'}}</div>
+            <div class="save" data-id='{{suggestion_id}}'>{{ i18n 'update'}}</div>
+        </div>
+        <div class="form-failed">{{ i18n 'oops!saving failed'}}</div>
+        <div class="form-sent">{{ i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{ i18n 'saving...'}}<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if confirm_delete}}
+<div class="popup-box confirm_delete">
+    <div class="popup-title delete-title">
+            {{ i18n 'delete'}} {{entity_type}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                   {{ i18n 'you\'ve made some cool stuff!'}}<br><br>
+                   {{ i18n 'are you sure want to permanently delete this'}} {{entity_type}}?
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" rel="confirm_delete">cancel</div>
+                <div class="confirm-delete delete" data-type="{{entity_type}}" 
+                    {{# if checklist_slug}}data-checklist-slug="{{checklist_slug}}"{{/if}}
+                    {{# if section_id}}data-section-id="{{section_id}}"{{/if}}
+                    {{# if item_id}}data-item-id="{{item_id}}"{{/if}}
+                    {{# if suggestion_id}}data-suggestion-id="{{suggestion_id}}"{{/if}}>
+                    {{ i18n ' delete'}}
+                </div>
+            </div>
+            <div class="form-failed">{{ i18n 'oops! your work was not saved.'}}</div>
+            <div class="form-sent">{{ i18n 'success! your work has successfully been deleted.!'}}</div>
+            <div class="form-sending">{{ i18n 'deleting...'}}<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}} 
+
+{{#if confirm_disable}}
+<div class="popup-box confirm_disable">
+    <div class="popup-title disable-title">
+            {{ i18n 'disable'}} {{entity_type}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                   {{ i18n 'this'}} {{entity_type}} {{ i18n 'will not be visible to your viewers'}}<br>
+                   {{ i18n 'are you sure you want to disable this '}}{{entity_type}} {{ i18n 'from view??'}}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" rel="confirm_disable">{{ i18n 'cancel'}}</div>
+                <div class="confirm-disable disable" data-type="{{entity_type}}" data-checklist-slug="{{checklist_slug}}">{{ i18n 'disable'}}</div>
+            </div>
+            <div class="form-failed">{{ i18n 'oops! your submission was not sent'}}</div>
+            <div class="form-sent">{{ i18n 'disabled successfully'}}</div>
+            <div class="form-sending">{{ i18n 'disabling...'}}<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}} 
+
+{{#if confirm_enable}}
+<div class="popup-box confirm_enable">
+    <div class="popup-title enable-title">
+            {{ i18n 'enable'}} {{entity_type}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                   {{ i18n 'this'}} {{entity_type}} {{ i18n 'will be visible to your viewers'}}<br>
+                   {{ i18n 'are you sure you want to enable this'}} {{entity_type}} {{ i18n 'from view??'}}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" rel="confirm_enable">{{ i18n 'cancel'}}</div>
+                <div class="confirm-enable enable" data-type="{{entity_type}}" data-checklist-slug="{{checklist_slug}}">{{ i18n 'enable'}}</div>
+            </div>
+            <div class="form-failed">{{ i18n 'oops! your submission was not sent'}}</div>
+            <div class="form-sent">{{ i18n 'enabled successfully'}}</div>
+            <div class="form-sending">{{ i18n 'enabling...'}}<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}} 
+
+{{#if publish_checklist}}
+<div class="popup-box confirm_publish_checklist">
+    <div class="popup-title">
+            {{ i18n 'publish changes'}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                    {{ i18n 'are you sure you want to take your work live?'}}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" rel="confirm_publish_checklist">{{ i18n 'cancel'}}</div>
+                <div class="confirm-publish-checklist publish">{{ i18n 'publish'}}</div>
+            </div>
+            <div class="form-failed">{{ i18n 'oops! your work was not saved.'}}</div>
+            <div class="form-sent">{{ i18n 'success! your work has successfully been published.!'}}</div>
+            <div class="form-sending">{{ i18n 'publishing...'}}<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if add_suggested_chapters}}
+    <div class="popup-box" data-popup="checklist_suggestion">
+        <div class="popup-title">
+            <div class="back" data-popup="add_suggestions" data-id="{{item_id}}"></div>
+            {{ i18n 'browse library'}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="search_chapters">
+                    <input name="search" type="text" maxlength="100" autocomplete="off" placeholder="{{ i18n 'search content'}}" />
+                </div>
+            </div>
+            <div class="demo-library block" id="demo-library"></div>
+            <div class="block site_map hidden" id="site_map"></div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel">{{ i18n 'cancel'}}</div>
+                <div class="save" data-id="{{item_id}}">{{ i18n 'save'}}</div>
+            </div>
+            <div class="form-failed">{{ i18n 'oops! saving failed'}}</div>
+            <div class="form-sent">{{ i18n 'saved successfully!'}}</div>
+            <div class="form-sending">{{ i18n 'saving...'}}<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if export}}
+    <div class="popup-box" data-popup="export">
+        <div class="popup-title">
+            <div class="back export-back"></div>
+            {{ i18n 'export results'}}
+        </div>
+        <div class="content-block">
+            <div class="demo-library block" id="demo-library">
+                 <div class='demo'>
+                     <div>
+                         <h1>{{ i18n 'suggested content'}}</h1>
+                         <p>{{ i18n 'do you want to include the suggested content links in the '}}<span>pdf</span>?</p>
+                     </div>
+                     <input name="pdf" type='checkbox' id="suggested-content-export" class='css-checkbox' />
+                     <label for="suggested-content-export" class='css-label'></label>
+                 </div>
+                <div class='demo'>
+                     <div>
+                         <h1>{{ i18n 'email copy'}}</h1>
+                         <p>{{ i18n 'would you like an email copy of your results for your records?'}}</p>
+                     </div>
+                     <input name="email" type='checkbox' id="email-export" class='css-checkbox' />
+                     <label for="email-export" class='css-label'></label>
+                 </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="save download">{{ i18n 'download'}}</div>
+            </div>
+            <div class="form-failed">{{ i18n 'oops! download failed'}}</div>
+            <div class="form-sent">{{ i18n 'download successfully!'}}</div>
+            <div class="form-sending">{{ i18n 'downloading...'}}<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}

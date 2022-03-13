@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SolidFire</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="">
+	<link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+	<link rel="stylesheet" type="text/css" href="//cloud.typography.com/7667932/7011412/css/fonts.css" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/solidfire-favicon.ico') }}">
+</head>
+<body>
+	<div id="solidfire_container">
+		<div class="left_block">
+			<div class="left_content">
+				<div class="solidfire_logo"></div>
+				<p>Learn about the features of the SolidFire platform, its place within the NetApp flash portfolio, how it stacks up against competitors, and more.</p>
+			</div>
+		</div>
+		{% block container %}
+        {% endblock %}
+	</div>
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/site.js') }}"></script>
+</body>
+</html>

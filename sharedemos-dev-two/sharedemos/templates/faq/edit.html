@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+    <!-- froala css and plugin css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_editor.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/froala_style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/char_counter.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/code_view.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/colors.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/emoticons.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/file.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/fullscreen.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/help.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/image.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/image_manager.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/line_breaker.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/quick_insert.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/special_characters.min.css') }}" /> 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/table.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/plugins/video.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/third_party/embedly.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/froala/css/third_party/font_awesome.min.css') }}" />
+    
+
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+{% endblock %}
+
+{% block container %}
+   <div id="main_container" data-faq-edit>
+        <div class="header">
+            {{ languagelist() }}
+            <div class="action publish-faq disabled" data-popup="publish_faq">Publish</div>
+            <a href="{{url_for('dashboard.home')}}"><div class="cancel-faq-edit">Cancel</div></a>            
+            <label>EDITING MODE</label>
+        </div>
+        <div id="block_container"></div> 
+        <div class="popup-overlay">
+            <div class="popup-wrap"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        document.favicon = "";
+        {% if tenant.favicon %} document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}" {% endif %}
+
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.defaultLocale = "{{tenant.default_locale.name}}";
+        document.locales = JSON.parse('{{all_languages|tojson}}');
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+        document.isPrivateTenant = "{{tenant.flags.is_private}}" === "True";
+        document.requestParameters = function(){
+            return '?author=1'
+        };
+        document.viewType = "{{view_type}}";
+        {% if group %}
+        document.group_slug = "{{group.slug}}";
+        {% endif %}
+        {% if session['author']['locale'] %}
+            document.current_locale = "{{session['author']['locale']}}";
+        {% endif %}  
+    </script>
+    <script src="{{ url_for('static', filename='js/build/apps/faq.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+{% endblock %}

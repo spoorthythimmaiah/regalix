@@ -1,0 +1,102 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block container %}
+<div class="fixed-bg">
+    <div class="login-wrap">
+        <div class="login-header">
+            <div class="logo">
+                <a class="logo" href="{{sdemos_website_url}}">SHAREDEMOS</a>
+            </div>
+            <button type="button" class="navbar-toggle visible-xs">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <div class="header-menu">
+                <ul class="nav navbar-nav">
+                    <li class="menu-item">
+                        <a href="javascript:;" class="menu-dropdown"><span>PRODUCT</span></a>
+                        <ul class="dropdown-list">
+                            <li>
+                                <a href="{{sdemos_website_url}}/features">
+                                    <h5>Features</h5>
+                                    <p>Explore our line of tools built to make your life easier.</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:;" class="menu-dropdown"><span>SOLUTIONS</span></a>
+                        <ul class="dropdown-list">
+                            <li>
+                                <a href="{{sdemos_website_url}}/sales">
+                                    <h5>Sales Cloud</h5>
+                                    <p>Onboard and keep your sales teams up-to-date.</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{sdemos_website_url}}/marketing">
+                                    <h5>Marketing Cloud</h5>
+                                    <p>Create, Distribute and Measure technical content with ease.</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="active" href="{{sdemos_website_url}}/resources"><span>RESOURCES</span></a></li>
+                    <li><a class='signin' href="{{sdemos_website_url}}/sign-in"><span>LOG IN</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-wrap" >
+            {% for message in get_flashed_messages() %}
+            <p class="error">{{message}}</p>
+            {% endfor %}
+            <p class="proceed-to">
+                <a class="signin-rdt" href="javascript:void(0)">sign in</a>
+            </p>
+            <div class="login-form-block">
+                <h4>Sign in to {{request.host}}</h4>
+                <div class="login-form-left">
+                    <form id="acct-signin" method="post" action="{{url_for("social.complete", backend="email")}}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <div class="login-form-field email-field">
+                            <input type="text" placeholder="Email" required  name="email" id="email" class="trim-input" autocomplete="off"  />
+                        </div>
+                        <div class="login-form-field password-field">
+                            <input type="password" placeholder="Password" required  name="password" id="password" autocomplete="off"  />
+                        </div>
+                        {% if next %}
+                        <input type="hidden" name="next" value="{{next}}" />
+                        {% endif %}
+                        <input type="hidden" name="hash_url" id="hash_url"/>
+                        <div>
+                            <input type="submit" name="login-submit" id="sign-in-btn" class="active" value="Sign In">  
+                        </div>
+                    </form>
+                </div>
+                <div class="login-form-right">
+                    <div>
+                        <h5>Not your domain?</h5>
+                        <a href="{{sdemos_website_url}}/sign-in">Enter a new domain</a> 
+                    </div>
+                    <div>
+                        <h5>Forgot your password?</h5>
+                        <a  class="fpwd" href="{{url_for('auth.forgot_password')}}">Reset it here</a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}

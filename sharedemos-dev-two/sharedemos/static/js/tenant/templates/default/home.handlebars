@@ -1,0 +1,18 @@
+ <div id="home-container" class="page-container theme-bg-color">
+	<div class="fs-banner"> 
+		<div class="title1 theme-title-color">
+			{{tenant_title}}
+		</div>
+		<div class="filter all theme-title-color active camel-case">{{i18n "all"}}</div>
+		<div class="filter trending theme-title-color camel-case">{{i18n "trending"}}</div>
+		<div class="filter mostrecent theme-title-color camel-case">{{i18n "most recent"}}</div>
+	</div>
+	<div class="pwt-list">
+		<div class="home-container all active"></div>
+		<div class="home-container trending"></div>
+		<div class="home-container mostrecent"></div>
+	</div>
+	{{#if tenant_privacy_link}} 
+		<a class="privacy theme-title-color camel-case" href="{{tenant_privacy_link}}" target="_blank">{{i18n 'privacy policy'}}</a>
+	{{/if}}
+</div>

@@ -1,0 +1,107 @@
+{% extends 'tenants/seo/avaya/base.html' %}
+
+{% block container %}
+<div id="content-section" class="container-block">
+    <div class="split-main-container">
+        {{ header() }}
+        <div class="right-side-panel">
+            <div class="heading">
+                <div class="section-header">
+                    <a href="{{ url_for('apps.library') }}">
+                        <img class="left-arrow lazy-load" data-src="{{ url_for('static', filename='images/avaya/left_arrow.png') }}">
+                    </a>
+                    <div class="header-info">
+                        <h2 class="heading-alignment">Library</h2>
+                        <p class="section-breadcrumb text-muted">Home > Cloud</p>
+                    </div>
+                </div>
+                {{ search() }}
+            </div>
+            <div class="row heading-category">
+                <div class="col-xs-12">
+                    <h1>{{api['name']}}</h1>
+                    <p>{{api['description'] or ''}}</p>
+                </div>
+            </div>
+            <div class="watch-video">
+                <a href="">
+                    <img class="icon lazy-load" data-src="{{ url_for('static', filename='images/avaya/camera.png') }}">
+                    <div class="icon-text">Watch the video</div>
+                    <img class="right-arrow lazy-load" data-src="{{ url_for('static', filename='images/avaya/left_arrow.png') }}"> 
+                </a>
+            </div>
+            <div class="sub-category-block">
+                <main>
+                    {% if api['children'] %}
+                    <h6>{{_('categories')}}</h6>
+                    <section class="row sec-cat-list">
+                        {% for child in api['children'] %}
+                        <div class="col-xs-12 category-list-details">
+                            <div class="category-list-link-block">
+                                {% if child['translations_available'] %}
+                                <div class="translation-icon" data-overlay="language-translations" data-language-options='{{child['locales_available']|tojson}}'></div>
+                                {% endif %}
+                                {% if child['tags'] %}
+                                    <ul class="category-tags">
+                                        {% for tag in child['tags'] %}
+                                        <li>{{tag}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                {% set href_url = url_for('apps.library', section=child['slug'])%}
+                                {% set class_name = 'category-list-link' %}
+                                {% if child['linked_asset'] %}
+                                    {% set href_url =  url_for('main.serve_section_assets', asset_name=child['linked_asset']['name']) %}
+                                    {% set class_name = 'asset-linked' %}
+                                {% endif %}
+                                {% set data_attr = 'data-product-id=' + api['product']['slug'] + ' data-section-id=' + child['slug'] %}
+                                <a href="{{href_url}}" class="{{class_name}}"{% if child['linked_asset'] %} {{data_attr}} target="_blank" {% endif %}>
+                                    <div class="category-list-icon">
+                                        {% if child['linked_asset'] %}
+                                            {% if child['icon'] %}
+                                                <div class="relative-icon">    
+                                                    <div class="lazy-load" data-src="{{ child['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                                </div>
+                                            {% else %}
+                                                <div class="default-icon">
+                                                    <img class="lazy-load" data-src="{{ url_for('static', filename='images/section-default-link-icon.png') }}">
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if child['icon'] %}
+                                                <div class="relative-icon">    
+                                                    <div class="lazy-load" data-src="{{ child['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                                </div>
+                                            {% else %}
+                                                <div class="default-icon">
+                                                    <img class="lazy-load" data-src="{{ url_for('static', filename='images/vmware/default-category-icon.png') }}">
+                                                </div>
+                                            {% endif %}
+            
+                                        {% endif %}
+                                    </div>
+                                    <div class="category-list-desc">
+                                        <h5>{{child['name']}}</h5>
+                                        <p {% if child['tags'] %} class="desc-with-tags" {% endif %}>{{child['description'] or ''}}</p>
+                                    </div>
+                                    <img class="right-arrow lazy-load" data-src="{{ url_for('static', filename='images/avaya/left_arrow.png') }}">
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </section>
+                    {% endif %}
+                </main>
+            </div>
+            {{ footer() }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sub_scripts %}
+<script type="text/javascript">
+    document.page = 'Category';
+</script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+{% endblock %}

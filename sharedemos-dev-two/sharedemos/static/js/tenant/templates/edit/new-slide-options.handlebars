@@ -1,0 +1,285 @@
+{{# if show_start_message }}
+<div class="demo_welcome_block">
+    <div class="welcome_content">
+        <h1 class="camel-case">{{i18n 'start creating your asset'}}</h1>
+        <h2 class="sub-title"><pre class="sub-title">{{i18n 'let\'s get started by adding your files'}}.</pre><pre class="sub-title">{{i18n 'click on the green button to begin'}}.</pre></h2>
+    </div>
+</div>
+{{/if}}
+<!--  slide fade overlay -->
+<div class="author_fade">
+    <div class="new_slide_options">
+        <div class="options_block">
+            <div class="options add_image" type="slide_image">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add image'}}</div>
+                <div class="title2">jpg, png</div>
+            </div>
+            <div class="options add_video" type="slide_video">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add video'}}</div>
+                <div class="title2">MP4, WMV, MPEG4</div>
+            </div>
+            <div class="options add_audio" type="slide_audio">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add audio'}}</div>
+                <div class="title2">MP3, WAV</div>
+            </div>
+            <div class="options add_text" type="slide_content">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'text editor'}}</div>
+                <div class="title2">Text</div>
+            </div>
+            <div class="options add_pdf" type="slide_pdf">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add pdf'}}</span></div>
+                <div class="title2">PDF</div>
+            </div>
+            <div class="options add_ppt" type="slide_ppt">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add presentation'}}</span></div>
+                <div class="title2">PPT, PPTX</div>
+            </div>
+            <div class="options add_360" type="slide_360">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add'}} 360<sup>0</sup> {{i18n 'view'}}</div>
+                <div class="title2">JPG, PNG</div>
+            </div>
+            <div class="options add_iframe" type="slide_iframe">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add html'}}</div>
+                <div class="title2">zip, HTML</div>
+            </div>
+            <div class="options add_link" type="slide_link">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add link'}}</div>
+                <div class="title2">URL</div>
+            </div>
+            <div class="options add_file_uploader" type="slide_file">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'file upload'}}</div>
+                <div class="title2">1GB limit</div>
+            </div>
+            {{# if is_sandbox_enabled}}
+            <div class="options add_sandbox" type="slide_sandbox">
+                <div class="icon"></div>
+                <div class="title1">{{i18n 'add sandbox'}}</div>
+                <div class="title2">JSON</div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <!--Upload image to slide -->
+    <div class="slide_options" data-slide="slide_image">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'drag and drop an image file'}} <br> {{i18n 'or multiple images'}} </div>
+            <div class="sub_title">{{i18n 'or select one of the options below'}}</div>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="image" multiple id='upload-slide-image' name='image_resource' accept=".jpg, .jpeg, .png, .gif, .bmp|images/*" />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-image'>{{i18n 'browse files'}}</label>
+            <div class='resourceUrl rippleEffect'>{{i18n 'url'}}</div><br />
+            <div class="upload-url">
+                <input class='url_input' type='text' media-type='image' />
+                <div class='url_upload rippleEffect'>{{i18n 'upload'}}</div>
+            </div>
+            <label class="error-message"></label>
+        </div>
+    </div>
+
+    <!--Upload Video to slide -->
+    <div class="slide_options" data-slide="slide_video">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'drag and drop a video file'}}</div>
+            <div class="sub_title">{{i18n 'or select one of the options below'}}</div>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="video" id='upload-slide-video' name='video_resource' accept=".mp4, .webm, .ogg" />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-video'>{{i18n 'browse file'}}</label>
+            <div class='resourceUrl rippleEffect'>{{i18n 'embed url'}}</div><br />
+            <div class="upload-url ">
+                <input class='url_input' type='text' placeholder='Youtube, Vimeo or BrightCove url' media-type='embed' />
+                <div class='url_upload rippleEffect'>{{i18n 'embed'}}</div>
+            </div>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    <!--Upload audio to slide -->
+    <div class="slide_options" data-slide="slide_audio">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'drag and drop an audio file'}}</div>
+            <div class="sub_title">{{i18n 'or select one of the options below'}}</div>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="audio"  id='upload-slide-audio' name='audio_resource' accept=".mp3, .webm, .ogg" />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-audio'>{{i18n 'browse file'}}</label>
+            <div class='resourceUrl rippleEffect'>{{i18n 'URL'}}</div><br />
+            <div class="upload-url">
+                <input class='url_input' type='text' media-type='audio' />
+                <div class='url_upload rippleEffect'>{{i18n 'upload'}}</div>
+            </div>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    <!--Upload pdf to slide -->
+    <div class="slide_options" data-slide="slide_pdf">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'drag and drop a'}} <span class='capital-letter'>pdf</span> {{i18n 'file'}}</div>
+            <div class="sub_title">{{i18n 'or select one of the options below'}}</div>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="pdf" id='upload-slide-pdf' name='pdf_resource' accept=".pdf" />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-pdf'>{{i18n 'browse file'}}</label>
+            <div class='resourceUrl rippleEffect'>{{i18n 'pdf url'}}</div><br />
+            <div class="upload-url ">
+                <input class='url_input' type='text' placeholder='PDF url' media-type='pdf' />
+                <div class='url_upload rippleEffect'>{{i18n 'upload'}}</div>
+            </div>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    <!--Upload link to slide -->
+    <div class="slide_options" data-slide="slide_link">
+        <div class="upload_media_block">
+            <div class="close" ></div>
+            <div class="title sub-title">{{i18n 'link to content'}}</div>
+            <div class="sub_title sub-title">{{i18n 'enter a url to link outside content'}}</div>
+            <div class="upload-url active">
+                <input class='url_input' type='text' media-type='link' />
+                <div class='url_upload rippleEffect'>{{i18n 'add link'}}</div>
+            </div>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    <!-- upload progress block -->
+    <div class="upload_media_status">
+        <div class="options_block">
+            <div class="upload_status_update">{{i18n 'uploading'}}...</div>
+            <div class="file-progressbar">
+                <div class="file-progressbar-status"></div>
+            </div>
+            <div class="upload_status_successs"></div>
+            <div class="upload_status_failed">
+                <div class="upload_fail_block">
+                    <div class="upload_retry">
+                        <span class="upload_retry_button"></span>
+                        <span class="upload_retry_text camel-case">{{i18n 'retry'}}</span>
+                    </div>
+                    <div class="upload_cancel">
+                        <span class="upload_cancel_button"></span>
+                        <span class="upload_cancel_text camel-case">{{i18n 'cancel'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="malware-error">
+                <div class="malware-image"></div>
+                <div class="malware-detected">Malware Detected!</div>
+                <p>This file may not be safe, please verify with your IT department. Please upload a different asset</p>
+                <button class="close-button btn">CLOSE</button>
+            </div>    
+        </div>
+    </div>
+
+    <!--Upload link to slide -->
+    <div class="slide_options" data-slide="slide_iframe">
+        <div class="upload_media_block">
+            <div class="close" ></div>
+            <div class="title sub-title">{{i18n 'upload html code'}}</div>
+            <div class="sub_title">{{i18n 'select the options below'}}</div>
+            <label class='uploadFile rippleEffect' for='upload-iframe-zip'>{{i18n 'browse files'}}</label>
+            <div class='resourceUrl rippleEffect'>{{i18n 'embed url'}}</div><br />
+            <div class="html-zip-block">
+                <input type='file' class='slide-file' media-type="html5" id='upload-iframe-zip' name='iframe_zip_resource' accept=".zip, .html" />
+            </div>
+            <div class="upload-url">
+                <div class="sub_title">{{i18n 'paste your iframe html below'}}</div>
+                <input class='url_input' type='text' media-type='iframe' />
+                <div class='url_upload rippleEffect'>{{i18n 'add iframe'}}</div>
+            </div>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    <!--Upload file to slide-->
+    <div class="slide_options" data-slide="slide_file">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'upload a file for download'}}</div>
+            <div class="sub_title">{{i18n 'drag and drop a file or browse your computer'}}</div>
+            <p>Supported file types Doc, pdf, ppt, image, audio, video, zip, text</p>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="file" id='upload-slide-file' name='file_resource' accept=".zip, .html, .ppt, .pptx, .jpg, .pdf, .gif, .jpeg, .mp3, .mp4, .webm, .ogg, .doc, .docx, .txt" />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-file'>{{i18n 'browse file'}}</label>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    <!--Upload image to 360 slide -->
+    <div class="slide_options" data-slide="slide_360">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'drag and drop the image files'}}</div>
+            <div class="sub_title">{{i18n 'or select the option below'}}</div>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="360" id='upload-slide-360' name='image_resource' accept=".jpg, .jpeg, .png, .gif, .bmp|images/*" multiple />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-360'>{{i18n 'browse files'}}</label>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    <!--Upload image to 360 slide -->
+    <div class="slide_options" data-slide="slide_ppt">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'drag and drop ppt/pptx file'}}</div>
+            <div class="sub_title">{{i18n 'or click on browse file'}}</div>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="ppt" id='upload-slide-ppt' name='ppt_resource' accept=".ppt, .pptx" />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-ppt'>{{i18n 'browse file'}}</label>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+
+    {{# if is_sandbox_enabled}}
+    <div class="slide_options" data-slide="slide_sandbox">
+        <div class="upload_media_block">
+            <div class="close"></div>
+            <div class="title sub-title">{{i18n 'drag and drop a json file'}}</div>
+            <div class="sub_title">{{i18n 'or select the option below'}}</div>
+            <div class="slide-file-block drag">
+                <input type='file' class='slide-file' media-type="sandbox" id='upload-slide-sandbox' name='json_resource' accept=".json" />
+            </div>
+            <label class='uploadFile rippleEffect' for='upload-slide-sandbox'>{{i18n 'browse files'}}</label>
+            <label class="error-message" ></label>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="slide-360-preview-wrap">
+        <div class="slide_option_360">
+            <div class="close"></div>
+            <div class="title"></div>
+            <div class="done-360">{{i18n 'done'}}</div>
+        </div>
+        <div class="slide_360_frames_wrap">
+            <ul>
+                <li class="add-frame">
+                    <input type='file' id='add-slide-360-frames' accept=".jpg, .jpeg, .png, .gif, .bmp|images/*" multiple />
+                    <label class='upload-frames' for='add-slide-360-frames'></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

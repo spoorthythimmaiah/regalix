@@ -1,0 +1,7 @@
+{% extends 'dashboard/dashboard_submenu/quiz.html' %}
+
+{% block dashboard_content_container %}
+    <a href="{{url_for('main.edit_quiz')}}">
+        <div class="create-new create_new_btn" data-form-name="create_quiz"></div>
+    </a>
+{% endblock %}

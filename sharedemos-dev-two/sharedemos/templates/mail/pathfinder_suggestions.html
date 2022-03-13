@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Your suggestions, ready for you</title>
+        <style type="text/css">
+            body {
+                font-family: Helvetica, Arial, sans-serif;
+                font-weight: normal;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <table border="0" cellpadding="0" cellspacing="0" width="800" style="border-collapse: collapse;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%; margin: 0px auto; background:#fff; font-family: Arial, Helvetica, sans-serif;border:1px solid #ccc;">
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="{% if path.tenant and path.tenant.logo %}{{url_for('static', filename='media/' + path.tenant.logo, _external=True)}}{% else %}{{url_for('static', filename='images/login-logo.png', _external=True)}}{% endif %}" style="display:block;margin: 45px auto;max-height: 60px;width: auto;">
+                    </td>
+                </tr>
+                <tr col='1'>
+                    <td style="font-size:24px;text-align:center;color: #41435a;">
+                        {{path}} Suggested Results.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="90%" style="border-radius: 10px;color:#9ba0a4;margin: 45px auto;padding: 50px;position: relative;overflow:hidden;border: 5px solid #f0f0f0;" >
+                            <tr>
+                                <td colspan="2" style="padding:0 0px 40px 0;line-height: 22px;">
+                                {% if option._suggestion_message.body %}
+                                    {{option._suggestion_message.body}} 
+                                {% else %}
+                                    These steps should help you align Professional Services solutions with the customer's current challenges.
+                                {% endif %}
+                                </td>
+                            </tr>
+
+                            {% for suggestion in option._suggestions %}
+
+                                {% if suggestion.type == 'group' %}
+                                    {% if suggestion.suggestions_list|length > 0 %}
+                                        <tr col='1'>
+                                            <td colspan="2" width="100%">
+                                                <table width="100%" style="border: 2px solid #f0f0f0; border-radius: 3px;padding: 10px;margin-bottom: 10px;">
+                                                    <tr>
+                                                        <td>{{suggestion.title}}</td>
+                                                    </tr>
+                                                    {% for entity in suggestion.suggestions_list %}
+                                                        <tr width="100%" >
+                                                            <td width="30%">
+                                                                {% if not entity._thumbnail_url %}
+                                                                    {% set thumbnail_url = url_for('static', filename='images/default_chapter_icon.jpg', _external=True) %}
+                                                                {% else %}
+                                                                    {% set thumbnail_url = entity._thumbnail_url %}
+                                                                {% endif %}
+                                                                <img style="width:230px;height: 165px;box-shadow: 2px 2px 4px 1px #ccc;-webkit-box-shadow: 2px 2px 4px 1px #ccc;-moz-box-shadow: 2px 2px 4px 1px #ccc;" src="{{thumbnail_url}}" target="_blank"/>
+                                                            </td>
+                                                            <td width="70%" style="padding-left: 25px;text-decoration: underline;">
+                                                                {% if entity.external_link %}
+                                                                    <a href="{{entity.external_link.url}}" target="_blank" style="color:#9ba0a4;">{{entity.external_link.title or entity.external_link.url }}</a>
+                                                                {% else %}
+                                                                     <a href="{{entity._url}}" target="_blank" style="color:#9ba0a4;">{{entity._name}}</a>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        {% if not loop.last %}
+                                                            <tr>
+                                                               <td>&nbsp;<!--To insert a space in a row.--></td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                {% else %}
+                                        <tr>
+                                            <td width="30%">
+                                                {% if not suggestion._thumbnail_url %}
+                                                    {% set thumbnail_url = url_for('static', filename='images/default_chapter_icon.jpg', _external=True) %}
+                                                {% else %}
+                                                    {% set thumbnail_url = suggestion._thumbnail_url%}
+                                                {% endif %}
+                                                <img style="width:230px;height: 165px;box-shadow: 2px 2px 4px 1px #ccc;-webkit-box-shadow: 2px 2px 4px 1px #ccc;-moz-box-shadow: 2px 2px 4px 1px #ccc;" src="{{thumbnail_url}}" target="_blank"/>
+                                            </td>
+                                            <td width="70%" style="padding-left: 25px;text-decoration: underline;">
+                                                {% set entity = suggestion.suggestion %}
+                                                {% if entity.external_link %}
+                                                    <a href="{{entity.external_link.url}}" target="_blank" style="color:#9ba0a4;">{{entity.external_link.title or entity.external_link.url}}</a>
+                                                {% else %}
+                                                    <a href="{{entity._url}}" target="_blank" style="color:#9ba0a4;">{{entity._name}}</a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% if not loop.last %}
+                                            <tr>
+                                               <td>&nbsp;<!--To insert a space in a row.--></td>
+                                            </tr>
+                                        {% endif %}
+                                {% endif %}
+
+                            {% endfor %}
+                            <tr>
+                                <td colspan="2" style="text-align:center;padding:45px 0 0;color:#41435a;font-size:14px;font-weight: bold;">Looking for something different? <a href="{{url_for('main.pathfinder', slug=path.slug, _external=True)}}" style="text-decoration:underline;color:#3a9bfc;">Create New</a></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;font-size: 10px;color:#d4d4d4;line-height:14px;">
+                        <div>Powered by</div>
+                        <img src="{% if path.tenant and path.tenant.logo %}{{url_for('static', filename='media/' + path.tenant.logo, _external=True)}}{% else %}{{url_for('static', filename='images/login-logo.png', _external=True)}}{% endif %}" style="display:block;margin:15px auto;max-height: 50px;width: auto;">
+                        <div style="margin:20px 0;">&copy;2014-{{now.year}} Sharedemos, Inc. | All Rights Reserved.<br><a href="http://sharedemos.com" target="_blank" style="color:#d4d4d4;text-decoration:none;">sharedemos.com</a>, 2200 Geng Road., Palo Alto, CA, 94303<br><a style="color:#d4d4d4;text-decoration:none;" href="javascript:;" style="color:#d4d4d4;text-decoration:none;">Privacy Policy</a> | <a style="color:#d4d4d4;text-decoration:none;" href="javascript:;">Terms and Conditions</a>
+                        </div>
+                    </td>
+                </tr>                    
+            </tbody>
+        </table>
+    </body>
+</html>

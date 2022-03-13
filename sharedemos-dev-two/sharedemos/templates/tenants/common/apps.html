@@ -1,0 +1,125 @@
+{% extends 'tenants/common/base.html' %}
+
+{% block seo %}
+    {{load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description'])}}
+{% endblock %}
+
+{% block container %}
+<div id="vmw-apps" class="container-block">  
+    <header>
+        <div class="container">
+            <div class="header-left-block">
+                <figure>
+                    {% set filename = 'media/' + api['tenant']['logo'] if api['tenant']['logo'] else 'images/' + api['tenant']['template'] + '/logo.png' %}
+                    <img class="vmw-logo" src="{{ url_for('static', filename=filename) }}" alt="logo">
+                </figure>
+            </div>
+            {% if tenant.template.lower() == 'vmware' %}
+            <div class="header-right-block">
+                <div class="row">
+                    <div class="search-site-block col-xs-12 col-sm-8">
+                        {{ search() }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+    <main class="container">
+        <h2>Apps</h2>
+        <section class="row apps-list">
+            <div class="col-xs-4 col-sm-2">
+                <a href="{{url_for('main.home')}}" class="app-details library-app">
+                    <div class="app-icon">
+                        <img src="{{ url_for('static', filename='images/vmware/library-app-icon.png') }}" alt="library-app">
+                    </div>
+                    <h6>Library</h6>
+                    <p>Product Walkthroughs</p> 
+                </a>
+            </div>
+            {% for app in tenant.applications %}
+                {% if app.unique_id.lower() == 'pathfinder' and app.is_enabled %}
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="{{url_for('main.pathfinder')}}" class="app-details pathfinder-app">
+                            <div class="app-icon">
+                                <img src="{{ url_for('static', filename='images/vmware/pathfinder-app-icon.png') }}" alt="pathfinder-app">
+                            </div>
+                            <h6>Pathfinder</h6>
+                            <p>Product Use Cases</p> 
+                        </a> 
+                    </div>
+                {% elif app.unique_id.lower() == 'checklist' and app.is_enabled %}
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="{{url_for('main.check_list')}}" class="app-details checklist-app">
+                            <div class="app-icon">
+                                <img src="{{ url_for('static', filename='images/vmware/checklist-app-icon.png') }}" alt="checklist-app">
+                            </div>
+                            <h6>Checklist</h6>
+                            <p>Troubleshoot</p> 
+                        </a> 
+                    </div>
+                {% elif app.unique_id.lower() == 'quiz' and app.is_enabled %}
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="{{url_for('main.quiz')}}" class="app-details quiz-app">
+                            <div class="app-icon">
+                                <img src="{{ url_for('static', filename='images/vmware/quiz-app-icon.png') }}" alt="quiz-app">
+                            </div>
+                            <h6>Quiz</h6>
+                            <p>Test Your Knowledge</p> 
+                        </a> 
+                    </div>
+                {% elif app.unique_id.lower() == 'faq' and app.is_enabled %}
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="{{url_for('main.faq')}}" class="app-details faq-app">
+                            <div class="app-icon">
+                                <img src="{{ url_for('static', filename='images/vmware/faq-app-icon.png') }}" alt="faq-app">
+                            </div>
+                            <h6>FAQ</h6>
+                            <p>Support &amp; More</p> 
+                        </a> 
+                    </div>
+                {% elif app.unique_id.lower() == 'journeys' and app.is_enabled %}
+                <div class="col-xs-4 col-sm-2">
+                    <a href="{{url_for('apps.journeys_home')}}" class="app-details journey-app">
+                        <div class="app-icon">
+                            <img src="{{ url_for('static', filename='images/vmware/journey/app-icon.png') }}" alt="journey-app">
+                        </div>
+                        <h6>Journey</h6>
+                        <p>See your Journeys</p>
+                    </a>
+                </div>
+                {% elif app.unique_id.lower() == 'pitch' and app.is_enabled %}
+                <div class="col-xs-4 col-sm-2">
+                        <a href="{{url_for('main.pitch')}}" class="app-details pitch-app">
+                            <div class="app-icon">
+                                <img src="{{ url_for('static', filename='images/pitch/icon.png') }}" alt="pitch-app">
+                            </div>
+                            <h6>Pitch</h6>
+                            <p>Pitch your product</p> 
+                        </a> 
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </main>
+</div>
+{{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+    document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+    document.algolia_app_id = '{{ algolia_api.app_id }}';
+    document.algolia_search_key = '{{ algolia_api.search_key }}';
+    document.apps = JSON.parse('{{apps|tojson}}');
+    document.isUserAnonymous = true;
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.page = 'Apps';
+</script>
+{% if tenant.template.lower() == 'vmware' %}
+    <script src="{{ url_for('static', filename='js/build/templates/vmware/search.js') }}"></script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,222 @@
+{% extends 'tenants/seo/dell/base.html' %}
+
+{% block seo %}
+    {% set icon = api['icon']['url'] if api['icon'] else None %}
+    {% if not icon %}
+    {% set icon = api['parent']['icon']['url'] if api['parent'] and api['parent']['icon'] else None %}
+    {% endif %}
+    {% if not icon %}
+    {% set icon = api['product']['icon']['url'] if api['product'] and api['product']['icon'] else None %}
+    {% endif %}
+    {{load_seo_meta(title=api['name'] + ' | ' + api['tenant']['name'], description=api['description'], image=icon)}}
+{% endblock %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/slick/slick-theme.css') }}" />
+{% endblock %}
+
+{% block container %}
+<div id="section-list" class="container-block">
+    {{ translation_wrapper() }}  
+    {{ header() }}
+    {% set product_id = None %}
+    {% set parent_id = None %}
+    {% if api['parent'] %}
+        {% set product_id = api['product']['slug'] %}
+        {% set parent_id = api['parent']['slug'] %}
+    {% endif %}
+    {{ back_button(section=parent_id) }}
+    {{ search() }}
+    {% if api['slug'] == api['product']['slug'] %}
+        {% if api['children'] %}
+        <!-- First level deep -->
+            <div class="product-section-list">
+                {% if api['product']['icon'] %}
+                        {% set banner_img = api['product']['icon']['url'] %}
+                {% elif api['product']['linked_asset'] %}
+                    {% set banner_img = url_for('static', filename='images/section-default-link-icon.png') %}
+                {% else %}
+                    {% set banner_img = url_for('static', filename='images/section-default-icon.png') %}
+                {% endif %}
+                <div class="section-list-banner {%if not banner_img %}default-product-icon {% endif %}" {% if banner_img %} style="background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.1), rgba(0, 0, 0, 0.7)), url('{{banner_img}}');" {% endif %}>
+                    <div class="container col-xs-container">
+                        <div class="banner-details">
+                            <div class="col-xs-container">
+                                <div class="banner-left-details">
+                                    <h1>{{ api['name'] }}</h1>
+                                    <p>{{ api['description'] }}</p>
+                                    {{ cta_list(api['cta_list']) }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="banner-right-details">
+                                    {{ videos() }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-list-data container">
+                    <!-- Asset slider -->
+                    <div id="data-slider">
+                        <div id="data-slider-navbar"></div>
+                        <div id="data-slider-content"></div>
+                    </div>
+                    <h3>Categories</h3>
+                    <div class="row categories">
+                        {% for product in api['children'] %}
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 category">
+                                {% set href_url = url_for('main.route_handler', section=product['slug']) %}
+                                {% set class_name = 'category-link' %}
+                                {% if product['linked_asset'] %}
+                                    {% set href_url =  url_for('main.serve_section_assets', asset_name=product['linked_asset']['name']) %}
+                                    {% set class_name = 'asset-linked' %}
+                                {% endif %}
+                                {% set data_attr = 'data-product-id=' + product['slug'] + ' data-section-id=' + product['slug'] %}
+                                <div class="category-block">
+                                    {% if product['translations_available'] %}
+                                        <div class="translation-icon" data-overlay="language-translations"
+                                                data-language-options='{{ product['locales_available']|tojson }}'></div>
+                                    {% endif %}
+                                    <a href="{{ href_url }}" class="{{ class_name }}"{% if product['linked_asset'] %}
+                                        {{ data_attr }} target="_blank" {% endif %}>
+                                        <div class="category-icon">
+                                            {% if product['icon'] %}
+                                                <img class="lazy-load" data-src="{{ product['icon']['url'] }}" alt="{{product['icon']['name']}}">
+                                            {% elif product['linked_asset'] %}
+                                                <img class="lazy-load" data-src="{{url_for('static', filename='images/section-default-link-icon.png')}}" alt="icon">
+                                            {% else %}
+                                                <div class="default-product-icon"></div>
+                                            {% endif %}
+                                        </div>
+                                        <h6 title="{{ product['name'] }}">{{ product['name'] }}</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>    
+        {% endif %}
+    {% else %}
+        <!-- Second level deep -->
+        <section class="container sec-cat-details">
+            <div class="breadcrum">
+                {% for breadcrumb in api['breadcrumb'] %}
+                    {%if api['breadcrumb']|length != loop.index %}
+                        <a href="{{breadcrumb['url']}}">{{breadcrumb['name']}}</a>
+                        >
+                    {% else %}
+                        {{ breadcrumb['name'] }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="{% if api['videos'] %} col-md-7 col-sm-7 {% else %} col-md-12 {% endif %}">
+                    <h1>{{api['name']}}</h1>
+                    <p>{{api['description'] or ''}}</p>
+                    {{ cta_list(api['cta_list']) }}
+                    {% if api['faq'] %}
+                        <a href="{{url_for('main.faq', slug=api['faq']['slug'])}}" class="iframe-link launch-faq">FAQ</a>
+                    {% endif %}
+                </div>
+                <div class="col-xs-6 col-sm-5 col-md-5 video-link-block">
+                    {{ videos() }}
+                </div> 
+            </div>
+        </section>
+        <main class="container">
+            {% if api['children'] %}
+                {% if api['product']['slug'] == api['parent']['slug'] %}
+                    <!-- Asset slider -->
+                    <div id="data-slider">
+                        <div id="data-slider-navbar"></div>
+                        <div id="data-slider-content"></div>
+                    </div>
+                    <h6>Asset Type</h6>
+                {% endif %}
+            <section class="row sec-cat-list">
+                {% for child in api['children'] %}
+                <div class="col-xs-12 col-md-6 category-list-details">
+                    <div class="category-list-link-block">
+                        {% if child['translations_available'] %}
+                        <div class="translation-icon" data-overlay="language-translations" data-language-options='{{child['locales_available']|tojson}}'></div>
+                        {% endif %}
+                        {% if child['tags'] %}
+                            <ul class="category-tags">
+                                {% for tag in child['tags'] %}
+                                <li>{{tag}}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% set href_url = url_for('main.route_handler', section=child['slug'])%}
+                        {% set class_name = 'category-list-link' %}
+                        {% if child['linked_asset'] %}
+                            {% set href_url =  url_for('main.serve_section_assets', asset_name=child['linked_asset']['name']) %}
+                            {% set class_name = 'asset-linked' %}
+                        {% endif %}
+                        {% set data_attr = 'data-product-id=' + api['product']['slug'] + ' data-section-id=' + child['slug'] %}
+                        <a href="{{href_url}}" class="{{class_name}}"{% if child['linked_asset'] %} {{data_attr}} target="_blank" {% endif %}>
+                            <div class="category-list-icon">
+                                {% if child['icon'] %}
+                                    <div class="relative-icon">    
+                                        <div class="lazy-load" data-src="{{ child['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                    </div>
+                                    {% if child['linked_asset'] %}
+                                        <label class="category-label asset-pdf">pdf</label>
+                                    {% elif child['is_leafnode'] %}
+                                        <label class="category-label asset-playlist">html</label>
+                                    {% endif %}
+                                {% elif child['linked_asset'] %}
+                                    <div class="default-icon">
+                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/dell/icon-pdf.png') }}">
+                                    </div>
+                                    <label class="category-label asset-pdf">pdf</label>
+                                {% elif child['is_leafnode'] %}
+                                    <div class="default-icon">
+                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/dell/icon-playlist.png') }}">
+                                    </div>
+                                    <label class="category-label asset-playlist">html</label>
+                                {% else %}
+                                    <div class="default-icon">
+                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/dell/default-category-icon.png') }}">
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="category-list-desc">
+                                <h5 title="{{child['name']}}">{{child['name']}}</h5>
+                                <p {% if child['tags'] %} class="desc-with-tags" {% endif %}>{{child['description'] or ''}}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+            {% endif %}
+        </main>
+    {% endif %}
+</div>
+{{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+    document.isUserAnonymous = true;
+    document.apps = JSON.parse('{{apps|tojson}}');
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.product = "{{api['product']['slug']}}";
+    document.section = "{{api['slug']}}";
+    document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    let bulletinBoard = JSON.parse('{{api["bulletin_board_list"]|tojson}}');
+    document.featuredChapters = bulletinBoard.length ? bulletinBoard[0].links: [] ;
+    document.recentChapters = JSON.parse('{{api["recent_chapters"]|tojson}}');
+    document.trendingChapters = JSON.parse('{{api["trending_chapters"]|tojson}}');
+    document.page = 'Category';
+</script>
+<script src="{{ url_for('static', filename='js/build/templates/dell/slider.js') }}"></script>
+<script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

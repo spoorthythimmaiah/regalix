@@ -1,0 +1,28 @@
+{% extends 'layouts/dashboard.html' %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/air-datepicker/css/datepicker.min.css') }}">
+{% endblock sub_styles %}
+
+{% block dashboard_container %}
+	<ul class="nav nav-pills">
+		<li role="overview"><a href="{{url_for('dashboard.leads')}}" {% if sub_menu == 'overview' %} class="active" {% endif %}>OVERVIEW</a></li>
+	</ul>
+	<div class="dashboard-work-area leads">
+		{% block dashboard_content_container %}
+		{% endblock %}
+	</div>
+{% endblock %}
+
+{% block sub_scripts %}
+<script type="text/javascript">
+    var date_range = "{{date_range}}";
+    var from_date = "{{from_date}}";
+    var to_date = "{{to_date}}";
+    var category_slug = "{{category.slug}}";
+    var custom_url = "/dashboard/leads/custom/{{category.slug}}/";
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/lang/datepicker.en.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/reports.js') }}"></script>
+{% endblock %}

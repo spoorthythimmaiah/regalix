@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style type="text/css">
+        html{
+			font-family: 'Varela Round';
+		    font-style: regular;
+			font-size: 12px;
+			font-variant: regular;
+			font-weight: 400;
+			color: #434343;
+		}
+        @page {
+            size: A4 portrait;
+			margin: 0.1in;
+			padding-bottom: 0.2in;
+			font-size: 9px;
+			color: #434343;
+            @bottom-center {
+				width: 100%;
+				height: 100%;
+				margin-top: -1cm;
+				color: #2C2C2C;
+				content: counter(page)
+            }
+        }
+        .header{
+            background: #0096d4;
+            max-height: 150px;
+            padding: 30px 0;
+            text-align: center;
+            display: table;
+            width: 100%;
+        }
+        .header .logo-holder{
+            width: 122px;
+            height: auto;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .banner{
+            position: relative;
+            padding: 25px;
+        }
+        .banner h1{
+            font-size: 25px;
+            font-weight: 400;
+            line-height: 19px;
+            color: #423f54;
+            margin-right: auto;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        .banner p{
+            font-size: 15px;
+            color: #597a96;
+            font-weight: 400;
+            position: absolute;
+            right: 0;
+            display: inline-block;
+        }
+        .check-list-description{
+            margin: 25px;
+            font-size: 18px;
+            color: #597a96;
+            font-weight: 400;
+        }
+        .progress-bar-title{
+            margin-left: 25px;
+        }
+        .progress-bar-title h1{
+            font-size: 12px;
+            text-transform: capitalize;
+            color: #423f54;
+            font-weight: 400;
+            margin: 0;
+            display: inline-block;
+        }
+        .progress-bar-title.overall h1{
+            font-size: 18px;
+            display: inline-block;
+        }
+        .progress-bar-title p{
+            font-size: 10px;
+            color: #423f54;
+            font-weight: 400;
+            margin-top: auto;
+            margin-left: 12px;
+            margin-bottom: 0.25em;
+            display: inline-block;
+        }
+        .progress-bar-holder{
+            margin-left: 25px;
+            margin-bottom: 20px;
+            margin-top: 4px;
+        }
+        .progress-bar-holder p{
+            width: 8%;
+            text-align: right;
+            font-size: 10px;
+            color: #6d7a97;
+            margin: 0;
+            display: inline-block;
+        }
+        .progress-bar{
+            width: 70%;
+            background: #8eabff;
+            border-radius: 6px;
+            height: 6px;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .progress-bar > div{
+            background: #0155B5;
+            border-radius: 6px;
+            height: 100%;
+        }
+        .progress-bar-holder.overall .progress-bar > div{
+            background:#4b69ff;
+        }
+        .progress-bar-holder.overall{
+            margin-top: 20px;
+        }
+        .step{
+            margin: 25px;
+            background-color: white;
+            border: 1px solid #e9e9e9;
+            border-radius: 5px;
+        }
+        .step .step-header{
+            position: relative;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 6px 0;
+            text-transform: uppercase;
+            width: 100%;
+        }
+        .step .step-header h1{
+            color: #4d5664;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: left;
+            margin-left: 50px;
+            display: inline-block;
+	        vertical-align: middle;
+        }
+        .step .step-header p{
+            position: absolute;
+            text-align: right;
+            font-size: 10px;
+            color: #6d7a97;
+            right: 25px;
+            display: inline-block;
+	        vertical-align: middle;
+        }
+        .step .item{
+            align-items: center;
+            margin-left: 50px;
+            margin-top: 5px;
+            border-bottom: 1px solid #f9fafb;
+            position: relative;
+            page-break-inside: avoid !important;
+        }
+        .step .item h1{
+            display: inline-block;
+            color: #597a96;
+            font-size: 15px;
+            font-weight: 400;
+            margin-left: 30px;
+            text-transform: capitalize;
+        }
+        .checkmark-holder{
+            width: 20px;
+            height: 20px;
+            display: table;
+            position: absolute;
+            top: 8px;
+        }
+        .checkmark-holder img{
+            width: 20px;
+            height: 20px;
+            display: table-cell;
+            vertical-align: bottom;
+        }
+        .step .suggested-content{
+            margin-top: 18px;
+            margin-bottom: 15px;
+            width: 100%;
+            margin-left: 54px;
+        }
+        .step .suggested-content p{
+            font-size: 10px;
+            font-style: italic;
+            color: #9a98a0;
+            font-weight: 400;
+            margin: 0;
+        }
+        .step .suggested-content a{
+            display: table;
+        }
+        .step .suggested-content img{
+            width: 1em;
+            height: 1em;
+        }
+        .step .suggested-content a p{
+            display: table-cell;
+            vertical-align: middle;
+            font-style: normal;
+            color: #8eabff;
+        }
+        .footer{
+            text-align: center;
+            font-size: 10px;
+            color: #6d7a97;
+        }
+        .footer .logo-holder{
+            margin-top: 34px;
+            margin-bottom: 27px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .footer .logo-holder img{
+            width: 122px;
+            height: auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-holder">
+            {% if tenant.logo %}
+                {% set tenant_logo = url_for("static", filename="media/" + tenant.logo) %}
+            {% else %}
+                {% set tenant_logo = url_for("static", filename="images/login-logo.png") %}
+            {% endif %}
+            <img src="{{ tenant_logo }}" style="width:122px; height: auto">
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="banner">
+            <h1>Overview</h1>
+            <p>{{ date }}</p>
+        </div>
+        <p class="check-list-description">{{ checklist_data.title }}</p>
+        <div class="progress-bar-title overall">
+            <h1>Overall Completion</h1>
+            <p>{{ checklist_data.completion_rate }}%</p>
+        </div>
+        <div class="progress-bar-holder overall">
+            <div class="progress-bar">
+                <div style="width: {{ checklist_data.completion_rate }}%"></div>
+            </div>
+            <p>{{ checklist_data.checked_items }}/{{ checklist_data.total_items }}</p>
+        </div>
+        {% for section in checklist_data.checklist_sections %}
+            <div class="progress-bar-title">
+                <h1>{{ section.title }}</h1>
+                <p>{{ section.completion_percent }}%</p>
+            </div>
+            <div class="progress-bar-holder">
+                <div class="progress-bar">
+                    <div style="width: {{ section.completion_percent }}%"></div>
+                </div>
+                <p>{{ section.section_checked_items }}/{{ section.section_total_items }}</p>
+            </div>
+        {% endfor %}
+    {% for section in checklist_data.checklist_sections %}
+        <div class="step">
+                <div class="step-header">
+                    <h1>{{ section.title }}</h1>
+                    <p>checked {{ section.section_checked_items }} / {{ section.section_total_items }}</p>
+                </div>
+                {% for checklist_item in section.checklist_items %}
+                <div class="item">
+                    <div class="checkmark-holder">
+                        {% if checklist_item.checked == true %}
+                            {% set src = url_for("static", filename="images/checklist_checked.png") %}
+                        {% else %}
+                            {% set src = url_for("static", filename="images/checklist_unchecked.png") %}
+                        {% endif %}
+                        <img src="{{ src }}">
+                    </div>
+                    <h1>{{ checklist_item.title }}</h1>
+                    {% if (show_suggested) and (checklist_item.suggestions) %}
+                        <div class="suggested-content">
+                            <p>suggested content</p>
+                            {% for suggestion in checklist_item.suggestions %}
+                                <a href="{{ suggestion.link }}"><p>{{ suggestion.name }}</p></a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

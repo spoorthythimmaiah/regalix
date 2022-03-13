@@ -1,0 +1,52 @@
+<div class="participants-data-list">
+    <div class="title-header">
+        <span class="name" data-sort-by="first_name">
+            <span>Name </span>
+            <span sort-order class="arrow-down"></span>
+        </span>
+        <span class="quiz-taken" data-sort-by="completed_at">
+            <span>Quiz taken </span>
+            <span sort-order class="arrow-down"></span>
+        </span>
+        <span class="time-taken" data-sort-by="time_taken">
+            <span>Time taken </span>
+            <span sort-order class="arrow-down"></span>
+        </span>
+        <span class="total-score" data-sort-by="score">
+            <span>Total Score </span>
+            <span sort-order class="arrow-down"></span>
+        </span>
+    </div>
+    {{#each users}}
+    <div class="participants-data-row">
+        <span class="name">{{first_name}} {{last_name}}</span>
+        <span>{{localTime completed_at '{"year": "numeric", "month": "numeric", "day": "numeric"}'}}</span>
+        <span>{{#if time_taken}}{{time_taken}}{{else}}-{{/if}}</span>
+        <span>{{#if score}}{{score}}/{{../total_score}}{{else}}-{{/if}}</span>
+    </div>
+    {{/each}}
+</div>
+<div class="question-data-list">
+    <div class="question-header">
+        {{#each questions}}
+        <div class="question-block">
+            <button data-trigger="mouseenter click"
+            data-toggle="popover"
+            data-placement="left"
+            data-content="{{title}}<a>view more</a>">
+                Q{{math @index "+" 1}}
+            </button>
+        </div>
+        {{/each}}
+    </div>
+    <hr>
+    <div class="answered-mark">
+        {{#each users}}
+        <div class="individual-answers">
+            {{#each answers}}
+            <div class="answers"><span class="answered-{{this}}"></span></div>
+            {{/each}}
+        </div>
+        {{/each}}
+    </div>
+</div>

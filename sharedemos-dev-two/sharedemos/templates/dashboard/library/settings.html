@@ -1,0 +1,407 @@
+{% extends 'dashboard/dashboard_submenu/library_menu.html' %}
+
+{% block dashboard_content_container %}  
+    <div class="dashboard_inner shadow" id="dashboard_settings">
+        <!-- General site settings -->
+        <div class="general-settings">
+            <div class="setup-tenant">
+                <ul class="site-settings">
+                    <li class="active"><a class="show_general_setting" href="javascript:;">GENERAL</a></li>
+                    <li><a class="show_advanced_setting" href="javascript:;">ADVANCED</a></li>
+                </ul>
+               <form method="post" id="general-settings" enctype="multipart/form-data" action="">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <input type="checkbox" name="is_general" value="Yes" style="display:none;" checked>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="blocks">
+                                <div class="block-title mandatory-field">SITE TITLE<div class="counter">(<span id="name-counter">50</span> characters left)</div></div>
+                                <div class="subtitle">
+                                    This is the main title for your site.
+                                </div>
+                                <input id="titleId" class="site-title trim-input" name="name" type="text" required value="{{form.name.data}}" maxlength="50">
+                                <div class="error-msg site-title">
+                                </br>
+                                    <i>Please provide a Title for your site</i>
+                                </div>
+                            </div>
+                            <div class="blocks">
+                                <div class="block-title mandatory-field">SITE URL</div>
+                                <div class="subtitle">
+                                    Choose a URL for your site.
+                                </div>
+                                <input class="site-title subdomine" name="domain" type="text" required="" value="{{form.domain.data}}" disabled />
+                                 <div class="error-msg ">
+                                    </br>
+                                    <i>&nbsp;&nbsp;&nbsp;</i>
+                                </div>
+                            </div>
+                            <div class="blocks">
+                                <div class="block-title">UPLOAD COMPANY LOGO</div>
+                                <div class="subtitle">
+                                   Upload a PNG or JPG file. (100x36 pixels max.)
+                                </div>
+                                <div class="upload">
+                                    <div class="tenant-logo-block">
+                                        <img id="sd-logo-preview" class="img" {% if form.logo.data %}src="{{ url_for('static', filename='media/' + form.logo.data) }}"{% endif %}/>
+                                    </div>
+                                    <div class="upload-prop">
+                                        <div id="sd-logo-filename" class="file-name">{{form.logo.data or ' '}}</div>
+                                        <label for="sd-logo" class="ripple">BROWSE</label>
+                                        <input id="sd-logo" name="logo" type="file" accept="image/*"  value="{{form.logo.data}}" onchange="previewImage(this);">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blocks color-picker-block">
+                                <div class="block-title mandatory-field">COLOR SCHEME</div>
+                                <div class="subtitle">
+                                    Choose a primary and secondary color for your site.
+                                </div>
+                                <div class="color-block">
+                                    <div class="color color1" id="background_color" data-color="{{form.background_color.data or '#2BA0CC'}}"></div>
+                                    <input type="hidden" name="background_color" value="{{form.background_color.data or '#2BA0CC'}}">
+                                    <div class="title">primary</div>
+                                </div>
+
+                                <div class="color-block">
+                                    <div class="color color2" id="progress_bar_color" data-color="{{form.progress_bar_color.data or '#fb5758'}}"></div>
+                                    <input type="hidden" name="progress_bar_color" value="{{form.progress_bar_color.data or '#fb5758'}}">
+                                    <div class="title">secondary</div>
+                                </div>
+
+                                <!-- font color  -->
+                                <div class="color-block">
+                                    <div class="color color3" id="title_color" data-color="{{form.title_color.data or '#ffffff'}}"></div>
+                                    <input type="hidden" name="title_color" value="{{form.title_color.data or '#ffffff'}}">
+                                    <div class="title">title</div>
+                                </div>
+
+                                <div class="color-block">
+                                    <div class="color color4" id="paragraph_color" data-color="{{form.paragraph_color.data or '#ffffff'}}"></div>
+                                    <input type="hidden" name="paragraph_color" value="{{form.paragraph_color.data or '#ffffff'}}">
+                                    <div class="title">paragraph</div>
+                                </div>
+                            </div>                         
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="blocks desc">
+                                <div class="block-title">SITE DESCRIPTION <div class="counter">(<span id="description-counter">150</span> characters left)</div></div>
+                                <div class="subtitle">
+                                    This is the description for your site.
+                                </div>
+                                <textarea name="description" class="site-description" maxlength="150">{{form.description.data or ''}}</textarea>
+                                <div class="error-msg site-descriptipn">
+                                </br>
+                                    <i>Please provide a dscription for your site</i>
+                                </div>
+                            </div>
+                            <div class="blocks">
+                                <div class="block-title site-message mandatory-field">HOMEPAGE TITLE<div class="counter">(<span id="home-title-counter">50</span> characters left)</div></div>
+                                <div class="subtitle">
+                                    This is the title for your homepage.
+                                </div>
+                                <input id="welcomeId" class="site-title trim-input" name="title" type="text" value="{{form.title.data or 'Product Walkthroughs'}}" maxlength="50">
+                                <div class="error-msg homepage-title">
+                                    </br>
+                                    <i>Please provide a Title for your HomePage</i>
+                                </div>
+                            </div>
+                            <div class="blocks blocks_gap">
+                                <div class="block-title">UPLOAD COMPANY FAVICON</div>
+                                <div class="subtitle">
+                                    Upload a PNG or ICO file. (16x16 pixels min.)
+                                </div>
+                                <div class="upload">
+                                    <div class="tenant-logo-block">
+                                        <img id="sd-favicon-preview" class="img" {% if form.favicon.data %}src="{{ url_for('static', filename='media/' + form.favicon.data) }}"{% endif %}/>
+                                    </div>
+                                    <div class="upload-prop">
+                                        <div id="sd-favicon-filename" class="file-name">{{form.favicon.data or ' '}}</div>
+                                        <label for="sd-favicon" class="ripple">BROWSE</label>
+                                        <input id="sd-favicon" name="favicon" type="file" accept="image/*" value="{{form.favicon.data}}" onchange="previewImage(this);" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blocks product-image">
+                                <div class="section-list-preview ">
+                                    <div class="block color1">
+                                        <div class="big color3"></div>
+                                        <div class="small color4"></div>
+                                        <div class="small color4"></div>
+                                        <div class="small color4"></div>
+                                        <div class="small color4"></div>
+                                     </div>
+                                    <div class="block middle ">
+                                        <div class="big"></div>
+                                        <div class="small"></div>
+                                        <div class="small"></div>
+                                        <div class="small"></div>
+                                        <div class="small"></div>
+                                    </div>
+                                    <div class="block demo-list">
+                                        <div class="demo">
+                                            <div class="progress color2">  
+                                                <div></div>                                         
+                                            </div>
+                                            <div class="text"></div>
+                                        </div>
+                                        <div class="demo">
+                                            <div class="progress color2">  
+                                                <div></div>                                         
+                                            </div>
+                                            <div class="text"></div>
+                                        </div>
+                                        <div class="demo">
+                                            <div class="progress color2">
+                                                <div></div>
+                                            </div>
+                                            <div class="text"></div>
+                                        </div>
+                                        <div class="demo">
+                                            <div class="progress color2">
+                                                <div></div>
+                                            </div>
+                                            <div class="text"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6  col-sm-offset-6">
+                            <div class="button-wrap">
+                                {% if page_type == 'Edit' %}                                
+                                    <input class="button save ripple" type="submit" value="SAVE">
+                                    <a href="{{url_for('dashboard.library')}}"><div class="button cancel ripple">CANCEL</div></a>
+                                {% else %}
+                                    <input class="button continue ripple" type="submit" value="CONTINUE">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Advanced site settings -->
+        <div class="advanced-settings">
+            <div class="setup-tenant">
+                <ul class="site-settings">
+                    <li><a class="show_general_setting" href="javascript:;">GENERAL</a></li>
+                    <li class="active"><a class="show_advanced_setting" href="javascript:;">ADVANCED</a></li>
+                </ul>
+               <form method="post" id="advanced-settings" enctype="multipart/form-data" action="">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="blocks box-integration row">
+                                <div class="adv-setting-title col-sm-12">
+                                    <div class="block-title">ENABLE BOX INTEGRATION</div>
+                                    <div class="subtitle">Enabling box integration will allow you to import existing content from your box account when creating content on your site.</div>
+                                </div>
+                                <div class="adv-setting-toggle col-sm-2 {% if tenant.box_integration_enabled %}active{% endif %}">
+                                    <input type="checkbox" name="enable_box" id="box_integration" class="css-toggle" {% if tenant.flags.box_integration_enabled %}checked{% endif %}/>
+                                    <label for="box_integration" class="css-toggle-label"></label>
+                                </div>
+                            </div>
+                            <div class="blocks private row">
+                                <div class="adv-setting-title col-sm-10">
+                                    <div class="block-title">ENABLE PRIVATE SITE</div>
+                                    <div class="subtitle">Enabling private site will restrict access to anyone that does not have your permission to access your site. All forms of social sharing will also be disabled.</div>
+                                </div>
+                                <div class="adv-setting-toggle col-sm-2">
+                                    <input type="checkbox" name="is_private" id="private_tenant" class="css-toggle"{% if tenant.flags.is_private %} checked{% endif %}/>
+                                    <label class="css-toggle-label" id="private_tenant_label" for="private_tenant" ></label>
+                                </div>
+                            </div>
+                            <div class="blocks offline-mode row">
+                                <div class="adv-setting-title col-sm-10">
+                                    <div class="block-title">ENABLE OFFLINE MODE</div>
+                                    <div class="subtitle">Enabling offline mode will allow all visitors to download sections of your site for offline viewing.</div>
+                                </div>
+                                <div class="adv-setting-toggle col-sm-2">
+                                    <input type="checkbox" name="allow_offline" id="allow_offline" class="css-toggle"{% if tenant.flags.allow_offline %} checked{% endif %}/>
+                                    <label for="allow_offline" class="css-toggle-label"></label>
+                                </div>
+                            </div>
+                            <div class="blocks pdf-export row">
+                                <div class="adv-setting-title col-sm-10">
+                                    <div class="block-title">ENABLE PDF EXPORT</div>
+                                    <div class="subtitle">Enabling PDF export will give your visitors the ability to download the content at playlist levels in PDF format. </div>
+                                </div>
+                                <div class="adv-setting-toggle col-sm-2">
+                                    <input type="checkbox" name="can_download" id="can_download" class="css-toggle" {% if tenant.flags.can_download %} checked{% endif %}/>
+                                    <label for="can_download" class="css-toggle-label"></label>
+                                </div>
+                            </div>
+                            <div class="blocks embedded-player row">
+                                <div class="adv-setting-title col-sm-10">
+                                    <div class="block-title">ENABLE EMBEDDED PLAYER</div>
+                                    <div class="subtitle">Enabling embedded player will give your visitors the ability to share your content through an embedded player in the share tab of your player.</div>
+                                </div>
+                                <div class="adv-setting-toggle col-sm-2">
+                                    <input type="checkbox" name="can_embed" id="can_embed" class="css-toggle" {% if tenant.flags.can_embed %} checked{% endif %}/>
+                                    <label for="can_embed" class="css-toggle-label"></label>
+                                </div>
+                            </div>
+
+                            <div class="blocks embedded-player row">
+                                <div class="adv-setting-title col-sm-10">
+                                    <div class="block-title">ENABLE CHAPTER AUTO FLOW</div>
+                                    <div class="subtitle">Enabling chapter auto flow will give your visitors the ability to see all the slides of a section in your player.</div>
+                                </div>
+                                <div class="adv-setting-toggle col-sm-2">
+                                    <input type="checkbox" name="chapter_autoflow" id="chapter_autoflow" class="css-toggle" {% if tenant.flags.chapter_autoflow %} checked{% endif %}/>
+                                    <label for="chapter_autoflow" class="css-toggle-label"></label>
+                                </div>
+                            </div>
+                            <div class="blocks embedded-player row">
+                                <div class="adv-setting-title col-sm-10">
+                                    <div class="block-title">ENABLE DEFAULT SHOW ADDITIONAL NOTES</div>
+                                    <div class="subtitle">Enabling Defaults Show notes will give your 
+                                    visitors the ability to see the additional notes by default.</div>
+                                </div>
+                                <div class="adv-setting-toggle col-sm-2">
+                                    <input type="checkbox" name="show_notes" id="show_notes" class="css-toggle" {% if tenant.flags.show_notes %} checked{% endif %}/>
+                                    <label for="show_notes" class="css-toggle-label"></label>
+                                </div>
+                            </div>
+                            {% if tenant.template == 'vmware' %}
+                                <div class="blocks widget row">
+                                    <div class="adv-setting-title col-sm-10">
+                                        <div class="block-title">ENABLE ANNOUNCEMENT WIDGET 
+                                            <span>
+                                                <img class='widget-edit {%if is_announcement_widget_enabled %}active{% endif %}' src="{{url_for('static', filename='images/author/icon-edit-dashboard.png')}}">
+                                            </span>
+                                        </div>
+                                        <div class="subtitle">Enabling widget will help users create a quick link for the latest released chapters for highlighting.</div>
+                                    </div>
+                                    <div class="adv-setting-toggle col-sm-2">
+                                        <input type="checkbox" name="enable_announcement_widget" id="enable-announcement-widget" class="css-toggle" {% if is_announcement_widget_enabled %}checked{% endif %} {% if widget %} data-id ='{{widget.id}}' {% endif %}>
+                                        <label for="enable-announcement-widget" class="css-toggle-label"></label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if tenant.template.lower() in ['bmc', 'designeverest', 'purestorage', 'regalix', 'silverpeak'] %}
+                                <div class="blocks banner row">
+                                    <div class="adv-setting-title col-sm-10">
+                                        <div class="block-title">Enable Homepage Banner  Configuration 
+                                            <span>
+                                                <img class="banner-edit {% if enable_homepage_banner and homepage_banner %}active{% endif %}"" src="{{url_for('static', filename='images/author/icon-edit-dashboard.png')}}"
+                                               data-id={{homepage_banner.id}}>
+                                            </span>
+                                        </div>
+                                        <div class="subtitle">
+                                            Enabling Configuration will help users to view homepage banner elements.
+                                        </div>
+                                    </div>
+                                    <div class="adv-setting-toggle col-sm-2">
+                                        <input type="checkbox"
+                                               name="enable_homepage_banner"
+                                               id="enable_homepage_banner"
+                                               class="css-toggle{% if homepage_banner %} active{%endif%}"
+                                               {% if enable_homepage_banner and homepage_banner %}
+                                                 checked 
+                                               {% endif %}
+                                               {% if homepage_banner%}
+                                                data-id ="{{homepage_banner.id}}"
+                                               {% endif %}>
+                                        <label for="enable_homepage_banner" class="css-toggle-label"></label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-6  col-sm-offset-6">
+                            <div class="button-wrap">
+                                <input class="button save ripple" type="submit" value="SAVE">
+                                <a href="{{url_for('dashboard.library')}}"><div class="button cancel ripple">CANCEL</div></a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <div class="dashboard-popups" id="dashboard-popups">
+        <div class="dashboard-overlay">
+            <div class="popup-wrap">
+                <div class="popup-box home-widget-popup">
+                    <div class="popup-title">
+                    ADD ANNOUNCEMENT WIDGET</div>
+                    <form name="site-widget" class="site-widget" enctype="multipart/form-data">
+                        <div class="popup-info">
+                            <div>
+                                <label>
+                                    <span class="mandatory-field">Announcement Widget Link Text</span>
+                                    <input type="text" class="trim-input" name="widget-link-text" id="widget-link-text" placeholder="Name">
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <span>Announcement Widget Description</span>
+                                    <textarea class="trim-input" name="widget-description" placeholder="Description"></textarea>
+                                </label>
+                            </div>
+                            <div>
+                                <div class="title mandatory-field">Chapter Tags</div>
+                                <div class="add-widget-tags">
+                                    <input type="text" class="widget-tag trim-input" placeholder="Tag" autocomplete="off">
+                                    <div class="add-widget-tag">add tag</div>
+                                </div>
+                                <div class="input_wrap">
+                                    <div class="category-tags">
+                                        <ul></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label>
+                                    <span class="title mandatory-field">Result Page Title</span>
+                                    <input type="text" class="trim-input" name="result-page-title">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="form-footer">
+                                <div class="cancel">cancel</div>
+                                <input type="submit" class="save" value="save" />
+                            </div>
+                            <div class="failed">oops! saving failed</div>
+                            <div class="added">saved successfully!</div>
+                            <div class="adding">saving...<div class="cd-loading"></div>
+                            </div>
+                        </div>
+                    </form>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sub_scripts %}
+<!-- Note: can i delete this section -->
+<script type="text/javascript">
+    var default_tenant_name = "{{form.name.data}}";
+    var default_domain = "{{form.domain.data}}";
+    var default_title = "{{form.title.data or 'Product Walkthroughs'}}";
+    var tenant_privacy = true?"{{form.is_private.data}}"=="True":false;
+    document.box_auth_url = "{{box_auth_url|safe or ''}}";
+    document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+
+    var default_logo_name = "{{form.logo.data or ' '}}";
+    {% if form.logo.data %}
+        var default_logo_src = "{{ url_for('static', filename='media/' + form.logo.data) }}";
+    {% else %}
+        var default_logo_src = "";
+    {% endif %}
+
+    var default_favicon_name = "{{form.favicon.data or ' '}}";
+    {% if form.favicon.data %}
+        var default_favicon_src = "{{ url_for('static', filename='media/' + form.favicon.data) }}";
+    {% else %}
+        var default_favicon_src = "";
+    {% endif %}
+    var errors = {{form.errors|safe}};
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/library.js') }}"></script>
+<script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+<script src="{{ url_for('static', filename='js/build/dashboard/homebanner/edit.js') }}"></script>
+{% endblock sub_scripts %}

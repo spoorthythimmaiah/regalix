@@ -1,0 +1,20 @@
+{{#if treeViewer}}
+    <div class="header">
+            <div class="expand-tree closed ">
+                <span class="folder-icon"></span>
+                <div class="expand-collapse-text">{{i18n 'expand all'}}</div>
+            </div>
+            <label class="caital-letter">{{i18n 'tree view mode'}}</label>
+            <div class="cancel-btn">{{i18n 'cancel'}}</div>
+    </div>
+    {{#if loading}}
+        <div class="path-tree-loading">{{i18n 'pathfinder tree data is loading'}}...</div>
+    {{/if}}
+    <div class="path-finder-tree"></div>
+{{/if}}
+{{#if next_question}}
+        {{> render_tree}}
+{{/if}}
+{{#if loadingFailed}}
+    <div class="tree-loading-failed">{{i18n 'data loading failed'}}</div>
+{{/if}}

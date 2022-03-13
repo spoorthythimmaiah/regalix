@@ -1,0 +1,58 @@
+<div class="work-area journeys journeys-details-wrap journey-background shadow" data-journey-slug="{{ slug }}"  data-journey-name="{{ name }}">
+    <div class="tenant-wrap">
+        <div class="tenant-details row">
+            <div class="journeys-details {{#if is_enabled}} enabled {{else}} disabled {{/if}}">
+                <div class="col-sm-4">
+                    <input type="file" name="journeys-cover-btn" id="{{ slug }}" class="journeys-cover-btn" accept="image/*">
+                    <label class="journeys-cover" for="{{ slug }}">
+                        {{#if icon_path}}
+                            <img class="journey-cover" src="{{ icon_path }}"/>
+                        {{else}}
+                            <p class="upper-case"><span>Add Cover</span></p>
+                        {{/if}}
+                    </label>
+                </div>
+                <div class="col-sm-8">
+                    <div class="journeys-title"><span class="journeys-name">{{name}}</span><span class="edit-journey-btn" data-form-name="create_journeys"></span>
+                    </div>
+                    <p class="journeys-description">{{ description }}</p>
+                    <div class="journeys-btns">
+                        <div>
+                            <div class="add-chapters-to-journeys uppercase">{{#if assets}}edit{{else}}add{{/if}} chapters</div>
+                            <div class="add-cta-to-journeys uppercase">{{#if cta_details.cta_button}}edit{{else}}add{{/if}} cta button</div>
+                        </div>
+                        {{#compare isPrivateTenant "&&" user_groups.length}}
+                        <div class="input_wrap selected-journeys-privacy-list">
+                            <label class="uppercase">visibility</label>
+                            <div class="section-name form-control journeys-privacy-btn">{{user_groups.length}} Group{{# compare user_groups.length '>' 1}}s{{/compare}} Selected</div>
+                            <ul class="selected journeys-privacy-opt hide">
+                                {{#each user_groups}}
+                                <li data-group-id="{{this._id}}" class="selected">{{this.name}}</li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        {{/compare}}
+                    </div>
+                </div>
+            </div>
+            <div class="journey-drag no-action ui-sortable-handle"></div>
+            <div class="journey-actions">
+                <span class="journey-status uppercase {{#unless published}}draft-mode{{/unless}}">
+                    {{#if published}}published{{else}}Draft{{/if}}
+                </span>
+                <div class="journey-hidden-actions">
+                    <div class="journey-actions-btn">...</div>
+                    <div class="journey-actions-list hidden">
+                        <ul>
+                            <li class="publish-journey">Publish</li>
+                            <li class="change-journey-status">
+                                {{#if is_enabled}} Disable {{else}} Enable {{/if}}
+                            </li>
+                            <li class="delete-journey">Delete</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

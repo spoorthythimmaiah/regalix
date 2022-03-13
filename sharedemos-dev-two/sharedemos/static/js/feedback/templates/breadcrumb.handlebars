@@ -1,0 +1,12 @@
+<span id="home-page" class="home-page">Home page</span>
+{{#if product_details }} >
+<span class="product" data-product-id="{{product_details.product_id}} "  {{#if section_details}} load-ratings {{/if}} >{{product_details.product_name}}</span>
+{{/if}}
+{{#compare product_details.product_id "!==" section_details.section_id}}
+{{#if section_details}} >
+<span class="section"  data-product-id="{{product_details.product_id}}" data-section-id="{{section_details.section_id}}" {{#if chapter_details}} load-ratings {{/if}} >{{section_details.section_name}}</span> 
+{{/if}} 
+{{/compare}}
+{{#if chapter_details}} >
+<span class="chapter" data-product-id="{{product_details.product_id}}" data-section-id="{{section_details.section_id}}" data-chapter-id="{{chapter_details.chapter_id}}" >{{chapter_details.chapter_name}}</span>
+{{/if}}

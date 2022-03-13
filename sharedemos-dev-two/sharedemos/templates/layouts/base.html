@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        {% block meta_headers %}
+        {% endblock %}
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+        Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        {% block seo %}
+            <title></title>
+            <meta name="description" content="">
+
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="" />
+            <meta property="og:description" content="" />
+            <meta property="og:url" content="" />
+            <meta property="og:image" content="" />
+
+            <meta name="twitter:card" content="summary">
+            <meta name="twitter:title" content="" />
+            <meta name="twitter:description" content="">
+            <meta name="twitter:url" content="">
+            <meta name="twitter:image" content="">
+        {% endblock seo %}
+        <meta name="fragment" content="#!">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" href="//cloud.typography.com/7667932/7011412/css/fonts.css" />
+        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        {% block head_end %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="browser_warning_popup">
+            <div class="greyout_bg"></div>
+            <div class="ancient_browser_warning">
+                <h5><span>{{_('Your Browser is')}} </span><span class="out-of-date">{{_('Out of Date')}}</span></h5>
+                <p>{{_('ShareDemos uses technology that works best in other browsers.')}}<br>
+                {{_('For a full experience use one of the browsers below')}}</p>
+                <div class="popular_browser_icons">
+                    <a href="https://www.mozilla.org/firefox" target="_blank" id="firefox_icon"></a>
+                    <a href="https://support.apple.com/downloads/safari" target="_blank" id="safari_icon"></a>
+                    <a href="https://www.google.com/chrome/browser/" target="_blank" id="chrome_icon"></a>
+                </div>
+            </div>
+        </div>
+        {% macro languagelist() %}
+        <div class="sd-language">
+            <ul class="language-dd" id='user-language'>
+                {% for language in languages %}
+                    <li lvalue='{{language.id}}' {% if language.selected %}class='active'{% endif %}>       {{language.name}}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endmacro %}
+        {% macro main_header(filters=[]) -%}
+        <div class="main-headers">
+            <a href="/" class="hidden-xs hidden-sm">
+                <div class="logo">
+                {% if tenant.logo %}
+                   {% set tenant_logo = url_for('static', filename='media/' + tenant.logo) %}
+                   <img src="{{tenant_logo}}">
+                {% else %}
+                   <span>SHAREDEMOS</span>
+                {% endif %}
+                </div>
+            </a>
+            {% if 'hide_language_list' not in filters %}
+                {{ languagelist() }}
+            {% endif %}
+            {% if 'offline' not in filters %}
+            <div class="avaiable_for_offline" id='avaiable_for_offline'>
+                <p>{{_('available offline:')}}</p>
+                <div class="playlist_offline">
+                    <div class="download_offline"></div>
+                </div> 
+            </div>
+            {% endif %}
+            {% if 'social_share' not in filters %}
+            <ul class="social-sharing {% if tenant.flags.is_private %} hide {% endif %}">
+                <li class="fa fa-twitter" social-share="twitter"></li>
+                <li class="fa fa-linkedin" social-share="linkedin"></li>
+                <li class="fa fa-facebook" social-share="facebook"></li>
+                <li class="fa fa-reddit" social-share="reddit"></li>
+            </ul>
+            {% endif %}
+            {% if 'apps' not in filters and pathfinder_app_enabled %}
+            <a href="{{url_for('main.pathfinder')}}" class="fa fa-question pathfinder-sharing"></a>
+            {% endif %}
+            {% if 'search' not in filters %}
+            <div class="search_input_block">
+                <div class="search-inner-block">
+                    <input type="text" name="search-terms" autocomplete="off" class= "search-terms" id="search-terms" placeholder="{{_('What are you looking for?')}}" autofocus>
+                    <label for="search-terms" class="search-input-cancel"></label>
+                </div>
+                <div class="close-search-mobile-overlay">Cancel</div>
+            </div>
+            {% if session['user']['locale'] %}
+                <div id="search-bar" class="search-bar">
+                    <div id="search">
+                        <div id="search-label" class="search-label"><label for="search-terms" class= "search-label-text visible-xs visible-sm" id="search-label-text">{{_('search')}}</label></div>
+                        <div class="search-overlay">
+                            <div class="search-overlay-header hidden-xs hidden-sm">
+                                <div class="close-search-overlay"></div>
+                            </div>
+                            <div id="input">
+                                <div id="search-result" class="search-result"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% endif %}
+            <a href="" class="visible-xs visible-sm">
+                <div class="logo">
+                {% if tenant.logo %}
+                   {% set tenant_logo = url_for('static', filename='media/' + tenant.logo) %}
+                   <img src="{{tenant_logo}}">
+                {% else %}
+                   <span>SHAREDEMOS</span>
+                {% endif %}
+                </div>
+            </a>
+        </div>
+        {%- endmacro %}
+        {% macro language_translation_popup_wrapper() %}
+            <div class="vmw language-popup-wrapper"></div>
+        {% endmacro %}
+        {% block container %}{% endblock %}
+        <script type="text/javascript">
+            let isIE = window.navigator.userAgent.match(/(MSIE|Trident)/); // IE 11 or older
+            if (isIE && isIE.length > 0) {
+                let warning = document.getElementById('browser_warning_popup');
+                warning.classList.add('show');
+            }
+        </script>
+        {% if (not g.user or g.user.is_anonymous()) and linkedin_app and linkedin_app.app_data and linkedin_app.app_data.get('app_key') %}
+            <script type="text/javascript" src="//platform.linkedin.com/in.js">
+                api_key: {{linkedin_app.app_data.get('app_key')}}
+                scope: r_basicprofile r_emailaddress
+                authorize: true
+                onLoad: onLinkedInLoad
+            </script>
+        {% endif %}
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

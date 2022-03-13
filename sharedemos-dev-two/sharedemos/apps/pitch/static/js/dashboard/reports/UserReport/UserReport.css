@@ -1,0 +1,162 @@
+.user-report .header-info-wrap{
+    display: flex;
+    margin-bottom: 43px;
+    height: auto;
+}
+.user-report .header-info{
+    display: flex;
+}
+.user-report .user-icon{
+    width: 62px;
+    height: 62px;
+    margin-right: 21px;
+    display: inline-block;
+}
+.user-report .user-icon img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.user-report .proficiency{
+    display: none;
+}
+.user-info{
+    display: inline-block;
+}
+.user-info .name{
+    color: #000000;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 11px;
+}
+.user-info .proficiency{
+    display: inline;
+    border-radius: 12px;
+    padding: 7px 12px;
+    color: #ffffff;
+    margin-left: 0px;
+    opacity: 1;
+}
+.proficiency.professional{
+    background-color: #9d4ef9;
+}
+.proficiency.mid-level{
+    background-color: #5d59f0;
+}
+.proficiency.rockstar{
+    background-color: #f0a659;
+}
+.proficiency.beginner{
+    background-color: #64b3f2;
+}
+.user-report .card .title{
+    font-size: 15px;
+    min-height: 32px;
+    line-height: 18px;
+}
+.user-report .card .metric-count{
+        margin: 25px 0px 32px;
+}
+.user-section-wrap{
+    position: relative;
+    padding: 21px 0px;
+}
+.user-section-wrap{
+    margin: 10px 0px;
+}
+.user-section-wrap .section-details{
+    padding: 50px 0px;
+    border-bottom: 2px solid rgba(191, 191, 191, 0.5)
+}
+.section-details h1{
+    color: #1e1e1e;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 36px;
+}
+.section-details h1 span{
+    font-size: 13px;
+    color: grey;
+    margin-left: 10px;
+}
+.section-details h3{
+    color: #1e1e1e;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 30px 0px;
+}
+.section-details .video-details{
+    display: flex;
+}
+.section-details .video-link{
+    position: relative;
+    padding-left: 20px;
+    color: #3987f5;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.video-link:after {
+    left: 0%;
+    top: 24px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(57, 135, 245, 0);
+    border-left-color: #3987f5;
+    border-width: 12px;
+    margin-top: -30px;
+}
+.video-details .duration{
+    color: #8a8a8a;
+    font-size: 14px;
+    font-weight: 500;
+    border-left: 1px solid #888888;
+    margin-left: 11px;
+    padding: 0px 11px;
+}
+.section-details .score-wrap{
+    display: flex;
+    margin-top: 30px;
+}
+.score{
+    flex: 1 ;
+    margin-right: 25px;
+    color: #000000;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.score:last-child{
+    margin-right: 0px;
+}
+
+/* video popup css*/
+.video-popup{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    top: 0px;
+    left: 0px;
+    z-index: 199;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.video-popup .close{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 40px;
+    top: 50px;
+    cursor: pointer;
+    background: url(/static/images/pitch/close.png) no-repeat;
+    background-size: 100%;
+    opacity: 1;
+}

@@ -1,0 +1,52 @@
+<div id="detail-popup" class="details-popUpModal">
+    <div class="details-content" id={{user_id}}>
+        <div class="details-closeButton">
+            <span class="details-closebtn">&times;</span>
+        </div>
+        <div class="details-header">
+            <img class="profile" data-name="{{initials}}" picture-url="{{profile_picture}}">
+            <div class="name-content">{{fullname}}
+                {{# each groups}}
+                    <span class="group-name {{this}}">{{this}}</span>
+                {{/each}}
+                <br>
+                {{#if onboard_at}}
+                    <span>First time on-boarding on {{localTime onboard_at '{"month": "long", "day": "numeric", "year": "numeric"}'}}</span>
+                {{/if}}
+            </div>
+        </div>
+        <div class="popup-userStatus">
+            <div class="viewer-sub-title">User Status</div>
+            <div class="custom-dropdown">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 custom-date">
+                        <div class="viewer-subtitle-custom">
+                            From
+                        </div>
+                        <input id="fromDate" type="text" name="from-date" class="datepicker-here" readonly="true">
+                    </div>
+                    <div class="col-xs-12 col-sm-6 custom-date">
+                        <div class="viewer-subtitle-custom">
+                            To
+                        </div>
+                        <input id="toDate" type="text" name="to-date" class="datepicker-here" readonly="true">
+                    </div>
+                </div>
+            </div>
+            <div class="time-interval">
+                <span class="viewer-interval">{{dateTitle}}</span>
+                <ul class="viewer-time-menu" id='viewer-metrics'>
+                    <li data-attr='today' data-title='today'>today</li>
+                    <li data-attr='yesterday' data-title='yesterday'>yesterday</li>
+                    <li data-attr='week' data-title='Last 7 Days'>1 week</li>
+                    <li data-attr='month' data-title='Last 30 days'>30 days</li>
+                    <li data-attr='quarter' data-title='Last 3 months'>3 months</li>
+                    <li data-attr='half-year' data-title='Last 6 months'>6 months</li>
+                    <li data-attr='year' data-title='Last 12 months'>12 months</li>
+                    <li data-attr='custom' data-title='Custom Days'>Custom</li>
+                </ul>
+            </div>
+        </div>
+        {{> viewer_report}}
+    </div>
+</div>

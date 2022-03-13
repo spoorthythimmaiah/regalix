@@ -1,0 +1,22 @@
+<ul class="faq">
+	{{#each groups}}
+	<li{{#if editMode}} data-slug={{slug}}{{/if}}>
+		<div class='faq-wrap'>
+			<div class="banner">
+	        	{{#if icon}}<img src="{{icon.url}}">{{/if}}
+				<label>{{name}}</label>
+				<div class="banner-overlay"></div>
+			</div>
+			<div class="info-block">
+				<div class="title">{{name}}</div>
+				<div class="description">{{description}}</div>
+				<a href="{{link}}" class="explore">{{i18n 'explore'}}</a>
+			</div>
+			<div class="footer">
+				<div class="description">{{description}}</div>
+				<div class="counts">{{questions_count}} {{i18n 'question'}}{{# compare questions_count ">" 1}}s{{/compare}}</div>
+			</div>
+		</div>
+	</li>
+	{{/each}}
+</ul>

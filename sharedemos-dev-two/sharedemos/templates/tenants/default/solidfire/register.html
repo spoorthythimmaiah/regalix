@@ -1,0 +1,52 @@
+{% extends 'tenants/default/solidfire/base.html' %}
+	{% block container %}
+		<div class="right_block">
+			<div class="right_content">
+				{% if registered %}
+				<div class="registration-response">
+	            	<div class="success-icon"></div>
+	            	<h5>A confirmation email has been sent!</h5>
+	            	<p>A confirmation email has been sent to <a href="mailto:{{email}}">{{email}}</a><br>Please check your email for the activation link</p>
+	            	<p>If you do not see an email in your inbox  please check the spam folder.</p>
+	            </div>
+				{% else %}
+				<div class="create-account">
+					<h4>Create Account</h4>
+	                <div class="login-form-right">
+	                    <form id="register-solidfire" name="register-solidfire" autocomplete="off" method="post" action="" onsubmit="return validateAccountForm()">
+		                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+	                    	<div>
+		                        <label>
+		                        	<p class="title mandatory-field">FIRST NAME</p>
+		                        	<input type="text" name="firstName" id="firstName" autocomplete="off">
+		                        </label>
+		                    </div>
+		                    <div>
+		                        <label>
+		                        	<p class="title mandatory-field">LAST NAME</p>
+		                        	<input type="text" name="lastName" id="lastName" autocomplete="off">
+		                        </label>
+		                    </div>
+		                   	<div>
+		                        <label>
+		                        	<p class="title mandatory-field">{{tenant_name|upper}} EMAIL</p>
+		                        	<input type="text" name="email" id="email" autocomplete="off">&nbsp;&nbsp;<span>{{email_host}}</span>
+		                        </label>
+		                    </div>
+		                   	<div>
+		                        <label>
+		                        	<p class="title mandatory-field">CONFIRM {{tenant_name|upper}} EMAIL</p>
+		                        	<input type="text" name="confirmEmail" id="confirmEmail" autocomplete="off">&nbsp;&nbsp;<span>{{email_host}}</span>
+		                        </label>
+		                    </div>
+		                    <div>
+		                    	<input type="submit" id="register-btn" class="active" value="CREATE ACCOUNT">
+		                    </div>
+	                    </form>
+	                </div>
+	            </div>
+	           	{% endif %}
+			</div>
+		</div>
+	{% endblock %}
+	

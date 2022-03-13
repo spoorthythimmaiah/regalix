@@ -1,0 +1,21 @@
+{{#if add_path}}
+<div class="add_block" data-popup="add_path">
+	<img src="/static/images/author/add_pathfinder.png" />
+	<h3 class= 'capital-letter'>{{i18n 'add path'}}</h3>
+</div>
+{{else if add_question }}
+<div class="add_block" data-popup="add_question">
+	<img src="/static/images/author/add_pathfinder.png" />
+	<h3 class= 'capital-letter'>{{i18n 'add question'}}</h3>
+</div>
+{{else if add_option }}
+<div class="add_block" data-popup="choose_option">
+	<img src="/static/images/author/add_pathfinder.png" />
+	<h3 class= 'capital-letter'>{{i18n 'add option'}}</h3>
+</div>
+{{else if add_suggestions }}
+<div class="add_block" data-popup="add_results_to">
+	<img src="/static/images/author/add_pathfinder.png" />
+	<h3 class= 'capital-letter'>{{i18n 'add suggested content'}}</h3>
+</div>
+{{/if}}

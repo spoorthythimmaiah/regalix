@@ -1,0 +1,26 @@
+ <div id="home-container" class="page-container boxtemp">
+	<div class="fs-banner"> 
+		<div class="title1">
+			{{tenant_title}}
+		</div>
+	</div>
+	{{#compare isBulletinBoardEnabled "&&" can_edit}}
+		<div class="bulletin-board-container">
+			{{>bulletin-board}}
+		</div>
+	{{/compare}}
+	<div class="list-type">
+		<div class="list-type-block">
+			<div class="filter trending">{{i18n "trending"}}</div>
+			<div class="filter mostrecent">{{i18n "most recent"}}</div>
+		</div>
+	</div>
+	<div class="pwt-list">
+		<div class="home-container trending"></div>
+		<div class="home-container mostrecent"></div>
+		<div class="category-container all active"></div>
+	</div>
+	{{#if tenant_privacy_link}} 
+		<a class="privacy camel-case" href="{{tenant_privacy_link}}" target="_blank">{{i18n 'privacy policy'}}</a>
+	{{/if}}
+</div>

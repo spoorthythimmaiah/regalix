@@ -1,0 +1,19 @@
+<div class="fs-banner"> 
+	<div class="title1">
+		{{ i18n 'checklists'}}
+	</div>
+	{{# unless is_edit}}
+		<div class="trendig-menu">
+			<div class="filter active" id="all">{{ i18n 'all'}}</div>
+			<div class="filter" id="featured">{{ i18n 'featured'}}</div>
+			<div class="filter" id="trending">{{ i18n 'trending'}}</div>
+			<div class="filter" id="recent">{{ i18n 'latest'}}</div>
+		</div>
+	{{/unless}}
+</div>
+<div class="checklist_list">
+	<ul class="checklists all_list"></ul>
+	<ul class="checklists featured_list"></ul>
+	<ul class="checklists trending_list"></ul>
+	<ul class="checklists recent_list"></ul>
+</div>

@@ -1,0 +1,20 @@
+ <div id="home-container" class="page-container newtemp">
+	<div class="fs-banner"> 
+		<div class="title1 theme-bg-color theme-title-color">
+			{{tenant_title}}
+		</div>
+		<div class="newtemp-bg-color">
+			<div class="filter all active camel-case">{{i18n "all"}}</div>
+			<div class="filter trending camel-case">{{i18n "trending"}}</div>
+			<div class="filter mostrecent camel-case">{{i18n "most recent"}}</div>
+		</div>
+	</div>
+	<div class="pwt-list newtemp-bg-color">
+		<div class="home-container all active"></div>
+		<div class="home-container trending"></div>
+		<div class="home-container mostrecent"></div>
+	</div>
+	{{#if tenant_privacy_link}} 
+		<a class="privacy camel-case" href="{{tenant_privacy_link}}" target="_blank">{{i18n 'privacy policy'}}</a>
+	{{/if}}
+</div>

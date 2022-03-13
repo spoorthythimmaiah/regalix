@@ -1,0 +1,21 @@
+{{#each siteMapData}}
+    <li class="sitemap-item {{#if disabled }}disabled{{/if}}" data-item="category"
+    data-slug="{{slug}}" data-groups="{{groups}}" data-id="{{id}}" data-name="{{name}}">
+        <div style="margin-left:10px" class="parentblock">
+            <span class="expandSection"></span>
+            <span class="siteMapTitle">{{name}}</span>     
+            <input id="tree-{{slug}}" slug-id="{{slug}}" type="checkbox" class="css-checkbox">
+            <label for="tree-{{slug}}" class="css-label"></label>
+        </div>
+
+        <ul class="category" id="{{slug}}" style="display: none;">
+            {{#each children}}
+                {{> render-sections }}
+            {{else}}
+                {{#each playlists}}
+                    {{> render-playlists }}
+                {{/each}}
+            {{/each}}
+        </ul>
+    </li>
+{{/each}}

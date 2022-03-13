@@ -1,0 +1,97 @@
+<div class="title-question-block">
+    <div class="title-report-cards rounded-block">
+        <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-content="Participants completing the quiz">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </button>
+        <h6>Quiz Participants</h6>
+        <div class="count">{{user.list.length}}</div>
+    </div>
+    <div class="title-report-cards rounded-block">
+        <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-content="Average time is calculated by dividing the sum of total time taken  by all participants  with the number of participants">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </button>
+        <h6>Average Time</h6>
+        <div class="count">{{#if average_time}}{{average_time}}{{else}}-{{/if}}</div>
+    </div>
+    <div class="title-report-cards rounded-block">
+        <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-content="Average score is calculated by dividing the sum of total score of all participants  with the number of participants">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </button>
+        <h6>Average Score</h6>
+        <div class="count">{{#if average_score}}{{average_score}}{{else}}-{{/if}}</div>
+    </div>
+    <div class="performers-container">
+        <div class="performer rounded-block">
+            <span class="performance">Top Performer</span>
+            <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="left"
+                data-content="Participant with highest score">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+            </button>
+            <div class="performer-info">
+                <div class="name">{{#if user.top}}{{user.top.first_name}} {{user.top.last_name}}{{else}}-{{/if}}</div>
+                <span class="highest-score">
+                {{#if total_score}}{{user.top.score}}/{{total_score}}{{/if}}
+                </span>
+            </div>
+        </div>
+        <div class="performer rounded-block">
+            <span class="performance">Low Performer</span>
+            <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="left"
+                data-content="Participant with lowest score">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+            </button>
+            <div class="performer-info">
+                <div class="name">
+                    {{#if user.least}}{{user.least.first_name}} {{user.least.last_name}}{{else}}-{{/if}}
+                </div>
+                <span class="lowest-score">
+                    {{#if total_score}}{{user.least.score}}/{{total_score}}{{/if}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="question-info-block">
+    <div class="passed-questions">
+        <div class="passed-question-container rounded-block">
+            <span class="passed-heading">Most Passed Question</span>
+            <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-content="Question of the quiz which has the highest number of correct answers selected by all participants">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+            </button>
+            <div class="question-info">
+                <div class="question">{{#if question.passed}}{{question.passed.title}}{{else}}NA{{/if}}</div>
+                <span class="highest-score">{{#if question.passed}}{{question.passed.rate}}%{{/if}}</span>
+            </div>
+        </div>
+        <div class="passed-question-container rounded-block">
+            <span class="passed-heading">Most Failed Question</span>
+            <button data-trigger="hover"
+                data-toggle="popover"
+                data-placement="left"
+                data-content="Question of the quiz which has the highest number of incorrect answers selected by all participants">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+            </button>
+            <div class="question-info">
+                <div class="question">{{#if question.failed}}{{question.failed.title}}{{else}}NA{{/if}}</div>
+                <span class="lowest-score">{{#if question.failed}}{{question.failed.rate}}%{{/if}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="participants-info rounded-block"></div>

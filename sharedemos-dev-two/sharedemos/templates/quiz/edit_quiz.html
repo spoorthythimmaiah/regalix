@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/air-datepicker/css/datepicker.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz/quiz.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
+    <!-- style  -->
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+{% endblock %}
+
+{% block container %}
+    <div class="grey_layout_bg"></div>
+    <div id="main_container" data-quiz-edit >
+        <div class="header">
+            <a href="{{url_for('dashboard.library')}}"><div class="cancel-quiz-edit camel-case">cancel</div></a>         
+            <label class= 'capital-letter'>editing mode</label>
+            {{ languagelist() }}
+        <div class="camel-case publish-quiz disabled" data-popup="publish_quiz">publish</div>
+        </div>
+        <div id="block_container" class="quiz-block">
+        </div> 
+        <div class="popup-overlay">
+            <div class="popup-wrap"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/lang/datepicker.en.js') }}"></script>
+    <script type="text/javascript">
+        document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+        document.algolia_app_id = '{{ algolia_api.app_id }}';
+        document.algolia_search_key = '{{ algolia_api.search_key }}';
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.defaultLocale = "{{tenant.default_locale.name}}";
+        document.locales = JSON.parse('{{all_languages|tojson}}');
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+        {% endif %}
+        {% if g.user.is_active() %}
+            document.isAuthor = true;
+            document.requestParameters = function(){
+                return '?author=1'
+            };
+        {% else%}
+            document.isAuthor = false;
+        {% endif %}
+        document.viewType = "{{view_type}}";
+        {% if session['author']['locale'] %}
+            document.current_locale = "{{session['author']['locale']}}";
+        {% endif %}   
+    </script>
+    <script src="{{ url_for('static', filename='js/build/apps/quiz/edit.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+{% endblock %}

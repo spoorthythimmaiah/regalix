@@ -1,0 +1,44 @@
+<div class="pf_edit">
+	<div class="pf_edit_wrap">
+		{{#if edit_path}}
+			<div class="pf_edit_option edit camel-case" data-popup="add_path">{{i18n 'edit path'}}</div>
+			<div class="pf_edit_option delete camel-case" data-attr="path">{{i18n 'delete path'}}</div>
+		{{/if}}
+		{{#if edit_question}}
+			<div class="pf_edit_option edit camel-case" data-popup="add_question">{{i18n 'edit question'}}</div>
+			<div class="pf_edit_option delete camel-case" data-attr="question">{{i18n 'delete question'}}</div>
+		{{/if}}
+		{{#if edit_option}}
+			{{#if can_add_question}}
+				<div class="pf_edit_option camel-case" data-popup="add_next_question">{{i18n 'add next question'}}</div>
+			{{/if}}
+			{{#if can_add_suggestion}}
+				<div class="pf_edit_option camel-case" data-popup="add_suggestions_warning">{{i18n 'add suggestions'}}</div>
+			{{/if}}
+			{{#if update_question_link}}
+				<div class="pf_edit_option update camel-case" data-popup="add_link">{{i18n 'update question link'}}</div>
+			{{/if}}
+			<div class="pf_edit_option edit camel-case" data-popup="add_option" data-option-type="text_image">{{i18n 'edit option'}}</div>
+			<div class="pf_edit_option delete camel-case" data-attr="option">{{i18n 'delete option'}}</div>
+		{{/if}}
+		{{#if edit_suggestions_headers}}
+			<div class="pf_edit_option edit camel-case" data-popup="edit_suggestions_headers">{{i18n 'edit header'}}</div>
+		{{/if}}
+		{{#if remove_suggestion}}
+			{{#if same_locale}}
+					<div class="pf_edit_option edit camel-case" data-popup="edit_suggestion">{{i18n 'edit suggestion'}}</div>
+			{{/if}}
+     			<div class="pf_edit_option delete camel-case" data-popup="delete_entity" data-attr="suggestion">{{i18n 'remove'}}</div>
+        {{/if}}
+        {{#if edit_suggestions_group}}
+			<div class="pf_edit_option edit camel-case" data-popup="add_suggestions_group">{{i18n 'edit group'}}</div>
+			<div class="pf_edit_option delete camel-case" data-attr="group">{{i18n 'delete group'}}</div>
+		{{/if}}
+	</div>
+</div>
+{{#if edit_path}}
+	<div class="pf_drag"></div>
+{{/if}}
+{{#if edit_option}}
+	<div class="pf_drag"></div>
+{{/if}}

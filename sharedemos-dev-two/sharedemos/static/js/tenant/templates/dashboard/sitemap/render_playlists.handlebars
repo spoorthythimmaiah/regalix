@@ -1,0 +1,25 @@
+<li class="" data-item="playlist" data-slug="{{id}}">
+    <div style="margin-left:10px" class="parentblock">
+        <span class="playlistIcon"></span>
+        <span class="siteMapTitle">{{name}}</span>
+    </div>
+    <ul class="playlist" id="{{../slug}}_{{id}}">
+        {{#each chapters }}
+            <li class="" data-item="demo" data-slug="{{slug}}">
+                <div style="margin-left:10px" class="parentblock">
+                    <span class="demoIcon"></span>
+                    <span class="siteMapTitle">{{name}}</span>
+                    <span class="demo-slide-count item-count">
+                        {{slides_count}} Slide{{#compare slides_count ">" '1'}}s{{/compare}}
+                    </span>
+                    <span class="hide remove-element click-btn undraggable" title="Delete Item"></span>
+                    <span class="hide lib-cat-launch">
+                        <a slug-id="{{slug}}" class="ripple launch-btn click-btn undraggable" target="_blank">
+                    <span class="click-btn undraggable">launch</span></a>
+                    </span>
+                </div>
+                <ul class="demo" id="{{../../slug}}_{{slug}}"></ul>
+            </li>
+        {{/each}}
+    </ul>
+</li>

@@ -1,0 +1,19 @@
+<!-- Journeys filter -->
+{{#each this as |options tag|}}
+    <div class="journey-filter-block" data-group="{{tag}}">
+        <div class="filter-heading-block">
+            <h4 class="filter-heading">{{tag}}</h4>
+        </div>
+        {{#each options}}
+            <div>
+                <div class="checkbox">
+                    <label class="checkbox-label" for="{{tag}}-{{this}}" >
+                        <input type="checkbox" class="filter-item" data-group="{{tag}}" id="{{tag}}-{{this}}" name="{{this}}">
+                        <span class="checkbox-icon"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                        {{this}}
+                    </label>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+{{/each}}

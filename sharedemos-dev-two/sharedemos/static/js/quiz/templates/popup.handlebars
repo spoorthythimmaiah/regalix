@@ -1,0 +1,403 @@
+{{#if alert}}
+<div class="popup-box alert">
+    <div class="popup-title">
+        {{i18n 'warning'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="sub-title text-center">
+                {{alert_message}}
+            </div>
+        </div>      
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel {{alert_action}}" data-popup="alert">ok</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if quiz}}
+<div class="popup-box" data-popup="quiz">
+    <div class="popup-title camel-case">
+        {{#if is_edit}}edit quiz{{else}}create new quiz{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'quiz name'}}</div>
+            <div class="sub-title">{{i18n 'write a name for your quiz'}}.</div>
+            <input name="title" type="text" maxlength="150" autocomplete="off" placeholder="Name" />
+            <div class="counter" id="quiz_title_counter">150 {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'quiz description'}}</div>
+            <div class="sub-title">{{i18n 'write a short description for this quiz'}}.</div>
+            <textarea name="description" maxlength="500" placeholder="Description"></textarea>
+            <div class="counter" id="quiz_desc_counter">500 {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title mandatory-field ">{{i18n 'question order'}}</div>
+            <div class="sub-title">{{i18n 'choose a question order style'}}</div>
+            <div id="sequential">
+                <div class="option-check active capital-letter">{{i18n 'sequential'}}</div>
+                <div class="option-check capital-letter">{{i18n 'random'}}</div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'question skip'}}</div>
+            <div class="sub-title">{{i18n 'allow user to skip questions?'}}</div>
+            <div id="skip">
+                <div class="option-check active capital-letter">{{i18n 'no'}}</div>
+                <div class="option-check capital-letter">{{i18n 'yes'}}</div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'time limit'}}</div>
+            <div class="sub-title">{{i18n 'do you want to set a time limit for your quiz?'}}</div> 
+            <div class="radio-block"> 
+                <input class="css-radio" type="radio" name="time" value="nolimit" id="nolimit" checked> 
+                <label class="css-radio-label camel-case" for="nolimit">{{i18n 'no time limit'}}</label> 
+            </div>
+            <div class="radio-block disabled">
+                <input class="css-radio" type="radio" name="time" value="time" id="time"> 
+                <label class="css-radio-label camel-case" for="time">{{i18n 'time limit'}}</label><br>
+                <input name="minutes" type="text" autocomplete="off" disabled="true"/>
+                <label class="minutes camel-case">{{i18n 'minutes'}}</label>
+            </div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'due date'}}</div>
+            <div class="sub-title">{{i18n 'choose a due date for this quiz. Upon due date users will not be able to take this quiz'}}</div>  
+            <label class="sub-title due-date">{{i18n 'due date'}}:</label>   <br>      
+            <input id="due_date" type="text" name="due_date" placeholder="Choose date"  data-language='en' class="datepicker-here">
+        </div>
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 're-attempts'}}</div>
+            <div class="sub-title">{{i18n 'do you want to allow re-attempts to this quiz?'}}</div> 
+            <div class="radio-block"> 
+                <input class="css-radio radio-attempts" type="radio" name="attempts" value="noreattempts" id="noreattemp" checked> 
+                <label class="css-radio-label camel-case" for="noreattemp">{{i18n 'no re-attempts'}}</label> 
+            </div>
+            <div class="radio-block disabled">
+                <input class="css-radio radio-attempts" type="radio" name="attempts" value="attempts" id="times"> 
+                <label class="css-radio-label camel-case" for="times">{{i18n 're-attempt'}}</label><br>
+                <input name="attempts_value" type="text" autocomplete="off" disabled="true"/>
+                <lable class="minutes camel-case">{{i18n 'times'}}</label>
+            </div>
+            <div class="radio-block disabled"> 
+                <input class="css-radio radio-attempts" type="radio" name="attempts" value="unlimited" id="unlimited"> 
+                <label class="css-radio-label camel-case" for="unlimited">{{i18n 'unlimited attempts'}}</label> 
+            </div>
+        </div>
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'grading style'}}</div>
+            <div class="sub-title">{{i18n 'choose a grading style that best suits this quiz?'}}</div> 
+            <div class="radio-block"> 
+                <input class="css-radio" type="radio" name="result" value="points" id="r_points" checked> 
+                <label class="css-radio-label" for="r_points">{{i18n 'non graded'}} {{i18n '(end users will only get the number of correct answers as result)'}}</label><br>
+            </div>
+            <div class="radio-block disabled">
+                <input class="css-radio" type="radio" name="result" value="pass_marks" id="pass"> 
+                <label class="css-radio-label" for="pass">{{i18n 'graded'}}{{i18n '(end users  will get Pass/Fail message as per minimum points defined)'}}</label> <br />
+                <input name="pass_marks" type="text" autocomplete="off" disabled="true"/>
+                <lable>{{i18n 'points'}} {{i18n '(minimum points to score to pass)'}}</label>
+            </div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'upload image'}}</div>
+            <div class="sub-title">{{i18n 'upload an image to go with your quiz'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*">
+            <img class="img-preview">
+            <div class="file-name sub-title">{{i18n 'file name'}}</div>
+            <div class="remove-file sub-title">{{i18n 'remove'}}</div>
+            <label for="upload-file">{{i18n 'browse'}}</label>
+        </div>
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'certification'}}</div>
+            <div class="sub-title">{{i18n 'write a message that will be displayed to passing user at the end of the quiz'}}.</div>
+            <textarea name="certification" maxlength="1000" placeholder="Message"></textarea>
+            <div class="counter" id="quiz_cert_counter">1000 {{i18n 'characters left'}}</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel capital-letter" data-popup="add-quiz">{{i18n 'cancel'}}</div>
+            <div class="save capital-letter" data-popup="add-question" data-id="{{quiz_id}}">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if question}}
+<div class="popup-box" data-popup="question">
+    <div class="popup-title camel-case">
+        {{#if is_edit}}{{i18n 'edit question'}}{{else}}{{i18n 'create new question'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'question'}}</div>
+            <div class="sub-title">{{i18n 'write a question for this quiz'}}.</div>
+            <input name="title" type="text" maxlength="200" autocomplete="off" placeholder="Question" />
+            <div class="counter" id="question_title_counter">200 {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'question description'}}</div>
+            <div class="sub-title">{{i18n 'write a short description that best describes your question'}}.</div>
+            <textarea name="description" maxlength="500" placeholder="Description"></textarea>
+            <div class="counter" id="question_desc_counter">500 {{i18n 'characters left'}}</div>
+        </div>
+        {{#if is_graded }}
+        <div class="block ">
+            <div class="title mandatory-field">{{i18n 'points'}}</div>
+            <div class="sub-title">{{i18n 'how many points is this question worth?'}}.</div>
+            <input name="points" type="text" autocomplete="off"/>
+            <lable class="points camel-case">{{i18n 'points'}}</label>
+        </div>
+        {{/if}}
+        <hr class="break"/>
+        <div class="advanced camel-case">{{i18n 'advanced'}}</div>
+        <div class="block advanced-block">
+            <div class="title">{{i18n 'upload media'}}</div>
+            <div class="sub-title">{{i18n 'upload an image/video/audio to go with your question'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*|audio/*|video/*">
+            <img class="img-preview">
+            <div class="file-name camel-case">{{i18n 'file name'}}</div>
+            <div class="remove-file title">{{i18n 'remove'}}</div>
+            <div class= 'error-message'></div>
+            <label for="upload-file">{{i18n 'browse'}}</label>
+        </div>
+    </div>
+    <div class="footer question">
+        <div class="block">
+            <div class="cancel camel-case" data-popup="add-question">{{i18n 'cancel'}}</div>
+            <div class="save" data-popup="add-question" data-id="{{question_id}}">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if choose_answer_option_type}}
+<div class="popup-box" data-popup="choose_answer_type">
+    <div class="camel-case popup-title">
+        {{#if is_edit}}{{i18n 'edit answer'}}{{else}}{{i18n 'choose answer type'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="sub-title">type</div>
+        <div class="block">
+            <div class="choose-layout capital-letter" data-answer-type="single_select">{{i18n 'single-select'}}</div>
+            <div class="choose-layout capital-letter" data-answer-type="multi_select">{{i18n 'multi-select'}}</div>
+            <div class="choose-layout capital-letter" data-answer-type="matching">{{i18n 'matching'}}</div>
+            <div class="choose-layout capital-letter" data-answer-type="sortable">{{i18n 'ordering'}}</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel capital-letter" data-popup="choose_answer_type">{{i18n 'cancel'}}</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if select}}
+<div class="popup-box" data-popup="save-answer">
+    <div class="camel-case popup-title">
+        {{#if is_edit}}{{i18n 'edit answer'}}{{else}}{{i18n 'create answer'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'answer'}}</div>
+            <div class="sub-title">{{i18n 'write an answer'}}.</div>
+            <input name="title" type="text" maxlength="100" autocomplete="off" placeholder="Answer" />
+            <div class="counter" id="answer_title_counter">100 {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'answer description'}}</div>
+            <div class="sub-title">{{i18n 'write a short description that best describes this answer'}}.</div>
+            <textarea name="description" maxlength="350" placeholder="Description"></textarea>
+            <div class="counter" id="answer_desc_counter">350 {{i18n 'characters left'}}</div>
+        </div>
+        <hr class="break"/>
+        <div class="advanced camel-case">{{i18n 'advanced'}}</div>
+        <div class="block advanced-block">
+            <div class="title">{{i18n 'upload image'}}</div>
+            <div class="sub-title">{{i18n 'upload an image to go with your answer'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*">
+            <img class="img-preview">
+            <div class="file-name sub-title">{{i18n 'file name'}}</div>
+            <div class="remove-file sub-title">{{i18n 'remove'}}</div>
+            <label for="upload-file">{{i18n 'browse'}}</label>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel capital-letter">{{i18n 'cancel'}}</div>
+            <div class="save capital-letter" data-type="{{option_type}}" data-id="{{option_id}}">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if item_style }}
+<div class="popup-box" data-popup="add_item">
+    <div class="popup-title camel-case">
+        {{#if is_edit}} switch {{else}}item style{{/if}}        
+    </div>
+    <div class="content-block">
+        <div class="sub-title">{{i18n 'style'}}</div>
+        <div class="block">
+            <div class="choose-layout text capital-letter" data-popup="add_item" data-item-type="text" data-type={{option_type}}>{{i18n 'text'}}</div>
+            <div class="choose-layout image capital-letter" data-popup="add_item" data-item-type="image" data-type={{option_type}}>{{i18n 'image'}}</div>
+            <div class="choose-layout text-image capital-letter" data-popup="add_item" data-item-type="text_image" data-type={{option_type}}>{{i18n 'text & image'}}</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel capital-letter" data-popup="item_style">{{i18n 'cancel'}}</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_item}}
+    <div class="popup-box" data-popup="save-item">  
+        <div class="popup-title camel-case">
+            {{# compare is_edit "==" false}}<div class="back {{#if is_edit}}switch_option{{/if}}" data-popup="item_style" data-item-type="{{#if option_text}}text{{#if option_image}}_image{{/if}}{{else if option_image}}image{{/if}}" data-type="{{option_type}}"></div>{{/compare}}
+            {{#if is_edit}} {{i18n 'edit'}} {{/if}} {{#if option_text}} {{i18n 'text'}} {{#if option_image}} {{i18n '& image'}}{{/if}} {{i18n 'option'}}{{else if option_image}} {{i18n 'image option'}}{{/if}}
+        </div>
+        <div class="content-block" data-type="{{#if option_text}}text{{#if option_image}}_image{{/if}}{{else if option_image}}image{{/if}}">
+            {{#if option_text}}
+                <div class="block">
+                    <div class="title mandatory-field">{{i18n 'option'}}</div>
+                    <div class="sub-title">{{i18n 'write a short description that best describes your option'}}.</div>
+                    <textarea name="description" class="" maxlength="250" placeholder="Option Description"></textarea>
+                    <div class="counter" id="item_desc_counter">250 {{i18n 'characters left'}}</div>
+               </div>
+            {{/if}}
+            {{#if option_image}}
+                <div class="block" img_block>
+                    <div class="title mandatory-field">{{i18n 'upload image'}}</div>
+                    <div class="sub-title">{{i18n 'upload an image to go with your option'}}</div>
+                    <input type="file" name="upload-file" class="upload-file" id="upload-file" accept="image/*">
+                    <img class="img-preview">
+                    <div class="file-name sub-title">{{i18n 'file name'}}</div>
+                    <div class="remove-file capital-letter">{{i18n 'remove'}}</div>
+                    <label for="upload-file" class="rippleEffect">{{i18n 'browse'}}</label>
+                </div>
+            {{/if}}
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel capital-letter" rel="add_option">{{i18n 'cancel'}}</div>
+                <div class="save capital-letter" data-type="{{option_type}}" data-id="{{option_id}}">{{i18n 'save'}}</div>
+            </div>
+            <div class="form-failed capital-letter">{{i18n 'oops! saving failed'}}</div>
+            <div class="form-sent capital-letter">{{i18n 'saved successfully!'}}</div>
+            <div class="form-sending capital-letter">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if confirm_delete}}
+<div class="popup-box confirm_delete">
+    <div class="popup-title delete-title">
+            {{i18n 'delete'}} {{option_type}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                   {{i18n "you've made some cool stuff!"}}<br><br>
+                   {{i18n 'are you sure want to permanently delete this'}} {{option_type}}?
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel capital-letter" rel="confirm_delete">{{i18n 'cancel'}}</div>
+                <div class="confirm-delete delete" data-type={{option_type}} data-id={{# compare option_type "==" "answer"}}{{option_id}}{{/compare}}{{# compare option_type "==" "quiz"}}{{quiz_id}}{{/compare}}>{{i18n 'delete'}}</div>
+            </div>
+            <div class="form-failed capital-letter">{{i18n 'oops! your work was not saved'}}.</div>
+            <div class="form-sent capital-letter">{{i18n 'success! your work has successfully been deleted.!'}}</div>
+            <div class="form-sending capital-letter">{{i18n 'deleting'}}...<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if publish_quiz}}
+<div class="popup-box confirm_publish_quiz">
+    <div class="capital-letter popup-title">
+            {{i18n 'publish changes'}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                    {{i18n 'are you sure you want to take your work live?'}}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel capital-letter" rel="confirm_publish_quiz">{{i18n 'cancel'}}</div>
+                <div class="capital-letter confirm-publish-quiz publish">{{i18n 'publish'}}</div>
+            </div>
+            <div class="form-failed capital-letter">{{i18n 'oops! your work was not saved'}}.</div>
+            <div class="form-sent capital-letter">{{i18n 'success! your work has successfully been published.!'}}</div>
+            <div class="form-sending capital-letter">{{i18n 'publishing'}}...<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if results}}
+<div class="popup-box">
+    <div class="popup-title">
+            results
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                    {{i18n 'total questions count'}} : {{quiz_result.total_questions_count}}
+                </div><br>
+                <div class="sub-title text-center">
+                    {{i18n 'attempted questions count'}} : {{quiz_result.attempted_questions_count}}
+                </div><br>
+                {{#if quiz_result.time_out}}
+                    <div class="sub-title text-center">
+                        {{i18n 'time over'}}
+                    </div><br>
+                {{else if quiz_result.time_taken}}
+                    <div class="sub-title text-center">
+                        {{i18n 'time taken'}} : {{quiz_result.time_taken}}
+                    </div><br>
+                {{/if}}
+                <div class="sub-title text-center">
+                    {{i18n 'skipped questions count'}} : {{quiz_result.skipped_questions_count}}
+                </div><br>
+                <div class="sub-title text-center">
+                {{# compare quiz_result.grading_style "==" "points"}}
+                    {{i18n 'correct answers'}} : {{quiz_result.result}}
+                {{/compare}}
+                {{# compare quiz_result.grading_style "==" "pass_or_fail"}}
+                    <div class="sub-title text-center">
+                    {{i18n 'obtained marks'}} : {{quiz_result.marks}}
+                    </div><br>
+                    <h3 class="result {{# compare quiz_result.result "==" "Pass"}}pass{{/compare}}{{# compare quiz_result.result "==" "Fail"}}fail{{/compare}}">{{quiz_result.result}}</h3>
+                {{/compare}}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="retry capital-letter" data-popup="results">{{i18n 'go home'}}</div>
+            </div>
+        </div>
+    </div>
+{{/if}}

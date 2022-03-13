@@ -1,0 +1,52 @@
+.tags-list li {
+    padding: 6px 12px;
+    height: 34px;
+    line-height: 20px;
+    position: relative;
+}
+.tag-group:after {
+    border-bottom: 1px solid #ccc;
+    content: "";
+    position: relative;
+    width: calc(100% - 30px);
+    left: 15px;
+    margin: 20px 0;
+    padding: 15px 0;
+}
+input.tagValue {
+    margin-bottom: 10px;
+}
+.tag-action-block {
+    display: flex;
+    justify-content: flex-end;
+}
+.add-input {
+    margin-right: 10px;
+}
+span.delete-tag {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 18px;
+    background: url(/static/images/icon-delete3.png) no-repeat;
+    right: -25px;
+    background-size: 100%;
+    filter: invert(0.5);
+    cursor: pointer;
+}
+.btn.btn-light-blue {
+    background: rgba(66,139,202,0.2);
+    color: #428bca;
+    outline: none;
+}
+.btn.btn-blue {
+    background: rgba(66,139,202,1);
+    color: #fff;
+    outline: none;
+}
+.error {
+    font-size: 12px;
+    color: #ff4848;
+    margin-bottom: 5px;
+    text-align: center;
+}

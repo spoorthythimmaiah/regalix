@@ -1,0 +1,6 @@
+<div class="translation-dd"><span id="selected_language">{{selected.name}}</span> <span class="glyphicon glyphicon-play"></span></div>
+<ul class="language-dd" id='user-language'>
+    {{#each languages }}
+    <li lvalue='{{locale}}' {{#compare selecte.locale '==' locale}}class="active"{{/compare}}>{{name}}</li>
+    {{/each}}
+</ul>

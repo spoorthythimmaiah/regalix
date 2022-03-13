@@ -1,0 +1,91 @@
+{% extends 'tenants/seo/avaya/base.html' %}
+
+{% block container %}
+<div id="content-section" class="container-block">
+    <div class="split-main-container">
+        {{ header() }}
+        <div class="right-side-panel">
+            <div class="toggle-side-bar"></div>
+            <div class="row heading">
+                <div class="col-sm-12">
+                    <h2>Welcome Back, John </h2>
+                    <h6>Here is the latest content for November 13, 2019.</h6>
+                </div>
+                {{ search() }}
+            </div>
+            <div class="row stack-container">
+                <div class="latest-news col-xs-12 col-sm-12 col-md-4 col-lg-4">{{api_data}}
+                    <h5>Latest News Stack</h5>
+                    <div class="slide">
+                        <img class="img-stack lazy-load" data-src="{{ url_for('static', filename='images/avaya/news-stack.png') }}" alt="Card image">
+                        <p class="stack-desc">Avaya Announces Strategic Partnership with RingCentral</p>
+                        <div class="card-block">October 03,2019<span class="dot"></span>2 min read</div>
+                    </div>
+                </div>
+                <div class="events-coming-up col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <h5>Events Coming Up</h5>
+                    <div class="events">
+                        <img data-src="{{ url_for('static', filename='images/avaya/events.png')}}" class="event-img-align img-responsive lazy-load" />
+                        
+                        <div class="image-text">
+                            <h3>Register Now for Avaya ENGAGE 2020</h3>
+                            <p>Phoenix, February 2-5, 2020</p>
+                            <a href="" class="register">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Recently Viewed Block and Recommended block-->
+            <div class="row recent-content-block">
+                <div class="col-md-7 col-sm-12 col-xs-12 recently-viewed-block">
+                    <div class="recently-viewed-header">
+                        <h3>Recently Viewed</h3>
+                        <div>View All</div>
+                    </div>
+                    <div class="recently-viewed-container">
+                        {% for chapter in recent_chapters %}
+                            <div class="recently-viewed-align">
+                                <div class="number-circle">{{loop.index}}</div>
+                                <div class="asset-name">
+                                    <div>{{chapter.name}}</div>
+                                    <div>{{chapter.breadcrumb}}</div>
+                                </div> 
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12 recommended-block">
+                    <div class="recommended-block-header">
+                        <h3>Recommended For You</h3>
+                        <div>View All</div>
+                    </div>
+                    <div class="recommended-container">
+                        <div class="recommended-align">
+                            <img data-src="{{ url_for('static', filename='images/avaya/recommended.png') }}" class="lazy-load">
+                            <div class="asset-name">
+                                <div>Lorem Ipsum dolor Sit Amet</div>
+                                <div class="text-color">Lorem ipsum>dolor sit amet>consectetur</div>
+                            </div>  
+                        </div>
+                        <div class="recommended-align">
+                            <img data-src="{{ url_for('static', filename='images/avaya/recommended.png') }}" class="lazy-load">
+                            <div class="asset-name">
+                                <div>Lorem Ipsum dolor Sit Amet</div>
+                                <div class="text-color">Lorem ipsum>dolor sit amet>consectetur</div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ footer() }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script type="text/javascript">
+        document.page = 'Feed';
+    </script>
+{% endblock %}
+

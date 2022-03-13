@@ -1,0 +1,25 @@
+<div id="repositories-list" class="repositories-wrap">
+    <div class="row">
+        {{#each this}}
+        <div class="repositories col-lg-6">
+            <div class="row">
+                <div class="col-lg-3">
+                    <img class="repository-type-img" src="/static/images/repository_manager/sharepoint-icon.png" />
+                </div>
+                <div class="col-lg-7">
+                    <div class="repository-detail" data-repository-slug="{{connector_id}}">
+                    <h1>{{name}}</h1>
+                    <p class="url">{{site_url}}</p>
+                    <p class="root-folder">{{root_folder}}</p>
+                    <div class="edit-repository">Edit</div>
+                    <div class="delete">Delete</div>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

@@ -1,0 +1,80 @@
+{{# compare playlist.is_enabled '||' is_author }}
+    <div class="playlist-block{{#unless playlist.is_enabled}} disabled{{/unless}} {{#unless can_edit}} uneditable{{/unless}}">
+        <div class="playlist_index">{{playlistCounter}}</div>
+        <div class="col-md-5 playlist-left" {{#if playlist.playlist_id}}playlist_id="{{playlist.playlist_id}}"{{/if}}>
+            {{#unless is_author}}
+                {{#if playlist.translations_available}}
+                <div class="translation_available" data-toggle="tooltip" data-placement="left" title="{{i18n 'Translations Available'}}"></div>
+                {{/if}}
+            {{/unless}}
+            <div class="read">
+                <div class="select-playlist"></div>
+            </div>
+            <h3>{{playlist.name}}</h3>
+            <p>{{playlist.description}}</p>
+        </div>
+        <div class="col-md-7 playlist-right">
+            <ul class="pwt-list sortable" {{#if playlist.playlist_id}}playlist_id="{{playlist.playlist_id}}"{{/if}}>
+                {{#each playlist.walkthroughs}}
+                    {{# compare is_enabled '||' ../is_author }}
+                        <li slug='{{slug}}'  id='{{slug}}' class="{{#unless is_enabled}}disabled{{/unless}} {{#unless has_slides}}no-slides{{/unless}} {{#unless ../can_edit}} uneditable{{/unless}}">
+                            <div class="read">
+                                <div class="circle">
+                                    <span class="chapter-index">{{math @index "+" 1}}</span>
+                                    <div class="select-chapter"></div>
+                                </div>
+                                <div class="playlist-loader">
+                                    <div class="playlist-loader-bg"></div>        
+                                    <div class="spiner-holder-1 animate-0-25-a">
+                                        <div class="spiner-holder-2 animate-0-25-b">
+                                            <div class="playlist-loader-spiner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="spiner-holder-1 animate-25-50-a">
+                                        <div class="spiner-holder-2 animate-25-50-b">
+                                            <div class="playlist-loader-spiner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="spiner-holder-1 animate-50-75-a">
+                                        <div class="spiner-holder-2 animate-50-75-b">
+                                            <div class="playlist-loader-spiner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="spiner-holder-1 animate-75-100-a">
+                                        <div class="spiner-holder-2 animate-75-100-b">
+                                            <div class="playlist-loader-spiner"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title">
+                                <div>{{name}} 
+                                    {{#if ../is_author}}
+                                        <span class="wt-draft">{{i18n 'draft'}}</span>
+                                        {{#if published}}
+                                        {{#if is_enabled}}
+                                        <span class="wt-live">{{i18n 'live'}}</span>
+                                        {{/if}}
+                                        {{/if}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                            {{#compare tags.length ">" 0}}
+                                <div class="playlist-tags">
+                                    {{#each tags}}
+                                        <span class="sd-label theme-bg-color tags-span">{{this}}</span>
+                                    {{/each}}
+                                </div>
+                            {{/compare}}
+                        </li>
+                    {{/compare}}
+                {{/each}}
+            {{#if is_author}}
+            {{#if can_edit}}
+                <div class="rippleEffect add-new-chapter"><br><p><span>+</span></br>add asset</p></div>
+            {{/if}}
+            {{/if}}
+            </ul>
+        </div>
+    </div>
+{{/compare}}

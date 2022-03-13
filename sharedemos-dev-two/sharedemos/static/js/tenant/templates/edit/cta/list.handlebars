@@ -1,0 +1,17 @@
+{{#each cta_list}}
+    <div class="cta-button" data-cta-id="{{ctaId}}" data-type="{{type}}" data-text="{{text}}" data-href="{{href}}" data-file-name="{{fileName}}" data-unique-id="{{uniqueId}}">
+        <div class="cta-text">{{text}}</div>
+        {{#compare type '==' 'link'}}
+            <div class="cta-link-name">
+                <a href="{{href}}" target="_blank">{{href}}</a>
+            </div>
+        {{/compare}}
+        {{#compare type '==' 'pdf'}}
+            <div class="cta-file-name">{{fileName}}</div>
+        {{/compare}}
+        <div class="cta-edit-delete-section">   
+            <div class="cta-edit-button">Edit</div>
+            <div class="cta-delete-button">Remove</div>
+        </div>
+    </div>
+{{/each}}

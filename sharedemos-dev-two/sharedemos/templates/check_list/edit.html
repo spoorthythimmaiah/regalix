@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <!-- style  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/walkthrough_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/checklist.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+{% endblock %}
+
+{% block container %}
+   <div id="main_container" data-checklist-edit>
+        <div class="header">
+            {{ languagelist() }}
+            <div class="action publish-checklist" data-popup="publish_checklist">Publish</div>
+            <div class="preview disable">preview</div>
+            <a href="{{url_for('dashboard.library')}}"><div class="cancel-checklist-edit">Cancel</div></a>
+                        
+            <label>EDITING MODE</label>
+        </div>
+        <div id="block_container" class="checklist-block">            
+        </div> 
+        <div class="popup-overlay">
+            <div class="popup-wrap"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript">
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+        {% else %}
+            document.favicon = ""
+        {% endif %}
+        document.requestParameters = function(){
+            return '?author=1'
+        };
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.defaultLocale = "{{tenant.default_locale.name}}";
+        document.viewType = "{{view_type}}";
+        document.locales = JSON.parse('{{all_languages|tojson}}');
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+        {% if view_type=="edit_checklist" and g.user.is_active() %}
+            document.isEdit = "true";
+        {% endif %}
+        {% if session['author']['locale'] %}
+            document.current_locale = "{{session['author']['locale']}}";
+        {% endif %}  
+    </script>
+    <script src="{{ url_for('static', filename='js/build/apps/checklist/edit.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+{% endblock %}

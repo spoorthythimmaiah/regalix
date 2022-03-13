@@ -1,0 +1,212 @@
+<div class="dashboard-overlay">
+    <div class="popup-wrap">
+        <!-- non-default language create warning popup -->
+        <div class="popup-box create-warning">
+            <div class="popup-title capital-letter">
+                {{i18n 'warning'}}
+            </div>
+            <div class="popup-info text-center"></div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel" rel="create-warning">{{i18n 'OK'}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- Error message popup -->
+        <div class="popup-box failed-case">
+            <div class="popup-title capital-letter">
+                {{i18n 'something went wrong'}}
+            </div>
+            <div class="popup-info text-center"></div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel" rel="failed-case">{{i18n 'OK'}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- Chapter popups -->
+        <div class="popup-box add-journey-chapters-popup">
+            <!-- 1st popup -->
+            <div class="chapters-popup-landing">
+                <div class="camel-case popup-title">
+                   <span class="form-action-type">add</span> chapters
+                </div>
+                <form name="save-assets" class="save-assets">
+                    <div class="popup-info">
+                        <label>
+                            <span class="mandatory-field uppercase">choose chapters</span>
+                        </label>
+                        <p>Select the chapters from your library that you would like to add to this journey. You can select chapters compatible with your visibility preferences.</p>
+                        <div class="uppercase trigger-inplace-popup browser-chapters black-bg-btn" data-hidePopup="chapters-popup-landing" data-showPopup="chapters-list-popup">browse your library</div>
+                        <ul class="journey-assets"></ul>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="form-footer">
+                            <div class="cancel">cancel</div>
+                            <input type="submit" class="save" value="save" />
+                        </div>
+                        <div class="failed">oops! adding failed</div>
+                        <div class="added">added successfully!</div>
+                        <div class="adding">
+                            adding...
+                            <div class="cd-loading"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- 2nd popup -->
+            <div class="chapters-list-popup hidden">
+                <div class="popup-title camel-case">choose chapters to add</div>
+                <div class="back trigger-inplace-popup" data-hidePopup="chapters-list-popup" data-showPopup="chapters-popup-landing"></div>
+                <div class="content-block">
+                    <ul id="chapters-list-wrap" class="sitemap-tree">
+                        <img class="loading-icon" src="/static/images/loading_icon.gif" />
+                    </ul>
+                </div>
+                <div class="popup-footer">
+                    <div class="form-footer">
+                        <div class="backbtn rippleEffect trigger-inplace-popup" data-hidePopup="chapters-list-popup" data-showPopup="chapters-popup-landing">cancel</div>
+                        <div class="save" data-hidePopup="chapters-list-popup" data-showPopup="chapters-popup-landing">choose</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CTA Popup -->
+        <div class="popup-box add-journeys-cta-popup">
+            <div class="camel-case popup-title">
+                <span class="form-action-type">add</span> CTA button
+            </div>
+            <form name="journey-cta" class="journey-cta">
+                <div class="popup-info">
+                    <label>
+                        <span class="mandatory-field uppercase">add a call-to-action button</span>
+                    </label>
+                    <p>Add a custom CTA button to be displayed in the bottom corner of this journey. Choose the text to be displayed and website link to redirect your use to.</p>
+                    <div class="blocks">
+                        <div class="cta-input-wrap">
+                            <input id="journey-cta-btn" name="journey-cta-btn" type="text" placeholder="Button Text" maxlength="25" autocomplete="off">
+                        </div>
+                        </br>
+                        <div class="cta-input-wrap">
+                            <input id="journey-cta-link" class="trim-input" autocomplete="off" name="journey-cta-link" type="url" placeholder="http://">
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <div class="form-footer">
+                        <div class="cancel">cancel</div>
+                        <input type="button" class="save" value="save">
+                    </div>
+                    <div class="failed">oops! saving failed</div>
+                    <div class="added">saved successfully!</div>
+                    <div class="adding">saving...<div class="cd-loading"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Confirm publish -->
+        <div class="popup-box confirm-publish-journey">
+            <div class="popup-title capital-letter">
+                {{i18n 'publish changes'}}
+            </div>
+            <div class="popup-info sub-title text-center">
+                <p class="sub-title">{{i18n "you've made some cool stuff!"}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to take your work live?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel" rel="confirm-publish-journey">{{i18n 'cancel'}}</div>
+                    <div class="confirm-publish">{{i18n 'publish'}}</div>
+                </div>
+                <div class="form-failed failed">
+                    {{i18n 'oops! your work was not saved'}}.
+                </div>
+                <div class="form-sent added">
+                    {{i18n 'success! your work has successfully been published'}}.
+                </div>
+                <div class="form-failed no-content">
+                    {{i18n 'Please add at least one chapter to publish journey'}}.
+                </div>
+                <div class="form-sending adding">
+                    {{i18n 'publishing'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Enable Journey -->
+        <div class="popup-box enable-journey">
+            <div class="popup-title capital-letter">Enable Journey</div>
+            <div class="popup-info text-center">
+                <p class="sub-title">This Journey will be visible to your viewers</p><br>
+                <p class="sub-title">Are you sure you want to enable this Journey?</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="enable-journey">{{i18n 'cancel'}}</div>
+                    <div class="enable rippleEffect">{{i18n 'enable'}}</div>
+                </div>
+                <div class="form-failed failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent added">
+                    {{i18n 'enabled successfully!'}}
+                </div>
+                <div class="form-sending adding">
+                    {{i18n 'enabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Disable Journey -->
+        <div class="popup-box disable-journey">
+            <div class="popup-title capital-letter">Disable Journey</div>
+            <div class="popup-info text-center">
+                <p class="sub-title">This Journey will not be visible to your viewers.</p><br>
+                <p class="sub-title">Are you sure you want to disable this Journey?</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="disable-journey">{{i18n 'cancel'}}</div>
+                    <div class="disable rippleEffect">{{i18n 'disable'}}</div>
+                </div>
+                <div class="form-failed failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent added">
+                    {{i18n 'disabled successfully!'}}
+                </div>
+                <div class="form-sending adding">
+                    {{i18n 'disabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete chapter popup -->
+        <div class="popup-box delete-journey-popup">
+            <div class="popup-title capital-letter">
+                    Delete Journey
+            </div>
+            <div class="popup-info sub-title text-center">
+                <p>You've made some cool stuff!</p></br>
+                <p>Are you sure you want to delete this Journey?'</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect capital-letter" rel="delete-journey-popup">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect capital-letter">{{i18n 'delete'}}</div>
+                </div>
+                <div class="form-failed capital-letter failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent capital-letter added">
+                    {{i18n 'deleted successfully!'}}
+                </div>
+                <div class="form-sending capital-letter adding">
+                    {{i18n 'deleting'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Delete Chapter popup -->
+    </div>
+</div>

@@ -1,0 +1,137 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/jquery-ui/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/jquery-ui/jquery-ui.theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/colpick/colpick.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+    {% block sub_styles %}
+    {% endblock sub_styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block head_end %}
+    {% if config and config['PROJECT_ENV'] == 'production' %}
+        <script type="text/javascript">
+            window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+            heap.load("2031291881");
+            heap.identify("{{user}}");
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block container %}
+    <div class="dashboard_block">
+        <div class="fixed-left-nav">
+            <div class="db_logo"><a href="{{url_for('dashboard.home')}}" id="home-icon"><h1>ShareDemos</h1></a></div>
+            <div id="nav_menu">
+                <div id="content_menu">
+                    <p>content</p>
+                    <ul>
+                        <li class="menu_icon nav_library {% if page in ['library', 'users'] %}active{% endif %}"><a href="{{url_for('dashboard.library')}}" id="library-icon">Library</a></li>
+                        <li class="menu_icon nav_activityfeed  {% if page in ['activity'] %}active{% endif %}"><a href="{{url_for('dashboard.activity')}}" id="activity-icon">Activity Feed</a></li>
+
+                        <!-- {% if g.user.is_active() and g.user.is_analyst() %}
+                        <li class="menu_icon nav_leads {% if page == 'leads' %} active {% endif %}"><a href="{{url_for('dashboard.leads')}}" id="leads-icon">Leads</a></li>
+                        {% endif %} -->
+
+                        <!-- <li class="nav_brand menu_icon {% if page == 'brand' %}active{% endif %}"><a href="{{url_for('dashboard.brand')}}" id="brand-icon">Brand</a></li> -->
+                    </ul>
+                </div>
+                {% if tenant_apps %}
+                    <div id="apps_menu">
+                        <p>apps</p>
+                        <ul>
+                            {% for app in tenant_apps %}
+                                {% set app_enabled = False %}
+                                {% if g.user.is_active() and g.user.is_author() and app.is_enabled %}
+                                    {% set app_enabled = True %}
+                                {% endif %}
+                                {% if app.id.lower() == 'audience' %}
+                                    <li class="menu_icon nav_audience{% if page == 'audience' %} active{% endif %}{% if not app_enabled %} locked{% endif %}">
+                                        <a  {% if app_enabled %}href="{{url_for('dashboard.audience')}}"{% endif %}>audiences</a>
+                                    </li>
+                                {% endif %}
+                                {% if app.id.lower() == 'checklist' %}
+                                    <li class="menu_icon nav_checklist{% if not app_enabled %} locked{% endif %}">
+                                        <a href="{{url_for('main.check_list', authoring_mode='edit')}}">checklists</a>
+                                    </li>
+                                {% endif %}
+                                {% if app.id.lower() == 'faq' %}
+                                    <li class="menu_icon nav_faq{% if not app_enabled %} locked{% endif %}">
+                                        <a href="{{url_for('main.faq', authoring_mode='edit')}}">faq</a>
+                                    </li>
+                                {% endif %}
+                                {% if app.id.lower() == 'journeys' %}
+                                    <li class="menu_icon nav_journeys{% if page == 'journeys' %} active{% endif %}{% if not app_enabled %} locked{% endif %}">
+                                        <a {% if app_enabled %} href="{{url_for('dashboard.journeys')}}" {% endif %}>Journeys</a>
+                                    </li>
+                                {% endif %}
+                                {% if app.id.lower() == 'pathfinder' %}
+                                    <li class="menu_icon nav_pathfinder{% if page == 'pathfinder' %} active{% endif %}{% if not app_enabled %} locked{% endif %}">
+                                        <a {% if app_enabled %}href="{{url_for('dashboard.pathfinder')}}"{% endif %}>pathfinder</a>
+                                    </li>
+                                {% endif %}
+                                {% if app.id.lower() == 'pitch' %}
+                                    <li class="menu_icon nav_pitch{% if page == 'pitch' %} active {% endif %} {% if not app_enabled %} locked {% endif %}">
+                                        <a {% if app_enabled %} href="{{url_for('dashboard.pitch')}}" {% endif %}>pitch</a>
+                                    </li>
+                                {% endif %}
+                                {% if app.id.lower() == 'quiz' %}
+                                    <li class="menu_icon nav_quiz{% if page == 'quiz' %} active {% endif %} {% if not app_enabled %} locked{% endif %}">
+                                        <a {% if app_enabled %} href="{{url_for('dashboard.quiz')}}" {% endif %}>quizzes</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- <a><img class="profile-img" id="default-profile-pic" data-name="{{g.user.initials}}" picture-url="{{g.user.profile_picture_url or ''}}"></a> -->
+
+            <div id="menu_footer">
+                <ul>
+                    <li class="col-sm-6"><a href="{{url_for('dashboard.accountsettings')}}">Settings</a></li>
+                    <li class="col-sm-6"><a title='logout' href="{{url_for('auth.logout')}}">sign out</a></li>
+                </ul>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+        </div>
+        <main id="main_container">
+    	   {% block dashboard_container %}{% endblock %}
+        </main>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-nicescroll/jquery.nicescroll.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/colpick/colpick.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/initialjs/initial.min.js') }}"></script>
+    <script type="text/javascript">
+        document.isPrivateTenant = "{{tenant.flags.is_private}}" == "True";
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.defaultLocale = "{{tenant.default_locale.name}}";
+        {% if 'author' in session and session['author']['locale'] %}
+            document.author_locale = "{{session['author']['locale']}}";
+        {% endif %}
+        {% if 'user' in session and session['user']['locale'] %}
+            document.current_locale = "{{session['user']['locale']}}";
+        {% endif %}  
+        {% if tenant.favicon %}
+            var favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+            $("link[rel*='shortcut']").attr("href", favicon);
+        {% endif %}
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ripple.js') }}"></script>
+    {% block sub_scripts %}
+    {% endblock sub_scripts %}
+{% endblock %}

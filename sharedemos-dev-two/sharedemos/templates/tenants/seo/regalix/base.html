@@ -1,0 +1,218 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pdf_viewer.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo/regalix/search.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo/regalix/main.css') }}" />
+{% endblock %}
+
+{% block head_end %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript">
+        if(window.location.hash && window.location.hash.includes('#!') && '{{request.blueprint}}' == 'main'){
+            var h_url = window.location.hash.split('#!')
+            if(h_url.length > 1 && h_url[1] != '/'){
+                window.location.replace(window.location.href.replace('#!', 't'));
+            }
+        }
+    </script>
+    {% if tenant and tenant.analytics %}
+        {{tenant.analytics|safe}}
+    {% endif %}
+{% endblock %}
+
+{% macro header() %}
+    <div class="nav-outer">
+        <div class="black-overlay"></div>
+        <div class="nav-bar">
+            <div class="container">
+                {% if api['tenant']['logo'] %}
+                    <a class="custom-logo" href="/">
+                        <img class="lazy-load" data-src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}" alt="logo">
+                    </a>
+                {% else %}
+                    <a class="logo" href="/"></a>
+                {% endif %}
+                <div class="header-nav-right">
+                    <div class="search-bg">
+                        <div class="search-icon"></div>
+                        <div data-attr="cancel-search"></div>
+                    </div>     
+                    {% if g.user.is_active() %}
+                    <div class="user-bg">
+                        <div class="user-icon">
+                            <div class="log-out-menu">
+                                <div class="loggedIn-user">{{g.user}}</div>
+                                <a href="mailto:regalix-support@regalix-inc.com" class="email-support" target="_top">Contact Support</a>
+                                <a href="{{url_for('auth.logout', redirect_to='https://regalix.com')}}" class="logout" title="Logout">sign out</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro translation_wrapper() %}
+    <div class="custom-popup-wrapper"></div>
+{% endmacro %}
+{% macro search() %}
+    <div class="search-holder">
+        <div class="search-site-block container">
+            <div class="row">
+                <input class="search-site col-xs-12" name="search-site" type="text" placeholder="Search Demos">
+                <div class="clear-search"></div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro homepage_banner(banner) %}
+    {% if banner._background_image %}
+        {% set bg_img_src = url_for('static', filename='media/' + banner._background_image.path) %}
+    {% endif %}
+    <div class="homepage-banner {% if bg_img_src%}lazy-load{% endif %}"
+        {% if bg_img_src%}data-src="{{bg_img_src}}"{% endif %}
+         style="background: center center no-repeat, #000; background-size:cover">
+            <div class="container banner-container">
+                <div class="row banner-row">
+                    <div class="banner-icon col-md-12">
+                        <h1>{{banner._title}}</h1>
+                        <p>{{banner._description}}</p>
+                        {% for cta in banner._cta_details %}
+                            <a class="cta-btn"
+                               href="{{cta._link}}"
+                               target="_blank"
+                               data-cta-id="{{cta._cta_id}}">{{cta._name}}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>    
+{% endmacro %}
+{% macro footer() -%}
+    <div class="grayout"></div>
+    {% if api and api.get('tenant') and api['tenant'].get('footer') and api['tenant']['footer']['links'] or api['tenant']['footer']['text']%}             
+        <footer class="footer">
+            <div class="container">
+                <div>
+                    {% set filename= 'media/'+ api['tenant']['logo'] if api['tenant']['logo'] else 'images/regalix/logo.png' %}
+                    <img class="lazy-load" data-src="{{ url_for('static', filename=filename) }}" alt="logo">
+                </div>
+                <div class="page-footer">
+                {% if api['tenant']['footer'].get('links') %}
+                    <ul class="links nav-footer-link-list">
+                        {% for link in api['tenant']['footer']['links'] | sort(attribute='order') %}
+                        <li class="item">
+                            <a class="title camel-case" target="_blank" href="{{link.url}}">{{link.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if api['tenant']['footer']['text'] %}
+                    <div class="copyright">
+                        <div class="footer-text">
+                            {{api['tenant']['footer']['text'] | safe}}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+        </footer>
+    {% endif %}
+{%- endmacro %}
+
+{% macro load_seo_meta(title=None, description=None, image=None) -%}
+    <title>{{title or 'Product Walkthroughs'}}</title>
+    <meta name="description" content="{{description or ''}}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{title or ''}}" />
+    <meta property="og:description" content="{{description or ''}}" />
+    <meta property="og:url" content="{{request.url}}" />
+    <meta property="og:image" content="{{image or ''}}" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title or ''}}" />
+    <meta name="twitter:description" content="{{description or ''}}">
+    <meta name="twitter:url" content="{{request.url}}">
+    <meta name="twitter:image" content="{{image or ''}}">
+{%- endmacro %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        {% if tenant.favicon %}
+            document.favicon = "{{ url_for('static', filename='media/' + tenant.favicon)}}"
+            $("link[rel*='shortcut']").attr("href", document.favicon);
+        {% endif %}
+        {% if session['user']['locale'] %}
+            document.current_locale = "{{session['user']['locale']}}";
+        {% endif %}
+        document.defaultLocaleID = "{{tenant.default_locale_id}}";
+        document.can_embed = "{{tenant.flags.can_embed}}";
+        document.isPrivate = "{{is_private}}" === 'True';
+        
+        // for algolia search content        
+        {% if algolia_api %}
+        document.algolia_tenant_index = '{{algolia_api.tenant_index}}';
+        document.algolia_app_id = '{{algolia_api.app_id}}';
+        document.algolia_search_key = '{{algolia_api.search_key}}';
+        {% endif %}
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+
+        document.isUserAnonymous = true;
+        document.documentStyles = "{{document_styles}}";
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+            {% if user_groups %}
+                document.userGroups = {{user_groups}};
+            {% endif %}
+        {% endif %}
+    </script>
+    <script type="text/html" id="rating-popup">
+        <div class="custom-popup" id='rating-feedback'>
+            <div class="popup-title">
+                <div class="feedback-title">Give Us Some Feedback</div>
+                <div class="feedback-subtitle">
+                    <p>Your feedback will help us to improve this content.</p>
+                    <p> How can we make this experience better for you?</p>
+                </div>
+            </div>
+            <div class="popup-body">
+                <textarea class="feedback-text" maxlength="500" placeholder="Feedback" ></textarea>
+                <div class="counter">
+                    <span data-counter>500</span><span> characters left</span>
+                </div>
+                <div class="error-msg">Please provide some feedback</div>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel">CANCEL</div>
+                    <div class="submit">SUBMIT FEEDBACK</div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script>
+        $('.user-icon').on('click', () => {$('.nav-outer').toggleClass('logout-menu-active')});
+        $('.black-overlay').on('click', () => {$('.nav-outer').removeClass('logout-menu-active')});
+    </script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+    <script type="text/javascript" src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+    <script type="text/javascript" src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+    <script src="{{ url_for('static', filename='libs/jquery-nicescroll/jquery.nicescroll.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/helpers/cookies.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/seo/common/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/templates/regalix/search.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/build/lazyload.js') }}"></script>
+    {% block sub_scripts %}{% endblock %}
+   
+{% endblock %}

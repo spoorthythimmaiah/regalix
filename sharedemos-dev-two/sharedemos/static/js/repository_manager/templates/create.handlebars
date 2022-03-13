@@ -1,0 +1,105 @@
+<section class="full_popup_block">
+    <div class="full_popup_overlay"></div>
+    <div class="full_popup_box create-repository">
+        <div class="close_full_popup" data-popup="create-repository"></div>
+        <div class="full_popup_content">
+            <h1 class="main-heading">{{#if isEdit}} Edit {{ else }} Add {{/if}} Integrations</h1>
+            <form class="text-left" data-repository-slug="{{connectorId}}" name="create-repository" id="create-repository" enctype="multipart/form-data">
+            
+                <div class="details-tabs">
+                    <div class="platform-tag active {{#if isEdit}}hidden{{/if}}" data-tab="platform">platform</div>
+                    <div class="basic-tag" data-tab="info-basic">basic info</div>
+                    <div class="config-tag" data-tab="config-data">configure</div>
+                </div>
+
+                <div class="platform-data active" data-tab="platform">
+                    <h1 class="label-heading">Choose Platform</h1>
+                    <div class="row repository-type-block">
+                        <div class="repository-type col-lg-6" data-type="sharepoint">
+                            <img class="repository-icon" src="/static/images/repository_manager/sharepoint-icon.png" />
+                            <div class="platform-name">Sharepoint</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="basic-info" data-tab="info-basic">
+                     <div class="form-group col-xs-12">
+                        <label for="nickname" class="mandatory-field uppercase">nickname</label>
+                        <div class="sub-title">Give this integration a nickname. For example 'account 1'.</div>
+                        <div>
+                            <input type="text" placeholder="Nickname" name="nickname" class="section-name form-control" autocomplete="off" value="{{name}}">
+                            <div class="validation-error-message">Please enter the Nickname</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="url" class="mandatory-field uppercase">Sharepoint site url</label>
+                        <div class="sub-title">Paste your sharepoint site URL.</div>
+                        <div>
+                            <input type="text" placeholder="http://" name="url" class="section-name form-control" autocomplete="off" value="{{this.siteUrl}}">
+                            <div class="validation-error-message">Please enter the valid url</div>
+                        </div>
+                        <div class="form-feedback integration-url"></div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="root-folder" class="mandatory-field uppercase">root folder</label>
+                        <div class="sub-title">Sharepoint root folder.</div>
+                        <div>
+                            <input type="text"  name="root-folder" placeholder="Root folder" class="root-folder form-control" autocomplete="off" value="{{this.rootFolder}}">
+                            <div class="validation-error-message">Please enter the root folder</div>
+                        </div>
+                        <div class="form-feedback folder-name"></div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <div for="credentials" class="mandatory-field uppercase">credentials</div>
+                        <div class="sub-title">Provide your log in credentials to connect with this integration.</div>
+                        <div class="row">
+                            <div class="col-xs-4 credential-heading">
+                                <label for="email" class="email col-xs-3">Email/Username: </label>
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="text" name="email" autocomplete="off" placeholder="email" class="email-validate form-control" autocomplete="off" value="{{this.email}}">
+                                 <div class="validation-error-message">Please enter the valid email</div>
+                            </div>
+                            <div class="form-feedback email-validation"></div>
+                        </div>
+                        <div class="row password-block">
+                            <div class="col-xs-4 credential-heading">
+                                <label for="password" class="password col-xs-3">Password:</label>
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="password" name="password" autocomplete="new-password" placeholder="password" class="password-validate form-control" autocomplete="off" value="{{this.password}}">
+                            </div>
+                            <div class="form-feedback password-validation"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="configure" data-tab="config-data">
+                    <div class="form-group">
+                        <h1 class="label-heading">sync</h1>
+                        <h2 class="sub-info">Keep your library content automatically updated when changes are made.</h2>
+                        <div class="toggle-block col-sm-2">
+                            <input type="checkbox" name="auto-sync" id="auto-sync" class="css-toggle" {{#if sync}}checked{{/if}}>
+                            <label class="css-toggle-label" id="auto-sync-label" for="auto-sync"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h1 class="label-heading">notifications</h1>
+                        <h2 class="sub-info">Notify me when content goes offline on my site when it’s deleted in the integration.</h2>
+                        <div class="toggle-block col-sm-2">
+                            <input type="checkbox" name="notifications" id="notifications" class="css-toggle" {{#if notify}}checked{{/if}}>
+                            <label class="css-toggle-label" id="notifications-label" for="notifications"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-block">
+                    <div id="right-arrow" class="previous-button">
+                        <div class="arrow-right"></div>
+                    </div>
+                    <input id="submit-button" class="btn" type="submit" name="submit" value="basic info" disabled/>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

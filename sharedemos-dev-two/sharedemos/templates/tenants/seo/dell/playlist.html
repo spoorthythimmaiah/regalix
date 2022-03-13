@@ -1,0 +1,265 @@
+{% extends 'tenants/seo/dell/base.html' %}
+
+{% block seo %}
+    {% set icon = api['icon']['url'] if api['icon'] else None %}
+    {% if not icon %}
+    {% set icon = api['parent']['icon']['url'] if api['parent'] and api['parent']['icon'] else None %}
+    {% endif %}
+    {% if not icon %}
+    {% set icon = api['product']['icon']['url'] if api['product'] and api['product']['icon'] else None %}
+    {% endif %}
+    {{load_seo_meta(title=api['name'] + ' | ' + api['tenant']['name'], description=api['description'], image=icon)}}
+{% endblock %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo_player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/apps/rating.css') }}" />
+{% endblock %}
+
+{% block container %}
+<div id="playlist" class="container-block"> 
+    {{ translation_wrapper() }}
+    {{ header() }}
+    {{ back_button(section=api['parent']['slug'] if api['parent'] else None) }}
+    {{ search() }}
+    <div class="left-sidebar">
+        {% set list_view = True %}
+        {% set pl_with_chapter = False %}
+        {% if api['playlists']|length > 1 %}
+            {% set wt_list = [] %}
+            {% for pl in api['playlists'] %}
+                {% if pl['walkthroughs']|length > 0 %}
+                    {% if wt_list.append(0) %}{% endif %}
+                {% endif%}
+            {% endfor %}
+            {% set list_view = wt_list|length <= 1 %}
+            {% set pl_with_chapter = wt_list|length > 0 %}
+        {% elif api['playlists'] and api['playlists'][0]['walkthroughs'] %}
+            {% set pl_with_chapter = True %}
+        {% endif %}
+        {% if api['tenant']['can_download'] and api['can_download'] and pl_with_chapter %}
+            {% set can_download = True %}
+        {% endif %}
+    </div> 
+    <section class="container sec-cat-details">
+        <div class="breadcrum">
+            {% for breadcrumb in api['breadcrumb'] %}
+                {%if api['breadcrumb']|length != loop.index %}
+                    <a href="{{breadcrumb['url']}}">{{breadcrumb['name']}}</a>
+                    >
+                {% else %}
+                    {{ breadcrumb['name'] }}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="{% if api['videos'] %} col-md-7 col-sm-7 {% else %} col-md-12 {% endif %}">
+                <h1>{{api['name']}}</h1>
+                <p>{{api['description'] or ''}}</p>
+                    {% for app in api['tenant']['applications'] %}
+                        {% if app.unique_id.lower() == 'rating' %}
+                        <div class="section content-rating-block">
+                            <label>Thank you for your feedback!</label>
+                            <ul class="section content-rating" data-target='section' section_id="{{api['slug']}}">
+                                <li id="1"></li>
+                                <li id="2"></li>
+                                <li id="3"></li>
+                                <li id="4"></li>
+                                <li id="5"></li>
+                            </ul>
+                        </div> 
+                        {% endif %}                 
+                    {% endfor %}
+                {{ cta_list(api['cta_list'])}}
+            </div>
+            <div class="col-xs-6 col-sm-5 col-md-5 video-link-block">
+                {{ videos() }}
+            </div>
+        </div>
+    </section>
+    {% if pl_with_chapter %}
+    <main class="container" data-playlist={{list_view}}>
+        <div class="container-header">
+            <h2>{{_('chapters')}}</h2>
+            <div class="playlist-view-opt">
+                <a id="playlist-thumbnail-view" data-toggle="thumbnail"></a>
+                <a id="playlist-row-view" data-toggle="row"></a>
+            </div>
+        </div>
+        <section class="row playlist-list" data-attr="thumbnail-view" style="display:none;">
+            {% for playlist in api['playlists'] %}
+                {% if playlist['walkthroughs'] %}
+                <div class="col-xs-12 col-sm-6 col-md-4 playlist-block">
+                    <div class="playlist-container">
+                        {% if playlist['translations_available'] %}
+                        <div class="translation-icon" data-overlay="language-translations" data-language-options='{{playlist['locales_available']|tojson}}'></div>
+                        {% endif %}
+                        {% if can_download %}
+                            <div
+                                class="pdf-icon-thumbnail-view export-pdf {% if playlist['translations_available'] %}with-trans-icon{% endif %}"
+                                data-section-slug="{{api['slug']}}"
+                                data-playlist-id="{{playlist['playlist_id']}}"
+                                title="Export To PDF" >
+                                <img src="{{url_for('static', filename='images/dell/download-icon.png')}}"/>
+                            </div>
+                        {% endif %}
+                        <div class="playlist-header">
+                            <h3>{{playlist['name']}}</h3>
+                            <p class="chapter-desc"><span class="min-chapter-desc">{{playlist['description'] or ''}}</span></p>
+                        </div>
+                        <ul class="chapters-list">
+                            {% for demo in playlist['walkthroughs']%}
+                            <li>
+                                <a href="{{url_for('main.launchpad', section=api['slug'], chapter=demo['slug'])}}"  data-product-id="{{api['product']['slug']}}" data-section-id="{{api['slug']}}" data-chapter-id="{{demo['slug']}}"> 
+                                    <div class="chapter-index-block">
+                                        <div class="chapter-index">{{loop.index}}</div>
+                                    </div>
+                                    <div class="chapter-title">{{demo['name']}}</div>
+                                </a>
+                                {% if demo['tags']|length > 0 %}
+                                    <div class="tags-block">
+                                        <ul class="playlist-tags">
+                                            {% for tag in demo['tags'] %}
+                                                <li>{{ tag }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+        <section class="row playlist-list" data-attr="row-view" style="display:none;">
+            {% for playlist in api['playlists'] %}
+                {% if playlist['walkthroughs'] %}
+                <div class="col-xs-12">
+                    <div class="playlist-container">
+                        {% if playlist['translations_available'] %}
+                        <div class="translation-icon" data-overlay="language-translations" data-language-options='{{playlist['locales_available']|tojson}}'></div>
+                        {% endif %}
+                        {% if can_download %}
+                            <div
+                                class="pdf-icon-row-view export-pdf {% if playlist['translations_available'] %}with-trans-icon{% endif %}"
+                                data-section-slug="{{api['slug']}}"
+                                data-playlist-id="{{playlist['playlist_id']}}"
+                                title="Export To PDF" >
+                                <img src="{{url_for('static', filename='images/dell/download-icon.png')}}"/>
+                            </div>
+                        {% endif %}
+                        <div class="playlist-header col-sm-6 col-md-6">
+                            <h3>{{playlist['name']}}</h3>
+                            <p>{{playlist['description'] or ''}}</p>
+                        </div>
+                        <ul class="chapters-list col-sm-6 col-md-6">
+                            {% for demo in playlist['walkthroughs']%}
+                            <li>
+                                <a href="{{url_for('main.launchpad', section=api['slug'], chapter=demo['slug'])}}" data-product-id="{{api['product']['slug']}}" data-section-id="{{api['slug']}}" data-chapter-id="{{demo['slug']}}">
+                                    <div class="chapter-index-block">
+                                        <div class="chapter-index">{{loop.index}}</div>
+                                    </div>
+                                    <div class="chapter-title">{{demo['name']}}</div>
+                                </a>
+                                {% if demo['tags']|length > 0 %}
+                                    <div class="tags-block">
+                                        <ul class="playlist-tags">
+                                            {% for tag in demo['tags'] %}
+                                                <li>{{ tag }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </main>
+    {% endif %}
+</div>
+{{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+    document.isUserAnonymous = true;
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.apps = JSON.parse('{{apps|tojson}}');
+    document.app_name = "library";
+    document.tenantFooterImage = "{{tenant.logo or ''}}";
+    document.viewType = "{{view_type}}";
+    document.product = "{{api['product']['slug']}}";
+    document.section = "{{api['slug']}}";
+    document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    document.page = 'Playlist';
+    $(document).ready(function(){
+        var localStorage = window.sessionStorage || window.localStorage;
+        $('[data-toggle]').click(function(){
+            if(!$(this).hasClass('active')) {
+                $('[data-toggle]').toggleClass('active');
+                $('[data-attr=thumbnail-view], [data-attr=row-view]').toggle();
+                let thumbnailId = $(this).attr('id');
+                if (thumbnailId == 'playlist-thumbnail-view'){
+                    $('#playlist').addClass('playlist-thumbnail');
+                }else{
+                    $('#playlist').removeClass('playlist-thumbnail');
+                }
+            localStorage.setItem('playlistView', thumbnailId);
+            }
+        });
+
+        function playlistView(toggleValue,attrValue){
+            $(`[data-toggle=${toggleValue}]`).addClass('active');
+            $(`[data-attr=${attrValue}]`).toggle();
+            if (toggleValue == 'thumbnail'){
+                $('#playlist').addClass('playlist-thumbnail');
+            }else{
+                $('#playlist').removeClass('playlist-thumbnail');
+            }
+        }
+
+        playlistViewMore();
+
+        function playlistViewMore() {
+            var seeMore = 'See More',
+                showMore = '<div class="viewmore-chapters"></div>',
+                readMore = '<span class="seemore-chapter-desc">' + seeMore + '</span>';
+
+                var selectedView = localStorage.getItem("playlistView");
+                let hasSinglePlaylist = $('main.container').attr('data-playlist');
+                if (!selectedView){
+                    (hasSinglePlaylist == 'True')?
+                    playlistView('row','row-view'):playlistView('thumbnail','thumbnail-view');
+                    
+                }else{
+                    (selectedView=='playlist-thumbnail-view')?
+                    playlistView('thumbnail','thumbnail-view'):playlistView('row','row-view');
+                }
+
+            $('[data-attr=thumbnail-view] .playlist-block').each(function(index){
+                var playlistChapters  = $(this).find('ul');
+                var chapterDesc   =  $(this).find('.chapter-desc');
+                if(playlistChapters.height() > 185) {
+                    $(this).find('.chapters-list').addClass('min-chapters');
+                    $(this).find('.playlist-container').append(showMore);
+                }
+                if(chapterDesc.height() > 32) {
+                    $(chapterDesc).find('.min-chapter-desc').addClass('max-chapter-desc');
+                    $(chapterDesc).append(readMore);
+                }
+            });
+        }
+    })
+</script>
+<script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

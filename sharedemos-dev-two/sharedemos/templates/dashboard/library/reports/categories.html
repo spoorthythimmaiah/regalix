@@ -1,0 +1,156 @@
+{% extends 'dashboard/dashboard_submenu/library_menu.html' %}
+
+{% block sub_styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap-multiselect/css/bootstrap-multiselect.css') }}">
+{% endblock sub_styles %}
+
+{% block dashboard_content_container %}
+    <div id="library_reports" class="work-area container_data">
+       <div class="library_filter row shadow">
+            <div>
+                <div class="dashboard_sub_title">Metrics for:</div>
+                <div class="time-interval-dd">
+                    <span class="interval">last 7 days</span>
+                    <ul class="dd-menu" id='metrics'>
+                        <li data-attr='today' data-title='today'>today</li>
+                        <li data-attr='yesterday' data-title='yesterday'>yesterday</li>
+                        <li data-attr='week' data-title='Last 7 Days' class="active">1 week</li>
+                        <li data-attr='month' data-title='Last 30 days'>30 days</li>
+                        <li data-attr='quarter' data-title='Last 3 months'>3 months</li>
+                        <li data-attr='half-year' data-title='Last 6 months'>6 months</li>
+                        <li data-attr='year' data-title='Last 12 months'>12 months</li>
+                        <li data-attr='custom' data-title='Custom Days'>Custom</li>
+                    </ul>
+               </div>
+            </div>
+            <div class="custome-dropdown">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 custome-date">
+                        <div class="dashboard-sub-title">
+                            From
+                        </div>
+                        <input id="from-date" type="text" name="from-date" class='datepicker-here' readonly="true">
+                    </div>
+                    <div class="col-sm-6 col-xs-12 custome-date">
+                        <div class="dashboard-sub-title">
+                            To
+                        </div>
+                        <input id="to-date" type="text" name="to-date" class='datepicker-here' readonly="true">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="category-dd">
+                        <span class="category">All Categories</span>
+                     <ul class="dd-menu" id="categories">
+                        <li data-attr="all" data-id="0" class="active">All Categories</li>
+                        {% for cat in categories %}
+                            <li data-attr="{{cat.name}}" data-id="{{cat.id}}">{{cat.name}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+       </div>
+       <div class="library_count_cards row" id='user_analytics'></div>
+        <div id="view-entire-site"></div>
+        <div class="dashboard-graph-area shadow spine_chart">
+            <div class="row">
+                <div class="graph-head">
+                    <span class="title">Views for 'Entire Site'</span>
+                    <ul class="chart-legend-horizontal">
+                      <li><span data-color="main-chart-color1"></span> Site Visitors</li>
+                      <li><span data-color="main-chart-color2"></span> Demo Views</li>
+                    </ul>
+                </div>
+                <div id="spline_chart"></div>
+            </div>
+        </div>
+
+        <!-- Top Trending Categories Graph -->
+        <div class="dashboard-graph-area top_trending_cat_graph shadow">
+            <div class="row">
+                <div class="graph-head">
+                    <span class="title">Top Trending Categories</span>
+                </div>
+                <div id="top_trending_cat_chart"></div>
+            </div>
+        </div>
+        <div class="report-area">
+            <div class="most_popular_chapters row shadow reports_data_list">
+                <h4>Most Popular Chapters</h4>
+                <div class='data_block'></div>
+            </div>
+        </div>
+        <div class="dashboard-graph-area ">
+            <div class="row col-sm-12">
+                <div class="shadow referral_chart_block col-sm-6"></div>
+                <div class="shadow geography_chart_block col-sm-6"></div>
+            </div>
+        </div>
+        <!-- social share -->
+        {% if not tenant.flags.is_private %}
+        <div class="dashboard-graph-area social_share_statistics shadow">
+            <div class="row">
+                <div class='social_share_block col-sm-12'></div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if tenant.flags.is_private %}
+        <div class="report-viewers-block" id="viewer-details">
+            <div class="viewers-block-alignment">
+                <div class="viewer-header row">
+                    <div class="viewer col-md-3">Viewers</div>
+                    <div class="total-viewers-block col-md-3">
+                        <div class="total-viewers">Total Viewers:</div>
+                        <div class="viewers-count"></div>
+                    </div>
+                    {% if tenant_groups %}
+                    <div class="filter-groups col-md-6">
+                        <div class='group-header'>Groups</div>
+                        <select id="multiselect" multiple="multiple">
+                            {% for group in tenant_groups %}
+                                <option value="{{group.id}}">{{group.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endif %}
+                </div> 
+                <div class="viewers-block-header">
+                    <div>Name</div>
+                    <div>Email</div>
+                    <div>Date Added</div>
+                </div>
+                <div id="viewers-block"></div>
+            </div>
+        </div>
+        <div id="viewer-popup"></div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block sub_scripts %}
+<script src="{{ url_for('static', filename='libs/highcharts/js/highcharts.src.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/highcharts/js/modules/exporting.src.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/highcharts/js/modules/heatmap.src.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/highcharts/js/modules/treemap.src.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/flotcharts/jquery.flot.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/flotcharts/curvedlines.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/flotcharts/jquery.flot.pie.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/flotcharts/jquery.flot.time.js') }}"></script>
+
+<script src="{{ url_for('static', filename='libs/highcharts/js/map.src.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/highcharts/js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='libs/highcharts/js/world.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/lang/datepicker.en.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='libs/bootstrap-multiselect/js/bootstrap-multiselect.min.js') }}"></script>
+<script type="text/javascript">
+    document.isAuthor =  "{{g.user.is_author()}}" === 'True';
+    document.dateRange = "{{request.args.get('date_range', 'week')}}";
+    document.fromDate = "{{request.args.get('from_date', '')}}";
+    document.toDate = "{{request.args.get('to_date', '')}}"
+    document.categoryId = "{{request.args.get('category_id', 'all')}}"
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/build/dashboard/reports.js') }}"></script>
+{% endblock sub_scripts %}

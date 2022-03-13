@@ -1,0 +1,33 @@
+/* Custom style for Pitch */
+body.custom-modal-open {
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+}
+#root .pitchs-wrapper h1 {
+    display: none;
+}
+#pitch-temp-container .logo,
+#pitch-temp-container .go-back {
+    display: none;
+}
+#pitch-temp-container .pitch-section .logo {
+    display: block;
+}
+#pitch-temp-container .pitch-section .go-back {
+    display: flex;
+}
+#pitch-temp-container #root .container:not(.info-wrapper) {
+    width: auto;
+}
+.pitch-section {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    left: 0;
+    background: #fff;
+    z-index: 10;
+    top: 0;
+    padding-bottom: 100px;
+}

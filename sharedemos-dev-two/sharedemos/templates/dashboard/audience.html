@@ -1,0 +1,19 @@
+{% extends 'layouts/dashboard.html' %}
+
+{% block sub_styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/air-datepicker/css/datepicker.min.css') }}">
+{% endblock sub_styles %}
+
+{% block dashboard_container %} 
+    <div class="dashboard-work-area company" id="audience_page">
+        <div class="work-area" id="audience_list"></div>
+        <div id="audience_overlay"></div>
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/datepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/air-datepicker/js/lang/datepicker.en.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build/apps/audience/edit.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/initialjs/initial.min.js') }}"></script>
+{% endblock sub_scripts %}

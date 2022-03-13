@@ -1,0 +1,172 @@
+.shadow{
+    box-shadow: 0 1px 19px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+.report-filters{
+    padding: 30px 20px;
+    display: flex;
+    flex:1;
+    justify-content:flex-start;
+}
+.filter-title{
+    position: relative;
+    font-size: 12px;
+    line-height: 30px;
+    float: left;
+    min-height: 30px;
+    color: #c8c8c8;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-right: 10px;
+}
+.interval-dd {
+    position: relative;
+    width: 127px;
+}
+.interval-dd .interval {
+    display: block;
+    height: 30px;
+    background: url(/static/images/icon-down-arrow.png) no-repeat;
+    background-position: right 8px center;
+    padding: 0px 30px 0px 6px;
+    cursor: pointer;
+    background-size: 12px;
+    border-radius: 3px;
+    border: 1px solid #b3b3b3;
+    text-transform: capitalize;
+    color: #1e1e1e;
+    font-size: 12px;
+    line-height: 30px;  
+}
+ul.dd-menu.active{
+    display: block;
+}
+.custome-date{
+    display: block;
+}
+.dashboard-sub-title{
+    float: left;
+    line-height: 30px;
+}
+.report-cards-wrap{
+    margin-top: 27px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.report-cards-wrap .card{
+    height: 160px;
+    flex: 1 0;
+    margin-right: 27px;
+    padding: 22px;
+    text-align: center;
+}
+.report-cards-wrap .card:first-child{
+    background-color: #4ec2f6;
+}
+.report-cards-wrap .card:nth-child(2){
+    background-color: #3662ff;
+}
+.report-cards-wrap .card:nth-child(3){
+    background-color: #36bea7;
+}
+.report-cards-wrap .card:nth-child(4){
+    background-color: #4fc3f7;
+}
+.report-cards-wrap .card:nth-child(5){
+    background-color: #4ec2f6;
+}
+.report-cards-wrap .card:last-child{
+    margin-right: 0px;
+}
+.card .title{
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+    text-align: left;
+}
+.card .metric-count{
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 38px 0px 32px;
+}
+.card .metric-details{
+    position: relative;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding-left: 20px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.card .metric-details:before{
+    position: absolute;
+    height: 100%;
+    width: 20px;
+    top: 0px;
+    left: 0px;
+    background: url(/static/images/dashboard/icon-arrow.png) no-repeat left 5px center;
+    background-size: 7px;
+}
+.card .metric-details.down:before{
+    content: '';
+    transform: rotateX(0deg);
+}
+.card .metric-details.up:before{
+    content: '';
+    transform: rotateX(180deg);
+}
+
+.pitch-list{
+    margin-top: 27px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 19px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+.pitch-list h3{
+    color: #1e1e1e;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 10px;
+    text-transform: capitalize;
+}
+.pitch-list-wrap{
+    position: relative;
+}
+.pitch-list-wrap .pitch-details{
+    position: relative;
+    display: flex;
+    border-bottom: #f2f2f2 solid 1.5px;
+    cursor: pointer;
+}
+.pitch-details div:first-child{
+    text-align: left;
+    color: #2679df;
+    font-size: 12px;
+    font-weight: 400;
+}
+.pitch-details.header div{
+    color: #c8c8c8;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.pitch-details div{
+    text-align: center;
+    flex: 1;
+    padding: 18px 0px;
+}
+.loading{
+    position: relative;
+    text-align: center;
+    padding: 150px 0px;
+}
+.custome-dropdown{
+    position: relative;
+    display: inline-block;
+    margin-left: 50px;
+}

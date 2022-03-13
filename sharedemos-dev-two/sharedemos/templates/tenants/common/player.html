@@ -1,0 +1,87 @@
+{% extends 'tenants/common/base.html' %}
+
+{% block seo %}
+    {% set slide = api['slides'][slide_index|int-1] if api['slides'] and api['slides']|length >= slide_index|int else None %}
+    {% set icon = None %}
+    {% set description = None %}
+    {% set external_icon = False %}
+    {% set remote_icon = False %}
+    {% if slide %}
+        {% if slide.notes and slide.notes.get('1') %}
+            {% set description = slide.notes['1']['body'] %}
+        {% endif %}
+        {% if slide.primary_resource %}
+            {% if slide.primary_resource.type == 'image' %}
+                {% set icon = slide.primary_resource.path %}
+            {% elif slide.primary_resource.type == '360' and slide.primary_resource.meta_data.count %}
+                {% set icon = slide.primary_resource.path + '/1.jpg' %}
+            {% elif slide.primary_resource.type == 'link' and slide.primary_resource.meta_data.icon_name %}
+                {% set icon = slide.primary_resource.meta_data.icon_name %}
+                {% set external_icon = True %}
+            {% elif slide.primary_resource.type == 'sandbox' %}
+                {% if slide.primary_resource.meta_data.frames|length > 1 and slide.primary_resource.meta_data.frames[0].type == 'image' %}
+                    {% set remote_icon = True %}
+                    {% set description = slide.primary_resource.meta_data.frames[0].notes %}
+                    {% set icon = slide.primary_resource.meta_data.path + '/frame-%04d.jpg' % (slide.primary_resource.meta_data.frames[0].index) %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        {% if slide.secondary_resource and slide.secondary_resource.type == 'image' %}
+            {% set icon = slide.secondary_resource.path %}
+        {% endif %}
+    {% endif %}
+    {% if icon %}
+        {% if external_icon %}
+            {% set icon = url_for('static', filename='media/external_icons/' + icon, _external=True) %}
+        {% elif not remote_icon %}
+            {% set icon = url_for('static', filename='media/' + icon, _external=True) %}
+        {% endif %}
+    {% endif %}
+    {{load_seo_meta(title=api['name'] + ' | ' + api['section']['name'] + ' | ' +  api['tenant']['name'], description=description, image=icon)}}
+{% endblock %}
+
+{% block sub_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/document_styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/seo_player.css') }}" />
+    <link rel="stylesheet" type="text/css" href="https://use.typekit.net/kua5vej.css">
+    {% if tenant.template.lower() == 'bmc' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bmc.css') }}" />
+    {% elif tenant.template.lower() == 'purestorage' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/purestorage_style.css') }}" />
+    {% elif tenant.template.lower() == 'vmware' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/vmw_player.css') }}" />
+    {% endif %}
+{% endblock %}
+
+{% block container %}
+{% if api['tenant']['template'].lower() in ['helpsite', 'silverpeak', 'regalix']%}
+    <a href="/" class="nav-back-button" data-template={{tenant.template.lower()}}></a>
+{% endif %}
+
+<div id="main_container">
+    {{ translation_wrapper() }}
+    <div id="block_container" class="block_container"></div>
+</div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script type="text/javascript">
+        document.product = "{{api['product']['slug']}}";
+        document.section = "{{api['section']['slug']}}";
+        document.chapter = "{{api['slug']}}";
+        document.slide_index = "{{slide_index}}";
+        document.viewType = "{{view_type}}";
+        document.app_name = "library";
+        document.cdn_url = "{{config.get('ASSET_CDN_URL', '')}}";
+        document.tenantFooterImage = "{{tenant.logo or ''}}";
+        document.page = 'Player';
+    </script>
+    <script>
+        document.initializePlayer({
+            productID: document.product,
+            sectionID: document.section,
+            chapterID: document.chapter,
+            slideIndex: document.slide_index});
+    </script>
+{% endblock %}

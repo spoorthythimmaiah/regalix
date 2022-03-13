@@ -1,0 +1,37 @@
+<div class="feedback-cards shadow">
+    <p class="card-title">Ratings Received</p>
+    <h1 class="card-title">{{rating_received.count}} Ratings</h1>
+    <p class="feedback-stats {{#compare rating_received.progress '<' 0}}down{{/compare}}{{#compare rating_received.progress '>=' 0}}up{{/compare}}">
+        {{rating_received.progress}}% FROM LAST PERIOD
+    </p>
+</div>
+<div class="feedback-cards shadow">
+    <p class="card-title">Feedback Received</p>
+    <h1 class="card-title">{{feedback_received.count}} Comments</h1>
+    <p class="feedback-stats {{#compare feedback_received.progress '<' 0}}down{{/compare}} {{#compare feedback_received.progress '>' 0}}up{{/compare}}">
+        {{feedback_received.progress}}% FROM LAST PERIOD
+    </p>
+</div>
+<div class="feedback-cards shadow">
+    <p class="card-title">Highest Rated Section</p>
+    <h2 load-ratings class="card-title" data-section-id="{{highest_rated_section.section_id}}" 
+    data-product-id="{{highest_rated_section.product_id}}">{{highest_rated_section.section_name}}</h2>
+    <div class="content-ratings" data-rating="{{highest_rated_section.avg_rating}}"><span>{{highest_rated_section.avg_rating}}</span></div>
+</div>
+<div class="feedback-cards shadow">
+    <p class="card-title">Lowest Rated Section</p>
+    <h2 load-ratings class="card-title" data-section-id="{{lowest_rated_section.section_id}}" data-product-id="{{lowest_rated_section.product_id}}">{{lowest_rated_section.section_name}}</h2>
+    <div class="content-ratings" data-rating="{{lowest_rated_section.avg_rating}}"><span>{{lowest_rated_section.avg_rating}}</span></div>
+</div>
+<div class="feedback-cards shadow">
+    <p class="card-title">Highest Rated Chapter</p>
+    <h2 class="card-title" load-ratings data-chapter-id="{{highest_rated_chapter.chapter_id}}" data-section-id="{{highest_rated_chapter.section_id}}" data-product-id="{{highest_rated_chapter.product_id}}">{{highest_rated_chapter.chapter_name}}</h2>
+    <div class="content-ratings" data-rating="{{highest_rated_chapter.avg_rating}}"><span>{{highest_rated_chapter.avg_rating}}</span></div>
+</div>
+<div class="feedback-cards shadow">
+    <p class="card-title">Lowest Rated Chapter</p>
+    <h2 class="card-title" load-ratings data-chapter-id="{{lowest_rated_chapter.chapter_id}}"
+    data-section-id="{{lowest_rated_chapter.section_id}}" 
+    data-product-id="{{lowest_rated_chapter.product_id}}">{{lowest_rated_chapter.chapter_name}}</h2>
+    <div class="content-ratings" data-rating="{{lowest_rated_chapter.avg_rating}}"><span>{{lowest_rated_chapter.avg_rating}}</span></div>
+</div>

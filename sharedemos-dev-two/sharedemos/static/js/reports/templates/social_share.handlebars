@@ -1,0 +1,26 @@
+<h4>Social Sharing</h4>
+{{#if total_shares}}
+    <div class="col-xs-12"> 
+        <div class="=outside">
+            <div class="total_shares col-md-6">{{total_shares}}</div>
+            <div class="col-md-6" id="social_share_graph"></div>
+        </div>
+        <div class='reports_data_list col-md-6'>
+            <div class="reports_header col-xs-12">
+                <div class="col-xs-10"><span>SOCIAL CHANNEL</span></div>
+                <div class="col-xs-2 text-right"><span>SHARES</span></div>
+            </div>
+            <div class="reports_list" id="social_share_reports">
+                {{#each social_shares}}
+                    <div class="reports_data_row col-xs-12">
+                        <div class="col-xs-2"><i class="fa fa-{{this.label}}-square"></i></div>
+                        <div class="col-xs-8 social-share-label">{{this.label}}</div>
+                        <div class="col-xs-2 text-right">{{this.data}}</div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+{{else}}
+    <div class="no-report">{{ i18n 'No data available'}}</div>
+{{/if}}

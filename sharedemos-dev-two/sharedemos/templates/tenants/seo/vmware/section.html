@@ -1,0 +1,126 @@
+{% extends 'tenants/seo/vmware/base.html' %}
+
+{% block seo %}
+    {% set icon = api['icon']['url'] if api['icon'] else None %}
+    {% if not icon %}
+    {% set icon = api['parent']['icon']['url'] if api['parent'] and api['parent']['icon'] else None %}
+    {% endif %}
+    {% if not icon %}
+    {% set icon = api['product']['icon']['url'] if api['product'] and api['product']['icon'] else None %}
+    {% endif %}
+    {{load_seo_meta(title=api['name'] + ' | ' + api['tenant']['name'], description=api['description'], image=icon)}}
+{% endblock %}
+
+{% block container %}
+<div id="vmw-section" class="container-block">
+    {{ translation_wrapper() }}
+    <div class="left-sidebar">
+        {{ back_button(section=api['parent']['slug'] if api['parent'] else None) }}
+        {% if not api['product']['is_private'] %}
+        {{ social_share() }}
+        {% endif %}
+    </div>
+    {{ header() }}
+    <section class="container sec-cat-details">
+        <div class="row">
+            <div class="{% if api['videos'] %} col-md-7 {% else %} col-md-12 {% endif %}">
+                <h1>{{api['name']}}</h1>
+                <p>{{api['description'] or ''}}</p>
+                
+                {{ cta_list(api['cta_list']) }}
+                
+                {% if api['faq'] %}
+                    <a href="{{url_for('main.faq', slug=api['faq']['slug'])}}" class="iframe-link launch-faq">FAQ</a>
+                {% endif %}
+            </div>
+            <div class="col-xs-6 col-sm-5 col-md-3 video-link-block">
+                {{ videos() }}
+            </div> 
+        </div>
+    </section>
+    {% if api['journey_list']%}
+         <div class="section-related-journey">
+            <div class="container">
+                {{ journeys() }}
+            </div>            
+        </div>
+    {% endif %}
+    <main class="container">
+        {% if api['children'] %}
+        <h2>{{_('categories')}}</h2>
+        <section class="row sec-cat-list">
+            {% for child in api['children'] %}
+            <div class="col-xs-12 col-md-6 category-list-details">
+                <div class="category-list-link-block">
+                    {% if child['translations_available'] %}
+                    <div class="translation-icon" data-overlay="language-translations" data-language-options='{{child['locales_available']|tojson}}'></div>
+                    {% endif %}
+                    {% if child['tags'] %}
+                        <ul class="category-tags">
+                            {% for tag in child['tags'] %}
+                            <li>{{tag}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% set href_url = url_for('main.route_handler', section=child['slug'])%}
+                    {% set class_name = 'category-list-link' %}
+                    {% if child['linked_asset'] %}
+                        {% set href_url =  url_for('main.serve_section_assets', asset_name=child['linked_asset']['name']) %}
+                        {% set class_name = 'asset-linked' %}
+                    {% endif %}
+                    {% set data_attr = 'data-product-id=' + api['product']['slug'] + ' data-section-id=' + child['slug'] %}
+                    <a href="{{href_url}}" class="{{class_name}}"{% if child['linked_asset'] %} {{data_attr}} target="_blank" {% endif %}>
+                        <div class="category-list-icon">
+                            {% if child['linked_asset'] %}
+                                {% if child['icon'] %}
+                                    <div class="relative-icon">    
+                                        <div class="lazy-load" data-src="{{ child['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                    </div>
+                                {% else %}
+                                    <div class="default-icon">
+                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/section-default-link-icon.png') }}">
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                {% if child['icon'] %}
+                                    <div class="relative-icon">    
+                                        <div class="lazy-load" data-src="{{ child['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                    </div>
+                                {% else %}
+                                    <div class="default-icon">
+                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/vmware/default-category-icon.png') }}">
+                                    </div>
+                                {% endif %}
+
+                            {% endif %}
+                        </div>
+                        <div class="category-list-desc">
+                            <h5>{{child['name']}}</h5>
+                            <p {% if child['tags'] %} class="desc-with-tags" {% endif %}>{{child['description'] or ''}}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+    </main>
+</div>
+{{ footer() }}
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+    document.isUserAnonymous = true;
+    document.apps = JSON.parse('{{apps|tojson}}');
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.product = "{{api['product']['slug']}}";
+    document.section = "{{api['slug']}}";
+    document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    document.page = 'Category';
+</script>
+<script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

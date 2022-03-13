@@ -1,0 +1,73 @@
+{% extends 'tenants/common/base.html' %}
+
+{% block seo %}
+  {{load_seo_meta(title=sample_details.title, description=sample_details.description)}}
+{% endblock %} 
+
+{% block sub_styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sample_exchange.css') }}">
+{% endblock %}
+
+{% block container %}
+<div id="main_container" class="sample-exchange">
+  {{ translation_wrapper() }}
+  <div class="left-sidebar">
+    {% if not tenant.flags.is_private %}
+    {{ social_share() }}
+    {% endif %}
+  </div>
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="header-left-block col-sm-7">
+          {% if api['tenant']['logo'] %}
+          <a href="{{ url_for('main.home') }}"
+            ><img
+              class="vmw-logo-holder"
+              src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}"
+              alt="logo"
+          /></a>
+          {% else %}
+          <a href="{{ url_for('main.home') }}"
+            ><img
+              class="vmw-logo-holder"
+              src="{{ url_for('static', filename='images/vmware/logo.png') }}"
+              alt="logo"
+          /></a>
+          {% endif %}
+        </div>
+        <div class="header-right-block col-sm-5">
+          <div class="row">
+            <div class="search-site-block col-xs-12">
+              {{ search() }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div id="block_container" class="sample-exchange-block"></div>
+  <div class="popup-overlay">
+    <div class="popup-wrap"></div>
+  </div>
+  <div class="grayout"></div>
+</div>
+{{ footer() }}
+{% endblock %} {% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script type="text/javascript">
+  document.algolia_tenant_index = '{{ algolia_api.tenant_index }}';
+  document.algolia_app_id = '{{ algolia_api.app_id }}';
+  document.algolia_search_key = '{{ algolia_api.search_key }}';
+  document.cdn_url = "{{cdn_url}}";
+  document.isUserAnonymous = true;
+  document.viewType = "{{view_type}}";
+  document.apps = JSON.parse('{{apps|tojson}}');
+  {% if g.user and g.user.is_active() %}
+    document.isUserAnonymous = false;
+  {% endif %}
+  document.sample_page_title = "{{sample_details.title|safe}}";
+</script>
+<script src="{{ url_for('static', filename='js/build/apps/sample_exchange/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/build/templates/vmware/search.js') }}"></script>
+{% endblock %}

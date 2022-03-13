@@ -1,0 +1,506 @@
+<!-- Add paths -->
+{{#if add_path}}
+<div class="popup-box add_path">
+    <div class="popup-title camel-case">
+        {{#if is_edit}}{{i18n 'edit path'}}{{else}}{{i18n 'create new path'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'path'}}</div>
+            <div class="sub-title">{{i18n 'enter path title'}}</div>
+            <input name="title" type="text" maxlength="100" autocomplete="off" placeholder="Path Title" />
+            <div class="counter sub-title">{{title_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'description'}}</div>
+            <div class="sub-title">{{i18n 'enter path description'}}</div>
+            <textarea name="description" maxlength="200" placeholder="Path Description"></textarea>
+            <div class="counter sub-title">{{description_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'upload image'}}</div>
+            <div class="sub-title">{{i18n 'upload an image to go with your path'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*" >
+            <img class="img-preview">
+            <div class="file_name sub-title">{{i18n 'file name'}}</div>
+            <div class="remove_file capital-letter">{{i18n 'remove'}}</div>
+            <label for="upload-file">{{i18n 'browse'}}</label>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="add_path">{{i18n 'cancel'}}</div>
+            <div class="save">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_question}}
+<div class="popup-box add_question">
+    <div class="popup-title">
+    {{#if is_edit}}{{i18n 'edit question'}}{{else}}{{i18n 'create new question'}}{{/if}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'question'}}</div>
+            <div class="sub-title">{{i18n 'write a question about the following path'}}.</div>
+            <textarea name="title" class="" maxlength="200" placeholder="Question"></textarea>
+            <div class="counter">{{title_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'question description'}}</div>
+            <div class="sub-title">{{i18n 'write a short description that best describes your question'}}.</div>
+            <textarea name="description" class="" maxlength="1000" placeholder="Description"></textarea>
+            <div class="counter">{{description_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <hr class="break"/>
+        <div class="advanced capital-letter">{{i18n 'advanced'}}</div>
+        <div class="block advanced-block">
+            <div class="title">{{i18n 'upload image'}}</div>
+            <div class="sub-title">{{i18n 'upload an image to go with your question'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*">
+            <img class="img-preview">
+            <div class="file_name">{{i18n 'file name'}}</div>
+            <div class="remove_file">{{i18n 'remove'}}</div>
+            <label for="upload-file">{{i18n 'browse'}}</label>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="add_question">{{i18n 'cancel'}}</div>
+            <div class="save">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if choose_option }}
+<div class="popup-box choose_option{{#if is_edit}} switch_option{{/if}}" {{#if option_id}}data-option="{{option_id}}"{{/if}} {{#if can_add_cta }} add_cta {{/if}}>
+    <div class="popup-title">
+        {{#if is_edit}}{{i18n 'switch option'}}{{else}}{{i18n 'create option'}}{{/if}}        
+    </div>
+    <div class="content-block">
+        <div class="sub-title style">{{i18n 'style'}}</div>
+        <div class="block">
+            <div class="choose_layout text" data-popup="add_option" data-option-type="text">{{i18n 'text'}}</div>
+            <div class="choose_layout image" data-popup="add_option" data-option-type="image">{{i18n 'image'}}</div>
+            <div class="choose_layout text_image" data-popup="add_option" data-option-type="text_image">{{i18n 'text & image'}}</div>
+            {{#if can_add_cta }}
+            <div class="choose_layout cta capital-letter" data-popup="add_option" data-option-type="cta">{{i18n 'cta button'}}</div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="choose_option">{{i18n 'cancel'}}</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_next_question}}
+<div class="popup-box add_next_question">
+    <div class="popup-title">
+        {{i18n 'create new question'}}
+    </div>
+    <div class="content-block">
+        <div class="sub-title style">{{i18n 'style'}}</div>
+        <div class="block">
+            <div class="choose_layout new_question capital-letter" data-popup="add_question" >{{i18n 'new'}}</div>
+            <div class="choose_layout link capital-letter" data-popup="add_link">{{i18n 'link existing'}}</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="add_next_question">{{i18n 'cancel'}}</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if publish_path_finder}}
+<div class="popup-box confirm_publish_pf">
+    <div class="popup-title">
+            {{i18n 'publish changes'}}
+        </div>
+        <div class="content-block">
+            <div class="block">
+                <div class="sub-title text-center">
+                    {{i18n 'are you sure you want to take your work live?'}}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="block">
+                <div class="cancel" rel="confirm_publish_pf">{{i18n 'cancel'}}</div>
+                <div class="publish_pathfinder publish">{{i18n 'publish'}}</div>
+            </div>
+            <div class="form-failed">{{i18n 'oops! your work was not saved'}}.</div>
+            <div class="form-sent">{{i18n 'success! your work has successfully been published'}}.!</div>
+            <div class="form-sending">{{i18n 'publishing'}}...<div class="cd-loading"></div></div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if add_option}}
+<div class="popup-box add_option">  
+    <div class="popup-title">
+        <div class="back {{#if is_edit}}switch_option{{/if}}" data-popup="choose_option" ></div>
+        {{#if is_edit}}{{i18n 'edit'}}{{else}}{{i18n 'create'}}{{/if}}{{#if option_text}} {{i18n 'text'}}{{#if option_image}} {{i18n '& image'}}{{/if}} {{i18n 'option'}}{{else if option_image}} {{i18n 'image option'}}
+        {{else if option_cta}} CTA Button{{/if}}
+    </div>
+    <div class="content-block">
+    {{#if option_text}}
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'option'}}</div>
+            <div class="sub-title">{{i18n 'write a short description that best describes your option'}}.</div>
+            <textarea name="description" class="" maxlength="250" placeholder="Option Description"></textarea>
+            <div class="counter">{{description_limit}} {{i18n 'characters left'}}</div>
+       </div>
+    {{/if}}
+    {{#if option_image}}
+        <div class="block" img_block>
+            <div class="title mandatory-field">{{i18n 'upload image'}}</div>
+            <div class="sub-title">{{i18n 'upload an image to go with your option'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*">
+            <img class="img-preview">
+            <div class="file_name">{{i18n 'file name'}}</div>
+            <div class="remove_file">{{i18n 'remove'}}</div>
+            <label for="upload-file" class="rippleEffect">{{i18n 'browse'}}</label>
+        </div>
+    {{/if}}
+    {{#if option_cta}}
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'cta button text'}}</div>
+            <div class="sub-title">{{i18n 'write some text that will be displayed inside the button'}}</div>
+            <textarea name="description" class="" maxlength="100" placeholder="Button Text"></textarea>
+            <div class="counter">{{description_limit}} {{i18n 'characters left'}}</div>
+        </div>
+    {{/if}}
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="add_option">{{i18n 'cancel'}}</div>
+            <div class="save">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_link}}
+<div class="popup-box add_link">
+    <div class="popup-title">
+        {{#if unlinked_option}}
+            <div class="back" data-popup="add_next_question"></div>
+        {{/if}}
+        {{i18n 'link existing question'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <input class="search" type="text" placeholder="Search Content" />
+            <div class="link_block search_block">
+                {{#if questions.length }}
+                    {{#unless unlinked_option}}
+                        <div class="links">
+                            <input type="radio" name="radiog_lite" id="none" value="" class="css-checkbox">
+                            <label for="none" class="css-label">None</label>
+                        </div>
+                    {{/unless}}
+                    {{#each questions}}
+                    <div class="links">
+                        <input type="radio" name="radiog_lite" id="q{{@index}}" value="{{question_id}}" class="css-checkbox" 
+                        {{#if is_current}} checked="checked" {{/if}}>
+                        <label for="q{{@index}}" class="css-label">{{text}}</label>
+                    </div>
+                    {{/each}}
+                {{else}}
+                    <p>{{i18n 'no questions added yet!!'}}</p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="add_link">{{i18n 'cancel'}}</div>
+            <div class="link">{{i18n 'link'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+<!-- Delete Entitys -->
+{{#if delete_entity}}
+<div class="popup-box delete_entity">
+    <div class="popup-title">
+        Delete {{entity_type}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="sub-title">{{i18n "you’ve made some cool stuff!"}}
+                {{i18n 'are you sure you want to delete this'}} {{entity_type}}?
+            </div>
+        </div>      
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="delete_entity">{{i18n 'cancel'}}</div>
+            <div class="delete" data-type='{{entity_type}}' data-id='{{entity_id}}'>{{i18n 'delete'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! deleting failed'}}</div>
+        <div class="form-sent">{{i18n 'deleted successfully!'}}</div>
+        <div class="form-sending">{{i18n 'deleting'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_suggestions_warning}}
+<div class="popup-box add_suggestions_warning">
+    <div class="popup-title">
+        {{i18n 'confirm add suggestions'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="sub-title">
+                {{i18n 'adding suggested content for your users will finish this trail'}}.<br />
+                {{i18n 'you will not be able to add any further questions under this option'}}.
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="add_suggestions_warning">{{i18n 'cancel'}}</div>
+            <div class="continue" data-prev-option-id={{prev_option_id}}>CONTINUE</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if edit_suggestions_headers}}
+<div class="popup-box edit_suggestions_headers">
+    <div class="popup-title">
+        {{i18n 'edit header text'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'title'}}</div>
+            <div class="sub-title">{{i18n 'write a title for the results page header'}}.</div>
+            <textarea name="title" class="" maxlength="120" placeholder="Write something">{{title}}</textarea>
+            <div class="counter">{{title_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'description'}}</div>
+            <div class="sub-title">{{i18n 'write a description to your header'}}.</div>
+            <textarea name="description" class="" maxlength="2000" placeholder="Description">{{description}}</textarea>
+            <div class="counter">{{description_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <hr class="break"/>
+        <div class="advanced">{{i18n 'advanced'}}</div>
+        <div class="block advanced-block">
+            <div class="title">{{i18n 'upload image'}}</div>
+            <div class="sub-title">{{i18n 'upload an image to go with your suggestions'}}</div>
+            <input type="file" class="upload-file" id="upload-file" accept="image/*">
+            <img class="img-preview">
+            <div class="file_name">File name</div>
+            <div class="remove_file">{{i18n 'remove'}}</div>
+            <label for="upload-file">{{i18n 'browse'}}</label>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="edit_suggestions_headers">{{i18n 'cancel'}}</div>
+            <div class="save">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if edit_suggestion }}
+<div class="popup-box edit_suggestion">
+    <div class="popup-title">
+        {{i18n 'edit suggestion text'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'title'}}</div>
+            <div class="sub-title">{{i18n 'write a title for the suggestion'}}.</div>
+            <textarea name="title" class="" maxlength="200" placeholder="Write something">{{title}}</textarea>
+            <div class="counter">{{title_limit}} {{i18n 'characters left'}}</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="edit_suggestion">{{i18n 'cancel'}}</div>
+            <div class="save" data-id='{{suggestion_id}}'>{{i18n 'update'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_results_to}}
+<div class="popup-box add_results_to">
+    <div class="popup-title">{{i18n 'add results'}}</div>
+    <div class="content-block">
+        <div class="block">
+            <div class="sub-title style">{{i18n 'style'}}</div>
+            <div class="suggetsion_group">
+                <div class="single_list_suggestion add_block" data-popup="add_suggestions">{{i18n 'single list'}}</div>
+                <div class="group_list_suggestion add_block" data-popup="add_suggestions_group">{{i18n 'group list'}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="cancel" rel="add_results_to">{{i18n 'cancel'}}</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+
+{{#if add_suggestions}}
+<div class="popup-box add_suggestions">
+    <div class="popup-title">
+        {{i18n 'add suggested content'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'suggested content'}}</div>
+            <div class="sub-title">{{i18n 'choose suggested content from internal or external source to finish this path'}}.</div>
+            <div class="suggetsion_type">
+                <input type="radio" id="link_chapter" name="cta_type"  class="css-radio" checked="checked" value="cta-link">
+                <label class="css-radio-label" for="link_chapter">{{i18n 'chapters from your internal library'}}</label>
+                <div class="content_suggestion">
+                    <div class="browse" data-popup="add_suggested_chapters" data-popup-from="add_suggestions">{{i18n 'browse your library'}}</div>
+                    <div class="selected_chapters"></div>
+                </div>
+            </div>
+            <div class="suggetsion_type">
+                <input type="radio" id="link_external" name="cta_type"  class="css-radio" value="cta-link" >
+                <label class="css-radio-label" for="link_external">{{i18n 'link to external content'}}</label>
+                <div class="content_suggestion disabled">
+                    <div class="external-links"></div>
+                    <input class="suggestion_link" placeholder="http://" type="url" disabled="true"/>
+                    <div class="add_suggestion_link">{{i18n 'add'}}</div>
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="add_block cancel" data-popup="add_results_to">{{i18n 'cancel'}}</div>
+            <div class="save_suggestions" disabled="true">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_suggestions_group}}
+<div class="popup-box add_suggestions_group">
+    <div class="popup-title">
+    {{#if is_edit}} {{i18n 'edit'}} {{else}} {{i18n 'add'}} {{/if}} {{i18n 'suggested content group'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'group title'}}</div>
+            <div class="sub-title">{{i18n 'choose a title for this group'}}</div>
+            <input name="title" type="text" maxlength="100" autocomplete="off" placeholder="Name" />
+            <div class="counter">{{title_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'group description'}}</div>
+            <div class="sub-title">{{i18n 'write a short description that describes the suggested content in this group'}}</div>
+            <textarea name="description" maxlength="200" placeholder="Description"></textarea>
+            <div class="counter">{{description_limit}} {{i18n 'characters left'}}</div>
+        </div>
+        <div class="block">
+            <div class="title">{{i18n 'suggested content'}}</div>
+            <div class="sub-title">{{i18n 'choose suggested content from internal or external source to finish this path'}}.</div>
+            <div class="suggetsion_type">
+                <input type="radio" id="link_chapter" name="cta_type"  class="css-radio" checked="checked" value="cta-link">
+                <label class="css-radio-label" for="link_chapter">{{i18n 'chapters from your internal library'}}</label>
+                <div class="content_suggestion">
+                    <div class="browse capital-letter" data-popup="add_suggested_chapters" data-popup-from="add_suggestions_group">{{i18n 'browse your library'}}</div>
+                    <div class="selected_chapters"></div>
+                </div>
+            </div>
+            <div class="suggetsion_type">
+                <input type="radio" id="link_external" name="cta_type"  class="css-radio" value="cta-link" >
+                <label class="css-radio-label" for="link_external">{{i18n 'link to external content'}}</label>
+                <div class="content_suggestion disabled">
+                    <div class="external-links"></div>
+                    <input class="suggestion_link" placeholder="http://" type="url" disabled="true"/>
+                    <div class="add_suggestion_link">{{i18n 'add'}}</div>
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="add_block cancel" data-popup="add_results_to">{{i18n 'cancel'}}</div>
+            <div class="save_suggestions_group">{{#if is_edit}}{{i18n 'update'}}{{else}}{{i18n 'save'}}{{/if}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+
+{{#if add_suggested_chapters}}
+<div class="popup-box add_suggested_chapters">
+    <div class="popup-title">
+        <div class="back"></div>
+        {{i18n 'browse library'}}
+    </div>
+    <div class="content-block">
+        <div class="block">
+            <input class="search" type="text" placeholder="Search Content" />
+            <div class="chapter_block search_block">
+                {{#each chapters}}
+                <div class="chapters">
+                    <input type="checkbox" name="suggestions" id="{{slug}}" value="{{slug}}" {{#if selected}}checked{{/if}} class="css-checkbox">
+                    <label for="{{slug}}" class="css-label">{{name}}</label>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="block">
+            <div class="back">{{i18n 'cancel'}}</div>
+            <div class="add">{{i18n 'save'}}</div>
+        </div>
+        <div class="form-failed">{{i18n 'oops! saving failed'}}</div>
+        <div class="form-sent">{{i18n 'saved successfully!'}}</div>
+        <div class="form-sending">{{i18n 'saving'}}...<div class="cd-loading"></div></div>
+    </div>
+</div>
+{{/if}}
+

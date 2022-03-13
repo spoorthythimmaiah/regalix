@@ -1,0 +1,224 @@
+<div class="popup-title capital-letter">
+    {{i18n 'media settings'}}
+</div>
+<form name='replace-media'>
+    <div class="content-block replace_media">
+        {{#if replace_image }}
+        <div class="block">
+            <div class="title">{{i18n 'replace image'}}</div>
+            <div class="sub-title">
+               {{i18n 'choose a different image file to replace the image'}}(.jpg, .jpeg, .png, .gif, .bmp)
+            </div>  
+            <input type="file" id='replace-image' accept="{{image_options}}" name="replace_resource" media-type='image' />
+            <img class="drag" />
+            <div class="file-name"></div>
+            <label for="replace-image" class="rippleEffect">{{i18n 'browse'}}</label>
+            <div class="error-message"></div>
+        </div>
+        <div class="block">
+            <div class="title">{{#if add_background_audio}}{{i18n 'add'}}{{ else }}{{i18n 'replace'}}{{/if}} {{i18n 'audio'}}</div>
+            <div class="sub-title">
+                {{#if add_background_audio}}
+                {{i18n 'choose an audio to use as image back ground audio'}}(.wav, .mp3)
+                {{else}}
+                {{i18n 'choose a different audio file to replace the existing audio'}}(.wav, .mp3)
+                {{/if}}
+            </div>  
+            <input type="file" id='add-replace-audio' accept="{{audio_options}}" name="replace_resource" media-type='audio' />
+            <label for="add-replace-audio" class="rippleEffect">{{i18n 'BROWSE'}}</label>
+            <div class="img-audio file-name"></div>
+            <div class="error-message"></div> 
+        </div>       
+        {{/if}}
+        {{#if replace_audio }}
+        <div class="block">
+            <div class="title">{{i18n 'replace audio'}}</div>
+            <div class="sub-title">
+               {{i18n 'choose a different audio file to replace the existing audio'}}(.wav, .mp3)
+            </div>  
+            <input type="file" id='replace-audio-file' accept="{{audio_options}}" name="replace_resource" media-type='audio' />
+            <div class="file-name"></div>
+            <label for="replace-audio-file" class="rippleEffect">{{i18n 'browse'}}</label>
+            <div class="error-message"></div>
+        </div>
+        <div class="block">
+            <div class="title">{{#if add_cover}}{{i18n 'add'}}{{ else }}{{i18n 'replace'}}{{/if}} {{i18n 'audio cover'}}</div>
+            <div class="sub-title">
+                {{#if add_cover}}
+                {{i18n 'choose an image to use as audio cover'}}(.jpg, .jpeg, .png, .gif, .bmp)
+                {{else}}
+                {{i18n 'choose a different image to replace existing audio cover'}}(.jpg, .jpeg, .png, .gif, .bmp)
+                {{/if}}
+            </div>  
+            <input type="file" id='add-replace-cover' accept="{{image_options}}" name="replace_resource" media-type='image' />
+            <img class="drag" />
+            <div class="file-name"></div>
+            <label for="add-replace-cover" class="rippleEffect">{{i18n 'browse'}}</label>
+            <div class="error-message"></div> 
+        </div>
+        {{/if}}
+        {{#if replace_video }}
+        <div class="block">
+            <div class="title">{{i18n 'replace video'}}</div>
+            <div class="sub-title">
+               {{i18n 'choose a different video file to replace the existing video'}}(.mp4, .wmv, .mpeg4)
+            </div>  
+            <input type="file" id='replace-video-file' accept="{{video_options}}" name="replace_resource" media-type='video' />
+            <div class="file-name"></div>
+            <label for="replace-video-file" class="rippleEffect">{{i18n 'browse'}}</label>
+            <div class="error-message"></div>
+        </div>
+        {{/if}}
+        {{# if replace_embed }}
+        <div class="block">
+            <div class="title">{{i18n 'replace embed video'}}</div>
+            <div class="sub-title">
+               {{i18n 'replace this existing video with another embedded video using a url'}}.
+            </div> 
+            <div class="video-link">
+                <input type="text" class="url_input" name="replace_resource" placeholder="Youtube, Vimeo or BrightCove url" autocomplete="off" media-type='embed' />
+            </div>
+            <div class="error-message"></div>
+        </div>
+        {{/if}}
+        {{# if replace_link }}
+        <div class="block">
+            <div class="title">{{i18n 'replace link'}}</div>
+            <div class="sub-title">
+                {{i18n 'replace this link with another link using a destination url'}}.
+            </div> 
+            <div class="url-link">
+                <input type="text" class="url_input" name="replace_resource" placeholder="enter a link" autocomplete="off" media-type="link" />
+            </div>
+            <div class="error-message"></div> 
+        </div>
+        {{/if}}
+        {{# if replace_content }}
+        <div class="block">
+            <div class="title">{{i18n 'footer icon'}}</div>
+            <div class="sub-title">
+               {{i18n 'choose an icon or image to be presented at the footer of the page'}}.
+            </div>  
+            <input type="file" id='replace-image' accept="{{image_options}}" name="replace_resource" media-type='image' />
+            <img class="drag" id='footer-image'/>
+            <div class="file-name"></div>
+            <label for="replace-image" class="rippleEffect">{{i18n 'browse'}}</label>
+            <div class="error-message"></div>
+        </div>     
+        <div class="block">
+            <div class="title mandatory-field">{{i18n 'description'}}<div class="counter">(<span id="footer-description-counter">200</span> {{i18n 'characters left'}})</div></div>
+            <div class="sub-title">{{i18n 'provide a footer text for all the pages in this frame'}}.</div>
+            <div class="input_wrap">
+                <textarea name="footer" class="footer-description trim-input" id='footer-text' maxlength="200" placeholder="Footer"></textarea>
+            </div>
+        </div>
+        {{/if}}
+        {{#if replace_pdf }}
+            <div class="block">
+                <div class="title">{{i18n 'replace pdf'}}</div>
+                <div class="sub-title">
+                    {{i18n 'choose a different pdf file to replace the existing pdf'}}
+                </div>  
+                <input type="file" id='replace-pdf' accept="{{pdf_options}}" name="replace_resource" media-type='pdf' />
+                <img class="drag" src="/static/images/pdf-thumb.png"/>
+                <div class="file-name"></div>
+                <label for="replace-pdf" class="rippleEffect">{{i18n 'browse'}}</label>
+                <div class="error-message"></div>
+            </div>
+        {{/if}}
+        {{#if replaceFile }}
+            <div class="block">
+                <div class="title">name</div>
+                <div class="sub-title">choose a name for this file.</div>
+                <div class="input_wrap">
+                    <input type="text" name="file_name" class="section-name trim-input" maxlength="110" autocomplete="off" placeholder="Name" value="{{name}}">
+                    <div class="counter"><span data-counter="">110</span> <span>characters Left</span></div>
+                </div>            
+            </div>
+            <div class="block file">
+                <div class="title">{{i18n 'replace file'}}</div>
+                <div class="sub-title">
+                    {{i18n 'choose a different file to replace the existing file'}}
+                </div>  
+                <input type="file" id='replace-file' accept="{{fileOptions}}" name="replace_resource" media-type="file" />
+                <div class="file-name">{{fileName}}</div>
+                <label for="replace-file" class="rippleEffect">{{i18n 'browse'}}</label>
+                <div class="error-message"></div>
+            </div>
+            <div class="block {{#if icon}}image-added{{/if}}">
+                <div class="title">upload image/icon</div>
+                <div class="sub-title">upload an image/icon to go with your file.</div>
+                <input type="file" class="drag-file" id="upload-file" accept="image/*" name="file_cover_image">
+                <img class="drag" id="upload-file-preview" {{#if icon}}src="{{icon.url}}"{{/if}}>
+                <div class="file-name">{{#if icon}}{{icon.name}}{{/if}}</div>
+                <label id="remove-img">remove</label>
+                <label for="upload-file" class="rippleEffect">upload file</label>
+            </div>
+        {{/if}}
+        {{#if replace_ppt }}
+            <div class="block">
+                <div class="title">{{i18n 'replace ppt'}}</div>
+                <div class="sub-title">
+                    {{i18n 'choose a different ppt file to replace the existing ppt'}}
+                </div>  
+                <input type="file" id='replace-ppt' accept="{{ppt_options}}" name="replace_resource" media-type='ppt' />
+                <img class="drag" src="/static/images/author/slide_icon_ppt.png"/>
+                <div class="file-name"></div>
+                <label for="replace-ppt" class="rippleEffect">{{i18n 'browse'}}</label>
+                <div class="error-message"></div>
+            </div>
+        {{/if}}
+        {{# if replace_iframe }}
+        <div class="block">
+            <div class="title">{{i18n 'replace html code'}}</div>
+            <div class="sub-title">
+                {{i18n 'paste your new iframe html below'}}.
+            </div> 
+            <div class="url-link">
+                <input type="text" class="url_input sub-title" name="replace_resource" placeholder="enter a iframe" autocomplete="off" media-type="iframe" />
+            </div>
+            <div class="error-message"></div> 
+        </div>
+        {{/if}}
+        {{# if replace_html5 }}
+        <div class="block">
+            <div class="title">{{i18n 'replace zip'}}</div>
+            <div class="sub-title">
+               {{i18n 'choose a different zip file to replace the existing file'}}
+            </div>  
+            <input type="file" id='replace-zip-file' accept=".zip, .html" name="replace_resource" media-type='html5' />
+            <label for="replace-zip-file" class="rippleEffect">{{i18n 'browse'}}</label>
+            <div class="file-name"></div>
+            <div class="error-message"></div>
+        </div>
+        {{/if}}
+        {{# if replace_sandbox }}
+        <div class="block">
+            <div class="title">{{i18n 'replace sandbox'}}</div>
+            <div class="sub-title">
+               {{i18n 'choose a different json file to replace the existing file'}}
+            </div>  
+            <input type="file" id='replace-sandbox-file' accept=".json" name="replace_resource" media-type='sandbox' />
+            <label for="replace-sandbox-file" class="rippleEffect">{{i18n 'browse'}}</label>
+            <div class="file-name"></div>
+            <div class="error-message"></div>
+        </div>
+        {{/if}}
+    </div>
+    <div class="popup-footer">
+        <div class="form-footer">
+            <div class="cancel rippleEffect" rel="popup-slide-settings">{{i18n 'cancel'}}</div>
+            <input class="save rippleEffect" type="submit" value="SAVE" {{#unless enableSaveButton}}disabled{{/unless}} />
+        </div>
+        <div class="form-failed">
+            {{i18n 'oops! your submission was not sent'}}
+        </div>
+        <div class="form-sent">
+            {{i18n 'saved successfully!'}}
+        </div>
+        <div class="form-sending">
+            {{i18n 'saving'}}...
+            <div class="cd-loading"></div>
+        </div>
+    </div>
+</form>

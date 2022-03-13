@@ -1,0 +1,61 @@
+{% extends 'layouts/base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%; 
+        }
+        .gif-container{
+            display: table;
+            margin: 0 auto;
+            width: 100%;
+            min-height: 100%;
+            overflow: hidden;
+        }
+        .gif-loader{
+            display: table-cell;
+            background: url("/static/images/loading_img.gif");
+            background-size: 100%;
+            width: 150px;
+            height: 150px;
+            vertical-align: middle;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            position: absolute;
+            transform: translateX(-50%) translateY(-100%);
+        }
+        .loading-msg {
+            left: 50%;
+            top: 50%;
+            position: absolute;
+            transform: translateX(-50%) translateY(-50%);
+            margin-top: 40px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block container %}
+    <div class='gif-container'>
+        <div class='gif-loader'></div>
+        <div class="loading-msg">Please wait. We are loading the content from your box account.</div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript">
+        $.get('/dashboard/read-box-content?code={{code}}&state={{state}}').done(function(){
+            window.location.href = "{{url_for('main.edit')}}"
+        }).error(function(a, b, c){
+            console.log(a,b,c)
+            window.location.href = "{{url_for('dashboard.library')}}"
+        });
+    </script>
+{% endblock %}

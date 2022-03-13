@@ -1,0 +1,20 @@
+.btn-large{
+	padding: 3px 12px;
+	font-size: 14px;
+	border-radius: 3px;
+}
+
+.control-group{
+	display: inline-block;
+}
+
+.ui-resizable{ 
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px; 
+}
+
+.ui-resizable.ui-resizable-resizing,
+.ui-resizable.ui-draggable-dragging{
+	border:1px dashed #ffcc66 !important; 
+}

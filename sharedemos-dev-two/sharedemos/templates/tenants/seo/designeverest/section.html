@@ -1,0 +1,189 @@
+{% extends 'tenants/seo/designeverest/base.html' %}
+
+{% block seo %}
+    {% set icon = api['icon']['url'] if api['icon'] else None %}
+    {% if not icon %}
+    {% set icon = api['parent']['icon']['url'] if api['parent'] and api['parent']['icon'] else None %}
+    {% endif %}
+    {% if not icon %}
+    {% set icon = api['product']['icon']['url'] if api['product'] and api['product']['icon'] else None %}
+    {% endif %}
+    {{load_seo_meta(title=api['name'] + ' | ' + api['tenant']['name'], description=api['description'], image=icon)}}
+{% endblock %}
+
+{% block container %}
+    {{ search() }}
+    <div class="container-block" id="main_container">
+        {{ translation_wrapper() }}
+        {{ header() }}
+        <div class="welcome-video-holder">
+            <div class="hide-video-popup"></div>
+            <div class="section-video">
+            </div>
+        </div>
+        <div class="playlist-banner">
+            <div class="container">
+                <div class="row banner-row">
+                    <div class="col-md-7 banner-column">
+                        <h1>{{ api['name'] }}</h1>
+                        {{ cta_list(api['cta_list']) }}
+                    </div>
+                    <div class="col-md-3 banner-video">
+                        {{ videos() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-page container">
+            {% if api['bulletin_board_list'] %}
+                <h1>Featured Content</h1>
+                {{ bulletin_boards() }}
+            {% endif %}
+            {% if api['has_leaf_node_parents'] %}
+                {% for child in api['children'] %}
+                    <h1>{{ child['name'] }}</h1>
+                    <p>{{ child['description'] or '' }}</p>
+                    <section class="row sec-cat-list">
+                        {% for grandchild in child['children'] %}
+                            <div class="col-xs-12 col-md-6 category-list-details">
+                                <div class="category-list-link-block">
+                                    {% if grandchild['translations_available'] %}
+                                        <div class="translation-icon" data-overlay="language-translations"
+                                             data-language-options='{{ grandchild['locales_available']|tojson }}'></div>
+                                    {% endif %}
+                                    {% if grandchild['tags'] %}
+                                        <ul class="category-tags">
+                                            {% for tag in grandchild['tags'] %}
+                                                <li>{{ tag }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    {% set href_url = url_for('main.route_handler',
+                                    section=grandchild['slug']) %}
+                                    {% set class_name = 'category-list-link' %}
+                                    {% if grandchild['linked_asset'] %}
+                                        {% set href_url =  url_for('main.serve_section_assets', asset_name=grandchild['linked_asset']['name']) %}
+                                        {% set class_name = 'asset-linked' %}
+                                    {% endif %}
+                                    {% set data_attr = 'data-product-id=' + api['product']['slug'] + ' data-section-id=' + grandchild['slug'] %}
+                                    <a href="{{ href_url }}" class="{{ class_name }}"{% if grandchild['linked_asset'] %}
+                                        {{ data_attr }} target="_blank" {% endif %}>
+                                        <div class="category-list-icon">
+                                            {% if grandchild['linked_asset'] %}
+                                                {% if grandchild['icon'] %}
+                                                    <div class="relative-icon">      
+                                                        <div class="lazy-load" data-src="{{ grandchild['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="default-icon">
+                                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/section-default-link-icon.png') }}">
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if grandchild['icon'] %}
+                                                    <div class="relative-icon">
+                                                        <div class="lazy-load" data-src="{{ grandchild['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="default-icon">
+                                                        <img class="lazy-load" data-src="{{ url_for('static', filename='images/vmware/default-category-icon.png') }}">
+                                                    </div>
+                                                {% endif %}
+
+                                            {% endif %}
+                                        </div>
+                                        <div class="category-list-desc">
+                                            <h5>{{ grandchild['name'] }}</h5>
+                                            <p {% if grandchild['tags'] %}
+                                                class="desc-with-tags" {% endif %}>{{ grandchild['description'] or '' }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                {% endfor %}
+            {% else %}
+                <section class="row sec-cat-list">
+                    {% for child in api['children'] %}
+                        <div class="col-xs-12 col-md-6 category-list-details">
+                            <div class="category-list-link-block">
+                                {% if child['translations_available'] %}
+                                    <div class="translation-icon" data-overlay="language-translations"
+                                         data-language-options='{{ child['locales_available']|tojson }}'></div>
+                                {% endif %}
+                                {% if child['tags'] %}
+                                    <ul class="category-tags">
+                                        {% for tag in child['tags'] %}
+                                            <li>{{ tag }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                {% set href_url = url_for('main.route_handler',
+                                 section=child['slug']) %}
+                                {% set class_name = 'category-list-link' %}
+                                {% if child['linked_asset'] %}
+                                    {% set href_url =  url_for('main.serve_section_assets', asset_name=child['linked_asset']['name']) %}
+                                    {% set class_name = 'asset-linked' %}
+                                {% endif %}
+                                {% set data_attr = 'data-product-id=' + api['product']['slug'] + ' data-section-id=' + child['slug'] %}
+                                <a href="{{ href_url }}" class="{{ class_name }}"{% if child['linked_asset'] %}
+                                    {{ data_attr }} target="_blank" {% endif %}>
+                                    <div class="category-list-icon">
+                                        {% if child['linked_asset'] %}
+                                            {% if child['icon'] %}
+                                                <div class="relative-icon">
+                                                        <div class="lazy-load" data-src="{{ child['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                                </div>
+                                            {% else %}
+                                                <div class="default-icon">
+                                                    <img class="lazy-load" data-src="{{ url_for('static', filename='images/section-default-link-icon.png') }}">
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if child['icon'] %}
+                                                <div class="relative-icon">
+                                                    <div class="lazy-load" data-src="{{ child['icon']['url'] }}" style="background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+                                                </div>
+                                            {% else %}
+                                                <div class="default-icon">
+                                                    <img class="lazy-load" data-src="{{ url_for('static', filename='images/vmware/default-category-icon.png') }}">
+                                                </div>
+                                            {% endif %}
+
+                                        {% endif %}
+                                    </div>
+                                    <div class="category-list-desc">
+                                        <h5>{{ child['name'] }}</h5>
+                                        <p {% if child['tags'] %}
+                                            class="desc-with-tags" {% endif %}>{{ child['description'] or '' }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+        </div>
+    </div>
+    {{ footer() }}
+
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.isUserAnonymous = true;
+        document.apps = JSON.parse('{{apps|tojson}}');
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.viewType = "{{view_type}}";
+        document.product = "{{api['product']['slug']}}";
+        document.section = "{{api['slug']}}";
+        document.locales = JSON.parse('{{api["locales"]|tojson}}');
+        document.page = 'Category';
+
+    </script>
+    <script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,14 @@
+<div class='hotspot {{#if display.delay}}delay-hotspot{{/if}}' id='hotspot{{hotspot_id}}' {{#if display}}style='{{#each display}}{{#if this}}{{@key}}:{{this}};{{/if}}{{/each}};{{#if display.color}}border-color:{{display.color}}{{/if}};{{#if display.delay}}animation: animatehotspot 0s {{display.delay}}s forwards;
+    -webkit-animation: animatehotspot 0s {{display.delay}}s forwards{{/if}};'{{/if}} {{#if display.color}}border-color='{{display.color}}'{{/if}}>
+{{#compare hotspot_type "==" 'link'}}
+    <a class='link' href='{{#if action.href}}{{action.href}}{{else}}javascript:;{{/if}}' target='_blank'>
+{{/compare}}
+{{# if callout.text}}
+    <div class='info-tooltip {{callout.tooltip_position}}'>
+        <span class='arrow'></span>
+        <div class='close'></div>
+        <h2></h2>
+        <p>{{{callout.text}}}</p>
+    </div>
+{{/if}}
+</div>

@@ -1,0 +1,32 @@
+{{# if trending_chapters.length }}
+<div class="popular_chapters_header reports_header col-xs-12">
+    <div class="chapters_title col-xs-7">
+        <span>name</span>
+    </div>
+    <div class="chapters_clicks col-xs-2 text-center{{# compare sort_by '==' 'views'}} active{{/compare}}">
+        <span class="sort">views</span>
+    </div>
+    <div class="chapters_comp_rate col-xs-3 text-center{{# compare sort_by '==' 'completion_rate'}} active{{/compare}}">
+        <span class="sort">completion rate</span>
+    </div>
+</div>
+<div class="popular_chapters_list reports_list" id="reports_trending_demos" data-sort="descending">
+    {{# each trending_chapters }}
+        <div class="reports_data_row col-xs-12{{#unless ../load_more}}{{# compare @index ">" 4}}  hidden {{/compare}}{{/unless}}">
+            <div class="chapters_title col-xs-7">
+                <span>{{walkthrough}}</span> 
+                <div class="breadcrumb">{{breadcrumb}}</div>
+            </div>
+            <div class="chapters_clicks col-xs-2 text-center">{{formatNumber views}}</div> 
+            <div class="chapters_comp_rate col-xs-3 text-center">{{completion_rate}}&#37</div>
+        </div>
+    {{/each}}
+    {{#unless load_more}}
+        {{# compare trending_chapters.length ">" 5}}
+        <div class="load_more_popular_chapters load_more_reports text-center col-xs-12">load more</div>
+        {{/compare}}
+    {{/unless}}
+</div>
+{{ else }}
+<div class="no-report">{{ i18n 'No data available'}}</div>
+{{/if}}

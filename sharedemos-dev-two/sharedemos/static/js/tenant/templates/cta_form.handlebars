@@ -1,0 +1,34 @@
+<div class="sign-box">
+	<form method="post" name="lead" enctype="multipart/form-data">
+		<div class="title">
+			{{cta_button.campaign_message}}
+		</div>
+		{{#each cta_button.fields}}
+    		<div class="block">
+    			<div class="flabel">{{this}}</div>
+    			<input type="text" name="{{this}}" placeholder="{{this}}" autocomplete="off">
+    		</div>
+		{{/each}}
+		<input type="hidden" name="product" value='{{product}}'/>
+		<input type="hidden" name="section" value='{{section}}'/>
+		{{# if chapter}}
+		<input type="hidden" name="walkthrough" value='{{chapter}}'/>
+		{{/if}}
+		<div class="footer">
+			<div class="form-footer">
+    			<input type="submit" value="{{i18n 'SUBMIT'}}" class="theme-bg-color">
+    			<div class="cancel capital-letter">{{i18n "cancel"}}</div>
+    		</div>	
+    		<div class="form-failed capital-letter">
+    			{{i18n 'oops! your submission was not sent'}}
+    		</div>	
+    		<div class="form-sent">
+    			{{i18n 'sent successfully!'}}
+    		</div>
+    		<div class="form-sending">
+    			{{i18n 'sending'}}...
+    			<div class="cd-loading"></div>
+    		</div>
+		</div>
+	</form>
+</div>

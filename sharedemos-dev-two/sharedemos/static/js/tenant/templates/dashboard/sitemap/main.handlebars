@@ -1,0 +1,48 @@
+{{#each siteMapData}}
+    <li class="sortableListsClosed {{#unless editable}}undraggable{{/unless}} {{#if is_asset}}asset-linked{{/if}}" data-item="category" data-slug="{{slug}}">
+
+        <div style="margin-left:10px" class="parentblock {{#unless editable}}undraggable{{/unless}} {{#if is_asset}}asset-linked{{/if}}">
+
+            <span class="expandSection {{#unless editable}}undraggable{{/unless}} {{#if is_asset}}asset-linked{{/if}}"></span>
+
+            <span class="siteMapTitle {{#unless editable}}undraggable{{/unless}} {{#if is_asset}}asset-linked{{/if}}">{{name}}</span>
+
+            {{#unless is_asset}}
+            <span class="category-demo-count item-count {{#unless editable}}undraggable{{/unless}} {{#if is_asset}}asset-linked{{/if}}">
+                {{demos_count}} Asset{{#compare demos_count ">" '1'}}s{{/compare}},
+            </span>
+
+            <span class="category-slide-count item-count {{#unless editable}}undraggable{{/unless}} {{#if is_asset}}asset-linked{{/if}}">
+                {{slides_count}} Slide{{#compare slides_count ">" '1'}}s{{/compare}}
+            </span>
+            {{/unless}}
+
+            {{#if editable}}
+                <span class="remove-element click-btn hide undraggable" title="Delete Item"></span>
+                {{#unless is_asset}}
+                    <span class="lib-cat-launch hide">
+                        <a slug-id="{{slug}}" class="ripple launch-btn click-btn undraggable" target="_blank">
+                            <span class="click-btn undraggable">launch</span>
+                        </a>
+                    </span>
+                {{/unless}}
+            {{/if}}
+
+        </div>
+
+        <ul class="category" id="{{slug}}" style="display: none;">
+            {{#if editable}}
+                {{#unless is_asset}}
+                    {{#each children}}
+                        {{> render_sections }}
+                    {{else}}
+                        {{#each playlists}}
+                            {{> render_playlists }}
+                        {{/each}}
+                    {{/each}}
+
+                {{/unless}}
+            {{/if}}
+        </ul>
+    </li>
+{{/each}}

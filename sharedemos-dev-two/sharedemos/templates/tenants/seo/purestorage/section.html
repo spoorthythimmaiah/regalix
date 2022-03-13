@@ -1,0 +1,110 @@
+{% extends 'tenants/seo/purestorage/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['name'] + ' | ' + api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+
+{% block container %}
+{{ purestorage_search() }}
+<div class="container-block">
+    {% set link = url_for('main.home') %} 
+    {% if api['parent'] %}
+        {% set link = url_for('main.route_handler', section=api['parent']['slug']) %}
+    {% endif %}
+    {{ translation_wrapper() }}
+    <header>
+        <div class="pure-nav-bar">
+            <div class="container">
+                <img src="{{ url_for('static', filename='images/purestorage/logo.png') }}">
+                <a href="{{ link }}"><img src="{{ url_for('static', filename='images/purestorage/backbutton.png') }}"></a>
+                <!-- search -->
+                <div class="ps-search-icon"></div>
+                <div data-attr="cancel-search"></div>
+            </div>
+        </div>
+        <div id="pure-carousel" class="carousel slide" data-ride="carousel" >
+            <div class="item">
+                <div class="carousel-banner-bg" style="background: url({{ url_for('static', filename='images/purestorage/categorybanner.jpg') }});background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                <div class="carousel-caption container">
+                    <div class="col-xs-12 col-md-7">
+                        <h1 class="sub-title">{{ api['name'] }}</h1>
+                        <p>{{ api['description'] or '' }}</p>
+                        {% if api['tenant']['can_download'] and api['can_download'] and pl_with_chapter %}
+                            <a class="export-pdf" data-attr-section="{{ api['slug'] }}">{{ _('export to pdf') }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        {{ videos() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- categories list -->
+        <div class="categories-list">
+            {% if api['children'] %}
+            <h2>{{_('categories')}}</h2>
+            <div class="row categories">
+                {% for child in api['children'] %}
+                    <div class="col-xs-6 col-md-4 col-lg-4 category">
+                        {% set href_url = url_for('main.route_handler', section=child['slug'])%}
+                        {% set class_name='category-link' %}
+                        {% if  child['linked_asset'] %}
+                            {% set href_url =  url_for('main.serve_section_assets', asset_name=child['linked_asset']['name']) %}
+                            {% set class_name = 'asset-linked' %}
+                        {% endif %}
+                        {% set data_attr = 'data-product-id=' + api['product']['slug'] + ' data-section-id=' + child['slug'] %}
+                        <div class="product-list-block">
+                            {% if child['translations_available'] %}
+                                <div class="translation-icon" data-overlay="language-translations" data-language-options='{{child['locales_available']|tojson}}'></div>
+                            {% endif %}
+                            <a href="{{href_url}}" class="{{class_name}}"{% if child['linked_asset']%} {{data_attr}} target="_blank" {% endif %}>
+                                <div class="category-icon">
+                                    {% if child['icon'] %}
+                                        <img class="lazy-load" data-src="{{ child['icon']['url'] }}" alt="{{child['icon']['name']}}">
+                                    {% else %}
+                                    <img class="lazy-load" data-src="{{ url_for('static', filename='images/purestorage/category-bg.jpg') }}" alt="library-app">
+                                    {% endif %}
+                                </div>
+                                <h6 title="{{child['name']}}">{{child['name']}}</h6>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% if api['cta_list'] %}
+        <div class="additional-resources">
+            <h4>check out these additional resources</h4>
+            <div class="pure-category-options">
+                {{ cta_list(api['cta_list']) }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="container">
+    {{ footer() }}
+</div>
+{% endblock %}
+
+{% block sub_scripts %}
+<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="{{ url_for('static', filename='js/seo/purestorage/main.js') }}"></script>
+<script type="text/javascript">
+    document.isUserAnonymous = true;
+    document.apps = JSON.parse('{{apps|tojson}}');
+    {% if g.user and g.user.is_active() %}
+        document.isUserAnonymous = false;
+    {% endif %}
+    document.viewType = "{{view_type}}";
+    document.product = "{{api['product']['slug']}}";
+    document.section = "{{api['slug']}}";
+    document.locales = JSON.parse('{{api["locales"]|tojson}}');
+    document.page = 'Category';
+
+</script>
+<script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

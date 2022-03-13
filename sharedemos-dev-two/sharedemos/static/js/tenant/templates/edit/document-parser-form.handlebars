@@ -1,0 +1,48 @@
+<!-- document upload -->
+<div class="document-parser-container">
+    <p class="capital-letter popup-container-title">{{i18n 'upload file'}}</p>
+    <p class="popup-container-desc">{{i18n 'Upload dita-zip/docx file to create your content.'}}</p>
+    <div class="document-parser-file-block">
+        <div class="document-parser-drop-zone dita" data-type="dita">
+            <div class="parser-upload-btn">
+                <input type="file" id="doc-parser-dita" class="visually-hidden document-upload" data-type="dita" accept=".zip" />
+                <label for="doc-parser-dita" class="capital-letter" data-type="dita">{{i18n 'dita as a zip file'}}</label>
+                <p class="drag-drop-txt capital-letter">{{i18n 'or drag & drop'}}</p>
+            </div>
+        </div>
+        <div class="document-parser-drop-zone docx" data-type="docx">
+            <div class="parser-upload-btn">
+                <input type="file" id="doc-parser-fileElem" class="visually-hidden document-upload" data-type="docx" accept=".docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                <label for="doc-parser-fileElem" class="capital-letter" data-type="docx">{{i18n 'docx file'}}</label>
+                <p class="drag-drop-txt capital-letter">{{i18n 'or drag & drop'}}</p>
+            </div>
+        </div>
+    </div>
+    <p class="import-filetype-msg">Supported file types: .docx, .zip</p>
+</div>
+<!-- uploaded document parsing status -->
+<div class="parser-document-status hidden">
+    <p class="capital-letter status-inprogress">{{i18n 'still loading thank you for your patience...'}}</p>
+    <p class="capital-letter status-done hidden">{{i18n 'congrats! your chapter(s) are ready to go...'}}</p>
+    <ul>
+        <li class="parser-uploading-doc row">
+            <div class="col-xs-12 col-md-3 status-text">Uploading Document</div>
+            <div class="status col-xs-12 col-md-7"><span></span></div>
+        </li>
+        <li class="parser-parsing-data row">
+            <div class="col-xs-12 col-md-3 status-text">Parsing Data</div>
+            <div class="status col-xs-12 col-md-7"><span></span></div>
+        </li>
+        <li class="parser-genrating-chapter row">
+            <div class="col-xs-12 col-md-3 status-text">Generating Chapters</div>
+            <div class="status col-xs-12 col-md-7"><span></span></div>
+        </li>
+    </ul>
+</div>
+<div class="parser-document-status-error hidden">
+    <p class="capital-letter status-error">{{i18n 'oops! something was wrong at this time..'}}</p>
+    <div class="description"></div>
+</div>
+<div class="parser-document-status-warning hidden">
+    <p class="capital-letter status-warning">{{i18n 'are you sure cancel the uploading?'}}</p>
+</div>

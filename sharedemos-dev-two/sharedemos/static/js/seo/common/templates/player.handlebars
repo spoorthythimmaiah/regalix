@@ -1,0 +1,304 @@
+<div id="player-container" class="page-container" data-template="{{tenant.template}}">
+    <div class="player_wrap vmw-player"> 
+        <!--  fade overlay -->  
+        <div class="overlay"></div>
+        <div class="player-left-sidebar">
+            <a href="javascript:;" data-product-id="{{product.slug}}" data-section-id="{{section.slug}}" class="vmw-back-button"></a>
+            {{#unless product.is_private}}
+            <div class="vmw-social-share" data-overlay="social-share" data-product-id="{{product.slug}}" data-section-id="{{section.slug}}" data-walkthrough-id="{{walkthrough.slug}}"></div>
+            {{/unless}}
+        </div>
+        <div class="vmw-player-header">
+            <!-- prgress indicator -->
+            <div class="progress-line">
+                <div></div>
+            </div>
+            <!-- Walkthrough Title -->
+            <div class="side-info-opener">
+                <div class="vmw-header-details">
+                    {{#if tenant.logo }}
+                    <img class="vmw-logo" src="{{tenant.logo}}" alt="logo">
+                    {{else}}
+                    <img class="vmw-logo" src="/static/images/vmware/logo.png" alt="logo">
+                    {{/if}}
+                    
+                    {{# compare tenant.template '!==' "regalix"}}
+                    {{# compare tenant.template '!==' "silverpeak"}}
+                    {{# compare tenant.template '!==' "helpsite"}}
+                        <div class="breadcrum">
+                            <a href="/" target="_parent" class="capitalize-text">{{i18n 'home'}}</a> &gt; <a target="_parent" href="/t/{{product.slug}}">{{product.name}}</a>
+                            {{# compare product.slug "!==" section.slug }}
+                             &gt; <a target="_parent" href="/t/{{section.slug}}">{{section.name}}</a>
+                            {{/compare}}
+                             &gt; {{walkthrough.name}}
+                        </div>
+                    {{/compare}}
+                    {{/compare}}
+                    {{/compare}}
+                    
+                    <div class='chapter-title'>{{walkthrough.name}}</div>
+                    {{#if ratingApp}}
+                    <div class="chapter content-rating-block">
+                        <label>Thank you for your feedback!</label>
+                        <ul class="chapter content-rating" data-target='chapter' 
+                            chapter_id={{walkthrough.slug}}>
+                            <li id="1"></li>
+                            <li id="2"></li>
+                            <li id="3"></li>
+                            <li id="4"></li>
+                            <li id="5"></li>
+                        </ul>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+        <!-- mobile back button -->
+        <div class="mobile-back seo-player">
+            <a href="#"><i class="icon-left"></i></a>
+        </div>
+        
+        <!-- Player block -->
+        <div id="player" class="player_wrapper">
+            <div class="player_slider source-area" id="slider">
+                <ul id="sdemos-player-box"></ul>
+            </div>
+            <!-- CTA Form -->
+            <div class="info-cta">
+                <div class="left">
+                        {{#if next_walkthrough}}
+                        <div class="block">
+                            <div class="text-block">
+                                <div class="title-label camel-case">{{i18n 'next chapter'}}</div>
+                                <div class="title">{{next_walkthrough.name}}</div>
+                            </div>
+                            {{#if next_walkthrough.image}}
+                                <img class='cta-image' src="{{next_walkthrough.image.thumbnail}}"/>
+                            {{/if}}
+                            <div class="description">
+                                {{{ next_walkthrough.text }}}
+                            </div>
+                            <div class="explore-btn capital-letter" slug='{{next_walkthrough.slug}}'>{{i18n 'explore'}}</div>
+                        </div>
+                        {{/if}}
+                </div>
+                <div class="right">
+                    <div class="block signup-block">
+                        {{#each section.cta_list}}
+                            {{#compare type "==" 'form'}}
+                                <div class="text-block">
+                                    <div class="title1">{{campaign_message}}</div>
+                                </div>
+                                <button class="cta-signup" data-cta-id="{{cta_id}}">{{text}}</button>
+                            {{/compare}}
+                            {{#compare type "==" 'link'}}
+                                <a class="cta-link" href="{{href}}" data-cta-id="{{cta_id}}" target="_blank">{{text}}</a>
+                            {{/compare}}
+                            {{#compare type "==" 'pdf'}}
+                                <a class="cta-link" href="{{file_path}}" data-cta-id="{{cta_id}}" target="_blank">{{text}}</a>
+                            {{/compare}}
+                        {{/each}}
+                    </div>
+                    <div class="block thanku-block" {{#if section.cta_list.length}}style='display:none'{{/if}}>
+                        <div class="title1 sub-title">{{i18n 'thank you'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu toggle -->
+        <img class="mobile-menu-toggle" src="/static/images/arrow-up-grey.png">
+        <div class="close-mobile-full-screen"></div>
+          
+        <!-- Right side controll button block -->
+        <div class="side-panel">
+            <ul>
+                <li><div class="full-screen-item full-screen-opener"><i class="icon-zoom"></i></div></li>
+                <li><div class="notes-item notes-opener"><i class="icon-document"></i>
+                    <div class="notes-icon">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div></li>
+                <li><div class="language-item language-opener"><i class="icon-earth"></i></div></li>
+                <li><div class="sb-bookmark-item bookmark-opener"><i class="icon-bookmark"></i></div></li>
+                <li><div class="fullscreen-item fullscreen-opener"></div></li>
+                {{#unless product.is_private}}
+                    <li>
+                         <div class="social-share mobile" data-product-id="{{product.slug}}" data-section-id="{{section.slug}}" data-walkthrough-id="{{walkthrough.slug}}"></div>
+                    </li>
+                {{/unless}}
+            </ul>
+
+            <!-- walkthrough player controlls -->
+            <div class="control-holder">
+                <div class="btn-prev customLink" target="prev"><i class="icon-left"></i></div>
+                <div class="btn-next customLink" target="next"><i class="icon-right"></i></div>
+            </div>
+
+            <!-- sandbox help icon -->
+            <div class="sandbox-help"></div>
+        </div>
+
+        <!-- desktop control buttons -->
+        <div class="dt-btn-prev customLink" target="prev"></div>
+        <div class="dt-btn-next customLink" target="next"></div>
+        <!-- Toggle Slides Notes -->
+        <div class="notes">
+            <div class="inner" >
+                <div class="sub-inner ">
+                    <div class="notes-wrap jcf-scrollable">
+                        <div class="notes-wrap-outer">
+                            <div class="notes-wrap-inner">
+                                <h1 target="title"></h1>
+                                <div class="anim1">
+                                    <p target="body"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-title">
+                        <div class="notes-link"></div>
+                    </div>
+                </div>
+                <div class="pagination-wrap"></div>
+            </div>
+        </div>
+
+        <!-- languages -->
+        <div class="language">
+            <div class="inner">
+                <div class="sub-inner">
+                    <div class="language-block">
+                        <div class="title">
+                            {{i18n 'languages'}}
+                        </div>
+                        <ul class="languages">
+                            {{#each locales}}
+                            <li{{#if selected}} class="selected"{{/if}} lvalue='{{locale}}'>
+                                <h3>{{name}}</h3>
+                            </li>
+                            {{/each}}
+                        </ul>  
+                    </div>
+                    <div class="language-block-mobile">
+                        <h4>{{i18n 'language select'}}</h4>
+                        {{#compare locales.length '<' 2}}
+                            <p>{{i18n 'this content is not available in another language.'}}</p>
+                        {{/compare}}
+                        {{#compare locales.length '>' 1}}
+                            <p>{{i18n 'this content is available in another language. select a language to translate'}}</p>
+                            <div class="languages-selector">
+                                <div>
+                                    <p>{{i18n 'current language'}}</p>
+                                    <div class="selected-language">
+                                        {{#each locales}}
+                                            {{#if selected}} {{name}} {{/if}}
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>{{i18n 'select language'}}</p>
+                                    <select class="mobile-language-select">
+                                        {{#each locales}}
+                                            <option {{#if selected}} selected="selected" {{/if}} lvalue='{{locale}}'> {{name}} </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        {{/compare}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of languages -->
+
+        <!-- mobile social share -->
+        {{#unless product.is_private}}
+        <div class="mobile-share">
+            <div class="inner">
+                <div class="sub-inner">
+                    <div class="mobile-share-block">
+                        <h4>{{i18n 'share this page'}}</h4>
+                        <p>{{i18n 'share this page on your feed'}}</p>
+                        <div class="share-icons">
+                            <div class="social-icon" social-share="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></div>
+                            <div class="social-icon" social-share="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></div>
+                            <div class="social-icon" social-share="facebook"><span class="fa fa-facebook-square" aria-hidden="true"></span></div>
+                            <div class="social-icon" social-share="reddit"><span class="fa fa-reddit-square" aria-hidden="true"></span></div>
+                            <div class="social-icon" social-share="copyurl"><span class="copy-url-icon"></span></div>
+                            {{#if can_embed}}
+                                <div class="social-icon" social-share="copyembedurl"><span class="fa fa-code" aria-hidden="true"></span></div>
+                                <div class="embed-url-box">
+                                        <div class="embedURL"></div>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/unless}}
+        <!-- sandbox bookmarks to section links -->
+        <div class="sandbox-bookmarks">
+            <div class="inner">
+                <div class="sub-inner">
+                    <div class="sandbox-bookmark-wrap jcf-scrollable">
+                        <ul class="bookmarks-wrap"></ul>  
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <!-- End of sandbox bookmarks to section links -->
+
+        <div class="form-cta">
+            <div class="sign-up-wrap"></div>
+        </div>
+
+        <div class="player-popups">
+            <div class="player-overlay">
+                <div class="popup-wrap">
+                    <!-- sandbox help info popup -->
+                    <div class="popup-box" id="sandbox-help">
+                        <h1>Tips &amp; Tricks</h1>
+                        <p>Navigate through this sandbox by clicking the designated hotspots or by using your left and right keyboard keys.
+                        You may click the "?" button at the top right corner to access the menu at any time.</p>
+                        <div class="controls">
+                            <div class="control">
+                                <div class="keys">
+                                    <img class="key" src="/static/images/left_key.png">
+                                    <img class="key" src="/static/images/right_key.png">
+                                    <p>navigate</p>
+                                </div>
+                                <div class="keys">
+                                    <div>
+                                        <img class="key" src="/static/images/ctr_key.png">
+                                        <img src="/static/images/plus.png">
+                                        <img class="key" src="/static/images/y_key.png">
+                                    </div>
+                                    <p>toggle hotspot</p>
+                                </div>
+                                <div class="keys">
+                                    <div>
+                                        <img class="key" src="/static/images/ctr_key.png">
+                                        <img src="/static/images/plus.png">
+                                        <img class="key" src="/static/images/j_key.png">
+                                    </div>
+                                    <p>jump to section</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sandbox-help-close">Got it</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- End of player page wrap-->
+</div>
+<div id='pdf-viewer-block' class='hide'></div>
+

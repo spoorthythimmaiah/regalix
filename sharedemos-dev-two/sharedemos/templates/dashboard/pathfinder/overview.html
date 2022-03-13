@@ -1,0 +1,49 @@
+{% extends 'dashboard/dashboard_submenu/pathfinder_menu.html' %}
+
+{% block dashboard_content_container %}
+    <div class="dashboard-work-area">
+        <section class="welcome_msg">
+            <div class="welcome_txt">
+                <h1>
+                    Welcome to Pathfinder
+                    <button type="button" data-trigger="focus" class="btn btn-default" data-toggle="popover" data-placement="bottom"  data-content="Pathfinder is a question-based navigation system that helps your users find tailored content from your library. <a href='google.com'>Learn More</a>"><span class="glyphicon glyphicon-question-sign"></span></button>
+                </h1>
+                <p>Create a path and start adding your questions.</p>
+            </div>
+            <div class="create-new pathfinder">
+                <a href="{{url_for('main.pathfinder', authoring_mode='edit')}}"></a>
+            </div>
+        </section>
+        <section class="db_container_content">
+            
+        </section>
+    </div>
+    <section class="full_popup_block">
+        <div class="full_popup_overlay"></div>
+        <div class="full_popup_box create_path">
+            <div class="close_full_popup" data-popup="create_path"></div>
+            <div class="full_popup_content">
+                <h4>Create your Library</h4>
+                <form action="" class="text-left" name="create_path_form" id="create_path_form">
+                    <div class="form-group col-xs-12">
+                        <label for="company" class="mandatory-field">HOMEPAGE TITLE</label>
+                        <div class="sub-title">Choose a title for the homepage of your library.</div>
+                        <div class="input_wrap">
+                            <input type="text" placeholder="Name" name="name" class="section-name trim-input form-control" maxlength="50" autocomplete="off" data-char-count="true">
+                            <div class="counter"><span class="chars-left">50</span> characters left</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="message">LIBRARY DESCRIPTION</label>
+                        <div class="sub-title">Write a short description for this library.</div>
+                        <div class="input_wrap">
+                            <textarea placeholder="Description" name="description" class="section-description trim-input form-control" maxlength="150" data-char-count="true"></textarea>
+                            <div class="counter"><span class="chars-left">150</span> characters left</div>
+                        </div>
+                    </div>
+                    <input type="submit" name="submit" value="SEND MESSAGE" class="btn" data-popup="create_path" disabled>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

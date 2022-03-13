@@ -1,0 +1,18 @@
+<div class="notes-link-popup-wrap">
+	<div class="popup-box">
+		<div class="note-popup-close">x</div>
+		<div class="popup-wrap">
+			{{#if isExternal}}
+				<iframe allowFullScreen='allowFullScreen' src="{{resourceLink}}" width="800" height="450" frameborder="0"></iframe>
+			{{else}}
+				{{#if isInternalVideo}}
+					<video width="800" height="450" controls>
+  						<source src="/static/media/{{resourceLink}}" >
+					</video>
+				{{else}}
+					<img src="/static/media/{{resourceLink}}">
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</div>

@@ -1,0 +1,751 @@
+
+<div class="edit-overlay">
+    <div class="popup-wrap">
+        <!-- Box or category option -->
+        <div class="popup-box box-category-option">
+            <div class="capital-letter popup-title ">
+                {{i18n 'create a category'}}
+            </div>
+            <div class="popup-info">
+                <div class="select-box-option">
+                    <div class="box-icon"></div>
+                    <div class="bc-option-label capital-letter">{{i18n 'box import'}}</div>
+                </div>
+                <div class="select-cat-option">
+                    <div class="category-icon"><span class="add-cat-icon"></span></div>
+                    <div class="bc-option-label capital-letter">{{i18n 'create new'}}</div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel" rel="box-category-option">{{i18n 'cancel'}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- End Box or category option -->
+        <!-- Layout option -->
+        <div class="popup-box layout_selection_block">
+            <div id="select_view_layout">
+                <h3 class="capital-letter popup-title">{{i18n 'choose a layout'}}</h3>
+                <div class="layouts">
+                    <div class="category_layout_block">
+                        <div class="category_layout"></div>
+                        <div class="layout_label capital-letter">{{i18n 'category'}}</div>
+                    </div>
+                    <div class="playlist_layout_block">
+                        <div class="playlist_layout"></div>
+                        <div class="layout_label capital-letter">{{i18n 'playlist'}}</div>
+                    </div>
+                    <div class="import_doc_block" data-open="upload-docx-documents-block" data-close="layout_selection_block">
+                        <div class="import_doc_icon"></div>
+                        <div class="layout_label capital-letter">{{i18n 'import document'}}</div>
+                    </div>
+                    <div class="import_box_block enabled">
+                        <div class="import_box_layout"></div>
+                        <div class="layout_label capital-letter">{{i18n 'box import'}}</div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <div class="form-footer">
+                        <div class="cancel" rel="layout_selection_block">{{i18n 'cancel'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Layout option -->
+
+        <!-- Import Doc -->
+        <div class="popup-box upload-docx-documents-block">
+            <div class="popup-title capital-letter">
+                <div class="show-layout-popup popup-back-icon" data-close="upload-docx-documents-block" data-open="layout_selection_block"></div>
+                {{i18n 'upload document'}}
+            </div>
+            <div class="import-popup-main-container">
+                <!-- will append DOM from upload-content-document.handlebars  -->
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect capital-letter" rel="upload-docx-documents-block">{{i18n 'cancel'}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Import Doc -->
+        
+        <!-- Box Content -->
+        <div class="popup-box box-content-block">
+            <div class="popup-title capital-letter">
+                {{i18n 'select box content'}}
+            </div>
+            <form name='box_content_form'>
+                <ul id="box-content-list"></ul>
+                <div class="popup-footer">
+                    <div class="form-footer">
+                        <div class="cancel" rel="box-content-block">{{i18n 'cancel'}}</div>
+                        <input type='submit' class="import-box-data" disabled value="{{i18n 'IMPORT'}}"/>
+                    </div>
+                    <div class="form-failed capital-letter">
+                        {{i18n 'oops! import failed'}}
+                    </div>
+                    <div class="form-sent capital-letter">
+                        {{i18n 'success! content imported successfully'}}   
+                    </div>
+                    <div class="form-sending capital-letter">
+                        {{i18n 'importing'}}...
+                        <div class="cd-loading"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- End Box Content -->
+        <!-- Create New Bulletin board -->
+        <div class="popup-box create-bulletin-board"></div>
+        <!-- End Create New Bulletin board -->
+        <!-- Category type popup -->
+        <div class="popup-box choose-category-type">
+            <div class="popup-title capital-letter">
+                    {{i18n 'choose category type'}}
+            </div>
+            <div class="block">
+                <p class="capital-letter">{{i18n 'type'}}</p>
+                <div class="layouts">
+                    <div class="category-options category-default">
+                        <div class="category-default-icon"></div>
+                        <div class="layout_label capital-letter">{{i18n 'category' }}</div>
+                    </div>
+                    <div class="category-options category-link-asset">
+                        <div class="category-link-asset-icon"></div>
+                        <div class="layout_label capital-letter">{{i18n 'link asset' }}</div>
+                    </div>
+                    {{#if repository_manager}}
+                        <div class="repository-category">
+                            <div class="integration-icon"></div>
+                            <div class="layout_label capital-letter">{{i18n 'integration' }}</div>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect capital-letter" rel="choose-category-type">{{i18n 'cancel'}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- End of category type popup -->
+
+        <!-- Link category popup -->
+        <div class="popup-box create-edit-link-category">
+            <div id="create-edit-link-category"></div>
+        </div>
+        <!-- End of link category popup  -->
+
+        <!-- Choose Integration popup -->
+        <div class="popup-box repository-connector-list"></div>
+        <!-- End of choose integration popup  -->
+
+        <!-- Enable and Disable section popup -->
+        <div class="popup-box popup-disable">
+            <div class="popup-title capital-letter">
+                {{i18n 'disable category'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n 'this section will not be visible to your viewers'}}.</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to disable this section from view?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-disable">{{i18n 'cancel'}}</div>
+                    <div class="disable rippleEffect">{{i18n 'disable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'disabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'disabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-box popup-enable">
+            <div class="popup-title capital-letter">
+                {{i18n 'enable category'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n 'this section will be visible to your viewers'}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to enable this section from view?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-enable">{{i18n 'cancel'}}</div>
+                    <div class="enable rippleEffect">{{i18n 'enable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'enabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'enabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Enable and Disable section popup -->
+
+        <!-- Delete section popup -->
+        <div class="popup-box popup-delete">
+            <div class="popup-title capital-letter">
+                {{i18n 'delete category'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class= "sub-title">{{i18n "you've made some cool stuff!"}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to delete this entire section?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-delete">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect">{{i18n 'delete'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'deleted successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'deleting'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Delete section popup -->
+
+        <!-- section edit popup -->
+        <div class="popup-box popup-edit">
+            <div id="create-edit-section"></div>
+        </div>
+        <!-- End Of section edit popup -->
+        <!-- Enable and Disable Chapter popup -->
+        <div class="popup-box popup-disable-chapter">
+            <div class="popup-title capital-letter">
+                {{i18n 'disable chapter'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n 'this chapter will not be visible to your viewers'}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to disable this chapter from view?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-disable-chapter">{{i18n 'cancel'}}</div>
+                    <div class="disable rippleEffect">{{i18n 'disable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'disabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'disabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-box popup-enable-chapter">
+            <div class="popup-title capital-letter">
+                {{i18n 'enable chapter'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n 'this chapter will be visible to your viewers'}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to enable this chapter from view?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-enable-chapter">{{i18n 'cancel'}}</div>
+                    <div class="enable rippleEffect">{{i18n 'enable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'enabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'enabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Enable and Disable chapter popup -->
+
+        <!-- Create chapter popup -->
+        <div id="create-edit-demo"></div>
+        <!--End of Enable and Disable popup -->
+        <!-- Delete chapter popup -->
+        <div class="popup-box popup-delete-chapter">
+            <div class="popup-title capital-letter">
+                    {{i18n 'delete chapter'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n "you've made some cool stuff!"}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to delete this entire chapter?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-delete-chapter">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect">{{i18n 'delete'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'deleted successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'deleting'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Delete Chapter popup -->
+        <!-- Delete multiple chapter popup -->
+        <div class="popup-box popup-delete-multiple-chapters">
+            <div class="popup-title capital-letter">
+            {{i18n 'delete chapter'}}
+            </div>
+            <div class="popup-info sub-title">
+            <p class="sub-title">{{i18n "are you sure want to delete all selected chapters?"}}</p><br>
+            <p class="sub-title">{{i18n 'if you delete chapters, you will permanently lose your content.'}}</p>
+            </div>
+            <div class="popup-footer">
+            <div class="form-footer">
+                <div class="cancel rippleEffect" rel="popup-delete-multiple-chapters">{{i18n 'cancel'}}</div>
+                <div class="confirm-delete-multiple-chapters to-do-action rippleEffect">{{i18n 'delete'}}</div>
+            </div>
+            <div class="form-failed">
+                {{i18n 'oops! your submission was not sent'}}
+            </div>
+            <div class="form-sent">
+                {{i18n 'deleted successfully!'}}
+            </div>
+            <div class="form-sending">
+                {{i18n 'deleting'}}...
+                <div class="cd-loading"></div>
+            </div>
+            </div>
+        </div>
+        <div class="popup-box popup-delete-multiple-playlists">
+            <div class="popup-title capital-letter">
+            {{i18n 'delete playlist'}}
+            </div>
+            <div class="popup-info sub-title">
+            <p class="sub-title">{{i18n "are you sure want to delete all selected playlists?"}}</p><br>
+            <p class="sub-title">{{i18n 'if you delete playlists, you will permanently lose your content.'}}</p>
+            </div>
+            <div class="popup-footer">
+            <div class="form-footer">
+                <div class="cancel rippleEffect" rel="popup-delete-multiple-playlists">{{i18n 'cancel'}}</div>
+                <div class="confirm-delete-multiple-playlists to-do-action rippleEffect">{{i18n 'delete'}}</div>
+            </div>
+            <div class="form-failed">
+                {{i18n 'oops! your submission was not sent'}}
+            </div>
+            <div class="form-sent">
+                {{i18n 'deleted successfully!'}}
+            </div>
+            <div class="form-sending">
+                {{i18n 'deleting'}}...
+                <div class="cd-loading"></div>
+            </div>
+            </div>
+        </div>
+        <!-- Confirm publish -->
+        <div class="popup-box confirm-publish-demo">
+            <div class="popup-title capital-letter">
+                {{i18n 'publish changes'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n "you've made some cool stuff!"}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to take your work live?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel" rel="confirm-publish-demo">{{i18n 'cancel'}}</div>
+                    <div class="confirm-publish">{{i18n 'publish'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your work was not saved'}}.
+                </div>
+                <div class="form-sent">
+                    {{i18n 'success! your work has successfully been published'}}.
+                </div>
+                <div class="form-sending">
+                    {{i18n 'publishing'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End Confirm publish -->
+
+        <!-- slide hotspot popup -->
+        <div class="popup-box popup-save-hotspot">
+            <div class="popup-title capital-letter">
+                {{i18n 'highlight link'}}
+            </div>
+            <div class="content-block" id="create-edit-popup"></div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-save-hotspot">{{i18n 'cancel'}}</div>
+                    <div class="save rippleEffect">{{i18n 'save'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'saved successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'sending'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of silde hotspot popup -->
+        <!-- Update delete popup -->
+        <div class="popup-box popup-delete-media">
+            <div class="popup-title capital-letter">
+                {{i18n 'delete media'}}
+            </div>
+            <div class="popup-info sub-title">
+                {{i18n "you've made some cool stuff!"}}<br />
+                {{i18n 'are you sure you want to delete this media?'}}
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="popup-delete-media">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect">{{i18n 'delete'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'deleted successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'deleting'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Update silde hotspot popup -->
+        <!-- Update delete popup -->
+        <div class="popup-box custom-message">
+            <div class="popup-title capital-letter">
+                {{i18n 'your request failed!!'}}
+            </div>
+            <div class="popup-info message-content"></div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="continue rippleEffect" rel="custom-message">{{i18n 'ok'}}</div>
+                </div>
+            </div>
+        </div>
+        <!--End of Update silde hotspot popup -->
+
+        <!-- Playlist popup -->
+        <div class="popup-box popup-create-playlist" id="create-edit-playlist"></div>
+        <!-- Playlist popup end -->
+
+
+        <!-- ENABLE, DISABLE, DELETE Playlist -->
+        <div class="popup-box enable-playlist">
+            <div class="popup-title capital-letter">
+                {{i18n 'enable playlist'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n 'this playlist and underlying demos will be visible to your viewers'}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to enable this playlist?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="enable-playlist">{{i18n 'cancel'}}</div>
+                    <div class="enable rippleEffect">{{i18n 'enable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'enabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'enabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-box disable-playlist">
+            <div class="popup-title capital-letter">
+                {{i18n 'disable playlist'}}
+            </div>
+            <div class="popup-info">
+                <p class="sub-title">{{i18n 'this playlist and underlying demos will not be visible to your viewers'}}.</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to disable this playlist?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="disable-playlist">{{i18n 'cancel'}}</div>
+                    <div class="disable rippleEffect">{{i18n 'disable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'disabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'disabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-box delete-playlist">
+            <div class="popup-title capital-letter">
+                {{i18n 'delete playlist'}}
+            </div>
+            <div class="popup-info">
+                <p class="sub-title">{{i18n "you've made some cool stuff!"}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to delete this entire playlist?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="delete-playlist">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect">{{i18n 'delete'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'deleted successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'deleting'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Playlist popup ends -->
+
+        <!-- Slide settings popup -->
+        <div class="popup-box popup-slide-settings"></div>
+
+        <!-- pdf warning popup -->
+        <div class="popup-box pdf-warning">
+            <div class="popup-title capital-letter">
+                {{i18n 'warning'}}
+            </div>
+            <div class="popup-info">
+                
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel" rel="pdf-warning">{{i18n 'ok'}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- non-default language create warning popup -->
+        <div class="popup-box create-warning">
+            <div class="popup-title capital-letter">
+                {{i18n 'warning'}}
+            </div>
+            <div class="popup-info">
+                
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel" rel="create-warning">{{i18n 'OK'}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- text editor done notification -->
+        <div class="popup-box text-editor-warning">
+            <div class="popup-title capital-letter">
+                {{i18n 'changes not saved'}}
+            </div>
+            <div class="popup-info sub-title">
+                {{i18n 'it looks like your changes have not been saved.'}}<br>
+                {{i18n 'do you want to try to save your changes again?'}}
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="textedit-exit rippleEffect" >{{i18n 'exit anyway'}}</div>
+                    <div class="try-again rippleEffect" >{{i18n 'try again'}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 360 frames delete worning popup -->
+        <div class="popup-box frame-360-delete-warning">
+            <div class="frame-delete-warning image-warning">
+                <div class="popup-title capital-letter">
+                    {{i18n 'delete image'}}
+                </div>
+                <div class="popup-info sub-title">
+                    {{i18n 'are you sure you want to delete this image ?'}}
+                </div>
+            </div>
+            <div class="frame-delete-warning 360-warning">
+                <div class="popup-title capital-letter">
+                    {{i18n 'delete frame'}}
+                </div>
+                <div class="popup-info">
+                    <div class="sub-title">{{i18n 'this frame is part of your 360'}}<sup> o </sup><span id="case">{{i18n 'view'}}</span>.</div>
+                    <div class="sub-title">{{i18n 'are you sure you want to delete this frame ?'}}</div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="frame-360-delete-warning">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect">{{i18n 'delete'}}</div>
+                </div>            
+            </div>
+        </div>
+        <div class="popup-box delete-bulletin-board">
+            <div class="popup-title capital-letter">
+                {{i18n 'delete bulletin board'}}
+            </div>
+            <div class="popup-info">
+                <p class="sub-title">{{i18n "you've made some cool stuff!"}}</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to delete this entire bulletin board?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="delete-bulletin-board">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect">{{i18n 'delete'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'deleted successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'deleting'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-box enable-bboard">
+            <div class="popup-title capital-letter">
+                {{i18n 'enable bulletin board'}}
+            </div>
+            <div class="popup-info sub-title">
+                <p class="sub-title">{{i18n 'this bulletin board will be visible to your viewers'}}.</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to enable this bulletin board?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="enable-bboard">{{i18n 'cancel'}}</div>
+                    <div class="enable rippleEffect">{{i18n 'enable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'enabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'enabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-box disable-bboard">
+            <div class="popup-title capital-letter">
+                {{i18n 'disable bulletin board'}}
+            </div>
+            <div class="popup-info">
+                <p class="sub-title">{{i18n 'this bulletin board will not be visible to your viewers'}}.</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to disable this bulletin board?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="disable-bboard">{{i18n 'cancel'}}</div>
+                    <div class="disable rippleEffect">{{i18n 'disable'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'disabled successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'disabling'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-box duplicate-bboard">
+            <div class="popup-title capital-letter">
+                {{i18n 'copy bulletin board'}}
+            </div>
+            <div class="popup-info">
+                <p class="sub-title">{{i18n 'this will create identical version '}}.</p><br>
+                <p class="sub-title">{{i18n 'are you sure you want to copy this bulletin board?'}}</p>
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect" rel="duplicate-bboard">{{i18n 'cancel'}}</div>
+                    <div class="duplicate rippleEffect">{{i18n 'copy'}}</div>
+                </div>
+                <div class="form-failed">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent">
+                    {{i18n 'copied successfully!'}}
+                </div>
+                <div class="form-sending">
+                    {{i18n 'copying'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!-- notes edit popup -->
+        <div class="popup-box create-edit-notes">
+            <div id="create-edit-notes"></div>
+        </div>
+        <!-- End of notes edit popup -->
+
+        <!-- Delete chapter popup -->
+        <div class="popup-box popup-delete-notes">
+            <div class="popup-title capital-letter">
+                    {{i18n 'delete notes'}}
+            </div>
+            <div class="popup-info sub-title">
+                {{i18n "you've made some cool stuff!"}}<br />
+                {{i18n 'are you sure you want to delete this entire notes?'}}
+            </div>
+            <div class="popup-footer">
+                <div class="form-footer">
+                    <div class="cancel rippleEffect capital-letter" rel="popup-delete-notes">{{i18n 'cancel'}}</div>
+                    <div class="delete rippleEffect capital-letter">{{i18n 'delete'}}</div>
+                </div>
+                <div class="form-failed capital-letter">
+                    {{i18n 'oops! your submission was not sent'}}
+                </div>
+                <div class="form-sent capital-letter">
+                    {{i18n 'deleted successfully!'}}
+                </div>
+                <div class="form-sending capital-letter">
+                    {{i18n 'deleting'}}...
+                    <div class="cd-loading"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Delete Chapter popup -->
+    </div>
+</div>

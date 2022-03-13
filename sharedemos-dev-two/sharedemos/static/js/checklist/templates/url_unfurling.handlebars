@@ -1,0 +1,14 @@
+<div class="url_unfurling_block">
+    <div class="thumb">
+        <img src="{{icon}}" />
+    </div>
+    <div class="info">
+        <div class="description">
+        {{#if desc}}{{desc}}{{else}}{{response.url}}{{/if}}
+        </div>
+        <div class="link">
+            {{response.url}}
+        </div>
+        <div class="remove">{{ i18n 'remove link'}}</div>
+    </div>
+</div>

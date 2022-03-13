@@ -1,0 +1,15 @@
+<ul class="connector-list">
+    {{#each this}}
+        <li class="connector-item {{#if sync_enabled}} trigger-inplace-popup active{{/if}}" id={{connector_id}} data-hidePopup="repository-connector-list-popup" data-showPopup="connector-folder-list-popup">
+            <div class="icon-wrapper">
+                <span class="icon {{platform}}"></span>
+            </div>
+            <h6>{{name}}</h6>
+            <div>
+                <p class="connector-url" title="{{site_url}}">{{site_url}}</p>
+                <p class="connector-root-folder" title="Root folder: {{root_folder}}">{{root_folder}}</p>
+            </div>
+            <div class="sync-status capital-letter">{{#if sync_enabled}}active{{else}}offline{{/if}}</div>
+        </li>
+    {{/each}}
+</ul>

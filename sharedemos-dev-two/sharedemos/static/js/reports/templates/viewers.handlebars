@@ -1,0 +1,34 @@
+{{# each viewers }}  
+<div class="viewer-row" data-id="{{user_id}}">
+    <div class="viewer-name">
+        <img class="profile" data-name="{{initials}}" picture-url="{{profile_picture}}">
+        <div class="name-block">
+            <span class="name">{{fullname}}</span><br>
+            {{# each groups}}
+            <span class="group-name {{this}}">{{this}}</span>
+            {{/each}}  
+        </div>
+    </div>
+    <div class="email">{{email}}</div>
+    <div class="date-added">{{localTime date_added '{"year": "numeric", "month": "2-digit", "day": "2-digit"}'}}</div>
+</div>
+{{/each}}
+{{#if pagination.is_paginated }}
+    <nav>
+        <ul class="pagination">
+            <li class="page-item {{#if pagination.prevDisable}} disabled {{/if}}"  data-page="{{pagination.pagePrev}}" >
+                <a class="page-link">Previous</a>
+            </li>
+            
+            {{#each pagination.pages}}
+                <li class="page-item {{#if currentPage}} active {{/if}}"  data-page={{pageNo}}>
+                    <a class="page-link">{{pageNo}}</a>
+                </li>    
+            {{/each}}
+
+            <li class="page-item {{#if pagination.nextDisable}} disabled {{/if}}"  data-page="{{pagination.pageNext}}">
+                <a class="page-link">Next</a>
+            </li>
+        </ul>
+    </nav>
+{{/if}}

@@ -1,0 +1,112 @@
+{% extends 'tenants/seo/silverpeak/base.html' %}
+
+{% block seo %}
+    {{ load_seo_meta(title=api['tenant']['name'], description=api['tenant']['description']) }}
+{% endblock %}
+
+{% block container %}
+    <div id="playlist" class="container-block">
+        <div class="custom-popup-wrapper"></div>
+        <div class="split-playlist-container">
+            <div class="playlist-left-panel" {% if enable_homepage_banner and banner_details._background_image %}
+                style="background: url({{url_for('static', filename='media/' + banner_details._background_image.path)}}) center center no-repeat, #f6f6f6; background-size:cover"
+            {% endif %}>
+                <a href="/">
+                    {% if api['tenant']['logo'] %}
+                        <img class="logo" src="{{ url_for('static', filename='media/' + api['tenant']['logo']) }}"
+                             alt="logo">
+                    {% else %}
+                        <img class="logo" src="{{ url_for('static', filename='images/silverpeak/logo.png') }}"
+                             alt="logo">
+                    {% endif %}
+                </a>
+
+                {% if enable_homepage_banner and banner_details %}
+                    {{ homepage_banner (banner_details)}}
+                {% else %}
+                    <h1 class="category-title">{{ api['tenant']['name'] }}</h1>
+                    <p>{{ api['tenant']['description'] or '' }}</p>
+                {% endif %}
+
+                <div class="mini-mobile-share">
+                    {% if not api['tenant']['is_private'] %}
+                        {{ social_share() }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="playlist-right-panel">
+                <div class="fluid-container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10 search-bar-holder">
+                            {% set filename = 'media/' + api['tenant']['logo'] if api['tenant']['logo']  else 'images/silverpeak/logo.png' %}
+                            <a href="/">
+                                <img class="mobile-logo"
+                                     src="{{ url_for('static', filename=filename) }}"
+                                     alt="tenant-logo">
+                            </a>
+                            {{ search() }}
+                        </div>
+                        <div class="col-md-2">
+                            {% if not api['tenant']['is_private'] %}
+                                {{ social_share() }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <main class="fluid-container" id="main_container">
+                    <section class="row playlist-list"  data-attr="thumbnail-view">
+                        {% for playlist in api['all_playlists']%}
+                            <div class="col-xs-12 col-sm-6 col-md-4 playlist-block">
+                                <div class="playlist-container">
+                                    <div class="playlist-icon-image"></div>
+                                    <div class="playlist-header">
+                                        <h3>{{playlist.name}}</h3>
+                                    </div>
+                                    <ul class="chapters-list">
+                                        {% for chapter in playlist.chapters %}
+                                            <li class="chapter">
+                                                <a class="playerframe-link" href="{{chapter.url}}"
+                                                   data-product-id="{{playlist.product}}"
+                                                   data-section-id="{{playlist.section}}"
+                                                   data-chapter-id="{{chapter.slug}}">
+                                                    <div class="chapter-index-block">
+                                                        <div class="chapter-index">{{loop.index}}</div>
+                                                    </div>
+                                                    <div class="chapter-title">{{ chapter.name}}</div>
+                                                </a>
+                                                <div class="tags-block">
+                                                    <ul class="chapter-tags">
+                                                        {% for tag in chapter.tags %}
+                                                            <li>{{tag}}</li>
+                                                        {% endfor%}
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sub_scripts %}
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script type="text/javascript">
+        document.isUserAnonymous = true;
+        document.viewType = "{{view_type}}";
+        document.apps = JSON.parse('{{apps|tojson}}');
+        document.app_name = 'library';
+        {% if g.user and g.user.is_active() %}
+            document.isUserAnonymous = false;
+        {% endif %}
+        document.user_email = '{{ g.user.email}}';
+        document.page = 'Home';
+    </script>
+    <script src="{{ url_for('static', filename='js/build/templates/silverpeak/home.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/seo/common/activitylogger.js') }}"></script>
+{% endblock %}

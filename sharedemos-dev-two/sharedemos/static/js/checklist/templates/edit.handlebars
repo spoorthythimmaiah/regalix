@@ -1,0 +1,79 @@
+{{#if add_checklist}}
+	<div class="add-block" data-popup="checklist">
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3>{{ i18n 'add checklist'}}</h3>
+	</div>
+{{/if}}
+
+{{#if add_checklist_section}}
+	<div class="add-block" data-popup="checklist_section" checklist_section>
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3>{{ i18n 'add step'}} {{count}}</h3>
+	</div>
+{{/if}}
+
+{{#if add_checklist_item}}
+	<div class="add-block" data-popup="checklist_item" checklist_item>
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3>{{ i18n 'add checklist item'}}</h3>
+	</div>
+{{/if}}
+
+{{#if add_suggestion}}
+	<div class="add-block" data-popup="add_suggestions" checklist_suggestion>
+	    <img src="/static/images/author/add_pathfinder.png" />
+	    <h3>{{ i18n 'add suggestion'}}</h3>
+	</div>
+{{/if}}
+
+{{#if edit_checklist}}
+	<div class="checklist-edit">
+		<div class="checklist-edit-wrap">
+			{{#if checklist_edit}}
+		        <div class="checklist-edit-option edit" data-popup="checklist">
+		        	{{ i18n 'edit checklist'}}
+		        </div>
+		        {{#if is_disabled}}
+			        <div class="checklist-edit-option enable" data-popup="confirm_enable" data-type="checklist">
+			        	{{ i18n 'enable checklist'}}
+			        </div>
+		        {{else}}
+			        <div class="checklist-edit-option disable" data-popup="confirm_disable" data-type="checklist">
+			        	{{ i18n 'disable checklist'}}
+			        </div>
+		        {{/if}}
+		        <div class="checklist-edit-option delete" data-popup="confirm_delete" data-type="checklist">
+		        	{{ i18n 'delete checklist'}}
+		        </div>
+		    {{/if}}
+		    {{#if checklist_edit_step}}
+		        <div class="checklist-edit-option edit" data-popup="checklist_section">
+		        	{{ i18n 'edit checklist step'}}
+		        </div>
+		        <div class="checklist-edit-option delete" data-popup="confirm_delete" data-type="checklist-step">
+		        	{{ i18n 'delete checklist step'}}
+		        </div>
+		    {{/if}}
+
+		    {{#if checklist_edit_item}}
+		        <div class="checklist-edit-option edit" data-popup="checklist_item">
+		        	{{ i18n 'edit checklist item'}}
+		        </div>
+		        <div class="checklist-edit-option delete" data-popup="confirm_delete" data-type="checklist-item">
+		        	{{ i18n 'delete checklist item'}}
+		        </div>
+		    {{/if}}
+
+		    {{#if checklist_edit_suggestion}}
+				{{#if is_external_link}}
+					<div class="checklist-edit-option edit" data-popup="edit_suggestion">{{ i18n 'edit suggestion'}}</div>
+				{{/if}}
+	     		<div class="checklist-edit-option delete" data-popup="confirm_delete" data-type="suggestion">{{ i18n 'remove'}}</div>
+	        {{/if}}
+		</div>
+	</div>
+{{/if}}
+
+{{#if checklist_edit_suggestion}}
+	<div class="checklist_drag"></div>
+{{/if}}

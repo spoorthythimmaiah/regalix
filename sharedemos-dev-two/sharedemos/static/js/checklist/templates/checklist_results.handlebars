@@ -1,0 +1,50 @@
+<div class="final_results">
+
+    {{# each checklists.checklist_sections}}
+        <h1 class="step_title">{{title}}</h1>
+        <div class="progress_bar step"><div class="progress_status" style="width:{{completion_percent}}%!important;"></div></div>
+        <span class="progress_percent">{{completion_percent}}%</span>
+    {{/each}}
+
+	<div class="completion_message">{{ i18n 'all done! looks like you\'ve completed'}} <span class="completed_length">{{checklists.checked_items}}</span> {{ i18n 'out of'}} <span class="total_length">{{checklists.total_items}}</span> {{ i18n 'checklist items.'}}</div>
+	{{# compare checklists.completion_rate "<" 100 }}
+		<div class="message">
+			{{ i18n 'you\'re doing a good job, but with a few tweaks, you can improve your'}} {{checklists.title}}.
+		</div>
+	{{/compare}}
+</div>
+{{# each checklists.checklist_sections}}
+	<div class="section_results">
+        <div class="completion_circle">{{section_checked_items}}/{{section_total_items}}</div>
+		<div class="title">"{{title}}"</div>
+		<div class="result_title">{{ i18n 'you completed'}} <span class="completed_length">{{section_checked_items}}</span> {{ i18n 'out of'}} <span class="total_length">{{section_total_items}}</span> {{ i18n 'checklist items in this step.'}}</div>
+		{{# if has_suggestions}}
+			<div class="description">{{ i18n 'here are some suggested resources that will help you based on the checklist items you didn’t mark.'}}</div>
+		{{/if}}
+		{{# each checklist_items}}
+            {{#unless checked}}
+                {{#if suggestions.length}}
+					<div class="checklist_item_title">
+						{{ i18n 'suggested for not checking'}} “{{title}}”
+					</div>
+					{{# each suggestions}}
+						<div class="suggested_content_wrap">
+							<a class="suggested_content" href={{link}} target="_blank" tabindex="-1">
+								<div class="suggested_content_icon">
+									<img class="icon" src="{{thumbnail}}">
+								</div>
+								<div class="suggested_content_info">
+									<div class="desc">
+										{{name}}
+									</div>
+									<div class="url">{{link}}</div>
+								</div>
+								<div class="link"></div>
+							</a>
+						</div>
+					{{/each}}
+                {{/if}}
+            {{/unless}}
+		{{/each}}
+	</div>
+{{/each}}
